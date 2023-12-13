@@ -1,0 +1,34 @@
+---
+format: 
+  revealjs:
+    navigation-mode: vertical
+    logo: ../libs/unl/N.svg
+    theme: ../libs/unl/inverse.scss
+    includes:
+      in_header: ../libs/unl/header.html
+    lib_dir: libs
+    embed-resources: true
+    title-slide-attributes: 
+      data-background-image: field.jpg
+      data-background-size: contain
+      data-background-opacity: "0.5"
+---
+
+# Why Data Visualization? {background-image="field.jpg"}
+
+## Exploratory Data Analysis
+
+- Identify issues with data quality/import ("gut check")
+
+- Develop initial hypotheses and questions
+
+
+## Understand a Model
+
+- Visuals help us understand what a model is doing
+
+- Useful for identifying areas where models may be less accurate
+
+
+## Make Decisions
+
