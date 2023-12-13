@@ -3,5 +3,65 @@ subtitle: "Graphics, Dimensionality, and Human Perception"
 author: "Tyler Wiederich, Erin Blankenship & Susan Vanderplas"
 date: 2024-07-01
 from: markdown+emoji
+bibliography: refs.bib
 abstract: |
-  Almost 40 years ago, Cleveland & McGill published the first of 3 papers detailing experiments assessing the accuracy of numerical perception using different types of charts. This study is often cited as a reason to avoid the use of extraneous dimension in data visualization: 2D comparisons were more accurate than the 3D perspective plot comparisons. Graphics have changed fairly significantly in the last 40 years: where we once had fixed 3D perspective charts, we now can rotate 3D renderings in digital space and even 3D print our charts to examine physically. Many optical illusions result from perceptual mismatches of 3D visual heuristics and 2D, planar, data representations; we might expect that the more realistic renderings available with modern tools might change the outcome of the Cleveland & McGill comparison of 2D vs. 3D accuracy. In this study, we replicate the bar chart portion of Cleveland & McGill's original study, comparing 2D, 3D fixed perspective, 3D rendered, and 3D printed charts in a series of studies integrated into introductory statistics classes. We discuss the findings and the importance of replicating classic experiments using modern technology, as well as the benefits of incorporating hands-on research in introductory classes as experiential learning activities.
+  Almost 40 years ago, Cleveland & McGill published the first of 3 papers detailing 
+  experiments assessing the accuracy of numerical perception using different types of charts. 
+  This study is often cited as a reason to avoid the use of extraneous dimensions in data visualization: 
+  2D bar charts produced more accurate estimates than 3D bar charts; in addition, 
+  lines (length) produced more accurate estimates than circles (area). 
+  Graphics have changed fairly significantly in the last 40 years: where we once had fixed 3D perspective charts, 
+  we now can rotate 3D renderings in digital space and even 3D print our charts to examine physically. 
+  Many optical illusions result from perceptual mismatches of 3D visual heuristics and 2D, planar, data representations 
+  [@vanderplasSignsSineIllusion2015;@daySineIllusion1991;@carswell1991graphing;@fischer2000irrelevant;@zacksReadingBarGraphs1998a]; 
+  more realistic renderings available with modern tools might change the outcome of the Cleveland & McGill comparison of 2D vs. 3D accuracy. 
+  In this paper, we present several experiments which replicate the bar chart portion of Cleveland & McGill's original study, 
+  comparing 2D, 3D fixed perspective, 3D rendered, and 3D printed charts. 
+  We discuss the findings and the importance of replicating classic experiments using modern technology, 
+  as well as the benefits of incorporating hands-on research in introductory classes as experiential learning activities.
+  
+  In all of the studies, participants were shown about 15 2D and 3D bar charts and 
+  were asked to estimate the ratio between the smaller marked bar and the larger using a numerical slider input.
+  In our first study, we replicated Cleveland & McGill's original sampling method, with a modern update,  
+  taking a convenience sample of professors and graduate students in our department and their adult roommates or partners. 
+  A second and third study instead sampled students taking introductory statistics courses. 
+  In order to accommodate online students, we created a variant of the study which utilized
+  2D, 3D fixed perspective, and 3D rendered plots.
+  In-person participants (convenience sample and students taking in-person classes) were shown 
+  2D, 3D rendered, and 3D printed charts. 
+  Through these experiments, we can replicate Cleveland & McGill's original study 
+  while also examining the effects of modern 3D graphics rendering methods which allow for 
+  direct interactivity or physical examination.
+  These modern rendering options may use our 3D spatial awareness in a more natural context, 
+  overcoming previously observed accuracy impacts due to artifically rendered 3D fixed-perspective plots.
+  
+  For each visualization medium, we created plots with the original ratios used by Cleveland & McGill, 
+  using both Type 1 (same bar group) and Type 3 (different bar group) comparisons. 
+  2D charts were created using ggplot2, 3D fixed perspective plots were created using Microsoft Excel, 
+  and 3D rendered or printed charts were created by exporting the data to an OpenSCAD script which was 
+  used to generate a corresponding STL file.
+  The experiment is a balanced incomplete block design: each participant examined 5 of the 7 bar ratios, 
+  randomly allocated between Type 1 and Type 3 comparisons. 
+  For each ratio x type, participants evaluated the same comparison across all 3 presentation methods. 
+  This allows us to achieve maximum precision on method-to-method comparisons while covering the full range of ratios. 
+  In addition, we can also estimate interactions between method and comparison type. 
+  
+  Results suggest that across all 3 experiments, the impact of visualization type is relatively small, that is, 
+  all effects were minimal when comparing estimation accuracy and presentation format. 
+  As in @heerCrowdsourcingGraphicalPerception2010, we found no statistically significant difference between Type 1 and 3 comparisons.
+  Data presented in this abstract represents a single summer semester's worth of pilot data, 
+  while the conference paper will present the results of a full year of data collection 
+  (excluding the student pilot data presented here).
+  
+  We expect that there are two likely explanations which may account for differences 
+  between our study, @heerCrowdsourcingGraphicalPerception2010, and @clevelandGraphicalPerceptionTheory1984. 
+  First, we expect there may be increased variability between estimates obtained from 'involved' participants (such as colleagues) 
+  relative to 'uninvolved' participants (such as undergraduates and Mechanical Turkers); this effect might explain the lack of significance
+  between Type 1 and Type 3 comparisons in both our study and @heerCrowdsourcingGraphicalPerception2010 compared to the non-overlapping intervals in @clevelandGraphicalPerceptionTheory1984. 
+  In addition, it is possible that more modern 3D visualization methods (physical and rendered 3D objects) 
+  are more naturally perceived than the 3D fixed perspective charts (relative to the 2D charts); 
+  this effect is likely small, requiring data collection on a larger scale (such as a full year of student data) to produce a precise estimate. 
+  Even if there is a significant decrease in accuracy detected with a larger sample, the overall effect size appears to be small, 
+  suggesting that other concerns may take precedence over the concerns about estimation accuracy; 
+  if the overall picture perceived is reaosnable, it may be worth sacricing accuracy for the ability to show a more 
+  complete and integrated view of the data.

@@ -1,9 +1,13 @@
 ---
-format: html
+format: pdf
 ---
 
 <div>
+
 ```{=html}
 <iframe class="slide-deck" src="./" width="100%" height="600px"></iframe>
 ```
+
 </div>
+
+## References
