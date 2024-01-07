@@ -7,7 +7,7 @@ format:
     includes:
       in_header: ../libs/unl/header.html
     lib_dir: libs
-    embed-resources: true
+    embed-resources: false
     title-slide-attributes: 
       data-background-image: field.jpg
       data-background-size: contain
