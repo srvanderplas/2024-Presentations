@@ -4,14 +4,14 @@
     "href": "index.html",
     "title": "Presentations in 2024",
     "section": "",
-    "text": "Cultivating Insights\n\n\n\nSusan Vanderplas\n\n\nJan 9, 2024\n\n\n\n\n\nLocation\n\n\nCorpus Christi, TX\n\n\n\n\nTopics\n\n\ngraphics,agriculture\n\n\n\n\n\n\n\n\n\n\n\n\n\nEscaping Flatland\n\n\n\nTyler Wiederich, Erin Blankenship & Susan Vanderplas\n\n\nJul 1, 2024\n\n\n\n\n\nLocation\n\n\nWashington, DC\n\n\n\n\nTopics\n\n\ngraphics,perception\n\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Cultivating Insights\n\n\n\nSusan Vanderplas\n\n\nJan 9, 2024\n\n\n\n\n\nLocation\n\n\nInternational Conference for On-Farm Precision Experimentation, Corpus Christi, TX\n\n\n\n\nTopics\n\n\ngraphics,agriculture\n\n\n\n\n\n\n\n\n\n\n\n\n\nEscaping Flatland\n\n\n\nTyler Wiederich, Erin Blankenship & Susan Vanderplas\n\n\nJul 1, 2024\n\n\n\n\n\nLocation\n\n\nWashington, DC\n\n\n\n\nTopics\n\n\ngraphics,perception\n\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "01-ICOFPE/index.html#exploratory-data-analysis",
-    "href": "01-ICOFPE/index.html#exploratory-data-analysis",
+    "objectID": "01-ICOFPE/index.html#why-data-visualization-1",
+    "href": "01-ICOFPE/index.html#why-data-visualization-1",
     "title": "Cultivating Insights",
-    "section": "Exploratory Data Analysis",
-    "text": "Exploratory Data Analysis\n\nIdentify issues with data quality/import (“gut check”)\nLook at raw data\nDevelop initial hypotheses and questions"
+    "section": "Why Data Visualization?",
+    "text": "Why Data Visualization?\n\nData is easier to understand visually\nBuild trust in models and results\nIdentify patterns, trends, outliers"
   },
   {
     "objectID": "01-ICOFPE/index.html#exploratory-data-analysis-1",
@@ -35,11 +35,11 @@
     "text": "Exploratory Data Analysis\nAfter Application:"
   },
   {
-    "objectID": "01-ICOFPE/index.html#understand-results",
-    "href": "01-ICOFPE/index.html#understand-results",
+    "objectID": "01-ICOFPE/index.html#exploratory-data-analysis-4",
+    "href": "01-ICOFPE/index.html#exploratory-data-analysis-4",
     "title": "Cultivating Insights",
-    "section": "Understand Results",
-    "text": "Understand Results\n\nVisuals help us understand what a model is doing\nUseful for identifying areas where models may be less accurate\nLook at raw data vs. model results"
+    "section": "Exploratory Data Analysis",
+    "text": "Exploratory Data Analysis\nAfter Harvest:"
   },
   {
     "objectID": "01-ICOFPE/index.html#understand-results-1",
@@ -47,6 +47,13 @@
     "title": "Cultivating Insights",
     "section": "Understand Results",
     "text": "Understand Results\n\nVisuals help us understand what a model is doing\nUseful for identifying areas where models may be less accurate\nLook at raw data vs. model results"
+  },
+  {
+    "objectID": "01-ICOFPE/index.html#understand-results-2",
+    "href": "01-ICOFPE/index.html#understand-results-2",
+    "title": "Cultivating Insights",
+    "section": "Understand Results",
+    "text": "Understand Results\n\n\n\n\n\n\n\nParametric Coefficients\n\n\neffect\nEstimate\nStd. Error\nt value\nPr(&gt;|t|)\n\n\n\n\n(Intercept)\n39.5926\n0.2215\n178.7559\n0.0000\n\n\n\n\n\n\n\nApproximate Significance of Smooth Terms\n\n\neffect\nedf\nRef.df\nF\np-value\n\n\n\n\ns(s_rate)\n0.9772\n9.0000\n0.1442\n0.2558\n\n\ns(elev)\n6.0431\n9.0000\n3.2842\n0.0000\n\n\ns(slope)\n4.7708\n9.0000\n2.8008\n0.0000\n\n\ns(clay)\n2.4558\n9.0000\n1.8240\n0.0001\n\n\ns(silt)\n1.4403\n9.0000\n0.7279\n0.0061\n\n\nte(x_coord,y_coord)\n20.3908\n24.0000\n14.1260\n0.0000"
   },
   {
     "objectID": "01-ICOFPE/index.html#understand-model-results",
@@ -61,13 +68,6 @@
     "title": "Cultivating Insights",
     "section": "Understand Model Results",
     "text": "Understand Model Results"
-  },
-  {
-    "objectID": "01-ICOFPE/index.html#make-decisions",
-    "href": "01-ICOFPE/index.html#make-decisions",
-    "title": "Cultivating Insights",
-    "section": "Make Decisions",
-    "text": "Make Decisions"
   },
   {
     "objectID": "01-ICOFPE/index.html#make-decisions-1",
@@ -98,38 +98,17 @@
     "text": "Make Decisions"
   },
   {
-    "objectID": "07-HCII/index.html#references",
-    "href": "07-HCII/index.html#references",
-    "title": "Escaping Flatland",
-    "section": "",
-    "text": "Carswell, C., Sylvia Frankenberger, and Donald Bernhard. 1991. “Graphing in Depth: Perspectives on the Use of Three-Dimensional Graphs to Represent Lower-Dimensional Data.” Behaviour & Information Technology 10: 459–74. https://doi.org/10.1080/01449299108924304.\n\n\nCleveland, William S., and Robert McGill. 1984. “Graphical Perception: Theory, Experimentation, and Application to the Development of Graphical Methods.” Journal of the American Statistical Association 79 (387): 531–54. https://doi.org/10.1080/01621459.1984.10478080.\n\n\nDay, Ross H, and Erica J Stecher. 1991. “Sine of an Illusion.” Perception 20 (1): 49–55. https://doi.org/10.1068/p200049.\n\n\nFischer, M. H. 2000. “Do Irrelevant Depth Cues Affect the Comprehension of Bar Graphs.” Applied Cognitive Psychology 14: 151–62. https://doi.org/10.1002/(SICI)1099-0720(200003/04)14:2&lt;151::AID-ACP629&gt;3.0.CO;2-Z.\n\n\nHeer, Jeffrey, and Michael Bostock. 2010. “Crowdsourcing Graphical Perception: Using Mechanical Turk to Assess Visualization Design.” In Proceedings of the SIGCHI Conference on Human Factors in Computing Systems, 203–12. Atlanta Georgia USA: ACM; ACM. https://doi.org/10.1145/1753326.1753357.\n\n\nVanderPlas, Susan, and Heike Hofmann. 2015. “Signs of the Sine IllusionWhy We Need to Care.” Journal of Computational and Graphical Statistics 24 (4): 1170–90. https://doi.org/10.1080/10618600.2014.951547.\n\n\nZacks, Jeff, Ellen Levy, Barbara Tversky, and Diane J. Schiano. 1998. “Reading Bar Graphs: Effects of Extraneous Depth Cues and Graphical Context.” Journal of Experimental Psychology: Applied 4 (2): 119–38. https://doi.org/10.1037/1076-898X.4.2.119."
-  },
-  {
-    "objectID": "01-ICOFPE/index.html#why-data-visualization-1",
-    "href": "01-ICOFPE/index.html#why-data-visualization-1",
-    "title": "Cultivating Insights",
-    "section": "Why Data Visualization?",
-    "text": "Why Data Visualization?\n\nData is easier to understand visually\nBuild trust in models and results\nIdentify patterns, trends, outliers"
-  },
-  {
-    "objectID": "01-ICOFPE/index.html#exploratory-data-analysis-4",
-    "href": "01-ICOFPE/index.html#exploratory-data-analysis-4",
-    "title": "Cultivating Insights",
-    "section": "Exploratory Data Analysis",
-    "text": "Exploratory Data Analysis\nAfter Harvest:"
-  },
-  {
-    "objectID": "01-ICOFPE/index.html#understand-results-2",
-    "href": "01-ICOFPE/index.html#understand-results-2",
-    "title": "Cultivating Insights",
-    "section": "Understand Results",
-    "text": "Understand Results\n\n\n\n\n\n\n\nParametric Coefficients\n\n\neffect\nEstimate\nStd. Error\nt value\nPr(&gt;|t|)\n\n\n\n\n(Intercept)\n39.5926\n0.2215\n178.7559\n0.0000\n\n\n\n\n\n\n\nApproximate Significance of Smooth Terms\n\n\neffect\nedf\nRef.df\nF\np-value\n\n\n\n\ns(s_rate)\n0.9772\n9.0000\n0.1442\n0.2558\n\n\ns(elev)\n6.0431\n9.0000\n3.2842\n0.0000\n\n\ns(slope)\n4.7708\n9.0000\n2.8008\n0.0000\n\n\ns(clay)\n2.4558\n9.0000\n1.8240\n0.0001\n\n\ns(silt)\n1.4403\n9.0000\n0.7279\n0.0061\n\n\nte(x_coord,y_coord)\n20.3908\n24.0000\n14.1260\n0.0000"
-  },
-  {
     "objectID": "01-ICOFPE/index.html#make-decisions-5",
     "href": "01-ICOFPE/index.html#make-decisions-5",
     "title": "Cultivating Insights",
     "section": "Make Decisions",
     "text": "Make Decisions"
+  },
+  {
+    "objectID": "07-HCII/index.html#references",
+    "href": "07-HCII/index.html#references",
+    "title": "Escaping Flatland",
+    "section": "",
+    "text": "Carswell, C., Sylvia Frankenberger, and Donald Bernhard. 1991. “Graphing in Depth: Perspectives on the Use of Three-Dimensional Graphs to Represent Lower-Dimensional Data.” Behaviour & Information Technology 10: 459–74. https://doi.org/10.1080/01449299108924304.\n\n\nCleveland, William S., and Robert McGill. 1984. “Graphical Perception: Theory, Experimentation, and Application to the Development of Graphical Methods.” Journal of the American Statistical Association 79 (387): 531–54. https://doi.org/10.1080/01621459.1984.10478080.\n\n\nDay, Ross H, and Erica J Stecher. 1991. “Sine of an Illusion.” Perception 20 (1): 49–55. https://doi.org/10.1068/p200049.\n\n\nFischer, M. H. 2000. “Do Irrelevant Depth Cues Affect the Comprehension of Bar Graphs.” Applied Cognitive Psychology 14: 151–62. https://doi.org/10.1002/(SICI)1099-0720(200003/04)14:2&lt;151::AID-ACP629&gt;3.0.CO;2-Z.\n\n\nHeer, Jeffrey, and Michael Bostock. 2010. “Crowdsourcing Graphical Perception: Using Mechanical Turk to Assess Visualization Design.” In Proceedings of the SIGCHI Conference on Human Factors in Computing Systems, 203–12. Atlanta Georgia USA: ACM; ACM. https://doi.org/10.1145/1753326.1753357.\n\n\nVanderPlas, Susan, and Heike Hofmann. 2015. “Signs of the Sine IllusionWhy We Need to Care.” Journal of Computational and Graphical Statistics 24 (4): 1170–90. https://doi.org/10.1080/10618600.2014.951547.\n\n\nZacks, Jeff, Ellen Levy, Barbara Tversky, and Diane J. Schiano. 1998. “Reading Bar Graphs: Effects of Extraneous Depth Cues and Graphical Context.” Journal of Experimental Psychology: Applied 4 (2): 119–38. https://doi.org/10.1037/1076-898X.4.2.119."
   }
 ]
