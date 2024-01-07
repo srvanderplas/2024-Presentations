@@ -30,6 +30,17 @@ library(gtsummary)
 
 # Why Data Visualization? {background-image="field.jpg"}
 
+## Why Data Visualization?
+
+- Data is easier to understand visually
+
+- Build trust in models and results
+
+- Identify patterns, trends, outliers
+
+
+# Exploratory Data Analysis {background-image="field.jpg"}
+
 ## Exploratory Data Analysis
 
 - Identify issues with data quality/import ("gut check")
@@ -92,6 +103,8 @@ ggplot(cz21, aes(fill = yield)) +
   ggtitle("Yield")
 ```
 
+# Understand Results {background-image="field.jpg"}
+
 ## Understand Results
 
 - Visuals help us understand what a model is doing
@@ -136,6 +149,8 @@ draw(model, select = c("te(x_coord,y_coord)")) +
   theme(legend.position = "right")
 ```
 
+
+# Make Decisions {background-image="field.jpg"}
 
 ## Make Decisions
 ```{r gd21-processing}
