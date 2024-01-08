@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Presentations in 2024",
     "section": "",
-    "text": "Cultivating Insights\n\n\n\nSusan Vanderplas\n\n\nJan 9, 2024\n\n\n\n\n\n\nLocation\n\n\nInternational Conference for On-Farm Precision Experimentation, Corpus Christi, TX\n\n\n\n\nTopics\n\n\ngraphics,agriculture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEscaping Flatland\n\n\n\nTyler Wiederich, Erin Blankenship & Susan Vanderplas\n\n\nJul 1, 2024\n\n\n\n\n\n\nLocation\n\n\nHuman Computer Interaction International, Washington DC\n\n\n\n\nTopics\n\n\nteaching,graphics,user-study\n\n\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Cultivating Insights\n\n\n\nSusan Vanderplas\n\n\nJan 9, 2024\n\n\n\n\n\nLocation\n\n\nInternational Conference for On-Farm Precision Experimentation, Corpus Christi, TX\n\n\n\n\nTopics\n\n\ngraphics,agriculture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEscaping Flatland\n\n\n\nTyler Wiederich, Erin Blankenship & Susan Vanderplas\n\n\nJul 1, 2024\n\n\n\n\n\nLocation\n\n\nHuman Computer Interaction International, Washington DC\n\n\n\n\nTopics\n\n\nteaching,graphics,user-study\n\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "01-ICOFPE/index.html#why-data-visualization-1",
@@ -60,7 +60,7 @@
     "href": "01-ICOFPE/index.html#understand-results-2",
     "title": "Cultivating Insights",
     "section": "Understand Results",
-    "text": "Understand Results\n\n\n\n\n\n  \n    \n      Parametric Coefficients\n    \n    \n    \n      effect\n      Estimate\n      Std. Error\n      t value\n      Pr(&gt;|t|)\n    \n  \n  \n    (Intercept)\n39.5926\n0.2215\n178.7559\n0.0000\n  \n  \n  \n\n\n\n\n\n  \n    \n      Approximate Significance of Smooth Terms\n    \n    \n    \n      effect\n      edf\n      Ref.df\n      F\n      p-value\n    \n  \n  \n    s(s_rate)\n0.9772\n9.0000\n0.1442\n0.2558\n    s(elev)\n6.0431\n9.0000\n3.2842\n0.0000\n    s(slope)\n4.7708\n9.0000\n2.8008\n0.0000\n    s(clay)\n2.4558\n9.0000\n1.8240\n0.0001\n    s(silt)\n1.4403\n9.0000\n0.7279\n0.0061\n    te(x_coord,y_coord)\n20.3908\n24.0000\n14.1260\n0.0000\n  \n  \n  \n\n\n\n\nFirst off, I’d like to point out the idfference between what the model print-out shows and what the graphics show. If you’re like me, tables like this don’t make a terrible amount of sense. I can translate them for you - essentially, in this model, we have smooth curves that model seed rate, elevation, slope, clay and silt percentage, and spatial correlation. The numbers in this table aren’t that useful, because we’re using smoothers - they mostly tell you just whether or not the variable is statistically significant - whether it seems to account for more variability than what would be expected by random chance.\nIn this case, seed rate doesn’t seem to be significant, though all of the variables I included that you have no control over seem to be significant. So that isn’t great - it means that at least according to the parameters of this experiment, seed rate doesn’t matter as much as other factors outside of your control. But mostly, a table of numbers doesn’t give you much to interrogate."
+    "text": "Understand Results\n\n\n\n\n\n\n\nParametric Coefficients\n\n\neffect\nEstimate\nStd. Error\nt value\nPr(&gt;|t|)\n\n\n\n\n(Intercept)\n39.5926\n0.2215\n178.7559\n0.0000\n\n\n\n\n\n\n\nApproximate Significance of Smooth Terms\n\n\neffect\nedf\nRef.df\nF\np-value\n\n\n\n\ns(s_rate)\n0.9772\n9.0000\n0.1442\n0.2558\n\n\ns(elev)\n6.0431\n9.0000\n3.2842\n0.0000\n\n\ns(slope)\n4.7708\n9.0000\n2.8008\n0.0000\n\n\ns(clay)\n2.4558\n9.0000\n1.8240\n0.0001\n\n\ns(silt)\n1.4403\n9.0000\n0.7279\n0.0061\n\n\nte(x_coord,y_coord)\n20.3908\n24.0000\n14.1260\n0.0000\n\n\n\n\n\n\n\n\nFirst off, I’d like to point out the idfference between what the model print-out shows and what the graphics show. If you’re like me, tables like this don’t make a terrible amount of sense. I can translate them for you - essentially, in this model, we have smooth curves that model seed rate, elevation, slope, clay and silt percentage, and spatial correlation. The numbers in this table aren’t that useful, because we’re using smoothers - they mostly tell you just whether or not the variable is statistically significant - whether it seems to account for more variability than what would be expected by random chance.\nIn this case, seed rate doesn’t seem to be significant, though all of the variables I included that you have no control over seem to be significant. So that isn’t great - it means that at least according to the parameters of this experiment, seed rate doesn’t matter as much as other factors outside of your control. But mostly, a table of numbers doesn’t give you much to interrogate."
   },
   {
     "objectID": "01-ICOFPE/index.html#understand-model-results",
@@ -74,42 +74,42 @@
     "href": "01-ICOFPE/index.html#understand-model-results-1",
     "title": "Cultivating Insights",
     "section": "Understand Model Results",
-    "text": "Understand Model Results"
+    "text": "Understand Model Results\n\n\nHere, we see the observations in the field as dots underneath the partial effect plot that is a purple to orange gradient, where purple means high and orange means low. This gradient type is safe for all types of colorblindness, which is why I use it instead of a more common rainbow-type scheme or even a red-yellow-green traffic light scheme.\nWhat we see here is a set of contours outlining a line of approximately equal performance, that produce something like a height map showing areas with higher yield and lower yield as predicted by spatial location (e.g. x and y coordinate of the center of the region).\nWhile this doesn’t mean that much to me, as I’m not familiar with the field in question, I’m pretty sure that a similar plot of a field you are familiar with is something that may be a useful “gut check” - you know your own fields, and likely have an idea of which areas were performing well or poorly - perhaps there was some wind damage along the edge of the field, but the center survived? Or maybe the center of this field is higher than the edges? We could examine these hypotheses with new plots, but my point is that as you look at a similar plot for your own field, you should be coming up with questions and hypotheses and checking those against your expectations as well as the model’s predictions.\nGraphics aren’t the final stop here - they’re a way for you to examine the model and understand where it is performing well or poorly."
   },
   {
     "objectID": "01-ICOFPE/index.html#make-decisions-1",
     "href": "01-ICOFPE/index.html#make-decisions-1",
     "title": "Cultivating Insights",
     "section": "Make Decisions",
-    "text": "Make Decisions"
+    "text": "Make Decisions\n\n\nFor this part of the talk, I’m switching example fields to one with an experiment designed to manipulate the nitrogen rate. As the main intervention in the last field wasn’t actually significant, it wasn’t all that useful to talk about how to use the model results to make decisions.\nOf course, Taro, David, Brittani, and John have all talked this morning about how they’re creating reports and models to help you make decisions. In this part of the talk, I’m simply going to highlight how graphics can help you make sense of both the automatic prescriptions their systems spit out, and how you can look at the charts to understand the why of those predictions.\nVisualizations are really important for helping us feel comfortable with the results from a statistical model - I don’t trust models unless I can see why they’re making predictions and what those predictions mean in practice."
   },
   {
     "objectID": "01-ICOFPE/index.html#make-decisions-2",
     "href": "01-ICOFPE/index.html#make-decisions-2",
     "title": "Cultivating Insights",
     "section": "Make Decisions",
-    "text": "Make Decisions\n\n\n\n\n\n\n  \n    \n      Parametric Coefficients\n    \n    \n    \n      effect\n      Estimate\n      Std. Error\n      t value\n      Pr(&gt;|t|)\n    \n  \n  \n    (Intercept)\n246.0769\n1.8919\n130.0671\n0.0000\n    munameDrummer silty clay loam\n21.3936\n13.0254\n1.6424\n0.1011\n    munameElpaso silty clay loam\n6.8863\n6.3001\n1.0930\n0.2749\n    munameHoughton muck\n−1.8043\n12.5800\n−0.1434\n0.8860\n    munameLisbon silt loam\n−16.0409\n9.4682\n−1.6942\n0.0909\n    munameOctagon silt loam\n−2.2365\n2.9266\n−0.7642\n0.4451\n  \n  \n  \n\n\n\n\n\n  \n    \n      Approximate Significance of Smooth Terms\n    \n    \n    \n      effect\n      edf\n      Ref.df\n      F\n      p-value\n    \n  \n  \n    s(n_rate)\n2.0872\n9.0000\n7.9926\n0.0000\n    s(elev)\n8.0000\n9.0000\n3.6272\n0.0000\n    s(slope)\n1.9356\n9.0000\n1.9140\n0.0000\n    s(elev,slope)\n16.5476\n27.0000\n1.7851\n0.0000\n    te(x_coord,y_coord)\n22.3023\n24.0000\n5.7360\n0.0000"
+    "text": "Make Decisions\n\n\n\n\n\n\n\n\nParametric Coefficients\n\n\neffect\nEstimate\nStd. Error\nt value\nPr(&gt;|t|)\n\n\n\n\n(Intercept)\n246.0769\n1.8919\n130.0671\n0.0000\n\n\nmunameDrummer silty clay loam\n21.3936\n13.0254\n1.6424\n0.1011\n\n\nmunameElpaso silty clay loam\n6.8863\n6.3001\n1.0930\n0.2749\n\n\nmunameHoughton muck\n−1.8043\n12.5800\n−0.1434\n0.8860\n\n\nmunameLisbon silt loam\n−16.0409\n9.4682\n−1.6942\n0.0909\n\n\nmunameOctagon silt loam\n−2.2365\n2.9266\n−0.7642\n0.4451\n\n\n\n\n\n\n\nApproximate Significance of Smooth Terms\n\n\neffect\nedf\nRef.df\nF\np-value\n\n\n\n\ns(n_rate)\n2.0872\n9.0000\n7.9926\n0.0000\n\n\ns(elev)\n8.0000\n9.0000\n3.6272\n0.0000\n\n\ns(slope)\n1.9356\n9.0000\n1.9140\n0.0000\n\n\ns(elev,slope)\n16.5476\n27.0000\n1.7851\n0.0000\n\n\nte(x_coord,y_coord)\n22.3023\n24.0000\n5.7360\n0.0000\n\n\n\n\n\n\n\n\n\nSo just as a starter, in this model for this field, I’m modeling each type of soil as a separate intercept - that is, each soil type is expected to have a different base yield rate, but to respond the same based on nitrogen rate, elevation, slope, etc. (this is obviously ridiculous, I would assume, but again, all models are wrong, some are useful, so let’s work with this simplification because it keeps the table at a manageable size for this presentation. It’s already pretty big.)"
   },
   {
     "objectID": "01-ICOFPE/index.html#make-decisions-3",
     "href": "01-ICOFPE/index.html#make-decisions-3",
     "title": "Cultivating Insights",
     "section": "Make Decisions",
-    "text": "Make Decisions"
+    "text": "Make Decisions\n\n\nSo our first task after checking the model summary is to look at the profiles of each partial effect. Here, we see that n_rate has a serious effect (up to a point) in that yield increases from 100 to 200, and then levels off and/or starts to decrease. That’s (from what I know) expected - after the plant is no longer deficient in nitrogen, there isn’t much benefit to adding more. We also see that the elevation effect here is pretty huge - higher yield at lower elevation, lower yield at higher elevation. We also see that the slope has a pretty significant effect as well.\nThis isn’t the whole story, though, because I included an interaction effect between elevation and slope."
   },
   {
     "objectID": "01-ICOFPE/index.html#make-decisions-4",
     "href": "01-ICOFPE/index.html#make-decisions-4",
     "title": "Cultivating Insights",
     "section": "Make Decisions",
-    "text": "Make Decisions"
+    "text": "Make Decisions\n\n\nHere, we can look at the interaction (ignoring the single-variable effects we included and looked at before). There are two things to note here: the effect size is smaller (about 20-30, instead of limits of -50 to 50 or -200 to 200 in the single-variable plots). The second thing to note is that the plot looks pretty lumpy, and that’s largely because the points are concentrated in a few different clusters. That is, while there may be differences here, they could well be driven by the fact that slope and elevation might change at the same time as e.g. soil type or other variables that are important.\nThe takeaway here is to be a bit suspicious and to look for other causes. I’m not digging further into this because of time, but it is absolutely ok to question why a variable might be significant and think about other causes for that effect."
   },
   {
     "objectID": "01-ICOFPE/index.html#make-decisions-5",
     "href": "01-ICOFPE/index.html#make-decisions-5",
     "title": "Cultivating Insights",
     "section": "Make Decisions",
-    "text": "Make Decisions"
+    "text": "Make Decisions\n\n\nSpeaking of other causes, let’s look at the spatial effects. Here, it seems very much like the model predicts much lower yield at the edge of the plot than it does in the top/center region. This could well be due to contouring or other effects."
   },
   {
     "objectID": "07-HCII/index.html#references",
@@ -117,5 +117,33 @@
     "title": "Escaping Flatland",
     "section": "",
     "text": "Carswell, C., Sylvia Frankenberger, and Donald Bernhard. 1991. “Graphing in Depth: Perspectives on the Use of Three-Dimensional Graphs to Represent Lower-Dimensional Data.” Behaviour & Information Technology 10: 459–74. https://doi.org/10.1080/01449299108924304.\n\n\nDay, Ross H, and Erica J Stecher. 1991. “Sine of an Illusion.” Perception 20 (1): 49–55. https://doi.org/10.1068/p200049.\n\n\nFischer, M. H. 2000. “Do Irrelevant Depth Cues Affect the Comprehension of Bar Graphs.” Applied Cognitive Psychology 14: 151–62. https://doi.org/10.1002/(SICI)1099-0720(200003/04)14:2&lt;151::AID-ACP629&gt;3.0.CO;2-Z.\n\n\nVanderPlas, Susan, and Heike Hofmann. 2015. “Signs of the Sine IllusionWhy We Need to Care.” Journal of Computational and Graphical Statistics 24 (4): 1170–90. https://doi.org/10.1080/10618600.2014.951547.\n\n\nZacks, Jeff, Ellen Levy, Barbara Tversky, and Diane J. Schiano. 1998. “Reading Bar Graphs: Effects of Extraneous Depth Cues and Graphical Context.” Journal of Experimental Psychology: Applied 4 (2): 119–38. https://doi.org/10.1037/1076-898X.4.2.119."
+  },
+  {
+    "objectID": "01-ICOFPE/index.html#make-decisions-6",
+    "href": "01-ICOFPE/index.html#make-decisions-6",
+    "title": "Cultivating Insights",
+    "section": "Make Decisions",
+    "text": "Make Decisions\n\n\n\n\n\n\n\n\n\n\n\nIn fact, if we plot the partial effects and then also plot the elevation, we can see that this is largely just another way to say higher elevations seem to perform better. Sometimes, there are multiple effects that are correlated and included in the model through separate variables."
+  },
+  {
+    "objectID": "01-ICOFPE/index.html#make-decisions-7",
+    "href": "01-ICOFPE/index.html#make-decisions-7",
+    "title": "Cultivating Insights",
+    "section": "Make Decisions",
+    "text": "Make Decisions\n\n\nSo, with all of this, what are we to do? Let’s go back to the fact that we’ve modeled yield as a function of soil type, location, elevation, slope, and nitrogen rate (which we manipulated with an experiment).\nLet’s return to the raw data for a moment. We can fit simple models to just each type of soil (ignoring spatial effects, elevation, etc. for the moment) and see if we can see a difference in the yield. Our statistical model is of course much more precise and we probably can trust it, but it always makes me feel better to see the effect in the raw data as well.\nHere, I’ve drawn simple models for the 3 soil types that have enough data points to be able to confidently do so. In Databrook silt loam, we see that there is a slight effect and yield tops out at around a nitrogen rate of 200. In El Paso silty clay loam, we see that the rate is largely not important until we get past 225 or so, at which point yield seems to increase a bit. And in Octagon silt loam, there is a steady increase in yield over the tested nitrogen rates.\nIf I were deciding what to do next year, I’d probably look at optimizing nitrogen around 225 or so. Of course, this isn’t taking into account the tradeoff between cost of inputs and profit – so you’d need to talk to David about that tradeoff, and the software should be helping with that tradeoff. But as a statistician, I feel more confident in the model’s predictions given that I’ve seen the same basic thing in the raw data… I just had to pull it out and visualize it."
+  },
+  {
+    "objectID": "01-ICOFPE/index.html#make-decisions-8",
+    "href": "01-ICOFPE/index.html#make-decisions-8",
+    "title": "Cultivating Insights",
+    "section": "Make Decisions",
+    "text": "Make Decisions\n\n\nHere’s the smooth our model fit to the data, showing the partial effect for nitrogen rate on yield. It, too, tops out at about 225, indicating that if nitrogen were free, we could optimize yield that way (since none of the other modeled factors are things within our control)."
+  },
+  {
+    "objectID": "01-ICOFPE/index.html#why-data-visualization-2",
+    "href": "01-ICOFPE/index.html#why-data-visualization-2",
+    "title": "Cultivating Insights",
+    "section": "Why Data Visualization?",
+    "text": "Why Data Visualization?\n\nData is easier to understand visually\nBuild trust in models and results\nIdentify patterns, trends, outliers\n\n\nTo recap - data visualization is an important tool for assessing models and data. Our goal is to show you plots that allow you to become familiar with the models we’ve built, identifying patterns, but also understanding where the model might be weak (e.g. where there aren’t enough data points) and why some results might be less useful because of differences between as-applied and planned application rates.\nIf you’re interested in learning more, or want to help us test the visualization part of the interactive platform, please let David know, and we’ll be in touch when we have a prototype available."
   }
 ]

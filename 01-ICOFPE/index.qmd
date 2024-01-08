@@ -233,10 +233,18 @@ To get a full picture of what's contributing to this model, though, we have to l
 ```{r}
 draw(model, select = c("te(x_coord,y_coord)")) + 
   ggtitle("Spatial Effects") + theme_map() + 
+  scale_fill_gradient2(low = "orange", high = "blue") + 
   theme(legend.position = "right")
 ```
 
 ::: notes
+Here, we see the observations in the field as dots underneath the partial effect plot that is a purple to orange gradient, where purple means high and orange means low. This gradient type is safe for all types of colorblindness, which is why I use it instead of a more common rainbow-type scheme or even a red-yellow-green traffic light scheme.
+
+What we see here is a set of contours outlining a line of approximately equal performance, that produce something like a height map showing areas with higher yield and lower yield as predicted by spatial location (e.g. x and y coordinate of the center of the region). 
+
+While this doesn't mean that much to me, as I'm not familiar with the field in question, I'm pretty sure that a similar plot of a field you are familiar with is something that may be a useful "gut check" - you know your own fields, and likely have an idea of which areas were performing well or poorly - perhaps there was some wind damage along the edge of the field, but the center survived? Or maybe the center of this field is higher than the edges? We could examine these hypotheses with new plots, but my point is that as you look at a similar plot for your own field,  you should be coming up with questions and hypotheses and checking those against your expectations as well as the model's predictions. 
+
+Graphics aren't the final stop here - they're a way for you to examine the model and understand where it is performing well or poorly. 
 :::
 
 # Make Decisions {background-image="field.jpg"}
@@ -264,6 +272,12 @@ ggplot(gd21, aes(fill = factor(trt_n))) +
 ```
 
 ::: notes
+For this part of the talk, I'm switching example fields to one with an experiment designed to manipulate the nitrogen rate. As the main intervention in the last field wasn't actually significant, it wasn't all that useful to talk about how to use the model results to make decisions.
+
+Of course, Taro, David, Brittani, and John have all talked this morning about how they're creating reports and models to help you make decisions. In this part of the talk, I'm simply going to highlight how graphics can help you make sense of both the automatic prescriptions their systems spit out, and how you can look at the charts to understand the why of those predictions.
+
+Visualizations are really important for helping us feel comfortable with the results from a statistical model - I don't trust models unless I can see why they're making predictions and what those predictions mean in practice. 
+
 :::
 
 ## Make Decisions
@@ -294,6 +308,7 @@ res2$s.table %>%
 ```
 
 ::: notes
+So just as a starter, in this model for this field, I'm modeling each type of soil as a separate intercept - that is, each soil type is expected to have a different base yield rate, but to respond the same based on nitrogen rate, elevation, slope, etc. (this is obviously ridiculous, I would assume, but again, all models are wrong, some are useful, so let's work with this simplification because it keeps the table at a manageable size for this presentation. It's already pretty big.)
 :::
 
 ## Make Decisions
@@ -303,6 +318,22 @@ draw(model2, select = c("s(n_rate)", "s(elev)", "s(slope)"), ncol = 3)
 ```
 
 ::: notes
+So our first task after checking the model summary is to look at the profiles of each partial effect. Here, we see that n_rate has a serious effect (up to a point) in that yield increases from 100 to 200, and then levels off and/or starts to decrease. That's (from what I know) expected - after the plant is no longer deficient in nitrogen, there isn't much benefit to adding more. We also see that the elevation effect here is pretty huge - higher yield at lower elevation, lower yield at higher elevation. We also see that the slope has a pretty significant effect as well. 
+
+This isn't the whole story, though, because I included an interaction effect between elevation and slope. 
+:::
+## Make Decisions
+
+```{r}
+draw(model2, select = c("s(elev,slope)")) + 
+  ggtitle("Interaction Effects: Elevation and Slope") + 
+  scale_fill_gradient2(limits = c(-40, 40), low = "orange", high = "blue", mid = "white") + 
+  theme(legend.position = "right")
+```
+::: notes
+Here, we can look at the interaction (ignoring the single-variable effects we included and looked at before). There are two things to note here: the effect size is smaller (about 20-30, instead of limits of -50 to 50 or -200 to 200 in the single-variable plots). The second thing to note is that the plot looks pretty lumpy, and that's largely because the points are concentrated in a few different clusters. That is, while there may be differences here, they could well be driven by the fact that slope and elevation might change at the same time as e.g. soil type or other variables that are important. 
+
+The takeaway here is to be a bit suspicious and to look for other causes. I'm not digging further into this because of time, but it is absolutely ok to question why a variable might be significant and think about other causes for that effect.
 :::
 
 ## Make Decisions
@@ -310,11 +341,41 @@ draw(model2, select = c("s(n_rate)", "s(elev)", "s(slope)"), ncol = 3)
 ```{r}
 draw(model2, select = c("te(x_coord,y_coord)")) + 
   ggtitle("Spatial Effects") + theme_map() + 
+  scale_fill_gradient2(low = "orange", high = "blue", mid = "white") + 
   theme(legend.position = "right")
 ```
 
 ::: notes
+Speaking of other causes, let's look at the spatial effects. Here, it seems very much like the model predicts much lower yield at the edge of the plot than it does in the top/center region. This could well be due to contouring or other effects. 
 :::
+
+## Make Decisions
+
+```{r}
+#| layout-ncol: 2
+#| message: false
+#| warning: false
+
+library(ggvoronoi)
+
+draw(model2, select = c("te(x_coord,y_coord)")) + 
+  ggtitle("Spatial Effects") + theme_map() + 
+  scale_fill_gradient2(low = "orange", high = "blue", mid = "white") + 
+  theme(legend.position = "right")
+
+ggplot(gd21, aes(x = x_coord, y = y_coord, fill = elev)) + 
+  stat_voronoi(geom = "polygon") + 
+  geom_point(color = "black", shape = 1, alpha = .5) + 
+  scale_fill_gradient("Elevation", low = "#0080FF", high = "white") + 
+  ggtitle("Elevation Map") + theme_map()  + 
+  theme(legend.position = c(.95, .05), legend.justification = c(1, 0))
+
+```
+
+::: notes
+In fact, if we plot the partial effects and then also plot the elevation, we can see that this is largely just another way to say higher elevations seem to perform better. Sometimes, there are multiple effects that are correlated and included in the model through separate variables. 
+:::
+
 
 ## Make Decisions
 
@@ -333,4 +394,43 @@ ggplot(aes(x = n_rate, y = yield, color = muname)) +
 ```
 
 ::: notes
+So, with all of this, what are we to do? Let's go back to the fact that we've modeled yield as a function of soil type, location, elevation, slope, and nitrogen rate (which we manipulated with an experiment).
+
+Let's return to the raw data for a moment. We can fit simple models to just each type of soil (ignoring spatial effects, elevation, etc. for the moment) and see if we can see a difference in the yield. 
+Our statistical model is of course much more precise and we probably can trust it, but it always  makes me feel better to see the effect in the raw data as well. 
+
+Here, I've drawn simple models for the 3 soil types that have enough data points to be able to confidently do so. In Databrook silt loam, we see that there is a slight effect and yield tops out at around a nitrogen rate of 200. In El Paso silty clay loam, we see that the rate is largely not important until we get past 225 or so, at which point yield seems to increase a bit. And in Octagon silt loam, there is a steady increase in yield over the tested nitrogen rates. 
+
+If I were deciding what to do next year, I'd probably look at optimizing nitrogen around 225 or so. Of course, this isn't taking into account the tradeoff between cost of inputs and profit -- so you'd need to talk to David about that tradeoff, and the software should be helping with that tradeoff. But as a statistician, I feel more confident in the model's predictions given that I've seen the same basic thing in the raw data... I just had to pull it out and visualize it.
 :::
+
+## Make Decisions
+
+```{r}
+draw(model2, select = c("s(n_rate)"))
+```
+
+::: notes
+
+Here's the smooth our model fit to the data, showing the partial effect for nitrogen rate on yield. It, too, tops out at about 225, indicating that if nitrogen were free, we could optimize yield that way (since none of the other modeled factors are things within our control). 
+
+:::
+
+
+## Why Data Visualization? {background-image="field.jpg"}
+
+-   Data is easier to understand visually
+
+-   Build trust in models and results
+
+-   Identify patterns, trends, outliers
+
+::: notes
+To recap - data visualization is an important tool for assessing models and data. Our goal is to show you plots that allow you to become familiar with the models we've built, identifying patterns, but also understanding where the model might be weak (e.g. where there aren't enough data points) and why some results might be less useful because of differences between as-applied and planned application rates.
+
+If you're interested in learning more, or want to help us test the visualization part of the interactive platform, please let David know, and we'll be in touch when we have a prototype available. 
+:::
+
+
+
+# Questions? {background-image="field.jpg"}
