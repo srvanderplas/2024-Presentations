@@ -4,8 +4,7 @@ author: "Tyler Wiederich, Erin Blankenship & Susan Vanderplas"
 date: 2024-07-01
 from: markdown+emoji
 bibliography: refs.bib
-location: Washington, DC
-keywords: ['graphics', 'perception']
+keywords: ['teaching', 'graphics', 'user-study']
 abstract: |
   Almost 40 years ago, Cleveland & McGill published the first of 3 papers detailing 
   experiments assessing the accuracy of numerical perception using different types of charts. 
@@ -23,5 +22,4 @@ abstract: |
   as well as the benefits of incorporating hands-on research in introductory classes as experiential learning activities.
 location: Human Computer Interaction International, Washington DC
 talk-type: invited
-keywords: ['teaching', 'graphics', 'user-study']
 image: cover.png

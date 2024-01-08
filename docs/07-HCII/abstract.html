@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Tyler Wiederich, Erin Blankenship &amp; Susan Vanderplas">
+<meta name="dcterms.date" content="2024-07-01">
+<meta name="keywords" content="teaching, graphics, user-study">
 
-<title>2024-Presentations - Presentations in 2024</title>
+<title>2024-Presentations - Escaping Flatland</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +23,44 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -61,38 +81,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-image','listing-title','listing-author','listing-location','listing-keywords',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -104,7 +93,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">2024-Presentations</span>
     </a>
   </div>
@@ -115,7 +104,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="../index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
 </ul>
@@ -126,127 +115,82 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#references" id="toc-references" class="nav-link active" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Presentations in 2024</h1>
+<h1 class="title">Escaping Flatland</h1>
+<p class="subtitle lead">Graphics, Dimensionality, and Human Perception</p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tyler Wiederich, Erin Blankenship &amp; Susan Vanderplas </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 1, 2024</p>
+    </div>
+  </div>
   
     
   </div>
   
+<div>
+  <div class="abstract">
+    <div class="abstract-title">Abstract</div>
+    <p>Almost 40 years ago, Cleveland &amp; McGill published the first of 3 papers detailing experiments assessing the accuracy of numerical perception using different types of charts. This study is often cited as a reason to avoid the use of extraneous dimensions in data visualization: 2D bar charts produced more accurate estimates than 3D bar charts; in addition, lines (length) produced more accurate estimates than circles (area). Graphics have changed fairly significantly in the last 40 years: where we once had fixed 3D perspective charts, we now can rotate 3D renderings in digital space and even 3D print our charts to examine physically. Many optical illusions result from perceptual mismatches of 3D visual heuristics and 2D, planar, data representations <span class="citation" data-cites="vanderplasSignsSineIllusion2015 daySineIllusion1991 carswell1991graphing fischer2000irrelevant zacksReadingBarGraphs1998a">(<a href="#ref-vanderplasSignsSineIllusion2015" role="doc-biblioref">VanderPlas and Hofmann 2015</a>; <a href="#ref-daySineIllusion1991" role="doc-biblioref">Day and Stecher 1991</a>; <a href="#ref-carswell1991graphing" role="doc-biblioref">Carswell, Frankenberger, and Bernhard 1991</a>; <a href="#ref-fischer2000irrelevant" role="doc-biblioref">Fischer 2000</a>; <a href="#ref-zacksReadingBarGraphs1998a" role="doc-biblioref">Zacks et al. 1998</a>)</span>; more realistic renderings available with modern tools might change the outcome of the Cleveland &amp; McGill comparison of 2D vs.&nbsp;3D accuracy. In this paper, we present several experiments which replicate the bar chart portion of Cleveland &amp; McGill’s original study, comparing 2D, 3D fixed perspective, 3D rendered, and 3D printed charts. We discuss the findings and the importance of replicating classic experiments using modern technology, as well as the benefits of incorporating hands-on research in introductory classes as experiential learning activities.</p>
+  </div>
+</div>
 
 </header>
 
+<iframe class="slide-deck" src="./" width="100%" height="600px"></iframe>
+<section id="references" class="level2">
 
 
 
 
-<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-listing-date-sort="1704780000000" data-listing-file-modified-sort="1704736444149" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
-<a href="./01-ICOFPE/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./01-ICOFPE/field.jpg" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Cultivating Insights
-</h5>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Susan Vanderplas
-</div>
-<div class="listing-date">
-Jan 9, 2024
-</div>
-</div>
+</section>
 
-<table class="card-other-values">
-<tbody><tr>
-<td>
-Location
-</td>
-<td class="location">
-International Conference for On-Farm Precision Experimentation, Corpus Christi, TX
-</td>
-</tr>
-<tr>
-<td>
-Topics
-</td>
-<td class="keywords">
-graphics,agriculture
-</td>
-</tr>
-
-</tbody></table>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-carswell1991graphing" class="csl-entry" role="listitem">
+Carswell, C., Sylvia Frankenberger, and Donald Bernhard. 1991. <span>“Graphing in Depth: <span>Perspectives</span> on the Use of Three-Dimensional Graphs to Represent Lower-Dimensional Data.”</span> <em>Behaviour &amp; Information Technology</em> 10: 459–74. <a href="https://doi.org/10.1080/01449299108924304">https://doi.org/10.1080/01449299108924304</a>.
 </div>
+<div id="ref-daySineIllusion1991" class="csl-entry" role="listitem">
+Day, Ross H, and Erica J Stecher. 1991. <span>“Sine of an Illusion.”</span> <em>Perception</em> 20 (1): 49–55. <a href="https://doi.org/10.1068/p200049">https://doi.org/10.1068/p200049</a>.
 </div>
-</a>
+<div id="ref-fischer2000irrelevant" class="csl-entry" role="listitem">
+Fischer, M. H. 2000. <span>“Do Irrelevant Depth Cues Affect the Comprehension of Bar Graphs.”</span> <em>Applied Cognitive Psychology</em> 14: 151–62. <a href="https://doi.org/10.1002/(SICI)1099-0720(200003/04)14:2<151::AID-ACP629>3.0.CO;2-Z">https://doi.org/10.1002/(SICI)1099-0720(200003/04)14:2&lt;151::AID-ACP629&gt;3.0.CO;2-Z</a>.
 </div>
-<div class="g-col-1" data-index="1" data-listing-date-sort="1719810000000" data-listing-file-modified-sort="1702427012392" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
-<a href="./07-HCII/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./07-HCII/cover.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Escaping Flatland
-</h5>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Tyler Wiederich, Erin Blankenship &amp; Susan Vanderplas
+<div id="ref-vanderplasSignsSineIllusion2015" class="csl-entry" role="listitem">
+VanderPlas, Susan, and Heike Hofmann. 2015. <span>“Signs of the <span>Sine Illusion</span><span></span><span>Why We Need</span> to <span>Care</span>.”</span> <em>Journal of Computational and Graphical Statistics</em> 24 (4): 1170–90. <a href="https://doi.org/10.1080/10618600.2014.951547">https://doi.org/10.1080/10618600.2014.951547</a>.
 </div>
-<div class="listing-date">
-Jul 1, 2024
+<div id="ref-zacksReadingBarGraphs1998a" class="csl-entry" role="listitem">
+Zacks, Jeff, Ellen Levy, Barbara Tversky, and Diane J. Schiano. 1998. <span>“Reading Bar Graphs: <span>Effects</span> of Extraneous Depth Cues and Graphical Context.”</span> <em>Journal of Experimental Psychology: Applied</em> 4 (2): 119–38. <a href="https://doi.org/10.1037/1076-898X.4.2.119">https://doi.org/10.1037/1076-898X.4.2.119</a>.
 </div>
-</div>
-
-<table class="card-other-values">
-<tbody><tr>
-<td>
-Location
-</td>
-<td class="location">
-Human Computer Interaction International, Washington DC
-</td>
-</tr>
-<tr>
-<td>
-Topics
-</td>
-<td class="keywords">
-teaching,graphics,user-study
-</td>
-</tr>
-
-</tbody></table>
-</div>
-</div>
-</a>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
