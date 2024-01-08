@@ -1,5 +1,7 @@
 project:
   type: website
+  # post-render: 
+  #   - code/webshot_img.R
 
 website:
   title: "2024-Presentations"
