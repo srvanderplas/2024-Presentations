@@ -1,0 +1,17 @@
+---
+title: "Presentations in 2024"
+format: 
+  html: 
+    page-layout: full
+listing: 
+  contents: 
+    - "*/index.qmd"
+  sort: "date"
+  exclude:
+    location: "TBD"
+  type: grid
+  fields: [date, image, title, author, location, keywords]
+  field-display-names:
+    location: "Location"
+    keywords: "Topics"
+---

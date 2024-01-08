@@ -1,0 +1,10 @@
+title: "Cultivating Insights"
+subtitle: "Harnessing the Power of Data Visualization in Agriculture"
+author: "Susan Vanderplas"
+date: 2024-01-09
+location: International Conference for On-Farm Precision Experimentation, Corpus Christi, TX
+keywords: ['graphics', 'agriculture']
+image: field.jpg
+from: markdown+emoji
+abstract: |
+  Data visualization is an important tool for examining the results of on-farm experiments before, during, and after formal modeling. This talk shows the different types of charts which can be used to gain insight into on-farm results as well as how the charts should be read.

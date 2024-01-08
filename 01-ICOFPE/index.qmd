@@ -1,0 +1,329 @@
+---
+format: 
+  revealjs:
+    navigation-mode: vertical
+    logo: ../libs/unl/N.svg
+    theme: ../libs/unl/inverse.scss
+    includes:
+      in_header: ../libs/unl/header.html
+    lib_dir: libs
+    embed-resources: false
+    title-slide-attributes: 
+      data-background-image: field.jpg
+      data-background-size: contain
+      data-background-opacity: "0.5"
+---
+```{r setup, include = F}
+library(dplyr)
+library(ggplot2)
+library(ggthemes)
+
+library(sf)
+
+library(mgcv)
+library(gratia)
+library(itsadug)
+
+library(gt)
+library(gtsummary)
+```
+
+# Why Data Visualization? {background-image="field.jpg"}
+
+## Why Data Visualization?
+
+- Data is easier to understand visually
+
+- Build trust in models and results
+
+- Identify patterns, trends, outliers
+
+::: notes
+I'm here to talk to you today about data visualization, and I think the first question we should answer is why.
+
+I'm a statistician who studies data visualization, which means graphs are my favorite tool to use to understand data.
+
+From my perspective, data is easier to understand visually, and if I can see why the model is suggesting I do X, Y, or Z, then I'm more likely to trust it than if I don't see any pictures or how the data supports that conclusion.
+
+Statistically, we use charts to identify patterns, trends, and outliers. What I'm going to talk through today is how we take that basic theme and apply it to on-farm data. 
+
+I'm not an agronomist or an economist, and I can barely keep houseplants alive, so you'll have to bear with me.
+I'm using some example data and I've fit some very basic models that are probably not correct, but are useful for demonstrating how to use different types of charts. 
+
+In statistics, we have a saying that "all models are wrong, but some are useful", and that's what I'm focusing on today.
+
+So I hope you'll overlook any major mistakes I've made in modeling and instead focus on the pictures, because that's what I actually know and am here to talk about.
+
+I'm going to talk about the use of data visualizations through the cycle of a single year's on-farm experiment. We'll start with exploratory data analysis - looking at data collected throughout the growing season, and then talk about the use of graphics to understand how certain variables affect yield (or other variables of interest). Finally, we'll talk about using graphics to make decisions about the next year.
+
+:::
+
+# Exploratory Data Analysis {background-image="field.jpg"}
+
+## Exploratory Data Analysis
+
+- Identify issues with data quality/import ("gut check")
+
+- Look at raw data
+
+- Develop initial hypotheses and questions
+
+::: notes
+Exploratory data analysis is data analysis that takes place before you fit models. 
+
+It's mostly done with data visualization, but can also include summary statistics and assessment of outliers (but those can be done with data visualization as well, so that's how I'm going to do it).
+:::
+
+## Exploratory Data Analysis
+
+```{r cz21-processing, include = F}
+cz21 <- readRDS("data/cz21/Analysis-Ready/analysis_data.rds")
+
+cz21_centroids <- sf::st_centroid(cz21$geometry) |>
+           st_cast("POINT") |>
+           as("Spatial") |>
+  as("data.frame") 
+names(cz21_centroids) <- c("x_coord", "y_coord")
+cz21 <- cz21 %>% bind_cols(cz21_centroids)
+
+# Fit a basic gam model
+model <- gam(yield ~ s(s_rate) + s(elev) + s(slope) + s(clay) + s(silt) + te(x_coord,y_coord), data = cz21, select = T)
+```
+
+During Design:
+
+```{r}
+
+ggplot(cz21, aes(fill = factor(trt_s))) + 
+  geom_sf() + 
+  theme_map() + 
+  theme(legend.position = "right") + 
+  scale_fill_manual("Seed Rate", values = c("#F5DFE6", "#EABFCD", "#DF9FB4", "#D4809C", "#C86183", "#BC436B")) + 
+  ggtitle("Design Preview Plot")
+```
+
+
+::: notes
+We start during the design process - before you implement an experiment it's good to check that the experiment is actually set up in a way that meets your expectations. If it doesn't, you can always ask your crop consultant or research contact to explain why something is the way it is - you might find an error, and you might learn something new.
+
+In addition, you know your fields better than we do - our goal is to write software that does these things automatically, but there are always exceptions and special cases that the software doesn't cover. Here, I'd be interested to know why one half of the field is much more densly managed than the other, but that might be something obvious to you. Otherwise, it might be good to look for e.g. changes in the seed rate that are too sharp (as I undrestand equipment can sometimes have trouble handling that) or areas that may be tricky and need a bit more focus when actually executing the experimental design during planting.
+:::
+
+## Exploratory Data Analysis
+
+After Application: 
+
+```{r}
+ggplot(cz21, aes(fill = s_rate - trt_s)) + 
+  geom_sf() + 
+  theme_map() + 
+  theme(legend.position = "right") + 
+  scale_fill_gradient2("Deviation from\nExperiment Plan", low = "#0059de", mid = "#ffffff", high = "#ff9603", midpoint = 0, limits = c(-20, 20)) + 
+  ggtitle("As-Applied Plot")
+```
+
+::: notes
+Once the seed is planted, it's useful to go and look at the difference between the planned experiment and the as-applied experiment. Deviations from the plan reduce the ability to determine how yield is affected by seed rate, and so it's in everyone's interest to minimize these issues. 
+:::
+
+## Exploratory Data Analysis
+
+After Application: 
+
+```{r}
+ggplot(cz21, aes(x = trt_s, y = s_rate - trt_s)) + 
+  geom_bin2d(aes(fill = after_stat(count))) + 
+  scale_fill_continuous("# plots", trans = "log10") + 
+  geom_text(aes(label = after_stat(count)), stat = "bin2d", nudge_x = 3) + 
+  ggtitle("As-Applied Plot") + 
+  ylab("Deviation from Planned Experiment") + 
+  xlab("Planned Seed Rate") 
+```
+
+::: notes
+It's nice to have the spatial view, but it can be more helpful from a design perspective to understand how the planned rate compares to the deviation. Here, I've created a binned plot -- this is like a scatterplot, but the rectangle is colored in based on how many points would be in that bin, so that we can see the different counts more effectively. I've added the actual counts to the side of each bin as well, to help you see what I'm seeing.
+
+What concerns me as a statistician isn't the deviations that are within about 10 each way, it's the ~64 sub plots that have high seed rates and have a -20 deviation. That could reduce our ability to see an effect in the higher seed rates, because we don't have as many data points in that area. 
+
+What we see here is that most seed rates are relatively accurate (right at 0) but that at lower planned seed rates we tend to over-seed and at higher planned seed rates, we tend to under-seed. This suggests an equipment issue. In addition, notice that there are 
+:::
+
+
+## Exploratory Data Analysis
+
+After Harvest: 
+
+```{r}
+ggplot(cz21, aes(fill = yield)) + 
+  geom_sf() + 
+  theme_map() + 
+  theme(legend.position = "right") + 
+  scale_fill_gradient(high = "#196d28", low = "#ccebca", limits = c(0, 70)) + 
+  ggtitle("Yield")
+```
+
+::: notes
+
+:::
+
+# Understand Results {background-image="field.jpg"}
+
+## Understand Results
+
+- Visuals help us understand what a model is doing
+
+- Useful for identifying areas where models may be less accurate
+
+- Look at raw data vs. model results
+
+
+::: notes
+
+:::
+
+## Understand Results {.r-fit-text .small}
+```{r, results = 'asis'}
+res <- summary(model)
+gt_group(
+res$p.table %>% as.data.frame() %>% mutate(effect = row.names(.)) %>% select(effect, Estimate, `Std. Error`, `t value`, `Pr(>|t|)`) %>% gt() %>%
+  fmt_number(decimals = 4) %>%
+  tab_header("Parametric Coefficients"),
+
+res$s.table %>% as.data.frame() %>% mutate(effect = row.names(.)) %>% select(effect, edf, Ref.df, F, `p-value`) %>% gt() %>%
+  fmt_number(decimals = 4) %>%
+  tab_header("Approximate Significance of Smooth Terms") %>%
+  data_color(columns = `p-value`, target_columns = 2:5, method = "bin", bins = c(0, 0.001, 0.01, 0.05, 1), palette = c("#a64b4b", "#d4908b", "#ffd6d2", "white", "white"))
+  
+)
+
+# itsadug::gamtabs(summary(model), type = "html")
+```
+
+::: notes
+
+:::
+
+## Understand Model Results
+
+```{r}
+# appraise(model)
+
+draw(model, select = c("s(s_rate)", "s(elev)", "s(slope)", "s(clay)", "s(silt)"), ncol = 3)
+```
+
+
+::: notes
+
+:::
+
+## Understand Model Results
+
+```{r}
+draw(model, select = c("te(x_coord,y_coord)")) + 
+  ggtitle("Spatial Effects") + theme_map() + 
+  theme(legend.position = "right")
+```
+
+
+::: notes
+
+:::
+
+# Make Decisions {background-image="field.jpg"}
+
+## Make Decisions
+```{r gd21-processing}
+gd21 <- readRDS("data/GD21/Analysis-Ready/analysis_data.rds")
+gd21_centroids <- sf::st_centroid(gd21$geometry) |>
+           st_cast("POINT") |>
+           as("Spatial") |>
+  as("data.frame") 
+names(gd21_centroids) <- c("x_coord", "y_coord")
+gd21 <- gd21 %>% bind_cols(gd21_centroids)
+
+```
+
+```{r}
+ggplot(gd21, aes(fill = factor(trt_n))) + 
+  geom_sf() + 
+  theme_map() + 
+  theme(legend.position = c(1, 0)) + 
+  scale_fill_manual("N Rate", values = c("#efdbff", "#cdade9", "#ab81d3", "#8756bc", "#6129a6")) + 
+  ggtitle("Design Preview Plot")
+```
+
+
+::: notes
+
+:::
+
+## Make Decisions
+```{r}
+model2 <- gam(yield ~ muname + s(n_rate) + s(elev) + s(slope) + s(elev, slope) + te(x_coord,y_coord), data = gd21, select = T)
+
+# summary(model2)
+res2 <- summary(model2)
+gt_group(
+res2$p.table %>% 
+  as.data.frame() %>% 
+  mutate(effect = row.names(.)) %>% 
+  select(effect, Estimate, `Std. Error`, `t value`, `Pr(>|t|)`) %>% 
+  gt() %>%
+  fmt_number(decimals = 4) %>%
+  tab_header("Parametric Coefficients"),
+
+res2$s.table %>% 
+  as.data.frame() %>% 
+  mutate(effect = row.names(.)) %>% 
+  select(effect, edf, Ref.df, F, `p-value`) %>% 
+  gt() %>%
+  fmt_number(decimals = 4) %>%
+  tab_header("Approximate Significance of Smooth Terms") %>%
+  data_color(columns = `p-value`, target_columns = 2:5, method = "bin", bins = c(0, 0.001, 0.01, 0.05, 1), palette = c("#a64b4b", "#d4908b", "#ffd6d2", "white", "white"))
+)
+```
+
+::: notes
+
+:::
+
+## Make Decisions
+```{r}
+draw(model2, select = c("s(n_rate)", "s(elev)", "s(slope)"), ncol = 3)
+```
+
+::: notes
+
+:::
+
+
+## Make Decisions
+```{r}
+draw(model2, select = c("te(x_coord,y_coord)")) + 
+  ggtitle("Spatial Effects") + theme_map() + 
+  theme(legend.position = "right")
+```
+
+::: notes
+
+:::
+
+## Make Decisions
+
+```{r}
+tmp <- gd21 %>%
+  mutate(slopeC = cut(slope, c(0:3, 6)),
+         elevC = cut(elev, breaks =c(245, 247, 249, 251, 254)))
+
+tmp %>%
+ggplot(aes(x = n_rate, y = yield, color = muname)) + 
+  geom_point() + 
+  geom_smooth(aes(x = n_rate, y = yield), ~filter(., muname %in% c("Danabrook silt loam", "Elpaso silty clay loam", "Octagon silt loam"))) + 
+  guides(color = "none") + facet_wrap(~muname) + 
+  xlab("Nitrogen Rate") + ylab("Yield") + 
+  ggtitle("Yield Response by Soil Type")
+```
+
+::: notes
+
+:::

@@ -1,0 +1,23 @@
+<Columns>
+  <Column Key="GrowerKey" Name="GrowerKey" DataType="0" Width="36" Decimals="0" DataUse="0" DataScope="1" UOM="0" UOMText="none" />
+  <Column Key="GrowerName" Name="GrowerName" DataType="8" Width="32" Decimals="0" DataUse="4" DataScope="1" UOM="0" UOMText="none" />
+  <Column Key="GrowerCode" Name="GrowerCode" DataType="8" Width="32" Decimals="0" DataUse="4" DataScope="1" UOM="0" UOMText="none" />
+  <Column Key="FarmKey" Name="FarmKey" DataType="0" Width="36" Decimals="0" DataUse="0" DataScope="1" UOM="0" UOMText="none" />
+  <Column Key="FarmName" Name="FarmName" DataType="8" Width="32" Decimals="0" DataUse="4" DataScope="1" UOM="0" UOMText="none" />
+  <Column Key="FarmCode" Name="FarmCode" DataType="8" Width="32" Decimals="0" DataUse="4" DataScope="1" UOM="0" UOMText="none" />
+  <Column Key="FieldKey" Name="FieldKey" DataType="0" Width="36" Decimals="0" DataUse="0" DataScope="1" UOM="0" UOMText="none" />
+  <Column Key="FieldName" Name="FieldName" DataType="8" Width="32" Decimals="0" DataUse="4" DataScope="1" UOM="0" UOMText="none" />
+  <Column Key="FieldCode" Name="FieldCode" DataType="8" Width="32" Decimals="0" DataUse="4" DataScope="1" UOM="0" UOMText="none" />
+  <Column Key="RptFldArea" Name="RptFldArea" DataType="5" Width="10" Decimals="2" DataUse="2" DataScope="1" UOM="acre" UOMText="acres" />
+  <Column Key="GISFldArea" Name="GISFldArea" DataType="5" Width="10" Decimals="2" DataUse="2" DataScope="1" UOM="acre" UOMText="acres" />
+  <Column Key="IsoCSC" Name="IsoCSC" DataType="8" Width="10" Decimals="0" DataUse="0" DataScope="1" UOM="0" UOMText="none" />
+  <Column Key="Meridian" Name="Meridian" DataType="8" Width="32" Decimals="0" DataUse="0" DataScope="1" UOM="0" UOMText="none" />
+  <Column Key="Township" Name="Township" DataType="8" Width="10" Decimals="0" DataUse="0" DataScope="1" UOM="0" UOMText="none" />
+  <Column Key="Section" Name="Section" DataType="8" Width="10" Decimals="0" DataUse="0" DataScope="1" UOM="0" UOMText="none" />
+  <Column Key="Range" Name="Range" DataType="8" Width="10" Decimals="0" DataUse="0" DataScope="1" UOM="0" UOMText="none" />
+  <Column Key="FSAFarm" Name="FSAFarm" DataType="8" Width="32" Decimals="0" DataUse="4" DataScope="1" UOM="0" UOMText="none" />
+  <Column Key="FSATract" Name="FSATract" DataType="8" Width="32" Decimals="0" DataUse="4" DataScope="1" UOM="0" UOMText="none" />
+  <Column Key="FSAField" Name="FSAField" DataType="8" Width="32" Decimals="0" DataUse="4" DataScope="1" UOM="0" UOMText="none" />
+  <Column Key="FSAAcres" Name="FSAAcres" DataType="5" Width="10" Decimals="2" DataUse="2" DataScope="1" UOM="acre" UOMText="acres" />
+  <Column Key="Directions" Name="Directions" DataType="8" Width="254" Decimals="0" DataUse="0" DataScope="1" UOM="0" UOMText="none" />
+</Columns>
