@@ -39,7 +39,7 @@ library(gtsummary)
 
 -   Identify patterns, trends, outliers
 
-::: notes
+::: {.notes}
 I'm here to talk to you today about data visualization, and I think the first question we should answer is why.
 
 I'm a statistician who studies data visualization, which means graphs are my favorite tool to use to understand data.
@@ -67,7 +67,7 @@ I'm going to talk about the use of data visualizations through the cycle of a si
 
 -   Develop initial hypotheses and questions
 
-::: notes
+::: {.notes}
 Exploratory data analysis is data analysis that takes place before you fit models.
 
 It's mostly done with data visualization, but can also include summary statistics and assessment of outliers (but those can be done with data visualization as well, so that's how I'm going to do it).
@@ -101,7 +101,7 @@ ggplot(cz21, aes(fill = factor(trt_s))) +
   ggtitle("Design Preview Plot")
 ```
 
-::: notes
+::: {.notes}
 We start during the design process - before you implement an experiment it's good to check that the experiment is actually set up in a way that meets your expectations. If it doesn't, you can always ask your crop consultant or research contact to explain why something is the way it is - you might find an error, and you might learn something new.
 
 In addition, you know your fields better than we do - our goal is to write software that does these things automatically, but there are always exceptions and special cases that the software doesn't cover. Here, I'd be interested to know why one half of the field is much more densly managed than the other, but that might be something obvious to you. Otherwise, it might be good to look for e.g. changes in the seed rate that are too sharp (as I undrestand equipment can sometimes have trouble handling that) or areas that may be tricky and need a bit more focus when actually executing the experimental design during planting.
@@ -120,7 +120,7 @@ ggplot(cz21, aes(fill = s_rate - trt_s)) +
   ggtitle("As-Applied Plot")
 ```
 
-::: notes
+::: {.notes}
 Once the seed is planted, it's useful to go and look at the difference between the planned experiment and the as-applied experiment. Deviations from the plan reduce the ability to determine how yield is affected by seed rate, and so it's in everyone's interest to minimize these issues.
 :::
 
@@ -138,7 +138,7 @@ ggplot(cz21, aes(x = trt_s, y = s_rate - trt_s)) +
   xlab("Planned Seed Rate") 
 ```
 
-::: notes
+::: {.notes}
 It's nice to have the spatial view, but it can be more helpful from a design perspective to understand how the planned rate compares to the deviation. Here, I've created a binned plot -- this is like a scatterplot, but the rectangle is colored in based on how many points would be in that bin, so that we can see the different counts more effectively. I've added the actual counts to the side of each bin as well, to help you see what I'm seeing.
 
 What concerns me as a statistician isn't the deviations that are within about 10 each way, it's the \~64 sub plots that have high seed rates and have a -20 deviation. That could reduce our ability to see an effect in the higher seed rates, because we don't have as many data points in that area.
@@ -159,7 +159,7 @@ ggplot(cz21, aes(fill = yield)) +
   ggtitle("Yield")
 ```
 
-::: notes
+::: {.notes}
 After harvest, we start by just looking at yield rates over time. I'm sure you've seen similar plots before, but they probably have multiple colors corresponding to different levels. Perceptually, it's better to use a single-hue scale for each variable, and green is the color humans can see the most shades of, so I wanted to use it for something important.
 
 We could flip back and forth between this and the design plot, or try to overlay them, but that gets pretty confusing to look at and isn't all that effective perceptually, either.
@@ -177,7 +177,7 @@ What we'll do instead is move on to the model portion of our discussion - we'll 
 
 -   Look at raw data vs. model results
 
-::: notes
+::: {.notes}
 When we're using graphics to understand results, we need to keep in mind that our goals have changed - instead of looking at raw data, we may be looking at residuals (differences between the model's predictions and reality) or partial effects (what a specific variable is predicted to be contributing to the outcome (which is usually yield).
 
 We want to be looking for areas where the model doesn't seem to be fitting properly or areas that don't make total sense - think of this as playing "devil's advocate" and questioning the model's conclusions to make a stronger model.
@@ -202,7 +202,7 @@ res$s.table %>% as.data.frame() %>% mutate(effect = row.names(.)) %>% select(eff
 # itsadug::gamtabs(summary(model), type = "html")
 ```
 
-::: notes
+::: {.notes}
 First off, I'd like to point out the idfference between what the model print-out shows and what the graphics show. If you're like me, tables like this don't make a terrible amount of sense. I can translate them for you - essentially, in this model, we have smooth curves that model seed rate, elevation, slope, clay and silt percentage, and spatial correlation. The numbers in this table aren't that useful, because we're using smoothers - they mostly tell you just whether or not the variable is statistically significant - whether it seems to account for more variability than what would be expected by random chance.
 
 In this case, seed rate doesn't seem to be significant, though all of the variables I included that you have no control over seem to be significant. So that isn't great - it means that at least according to the parameters of this experiment, seed rate doesn't matter as much as other factors outside of your control. But mostly, a table of numbers doesn't give you much to interrogate.
@@ -216,7 +216,7 @@ In this case, seed rate doesn't seem to be significant, though all of the variab
 draw(model, select = c("s(s_rate)", "s(elev)", "s(slope)", "s(clay)", "s(silt)"), ncol = 3)
 ```
 
-::: notes
+::: {.notes}
 Instead, with this type of model, it's often better to look at so-called 'partial effect plots' - basically, plots of the effect of a single variable, with all other variables removed.
 
 In each of these plots, you can see the number of observations at each point below the plot, in what's called a "rug chart" - a little tic for each observation. The black line shows the smoothed effect, and the grey area around it shows the variability in that effect - with more points, there's lower variability. Note that the scales on the y axis are different as well - you can't compare the variability around one line to that around the next.
@@ -237,7 +237,7 @@ draw(model, select = c("te(x_coord,y_coord)")) +
   theme(legend.position = "right")
 ```
 
-::: notes
+::: {.notes}
 Here, we see the observations in the field as dots underneath the partial effect plot that is a purple to orange gradient, where purple means high and orange means low. This gradient type is safe for all types of colorblindness, which is why I use it instead of a more common rainbow-type scheme or even a red-yellow-green traffic light scheme.
 
 What we see here is a set of contours outlining a line of approximately equal performance, that produce something like a height map showing areas with higher yield and lower yield as predicted by spatial location (e.g. x and y coordinate of the center of the region). 
@@ -271,7 +271,7 @@ ggplot(gd21, aes(fill = factor(trt_n))) +
   ggtitle("Design Preview Plot")
 ```
 
-::: notes
+::: {.notes}
 For this part of the talk, I'm switching example fields to one with an experiment designed to manipulate the nitrogen rate. As the main intervention in the last field wasn't actually significant, it wasn't all that useful to talk about how to use the model results to make decisions.
 
 Of course, Taro, David, Brittani, and John have all talked this morning about how they're creating reports and models to help you make decisions. In this part of the talk, I'm simply going to highlight how graphics can help you make sense of both the automatic prescriptions their systems spit out, and how you can look at the charts to understand the why of those predictions.
@@ -307,7 +307,7 @@ res2$s.table %>%
 )
 ```
 
-::: notes
+::: {.notes}
 So just as a starter, in this model for this field, I'm modeling each type of soil as a separate intercept - that is, each soil type is expected to have a different base yield rate, but to respond the same based on nitrogen rate, elevation, slope, etc. (this is obviously ridiculous, I would assume, but again, all models are wrong, some are useful, so let's work with this simplification because it keeps the table at a manageable size for this presentation. It's already pretty big.)
 :::
 
@@ -317,7 +317,7 @@ So just as a starter, in this model for this field, I'm modeling each type of so
 draw(model2, select = c("s(n_rate)", "s(elev)", "s(slope)"), ncol = 3)
 ```
 
-::: notes
+::: {.notes}
 So our first task after checking the model summary is to look at the profiles of each partial effect. Here, we see that n_rate has a serious effect (up to a point) in that yield increases from 100 to 200, and then levels off and/or starts to decrease. That's (from what I know) expected - after the plant is no longer deficient in nitrogen, there isn't much benefit to adding more. We also see that the elevation effect here is pretty huge - higher yield at lower elevation, lower yield at higher elevation. We also see that the slope has a pretty significant effect as well. 
 
 This isn't the whole story, though, because I included an interaction effect between elevation and slope. 
@@ -330,7 +330,7 @@ draw(model2, select = c("s(elev,slope)")) +
   scale_fill_gradient2(limits = c(-40, 40), low = "orange", high = "blue", mid = "white") + 
   theme(legend.position = "right")
 ```
-::: notes
+::: {.notes}
 Here, we can look at the interaction (ignoring the single-variable effects we included and looked at before). There are two things to note here: the effect size is smaller (about 20-30, instead of limits of -50 to 50 or -200 to 200 in the single-variable plots). The second thing to note is that the plot looks pretty lumpy, and that's largely because the points are concentrated in a few different clusters. That is, while there may be differences here, they could well be driven by the fact that slope and elevation might change at the same time as e.g. soil type or other variables that are important. 
 
 The takeaway here is to be a bit suspicious and to look for other causes. I'm not digging further into this because of time, but it is absolutely ok to question why a variable might be significant and think about other causes for that effect.
@@ -345,7 +345,7 @@ draw(model2, select = c("te(x_coord,y_coord)")) +
   theme(legend.position = "right")
 ```
 
-::: notes
+::: {.notes}
 Speaking of other causes, let's look at the spatial effects. Here, it seems very much like the model predicts much lower yield at the edge of the plot than it does in the top/center region. This could well be due to contouring or other effects. 
 :::
 
@@ -372,7 +372,7 @@ ggplot(gd21, aes(x = x_coord, y = y_coord, fill = elev)) +
 
 ```
 
-::: notes
+::: {.notes}
 In fact, if we plot the partial effects and then also plot the elevation, we can see that this is largely just another way to say higher elevations seem to perform better. Sometimes, there are multiple effects that are correlated and included in the model through separate variables. 
 :::
 
@@ -393,7 +393,7 @@ ggplot(aes(x = n_rate, y = yield, color = muname)) +
   ggtitle("Yield Response by Soil Type")
 ```
 
-::: notes
+::: {.notes}
 So, with all of this, what are we to do? Let's go back to the fact that we've modeled yield as a function of soil type, location, elevation, slope, and nitrogen rate (which we manipulated with an experiment).
 
 Let's return to the raw data for a moment. We can fit simple models to just each type of soil (ignoring spatial effects, elevation, etc. for the moment) and see if we can see a difference in the yield. 
@@ -410,7 +410,7 @@ If I were deciding what to do next year, I'd probably look at optimizing nitroge
 draw(model2, select = c("s(n_rate)"))
 ```
 
-::: notes
+::: {.notes}
 
 Here's the smooth our model fit to the data, showing the partial effect for nitrogen rate on yield. It, too, tops out at about 225, indicating that if nitrogen were free, we could optimize yield that way (since none of the other modeled factors are things within our control). 
 
@@ -425,7 +425,7 @@ Here's the smooth our model fit to the data, showing the partial effect for nitr
 
 -   Identify patterns, trends, outliers
 
-::: notes
+::: {.notes}
 To recap - data visualization is an important tool for assessing models and data. Our goal is to show you plots that allow you to become familiar with the models we've built, identifying patterns, but also understanding where the model might be weak (e.g. where there aren't enough data points) and why some results might be less useful because of differences between as-applied and planned application rates.
 
 If you're interested in learning more, or want to help us test the visualization part of the interactive platform, please let David know, and we'll be in touch when we have a prototype available. 
