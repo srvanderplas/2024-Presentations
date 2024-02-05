@@ -133,11 +133,165 @@
     "text": "Why Data Visualization?\n\nData is easier to understand visually\nBuild trust in models and results\nIdentify patterns, trends, outliers\n\n\nTo recap - data visualization is an important tool for assessing models and data. Our goal is to show you plots that allow you to become familiar with the models we’ve built, identifying patterns, but also understanding where the model might be weak (e.g. where there aren’t enough data points) and why some results might be less useful because of differences between as-applied and planned application rates.\nIf you’re interested in learning more, or want to help us test the visualization part of the interactive platform, please let David know, and we’ll be in touch when we have a prototype available."
   },
   {
+    "objectID": "02-graphics-git-submodules/index.html#motivation",
+    "href": "02-graphics-git-submodules/index.html#motivation",
+    "title": "Using Git Submodules",
+    "section": "Motivation",
+    "text": "Motivation\n\nData (v1)Project 1Project 2Data(v2)Project 3Data(v3)Different versions of the data used in different projects.\nSuppose I have a very large data set that is occasionally updated. I want to keep track of changes to my data and release/tag specific versions of the data. What’s more, I want to use this dataset in a few different projects, and I need to be able to ensure that the right version of the data is used in each project."
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#motivation-1",
+    "href": "02-graphics-git-submodules/index.html#motivation-1",
+    "title": "Using Git Submodules",
+    "section": "Motivation",
+    "text": "Motivation\n\nDatagit (lfs)Project 1Project 2Project 3@v1@v2@v3If we could only use git (or git lfs) to keep track of our data in one place, while still having separate repositories for the different projects!"
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#git-submodules",
+    "href": "02-graphics-git-submodules/index.html#git-submodules",
+    "title": "Using Git Submodules",
+    "section": "Git Submodules",
+    "text": "Git Submodules\nGit submodules allow you to embed a git repository inside another git repository.\n\nSometimes, they feel like this…"
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#conceptually",
+    "href": "02-graphics-git-submodules/index.html#conceptually",
+    "title": "Using Git Submodules",
+    "section": "Conceptually",
+    "text": "Conceptually\n\nProject 2Project 1Codein local repoPaperin local repoCodein local repoPaperin local repoDataData@e309c6@c47311git (lfs)Git submodules contain a pointer to a specific version of a different repository"
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#basic-commands",
+    "href": "02-graphics-git-submodules/index.html#basic-commands",
+    "title": "Using Git Submodules",
+    "section": "Basic Commands",
+    "text": "Basic Commands\n\nCreate a submodule in an existing repository\n\ngit submodule add &lt;address-to-submodule-repo&gt; &lt;location-in-existing-repo&gt;\ngit commit -am \"Commit with new submodule configs\"\n\nClone a project with submodules\n\ngit clone --recursive &lt;repo-address&gt; &lt;local-folder-name&gt;\n\nPull changes from a project with submodules\n\ngit pull --recurse-submodules\n\nSubmodule folders are there, files aren’t\n\ngit submodule init # add config files locally\ngit submodule update # pull files from submodules\n\nChanging files in a submodule\n\n(within submodule folder)\ngit checkout main # checkout branch\ngit commit ... # commit your changes\ngit push # push your changes\n\n(within main repo folder)\ngit add &lt;submodule-folder&gt; # change the commit you're using\ngit commit ... # commit your changes to the main repo\ngit push # push"
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#setup",
+    "href": "02-graphics-git-submodules/index.html#setup",
+    "title": "Using Git Submodules",
+    "section": "Setup",
+    "text": "Setup\n$ git clone git@github.com:srvanderplas/Presentations.git\nCloning into 'Presentations'...\nremote: Enumerating objects: 3, done.\nremote: Counting objects: 100% (3/3), done.\nremote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0\nReceiving objects: 100% (3/3), done.\n$ cd Presentations\n$ git status\nOn branch main\nYour branch is up to date with 'origin/main'.\n\nnothing to commit, working tree clean"
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#adding-a-submodule",
+    "href": "02-graphics-git-submodules/index.html#adding-a-submodule",
+    "title": "Using Git Submodules",
+    "section": "Adding a submodule",
+    "text": "Adding a submodule\n$ git submodule add git@github.com:srvanderplas/2020-Presentations.git 2020\nCloning into 'Presentations/2020'...\nremote: Enumerating objects: 1151, done.\nremote: Counting objects: 100% (6/6), done.\nremote: Compressing objects: 100% (6/6), done.\nremote: Total 1151 (delta 0), reused 5 (delta 0), pack-reused 1145\nReceiving objects: 100% (1151/1151), 358.25 MiB | 53.17 MiB/s, done.\nResolving deltas: 100% (470/470), done."
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#check-to-see-whats-there",
+    "href": "02-graphics-git-submodules/index.html#check-to-see-whats-there",
+    "title": "Using Git Submodules",
+    "section": "Check to see what’s there",
+    "text": "Check to see what’s there\n$ ls 2020/\n02-CSAFE-IMPL-OCR \n02-SDSU\n03-UNL-Forensics\n04-UNL-Extension \n07-DSSV\n08-ResearchTopics\n11-UNL-Election\n12-CSAFE-cmc\n12-CSAFE-OpenSourceForensics\n2020-Presentations.Rproj\ncode\ndata\nimages\nlibs\nLICENSE\nxaringan_csafe2.0\nxaringan_unl"
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#add-another-submodule",
+    "href": "02-graphics-git-submodules/index.html#add-another-submodule",
+    "title": "Using Git Submodules",
+    "section": "Add another submodule",
+    "text": "Add another submodule\n$ git submodule add git@github.com:srvanderplas/2021-Presentations.git 2021\nCloning into 'Presentations/2021'...\nremote: Enumerating objects: 463, done.\nremote: Counting objects: 100% (8/8), done.\nremote: Compressing objects: 100% (7/7), done.\nremote: Total 463 (delta 1), reused 8 (delta 1), pack-reused 455\nReceiving objects: 100% (463/463), 212.39 MiB | 52.43 MiB/s, done.\nResolving deltas: 100% (76/76), done."
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#repeat-a-couple-more-times",
+    "href": "02-graphics-git-submodules/index.html#repeat-a-couple-more-times",
+    "title": "Using Git Submodules",
+    "section": "Repeat a couple more times…",
+    "text": "Repeat a couple more times…"
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#see-our-changes",
+    "href": "02-graphics-git-submodules/index.html#see-our-changes",
+    "title": "Using Git Submodules",
+    "section": "See our changes",
+    "text": "See our changes\nPresentations$ ls\n2020  2021  2022  2023  2024  README.md\nPresentations$ git status\nOn branch main\nYour branch is up to date with 'origin/main'.\n\nChanges to be committed:\n(use \"git restore --staged &lt;file&gt;...\" to unstage)\nnew file:   .gitmodules\nnew file:   2020\nnew file:   2021\nnew file:   2022\nnew file:   2023\nnew file:   2024"
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#commit",
+    "href": "02-graphics-git-submodules/index.html#commit",
+    "title": "Using Git Submodules",
+    "section": "Commit…",
+    "text": "Commit…\nPresentations$ git commit -am \"Add submodules\"\n[main 94d80b5] Add submodules\n6 files changed, 20 insertions(+)\ncreate mode 100644 .gitmodules\ncreate mode 160000 2020\ncreate mode 160000 2021\ncreate mode 160000 2022\ncreate mode 160000 2023\ncreate mode 160000 2024"
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#push-to-github",
+    "href": "02-graphics-git-submodules/index.html#push-to-github",
+    "title": "Using Git Submodules",
+    "section": "Push to github",
+    "text": "Push to github\nPresentations$ git push\nEnumerating objects: 4, done.\nCounting objects: 100% (4/4), done.\nDelta compression using up to 16 threads\nCompressing objects: 100% (3/3), done.\nWriting objects: 100% (3/3), 543 bytes | 543.00 KiB/s, done.\nTotal 3 (delta 0), reused 0 (delta 0), pack-reused 0\nTo github.com:srvanderplas/Presentations.git\n1b161d9..94d80b5  main -&gt; main"
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#what-does-it-look-like",
+    "href": "02-graphics-git-submodules/index.html#what-does-it-look-like",
+    "title": "Using Git Submodules",
+    "section": "What does it look like?",
+    "text": "What does it look like?\n\nGithub Repository with Submodules"
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#cloning-to-another-machine",
+    "href": "02-graphics-git-submodules/index.html#cloning-to-another-machine",
+    "title": "Using Git Submodules",
+    "section": "Cloning to another machine",
+    "text": "Cloning to another machine\nUse the --recursive flag to clone submodules along with the main repo\n$ git clone --recursive git@github.com:srvanderplas/Presentations.git Presentations-copy\nCloning into 'Presentations-copy'...\nremote: Enumerating objects: 6, done.\nremote: Counting objects: 100% (6/6), done.\nremote: Compressing objects: 100% (4/4), done.\nremote: Total 6 (delta 0), reused 3 (delta 0), pack-reused 0\nReceiving objects: 100% (6/6), done.\nSubmodule '2020' (git@github.com:srvanderplas/2020-Presentations.git) registered for path '2020'\nSubmodule '2021' (git@github.com:srvanderplas/2021-Presentations.git) registered for path '2021'\nSubmodule '2022' (git@github.com:srvanderplas/2022-Presentations.git) registered for path '2022'\nSubmodule '2023' (git@github.com:srvanderplas/2023-Presentations.git) registered for path '2023'\nSubmodule '2024' (git@github.com:srvanderplas/2024-Presentations.git) registered for path '2024'\nCloning into '~/Projects/Web/Presentations-copy/2020'...\nremote: Enumerating objects: 1151, done.\nremote: Counting objects: 100% (6/6), done.\nremote: Compressing objects: 100% (6/6), done.\nremote: Total 1151 (delta 0), reused 5 (delta 0), pack-reused 1145\nReceiving objects: 100% (1151/1151), 358.25 MiB | 53.17 MiB/s, done.\nResolving deltas: 100% (470/470), done.\nCloning into '~/Projects/Web/Presentations-copy/2021'...\nremote: Enumerating objects: 463, done.\nremote: Counting objects: 100% (8/8), done.\nremote: Compressing objects: 100% (7/7), done.\nremote: Total 463 (delta 1), reused 8 (delta 1), pack-reused 455\nReceiving objects: 100% (463/463), 212.39 MiB | 50.32 MiB/s, done.\nResolving deltas: 100% (76/76), done.\nCloning into '~/Projects/Web/Presentations-copy/2022'...\nremote: Enumerating objects: 443, done.\nremote: Counting objects: 100% (121/121), done.\nremote: Compressing objects: 100% (106/106), done.\nremote: Total 443 (delta 11), reused 118 (delta 9), pack-reused 322\nReceiving objects: 100% (443/443), 221.33 MiB | 47.46 MiB/s, done.\nResolving deltas: 100% (57/57), done.\nCloning into '~/Projects/Web/Presentations-copy/2023'...\nremote: Enumerating objects: 695, done.\nremote: Counting objects: 100% (41/41), done.\nremote: Compressing objects: 100% (29/29), done.\nremote: Total 695 (delta 12), reused 36 (delta 11), pack-reused 654\nReceiving objects: 100% (695/695), 196.34 MiB | 52.04 MiB/s, done.\nResolving deltas: 100% (88/88), done.\nCloning into '~/Projects/Web/Presentations-copy/2024'...\nremote: Enumerating objects: 412, done.\nremote: Counting objects: 100% (151/151), done.\nremote: Compressing objects: 100% (97/97), done.\nremote: Total 412 (delta 60), reused 125 (delta 48), pack-reused 261\nReceiving objects: 100% (412/412), 84.17 MiB | 44.36 MiB/s, done.\nResolving deltas: 100% (101/101), done.\nSubmodule path '2020': checked out '76e41d812f045b92b128db3886ab98fd36c4356f'\nSubmodule path '2021': checked out '7600505ab20712fdc6db9d14613c5c52885fcdf2'\nSubmodule path '2022': checked out '89fafb9c9d06dff569efc7ec7beaed946e671825'\nSubmodule path '2023': checked out 'e7581d5a8ca872706e933087040bd868dd4c6281'\nSubmodule path '2024': checked out '70770f1b8fbac76b5257423ee525c7524fc44821'"
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#working-with-submodules-setting-up",
+    "href": "02-graphics-git-submodules/index.html#working-with-submodules-setting-up",
+    "title": "Using Git Submodules",
+    "section": "Working with Submodules… setting up",
+    "text": "Working with Submodules… setting up\n~/Downloads$ git clone https://github.com/srvanderplas/unl-stat850/ stat850\nCloning into 'stat850'...\nremote: Enumerating objects: 1242, done.\nremote: Counting objects: 100% (287/287), done.\nremote: Compressing objects: 100% (222/222), done.\nremote: Total 1242 (delta 130), reused 200 (delta 57), pack-reused 955\nReceiving objects: 100% (1242/1242), 28.75 MiB | 38.68 MiB/s, done.\nResolving deltas: 100% (690/690), done."
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#wheres-my-stuff",
+    "href": "02-graphics-git-submodules/index.html#wheres-my-stuff",
+    "title": "Using Git Submodules",
+    "section": "Where’s my stuff?",
+    "text": "Where’s my stuff?\n~/Downloads/stat850$ cd homework-repos/\n01-git-github/       03-fizzbuzz/         05-data-cookies/     07-murder/           10-professional/     11-simulation/\n02-finding-your-way/ 04-data-prog/        06-wrangling/        08-graphics/         11-simulate-craps/   12-shiny/\n~/Downloads/stat850$ cd homework-repos/01-git-github/\n~/Downloads/stat850/homework-repos/01-git-github$ ls"
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#fixing-this-situation",
+    "href": "02-graphics-git-submodules/index.html#fixing-this-situation",
+    "title": "Using Git Submodules",
+    "section": "Fixing this situation",
+    "text": "Fixing this situation\nInitialize Submodules in your Repo\ngit submodule init # create local config file\n~/Downloads/stat850$ git submodule init\nSubmodule 'homework-repos/01-git-github' (git@github.com:stat850-unl/github-starter-course.git) registered for path 'homework-repos/01-git-github'\nSubmodule 'homework-repos/02-finding-your-way' (git@github.com:stat850-unl/Hw-02-Finding-Your-Way.git) registered for path 'homework-repos/02-finding-your-way'\nSubmodule 'homework-repos/03-fizzbuzz' (git@github.com:stat-assignments/fizzbuzz-full.git) registered for path 'homework-repos/03-fizzbuzz'\nSubmodule 'homework-repos/04-data-prog' (git@github.com:stat850-unl/Hw-04-DataProgramming.git) registered for path 'homework-repos/04-data-prog'\nSubmodule 'homework-repos/05-data-cookies' (git@github.com:unl-stat251/hw-reading-data-template.git) registered for path 'homework-repos/05-data-cookies'\nSubmodule 'homework-repos/06-wrangling' (git@github.com:stat-assignments/poetry-reddit-dplyr.git) registered for path 'homework-repos/06-wrangling'\nSubmodule 'homework-repos/07-murder' (git@github.com:stat-assignments/sql-murder.git) registered for path 'homework-repos/07-murder'\nSubmodule 'homework-repos/08-graphics' (git@github.com:stat-assignments/graphics-complete.git) registered for path 'homework-repos/08-graphics'\nSubmodule 'homework-repos/10-professional' (git@github.com:stat-assignments/professional-documents.git) registered for path 'homework-repos/10-professional'\nSubmodule 'homework-repos/11-simulate-craps' (git@github.com:stat-assignments/simulation-craps.git) registered for path 'homework-repos/11-simulate-craps'\nSubmodule 'homework-repos/11-simulation' (https://github.com/stat-assignments/simulation-adv.git) registered for path 'homework-repos/11-simulation'\nSubmodule 'homework-repos/12-shiny' (https://github.com/stat-assignments/shiny-cocktails.git) registered for path 'homework-repos/12-shiny'\nSubmodule 'project/proj-template' (https://github.com/stat850-unl/project.git) registered for path 'project/proj-template'"
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#fixing-this-situation-1",
+    "href": "02-graphics-git-submodules/index.html#fixing-this-situation-1",
+    "title": "Using Git Submodules",
+    "section": "Fixing this situation",
+    "text": "Fixing this situation\nUpdate your submodules\ngit submodule update # get changes\n~/Downloads/stat850$ git submodule update\nCloning into '~/Downloads/stat850/homework-repos/01-git-github'...\nCloning into '~/Downloads/stat850/homework-repos/02-finding-your-way'...\nCloning into '~/Downloads/stat850/homework-repos/03-fizzbuzz'...\nCloning into '~/Downloads/stat850/homework-repos/04-data-prog'...\nCloning into '~/Downloads/stat850/homework-repos/05-data-cookies'...\nCloning into '~/Downloads/stat850/homework-repos/06-wrangling'...\nCloning into '~/Downloads/stat850/homework-repos/07-murder'...\nCloning into '~/Downloads/stat850/homework-repos/08-graphics'...\nCloning into '~/Downloads/stat850/homework-repos/10-professional'...\nCloning into '~/Downloads/stat850/homework-repos/11-simulate-craps'...\nCloning into '~/Downloads/stat850/homework-repos/11-simulation'...\nCloning into '~/Downloads/stat850/homework-repos/12-shiny'...\nCloning into '~/Downloads/stat850/project/proj-template'...\nSubmodule path 'homework-repos/01-git-github': checked out 'f9ad9ab3f68753f9ddef601c5e069d94d52ea0db'\nSubmodule path 'homework-repos/02-finding-your-way': checked out '460f30b2a0de17c6bc0a0b2394c462d370f672ad'\nSubmodule path 'homework-repos/03-fizzbuzz': checked out '5307020682c78895d5cf8e78927b7b31217727f8'\nSubmodule path 'homework-repos/04-data-prog': checked out '4344a05f08df8a8b76118b49cd45a325354683a0'\nSubmodule path 'homework-repos/05-data-cookies': checked out '6a892bc8c8615c731c70d4a5172e507293e9fb90'\nSubmodule path 'homework-repos/06-wrangling': checked out 'e8b31fc29526f05ddc597e1268db3c2d39962c06'\nSubmodule path 'homework-repos/07-murder': checked out 'ae7ac0f03d900c13d7ece93ec7d23fc7acca6103'\nSubmodule path 'homework-repos/08-graphics': checked out '1242e5bc7061a3d83ae114047d94e2e19275eb3c'\nSubmodule path 'homework-repos/10-professional': checked out '09fbd672451e9c34d657de2316597173eba36996'\nSubmodule path 'homework-repos/11-simulate-craps': checked out '3e603eb78d6b1fd6199507216eb81265a171cab1'\nSubmodule path 'homework-repos/11-simulation': checked out 'c14acf0995d6edf122f905b644ad553a3e40d570'\nSubmodule path 'homework-repos/12-shiny': checked out '51500f00be9058bee0d3b5da60439d0519dd3460'\nSubmodule path 'project/proj-template': checked out 'e4386574f871804cd9f9bc3127590c5ca7ae404e'"
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#making-a-change",
+    "href": "02-graphics-git-submodules/index.html#making-a-change",
+    "title": "Using Git Submodules",
+    "section": "Making a change…",
+    "text": "Making a change…\nLast year, I accidentally left this line in the murder-mystery repository (I wanted to give extra credit to my undergrads the previous semester, but not grad students)\n\nFor 5 bonus points, when you’re finished in one language, write equivalent code in the other language to solve the problem.\n\nI make my changes, and then go to commit them."
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#making-a-change-1",
+    "href": "02-graphics-git-submodules/index.html#making-a-change-1",
+    "title": "Using Git Submodules",
+    "section": "Making a change…",
+    "text": "Making a change…\nIn the submodule folder: 1. git checkout main 2. git commit -am \"changes\" 3. git push\nThis updates the submodule repository\n~/Downloads/stat850$ git status\nOn branch main\nYour branch is up to date with 'origin/main'.\n\nChanges not staged for commit:\n(use \"git add &lt;file&gt;...\" to update what will be committed)\n(use \"git restore &lt;file&gt;...\" to discard changes in working directory)\nmodified:   homework-repos/07-murder (new commits)\n\nno changes added to commit (use \"git add\" and/or \"git commit -a\")"
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#making-a-change-2",
+    "href": "02-graphics-git-submodules/index.html#making-a-change-2",
+    "title": "Using Git Submodules",
+    "section": "Making a change…",
+    "text": "Making a change…\nIn the main folder: 1. Update the config file to point to the updated commit\ngit commit -am \"Update submodule\" 2. git push\nBy default, updates to the submodule don’t change your local version. This is useful for some situations (e.g. dependencies) and annoying for others (e.g. content changes).\nVersion tags are very helpful."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Presentations in 2024",
     "section": "",
-    "text": "Cultivating Insights: Harnessing the Power of Data Visualization in Agriculture\n\n\n\nSusan Vanderplas\n\n\nJan 9, 2024\n\n\n\n\n\nLocation\n\n\nInternational Conference for On-Farm Precision Experimentation, Corpus Christi, TX\n\n\n\n\nTopics\n\n\ngraphics,agriculture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEscaping Flatland\n\n\n\nTyler Wiederich, Erin Blankenship & Susan Vanderplas\n\n\nJul 1, 2024\n\n\n\n\n\nLocation\n\n\nHuman Computer Interaction International, Washington DC\n\n\n\n\nTopics\n\n\nteaching,graphics,user-study\n\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Cultivating Insights: Harnessing the Power of Data Visualization in Agriculture\n\n\n\nSusan Vanderplas\n\n\nJan 9, 2024\n\n\n\n\n\nLocation\n\n\nInternational Conference for On-Farm Precision Experimentation, Corpus Christi, TX\n\n\n\n\nTopics\n\n\ngraphics,agriculture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Git Submodules\n\n\n\nSusan Vanderplas\n\n\nFeb 8, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\ngit,reproducibility,teaching\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEscaping Flatland\n\n\n\nTyler Wiederich, Erin Blankenship & Susan Vanderplas\n\n\nJul 1, 2024\n\n\n\n\n\nLocation\n\n\nHuman Computer Interaction International, Washington DC\n\n\n\n\nTopics\n\n\nteaching,graphics,user-study\n\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "07-HCII/index.html#references",
