@@ -1,0 +1,13 @@
+title: "Using Git Submodules"
+author: "Susan Vanderplas"
+date: 2024-02-08
+from: markdown+emoji
+location: Online
+abstract: |
+  Clever abstract here
+talk-type: ['seminar']
+# One or more of seminar, web, invited, contributed, other
+
+image: <iframe class="slide-deck" src="./" width="100%" height="200px"></iframe>
+
+keywords: ['git', 'reproducibility', 'teaching']

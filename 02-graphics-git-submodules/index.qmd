@@ -1,0 +1,250 @@
+---
+format: 
+  revealjs:
+    navigation-mode: vertical
+    logo: ../libs/unl/N.svg
+    theme: ../libs/unl/inverse.scss
+    includes:
+      in_header: ../libs/unl/header.html
+    lib_dir: libs
+    embed-resources: true
+---
+
+# Introduction
+
+## Motivation
+
+
+![Different versions of the data used in different projects.](use-case-data-separate.svg)
+
+::: notes
+Suppose I have a very large data set that is occasionally updated. 
+I want to keep track of changes to my data and release/tag specific versions of the data.
+What's more, I want to use this dataset in a few different projects, and I need to be able to ensure that the right version of the data is used in each project.
+:::
+
+
+## Motivation
+
+![If we could only use git (or git lfs) to keep track of our data in one place!](use-case-data.svg)
+
+## Git Submodules
+
+Git **submodules** allow you to embed a git repository inside another git repository.
+
+![Sometimes, they feel like this...](https://i.imgflip.com/2p8t08.jpg)
+
+## Conceptually
+
+![Git submodules contain a pointer to a specific version of a different repository](how-it-works-data.svg)
+
+## Creating a submodule in an existing repository
+
+```
+git submodule add <address-to-submodule-repo> <location-in-existing-repo>
+```
+
+# Example - Presentations
+
+![](presentation-structure-changes.svg)
+
+::: notes
+I used to have a Presentations repository that had every presentation I'd given... and then it got too big.
+
+I created a Presentations-Archive repository and moved the old presentations into there... but that only worked for a little while.
+
+I've now restructured to have 20XX-Presentations/ repositories, one for each year, but I'd like to have them all collected in a meta-repository that can build a single site to host all of the slides.
+:::
+
+## Setup
+
+```
+$ git clone git@github.com:srvanderplas/Presentations.git
+Cloning into 'Presentations'...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (3/3), done.
+$ cd Presentations
+```
+
+```
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+```
+
+## Adding a submodule
+
+```
+$ git submodule add git@github.com:srvanderplas/2020-Presentations.git 2020
+Cloning into 'Presentations/2020'...
+remote: Enumerating objects: 1151, done.
+remote: Counting objects: 100% (6/6), done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 1151 (delta 0), reused 5 (delta 0), pack-reused 1145
+Receiving objects: 100% (1151/1151), 358.25 MiB | 53.17 MiB/s, done.
+Resolving deltas: 100% (470/470), done.
+```
+
+## Check to see what's there
+```
+$ ls 2020/
+02-CSAFE-IMPL-OCR 
+02-SDSU
+03-UNL-Forensics
+04-UNL-Extension 
+07-DSSV
+08-ResearchTopics
+11-UNL-Election
+12-CSAFE-cmc
+12-CSAFE-OpenSourceForensics
+2020-Presentations.Rproj
+code
+data
+images
+libs
+LICENSE
+xaringan_csafe2.0
+xaringan_unl
+```
+
+## Add another submodule
+
+```
+$ git submodule add git@github.com:srvanderplas/2021-Presentations.git 2021
+Cloning into 'Presentations/2021'...
+remote: Enumerating objects: 463, done.
+remote: Counting objects: 100% (8/8), done.
+remote: Compressing objects: 100% (7/7), done.
+remote: Total 463 (delta 1), reused 8 (delta 1), pack-reused 455
+Receiving objects: 100% (463/463), 212.39 MiB | 52.43 MiB/s, done.
+Resolving deltas: 100% (76/76), done.
+```
+
+## Repeat a couple more times...
+
+## See our changes
+```
+Presentations$ ls
+2020  2021  2022  2023  2024  README.md
+Presentations$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+(use "git restore --staged <file>..." to unstage)
+new file:   .gitmodules
+new file:   2020
+new file:   2021
+new file:   2022
+new file:   2023
+new file:   2024
+```
+
+## Commit...
+```
+Presentations$ git commit -am "Add submodules"
+[main 94d80b5] Add submodules
+6 files changed, 20 insertions(+)
+create mode 100644 .gitmodules
+create mode 160000 2020
+create mode 160000 2021
+create mode 160000 2022
+create mode 160000 2023
+create mode 160000 2024
+```
+
+## Push to github
+```
+Presentations$ git push
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 543 bytes | 543.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To github.com:srvanderplas/Presentations.git
+1b161d9..94d80b5  main -> main
+```
+
+## What does it look like?
+
+![Github Repository with Submodules](github-submodule-screenshot.png)
+
+## Cloning to another machine
+
+Use the **--recursive** flag to clone submodules along with the main repo
+
+```
+$ git clone --recursive git@github.com:srvanderplas/Presentations.git Presentations-copy
+Cloning into 'Presentations-copy'...
+remote: Enumerating objects: 6, done.
+remote: Counting objects: 100% (6/6), done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 6 (delta 0), reused 3 (delta 0), pack-reused 0
+Receiving objects: 100% (6/6), done.
+Submodule '2020' (git@github.com:srvanderplas/2020-Presentations.git) registered for path '2020'
+Submodule '2021' (git@github.com:srvanderplas/2021-Presentations.git) registered for path '2021'
+Submodule '2022' (git@github.com:srvanderplas/2022-Presentations.git) registered for path '2022'
+Submodule '2023' (git@github.com:srvanderplas/2023-Presentations.git) registered for path '2023'
+Submodule '2024' (git@github.com:srvanderplas/2024-Presentations.git) registered for path '2024'
+Cloning into '/home/susan/Projects/Web/Presentations-copy/2020'...
+remote: Enumerating objects: 1151, done.
+remote: Counting objects: 100% (6/6), done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 1151 (delta 0), reused 5 (delta 0), pack-reused 1145
+Receiving objects: 100% (1151/1151), 358.25 MiB | 53.17 MiB/s, done.
+Resolving deltas: 100% (470/470), done.
+Cloning into '/home/susan/Projects/Web/Presentations-copy/2021'...
+remote: Enumerating objects: 463, done.
+remote: Counting objects: 100% (8/8), done.
+remote: Compressing objects: 100% (7/7), done.
+remote: Total 463 (delta 1), reused 8 (delta 1), pack-reused 455
+Receiving objects: 100% (463/463), 212.39 MiB | 50.32 MiB/s, done.
+Resolving deltas: 100% (76/76), done.
+Cloning into '/home/susan/Projects/Web/Presentations-copy/2022'...
+remote: Enumerating objects: 443, done.
+remote: Counting objects: 100% (121/121), done.
+remote: Compressing objects: 100% (106/106), done.
+remote: Total 443 (delta 11), reused 118 (delta 9), pack-reused 322
+Receiving objects: 100% (443/443), 221.33 MiB | 47.46 MiB/s, done.
+Resolving deltas: 100% (57/57), done.
+Cloning into '/home/susan/Projects/Web/Presentations-copy/2023'...
+remote: Enumerating objects: 695, done.
+remote: Counting objects: 100% (41/41), done.
+remote: Compressing objects: 100% (29/29), done.
+remote: Total 695 (delta 12), reused 36 (delta 11), pack-reused 654
+Receiving objects: 100% (695/695), 196.34 MiB | 52.04 MiB/s, done.
+Resolving deltas: 100% (88/88), done.
+Cloning into '/home/susan/Projects/Web/Presentations-copy/2024'...
+remote: Enumerating objects: 412, done.
+remote: Counting objects: 100% (151/151), done.
+remote: Compressing objects: 100% (97/97), done.
+remote: Total 412 (delta 60), reused 125 (delta 48), pack-reused 261
+Receiving objects: 100% (412/412), 84.17 MiB | 44.36 MiB/s, done.
+Resolving deltas: 100% (101/101), done.
+Submodule path '2020': checked out '76e41d812f045b92b128db3886ab98fd36c4356f'
+Submodule path '2021': checked out '7600505ab20712fdc6db9d14613c5c52885fcdf2'
+Submodule path '2022': checked out '89fafb9c9d06dff569efc7ec7beaed946e671825'
+Submodule path '2023': checked out 'e7581d5a8ca872706e933087040bd868dd4c6281'
+Submodule path '2024': checked out '70770f1b8fbac76b5257423ee525c7524fc44821'
+```
+
+# Example - Class
+
+[Course Website for Stat 850](https://srvanderplas.github.io/unl-stat850)
+
+- Links to reading, homework assignments, textbook
+
+- Homework assignments stored in repos under user `stat-assignments`, since I use them for both 850 and undergraduate classes.
+
+- Project template in a `computing-project` repository
+
+- Separate assignment from rendering by creating separate files with `{{< include xxx.qmd >}}` directives
+
+[Repository](https://github.com/srvanderplas/unl-stat850/)
+
+
