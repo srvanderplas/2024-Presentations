@@ -8,6 +8,6 @@ abstract: |
 talk-type: ['seminar']
 # One or more of seminar, web, invited, contributed, other
 
-image: <iframe class="slide-deck" src="./" width="100%" height="200px"></iframe>
+image: how-it-works-data.svg
 
 keywords: ['git', 'reproducibility', 'teaching']
