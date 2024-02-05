@@ -299,5 +299,12 @@
     "title": "Escaping Flatland",
     "section": "",
     "text": "Carswell, C., Sylvia Frankenberger, and Donald Bernhard. 1991. “Graphing in Depth: Perspectives on the Use of Three-Dimensional Graphs to Represent Lower-Dimensional Data.” Behaviour & Information Technology 10: 459–74. https://doi.org/10.1080/01449299108924304.\n\n\nDay, Ross H, and Erica J Stecher. 1991. “Sine of an Illusion.” Perception 20 (1): 49–55. https://doi.org/10.1068/p200049.\n\n\nFischer, M. H. 2000. “Do Irrelevant Depth Cues Affect the Comprehension of Bar Graphs.” Applied Cognitive Psychology 14: 151–62. https://doi.org/10.1002/(SICI)1099-0720(200003/04)14:2&lt;151::AID-ACP629&gt;3.0.CO;2-Z.\n\n\nVanderPlas, Susan, and Heike Hofmann. 2015. “Signs of the Sine IllusionWhy We Need to Care.” Journal of Computational and Graphical Statistics 24 (4): 1170–90. https://doi.org/10.1080/10618600.2014.951547.\n\n\nZacks, Jeff, Ellen Levy, Barbara Tversky, and Diane J. Schiano. 1998. “Reading Bar Graphs: Effects of Extraneous Depth Cues and Graphical Context.” Journal of Experimental Psychology: Applied 4 (2): 119–38. https://doi.org/10.1037/1076-898X.4.2.119."
+  },
+  {
+    "objectID": "02-graphics-git-submodules/index.html#removing-a-submodule",
+    "href": "02-graphics-git-submodules/index.html#removing-a-submodule",
+    "title": "Using Git Submodules",
+    "section": "Removing a submodule",
+    "text": "Removing a submodule\ngit submodule deinit &lt;path-to-submodule&gt;\ngit rm &lt;path-to-submodule&gt;\ngit commit -m \"Removed annoying submodule\"\ngit push"
   }
 ]

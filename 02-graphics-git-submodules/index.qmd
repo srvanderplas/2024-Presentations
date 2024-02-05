@@ -404,3 +404,12 @@ By default, updates to the submodule don't change your local version. This is us
 
 Version tags are very helpful.
 
+## Removing a submodule
+
+```
+git submodule deinit <path-to-submodule>
+git rm <path-to-submodule>
+git commit -m "Removed annoying submodule"
+git push
+```
+
