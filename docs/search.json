@@ -137,14 +137,14 @@
     "href": "02-graphics-git-submodules/index.html#motivation",
     "title": "Using Git Submodules",
     "section": "Motivation",
-    "text": "Motivation\n\nData (v1)Project 1Project 2Data(v2)Project 3Data(v3)Different versions of the data used in different projects.\nSuppose I have a very large data set that is occasionally updated. I want to keep track of changes to my data and release/tag specific versions of the data. What’s more, I want to use this dataset in a few different projects, and I need to be able to ensure that the right version of the data is used in each project."
+    "text": "Motivation\n\nDifferent versions of the data used in different projects.\nSuppose I have a very large data set that is occasionally updated. I want to keep track of changes to my data and release/tag specific versions of the data. What’s more, I want to use this dataset in a few different projects, and I need to be able to ensure that the right version of the data is used in each project."
   },
   {
     "objectID": "02-graphics-git-submodules/index.html#motivation-1",
     "href": "02-graphics-git-submodules/index.html#motivation-1",
     "title": "Using Git Submodules",
     "section": "Motivation",
-    "text": "Motivation\n\nDatagit (lfs)Project 1Project 2Project 3@v1@v2@v3If we could only use git (or git lfs) to keep track of our data in one place, while still having separate repositories for the different projects!"
+    "text": "Motivation\n\nIf we could only use git (or git lfs) to keep track of our data in one place, while still having separate repositories for the different projects!"
   },
   {
     "objectID": "02-graphics-git-submodules/index.html#git-submodules",
@@ -158,7 +158,7 @@
     "href": "02-graphics-git-submodules/index.html#conceptually",
     "title": "Using Git Submodules",
     "section": "Conceptually",
-    "text": "Conceptually\n\nProject 2Project 1Codein local repoPaperin local repoCodein local repoPaperin local repoDataData@e309c6@c47311git (lfs)Git submodules contain a pointer to a specific version of a different repository"
+    "text": "Conceptually\n\nGit submodules contain a pointer to a specific version of a different repository"
   },
   {
     "objectID": "02-graphics-git-submodules/index.html#basic-commands",
@@ -277,21 +277,21 @@
     "href": "02-graphics-git-submodules/index.html#making-a-change-1",
     "title": "Using Git Submodules",
     "section": "Making a change…",
-    "text": "Making a change…\nIn the submodule folder: 1. git checkout main 2. git commit -am \"changes\" 3. git push\nThis updates the submodule repository\n~/Downloads/stat850$ git status\nOn branch main\nYour branch is up to date with 'origin/main'.\n\nChanges not staged for commit:\n(use \"git add &lt;file&gt;...\" to update what will be committed)\n(use \"git restore &lt;file&gt;...\" to discard changes in working directory)\nmodified:   homework-repos/07-murder (new commits)\n\nno changes added to commit (use \"git add\" and/or \"git commit -a\")"
+    "text": "Making a change…\nIn the submodule folder:\n\ngit checkout main\ngit commit -am \"changes\"\ngit push\n\nThis updates the submodule repository\n~/Downloads/stat850$ git status\nOn branch main\nYour branch is up to date with 'origin/main'.\n\nChanges not staged for commit:\n(use \"git add &lt;file&gt;...\" to update what will be committed)\n(use \"git restore &lt;file&gt;...\" to discard changes in working directory)\nmodified:   homework-repos/07-murder (new commits)\n\nno changes added to commit (use \"git add\" and/or \"git commit -a\")"
   },
   {
     "objectID": "02-graphics-git-submodules/index.html#making-a-change-2",
     "href": "02-graphics-git-submodules/index.html#making-a-change-2",
     "title": "Using Git Submodules",
     "section": "Making a change…",
-    "text": "Making a change…\nIn the main folder: 1. Update the config file to point to the updated commit\ngit commit -am \"Update submodule\" 2. git push\nBy default, updates to the submodule don’t change your local version. This is useful for some situations (e.g. dependencies) and annoying for others (e.g. content changes).\nVersion tags are very helpful."
+    "text": "Making a change…\nIn the main folder:\n\nUpdate the config file to point to the updated commit\ngit commit -am \"Update submodule\"\ngit push\n\nBy default, updates to the submodule don’t change your local version. This is useful for some situations (e.g. dependencies) and annoying for others (e.g. content changes).\nVersion tags are very helpful."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Presentations in 2024",
     "section": "",
-    "text": "Cultivating Insights: Harnessing the Power of Data Visualization in Agriculture\n\n\n\nSusan Vanderplas\n\n\nJan 9, 2024\n\n\n\n\n\nLocation\n\n\nInternational Conference for On-Farm Precision Experimentation, Corpus Christi, TX\n\n\n\n\nTopics\n\n\ngraphics,agriculture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Git Submodules\n\n\n\nSusan Vanderplas\n\n\nFeb 8, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\ngit,reproducibility,teaching\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEscaping Flatland\n\n\n\nTyler Wiederich, Erin Blankenship & Susan Vanderplas\n\n\nJul 1, 2024\n\n\n\n\n\nLocation\n\n\nHuman Computer Interaction International, Washington DC\n\n\n\n\nTopics\n\n\nteaching,graphics,user-study\n\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Cultivating Insights: Harnessing the Power of Data Visualization in Agriculture\n\n\n\nSusan Vanderplas\n\n\nJan 9, 2024\n\n\n\n\n\n\nLocation\n\n\nInternational Conference for On-Farm Precision Experimentation, Corpus Christi, TX\n\n\n\n\nTopics\n\n\ngraphics,agriculture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Git Submodules\n\n\n\nSusan Vanderplas\n\n\nFeb 8, 2024\n\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\ngit,reproducibility,teaching\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEscaping Flatland\n\n\n\nTyler Wiederich, Erin Blankenship & Susan Vanderplas\n\n\nJul 1, 2024\n\n\n\n\n\n\nLocation\n\n\nHuman Computer Interaction International, Washington DC\n\n\n\n\nTopics\n\n\nteaching,graphics,user-study\n\n\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "07-HCII/index.html#references",

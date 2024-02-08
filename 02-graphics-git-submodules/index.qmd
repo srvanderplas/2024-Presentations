@@ -14,15 +14,11 @@ format:
 
 ## Motivation
 
-
 ![Different versions of the data used in different projects.](use-case-data-separate.svg)
 
 ::: notes
-Suppose I have a very large data set that is occasionally updated. 
-I want to keep track of changes to my data and release/tag specific versions of the data.
-What's more, I want to use this dataset in a few different projects, and I need to be able to ensure that the right version of the data is used in each project.
+Suppose I have a very large data set that is occasionally updated. I want to keep track of changes to my data and release/tag specific versions of the data. What's more, I want to use this dataset in a few different projects, and I need to be able to ensure that the right version of the data is used in each project.
 :::
-
 
 ## Motivation
 
@@ -40,30 +36,35 @@ Git **submodules** allow you to embed a git repository inside another git reposi
 
 ## Basic Commands {.scrollable}
 
-* Create a submodule in an existing repository
-```
+-   Create a submodule in an existing repository
+
+```         
 git submodule add <address-to-submodule-repo> <location-in-existing-repo>
 git commit -am "Commit with new submodule configs"
 ```
 
-* Clone a project with submodules
-```
+-   Clone a project with submodules
+
+```         
 git clone --recursive <repo-address> <local-folder-name>
 ```
 
-* Pull changes from a project with submodules
-```
+-   Pull changes from a project with submodules
+
+```         
 git pull --recurse-submodules
 ```
 
-* Submodule folders are there, files aren't
-```
+-   Submodule folders are there, files aren't
+
+```         
 git submodule init # add config files locally
 git submodule update # pull files from submodules
 ```
 
-* Changing files in a submodule
-```
+-   Changing files in a submodule
+
+```         
 (within submodule folder)
 git checkout main # checkout branch
 git commit ... # commit your changes
@@ -74,6 +75,7 @@ git add <submodule-folder> # change the commit you're using
 git commit ... # commit your changes to the main repo
 git push # push
 ```
+
 # Example - Presentations
 
 ![](presentation-structure-changes.svg)
@@ -88,7 +90,7 @@ I've now restructured to have 20XX-Presentations/ repositories, one for each yea
 
 ## Setup {.scrollable}
 
-```
+```         
 $ git clone git@github.com:srvanderplas/Presentations.git
 Cloning into 'Presentations'...
 remote: Enumerating objects: 3, done.
@@ -98,7 +100,7 @@ Receiving objects: 100% (3/3), done.
 $ cd Presentations
 ```
 
-```
+```         
 $ git status
 On branch main
 Your branch is up to date with 'origin/main'.
@@ -108,7 +110,7 @@ nothing to commit, working tree clean
 
 ## Adding a submodule {.scrollable}
 
-```
+```         
 $ git submodule add git@github.com:srvanderplas/2020-Presentations.git 2020
 Cloning into 'Presentations/2020'...
 remote: Enumerating objects: 1151, done.
@@ -120,7 +122,8 @@ Resolving deltas: 100% (470/470), done.
 ```
 
 ## Check to see what's there {.scrollable}
-```
+
+```         
 $ ls 2020/
 02-CSAFE-IMPL-OCR 
 02-SDSU
@@ -143,7 +146,7 @@ xaringan_unl
 
 ## Add another submodule {.scrollable}
 
-```
+```         
 $ git submodule add git@github.com:srvanderplas/2021-Presentations.git 2021
 Cloning into 'Presentations/2021'...
 remote: Enumerating objects: 463, done.
@@ -157,7 +160,8 @@ Resolving deltas: 100% (76/76), done.
 ## Repeat a couple more times...
 
 ## See our changes {.scrollable}
-```
+
+```         
 Presentations$ ls
 2020  2021  2022  2023  2024  README.md
 Presentations$ git status
@@ -175,7 +179,8 @@ new file:   2024
 ```
 
 ## Commit... {.scrollable}
-```
+
+```         
 Presentations$ git commit -am "Add submodules"
 [main 94d80b5] Add submodules
 6 files changed, 20 insertions(+)
@@ -188,7 +193,8 @@ create mode 160000 2024
 ```
 
 ## Push to github {.scrollable}
-```
+
+```         
 Presentations$ git push
 Enumerating objects: 4, done.
 Counting objects: 100% (4/4), done.
@@ -208,7 +214,7 @@ To github.com:srvanderplas/Presentations.git
 
 Use the **`--recursive`** flag to clone submodules along with the main repo
 
-```
+```         
 $ git clone --recursive git@github.com:srvanderplas/Presentations.git Presentations-copy
 Cloning into 'Presentations-copy'...
 remote: Enumerating objects: 6, done.
@@ -267,20 +273,19 @@ Submodule path '2024': checked out '70770f1b8fbac76b5257423ee525c7524fc44821'
 
 [Course Website for Stat 850](https://srvanderplas.github.io/unl-stat850)
 
-- Links to reading, homework assignments, textbook
+-   Links to reading, homework assignments, textbook
 
-- Homework assignments stored in repos under user `stat-assignments`, since I use them for both 850 and undergraduate classes.
+-   Homework assignments stored in repos under user `stat-assignments`, since I use them for both 850 and undergraduate classes.
 
-- Project template in a `computing-project` repository
+-   Project template in a `computing-project` repository
 
-- Separate assignment from rendering by creating separate files with `{{< include xxx.qmd >}}` directives
+-   Separate assignment from rendering by creating separate files with `{{< include xxx.qmd >}}` directives
 
 [Repository](https://github.com/srvanderplas/unl-stat850/)
 
-
 ## Working with Submodules... setting up {.scrollable}
 
-```
+```         
 ~/Downloads$ git clone https://github.com/srvanderplas/unl-stat850/ stat850
 Cloning into 'stat850'...
 remote: Enumerating objects: 1242, done.
@@ -293,7 +298,7 @@ Resolving deltas: 100% (690/690), done.
 
 ## Where's my stuff? {.scrollable}
 
-```
+```         
 ~/Downloads/stat850$ cd homework-repos/
 01-git-github/       03-fizzbuzz/         05-data-cookies/     07-murder/           10-professional/     11-simulation/
 02-finding-your-way/ 04-data-prog/        06-wrangling/        08-graphics/         11-simulate-craps/   12-shiny/
@@ -305,11 +310,11 @@ Resolving deltas: 100% (690/690), done.
 
 **Initialize Submodules in your Repo**
 
-```
+```         
 git submodule init # create local config file
 ```
 
-```
+```         
 ~/Downloads/stat850$ git submodule init
 Submodule 'homework-repos/01-git-github' (git@github.com:stat850-unl/github-starter-course.git) registered for path 'homework-repos/01-git-github'
 Submodule 'homework-repos/02-finding-your-way' (git@github.com:stat850-unl/Hw-02-Finding-Your-Way.git) registered for path 'homework-repos/02-finding-your-way'
@@ -327,12 +332,14 @@ Submodule 'project/proj-template' (https://github.com/stat850-unl/project.git) r
 ```
 
 ## Fixing this situation {.scrollable}
+
 **Update your submodules**
 
-```
+```         
 git submodule update # get changes
 ```
-```
+
+```         
 ~/Downloads/stat850$ git submodule update
 Cloning into '~/Downloads/stat850/homework-repos/01-git-github'...
 Cloning into '~/Downloads/stat850/homework-repos/02-finding-your-way'...
@@ -370,17 +377,17 @@ Last year, I accidentally left this line in the murder-mystery repository (I wan
 
 I make my changes, and then go to commit them.
 
+## Making a change... {.scrollable}
 
-## Making a change...
+In the submodule folder: 
 
-In the submodule folder:
-1. `git checkout main`
-2. `git commit -am "changes"`
+1. `git checkout main` 
+2. `git commit -am "changes"` 
 3. `git push`
 
 This updates the submodule repository
 
-```
+```         
 ~/Downloads/stat850$ git status
 On branch main
 Your branch is up to date with 'origin/main'.
@@ -393,23 +400,23 @@ modified:   homework-repos/07-murder (new commits)
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-## Making a change...
+## Making a change... {.scrollable}
 
-In the main folder:
-1. Update the config file to point to the updated commit   
-`git commit -am "Update submodule"`
+In the main folder: 
+
+1. Update the config file to point to the updated commit\
+`git commit -am "Update submodule"` 
 2. `git push`
 
 By default, updates to the submodule don't change your local version. This is useful for some situations (e.g. dependencies) and annoying for others (e.g. content changes).
 
 Version tags are very helpful.
 
-## Removing a submodule
+## Removing a submodule {.scrollable}
 
-```
+```         
 git submodule deinit <path-to-submodule>
 git rm <path-to-submodule>
 git commit -m "Removed annoying submodule"
 git push
 ```
-
