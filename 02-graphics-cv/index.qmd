@@ -92,8 +92,6 @@ When you get tired of updating publications manually...
 :::
 
 ## LaTeX
+Basic Command Structure
 
-```
-
-```
-
+![](moderncv-str.svg)
