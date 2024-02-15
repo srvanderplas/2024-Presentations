@@ -1,0 +1,99 @@
+---
+format: 
+  revealjs:
+    navigation-mode: vertical
+    logo: ../libs/unl/N.svg
+    theme: ../libs/unl/inverse.scss
+    includes:
+      in_header: ../libs/unl/header.html
+    lib_dir: libs
+    embed-resources: true
+---
+
+# Workflow 
+
+## Building a CV
+
+![](tex-pdf.svg)
+
+## Building a CV
+
+When you get tired of updating publications manually...
+
+![](tex-bib-pdf.svg)
+
+## Updating a CV
+
+![](bored.gif){width="100%"}
+
+## Part of the problem...
+
+![](cv-tex-screenshot.png)
+
+## If CVs were more like data...
+
+![](cv-spreadsheet-screenshot.png)
+
+## New Workflow
+
+![](xlsx-tex-bib-pdf.svg)
+
+::: {#rpkgs layout-ncol=7}
+
+![](https://github.com/rstudio/hex-stickers/blob/main/PNG/readxl.png?raw=true)
+
+![](https://github.com/rstudio/hex-stickers/blob/main/PNG/dplyr.png?raw=true)
+
+![](https://github.com/rstudio/hex-stickers/blob/main/PNG/tidyr.png?raw=true)
+
+![](https://github.com/rstudio/hex-stickers/blob/main/PNG/lubridate.png?raw=true)
+
+![](https://github.com/rstudio/hex-stickers/blob/main/PNG/pipe.png?raw=true)
+
+![](https://github.com/rstudio/hex-stickers/blob/main/PNG/purrr.png?raw=true)
+
+![](https://github.com/rstudio/hex-stickers/blob/main/PNG/glue.png?raw=true)
+
+:::
+
+## R Code
+
+- Get updated information    
+(if using google sheets)
+- Build LaTeX entries for each row with `glue` or `paste0` or `sprintf` 
+- Write lines to a `TeX` file    
+(escaping any special characters)
+
+## (Xe)LaTeX 
+
+- Main tex file:
+    - basic info (name, address, etc.)
+    - packages, options, special definitions
+    - Input statements to add R-created tex files for each section
+
+- For publications, use .bib file + biber
+    - could add code and manage with spreadsheet... I just didn't
+    
+# `moderncv` + `moderntimeline`
+
+::: {#moderncv layout-ncol=6}
+
+![Classic](moderncvclassic.png)
+
+![Casual](moderncvcasual.png)
+
+![Banking](moderncvbanking.png)
+
+![Old Style](moderncvoldstyle.png)
+
+![Fancy](moderncvfancy.png)
+
+![Timeline](moderntimeline.jpeg)
+:::
+
+## LaTeX
+
+```
+
+```
+
