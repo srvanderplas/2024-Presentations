@@ -1,0 +1,116 @@
+---
+format: 
+  revealjs:
+    navigation-mode: vertical
+    logo: ../libs/unl/N.svg
+    theme: ../libs/unl/inverse.scss
+    includes:
+      in_header: ../libs/unl/header.html
+    lib_dir: libs
+    embed-resources: true
+---
+
+# Blogs in Quarto
+
+## Documentation
+
+Here’s a summary of the key files created within the starter blog project:
+
+File |	Description
+---- | ----
+_quarto.yml |	Quarto project file.
+index.qmd |	Blog home page.
+about.qmd |	Blog about page.
+posts/ |	Directory containing posts
+posts/_metadata.yml |	Shared options for posts
+styles.css |	Custom CSS for website
+
+From [https://quarto.org/docs/websites/website-blog.html](https://quarto.org/docs/websites/website-blog.html)
+
+## Documentation
+
+![](https://quarto.org/docs/websites/images/myblog.png)
+
+## My dilemma
+
+- I'm too lazy/busy to actually maintain an active blog
+- Most of my writing effort goes into research papers
+- I still want an online presence that showcases my work
+
+![](https://climbingthecrazytree.files.wordpress.com/2015/08/ursula-tough-choices.gif){width=50%  fig-align="center" fig-alt="Gif of Ursula from The Little Mermaid, saying 'Life's full of tough choices, innit?"}
+
+## The Realization
+
+![](quarto-blog-layout-crop.png)
+
+![](talk-layout.png){.fragment}
+
+## The Realization {.scrollable}
+
+![](talk-post-layout.png)
+
+![](talk-layout.png)
+
+# Auto-Building Quarto Files
+
+![](SIMKP4dNU5znPHWSVZ.gif){fig-align="center"}
+
+## Talk Functions
+
+- format functions - create markup for specific fields    
+e.g. `format_post_name`, `format_abstract`, `format_slides`, `format_keywords`, `format_event`
+
+- `yaml_kv` for fixing up yaml entries properly
+
+- `talk_to_params` - create data frame with columns that map to key-value pairs
+
+- `create_talk` - creates whole qmd file from parameters
+
+- `get_image_link` - creates an image for the talk
+
+## `talk_to_params()`
+
+Goal: Format all the components of the qmd posts, keeping results in a data frame
+
+![](talk-to-params-full.svg)
+
+## `create_talk()`
+
+Goal: Create a qmd file from  a single row of data
+
+![](create-post.svg)
+
+## `get_image_link()`
+
+Goal: Get something to use as a cover image
+
+- If there is an image value in the spreadsheet:
+  - specified image link from the talk 
+  - screenshot of specific slide
+
+- Otherwise
+  - screenshot of first slide
+  - empty field
+
+
+## Paper Functions
+
+- `yaml_kv` for fixing up yaml entries properly
+
+- `pub_to_params` - create data frame with columns that map to key-value pairs
+
+- `create_paper` - creates whole qmd file from parameters
+
+## `pub_to_params()`
+
+Goal: Format all the components of the qmd post, keeping results in a data frame
+
+Works similarly to `talk_to_params()` but:
+
+- handles dates from bibtex files (not always ymd format)
+- adds bibliographic citation and bibtex code to entry text
+
+## `create_paper()`
+
+Goal: Create a qmd file from  a single row of data
+

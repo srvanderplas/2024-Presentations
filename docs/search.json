@@ -63,6 +63,48 @@
     "text": "LaTeX\nBasic Command Structure\n\n  \n    \n  \n  \n  \n    tldatecventrytlcventrycventry\n    command\n    \\\n    date\n    info fields\n    {start}{end}{year}{start--end} or {year}\n    \n    \n    \n    \n    \n    \n      \n      \n        \n        \n      \n    \n    \n    \n    \n    {field1}{field2}{field3}{field4}{field5}"
   },
   {
+    "objectID": "03-graphics-blog/index.html#documentation",
+    "href": "03-graphics-blog/index.html#documentation",
+    "title": "Building a CV/Blog Automatically",
+    "section": "Documentation",
+    "text": "Documentation\nHere’s a summary of the key files created within the starter blog project:\n\n\n\nFile\nDescription\n\n\n\n\n_quarto.yml\nQuarto project file.\n\n\nindex.qmd\nBlog home page.\n\n\nabout.qmd\nBlog about page.\n\n\nposts/\nDirectory containing posts\n\n\nposts/_metadata.yml\nShared options for posts\n\n\nstyles.css\nCustom CSS for website\n\n\n\nFrom https://quarto.org/docs/websites/website-blog.html"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#documentation-1",
+    "href": "03-graphics-blog/index.html#documentation-1",
+    "title": "Building a CV/Blog Automatically",
+    "section": "Documentation",
+    "text": "Documentation"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#my-dilemma",
+    "href": "03-graphics-blog/index.html#my-dilemma",
+    "title": "Building a CV/Blog Automatically",
+    "section": "My dilemma",
+    "text": "My dilemma\n\nI’m too lazy/busy to actually maintain an active blog\nMost of my writing effort goes into research papers\nI still want an online presence that showcases my work"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#the-realization",
+    "href": "03-graphics-blog/index.html#the-realization",
+    "title": "Building a CV/Blog Automatically",
+    "section": "The Realization",
+    "text": "The Realization"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#the-realization-1",
+    "href": "03-graphics-blog/index.html#the-realization-1",
+    "title": "Building a CV/Blog Automatically",
+    "section": "The Realization",
+    "text": "The Realization"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#functions",
+    "href": "03-graphics-blog/index.html#functions",
+    "title": "Building a CV/Blog Automatically",
+    "section": "Functions",
+    "text": "Functions\n\nformat functions - create markup for specific fields\ne.g. format_post_name, format_abstract, format_slides, format_keywords, format_event\nyaml_kv for fixing up yaml entries properly\ntalk_to_params - create data frame with columns that map to key-value pairs\ncreate_talk - creates whole qmd file from parameters\nget_image_link - creates an image for the talk"
+  },
+  {
     "objectID": "01-ICOFPE/index.html#why-data-visualization-1",
     "href": "01-ICOFPE/index.html#why-data-visualization-1",
     "title": "Cultivating Insights: Harnessing the Power of Data Visualization in Agriculture",
@@ -361,7 +403,7 @@
     "href": "index.html",
     "title": "Presentations in 2024",
     "section": "",
-    "text": "Cultivating Insights: Harnessing the Power of Data Visualization in Agriculture\n\n\n\nSusan Vanderplas\n\n\nJan 9, 2024\n\n\n\n\n\nLocation\n\n\nInternational Conference for On-Farm Precision Experimentation, Corpus Christi, TX\n\n\n\n\nTopics\n\n\ngraphics,agriculture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Git Submodules\n\n\n\nSusan Vanderplas\n\n\nFeb 8, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\ngit,reproducibility,teaching\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV with a Spreadsheet\n\n\n\nSusan Vanderplas\n\n\nFeb 15, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEscaping Flatland\n\n\n\nTyler Wiederich, Erin Blankenship & Susan Vanderplas\n\n\nJul 1, 2024\n\n\n\n\n\nLocation\n\n\nHuman Computer Interaction International, Washington DC\n\n\n\n\nTopics\n\n\nteaching,graphics,user-study\n\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Cultivating Insights: Harnessing the Power of Data Visualization in Agriculture\n\n\n\nSusan Vanderplas\n\n\nJan 9, 2024\n\n\n\n\n\nLocation\n\n\nInternational Conference for On-Farm Precision Experimentation, Corpus Christi, TX\n\n\n\n\nTopics\n\n\ngraphics,agriculture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Git Submodules\n\n\n\nSusan Vanderplas\n\n\nFeb 8, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\ngit,reproducibility,teaching\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV with a Spreadsheet\n\n\n\nSusan Vanderplas\n\n\nFeb 15, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV/Blog Automatically\n\n\n\nSusan Vanderplas\n\n\nMar 7, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEscaping Flatland\n\n\n\nTyler Wiederich, Erin Blankenship & Susan Vanderplas\n\n\nJul 1, 2024\n\n\n\n\n\nLocation\n\n\nHuman Computer Interaction International, Washington DC\n\n\n\n\nTopics\n\n\nteaching,graphics,user-study\n\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "07-HCII/index.html#references",
@@ -369,5 +411,47 @@
     "title": "Escaping Flatland",
     "section": "",
     "text": "Carswell, C., Sylvia Frankenberger, and Donald Bernhard. 1991. “Graphing in Depth: Perspectives on the Use of Three-Dimensional Graphs to Represent Lower-Dimensional Data.” Behaviour & Information Technology 10: 459–74. https://doi.org/10.1080/01449299108924304.\n\n\nDay, Ross H, and Erica J Stecher. 1991. “Sine of an Illusion.” Perception 20 (1): 49–55. https://doi.org/10.1068/p200049.\n\n\nFischer, M. H. 2000. “Do Irrelevant Depth Cues Affect the Comprehension of Bar Graphs.” Applied Cognitive Psychology 14: 151–62. https://doi.org/10.1002/(SICI)1099-0720(200003/04)14:2&lt;151::AID-ACP629&gt;3.0.CO;2-Z.\n\n\nVanderPlas, Susan, and Heike Hofmann. 2015. “Signs of the Sine IllusionWhy We Need to Care.” Journal of Computational and Graphical Statistics 24 (4): 1170–90. https://doi.org/10.1080/10618600.2014.951547.\n\n\nZacks, Jeff, Ellen Levy, Barbara Tversky, and Diane J. Schiano. 1998. “Reading Bar Graphs: Effects of Extraneous Depth Cues and Graphical Context.” Journal of Experimental Psychology: Applied 4 (2): 119–38. https://doi.org/10.1037/1076-898X.4.2.119."
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#talk_to_params",
+    "href": "03-graphics-blog/index.html#talk_to_params",
+    "title": "Building a CV/Blog Automatically",
+    "section": "talk_to_params()",
+    "text": "talk_to_params()\nGoal: Format all the components of the qmd posts, keeping results in a data frame\n\nformat_post_name(x)format_slides(x)format_event(df)nametitleauthordateabstractslidesurlimagekeywordseventformat_abstract(x)talk_to_params(df)format_keywords(x)"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#create_talk",
+    "href": "03-graphics-blog/index.html#create_talk",
+    "title": "Building a CV/Blog Automatically",
+    "section": "create_talk()",
+    "text": "create_talk()\nGoal: Create a qmd file from a single row of data\n\nget_img_link(params, path)yaml_kv(key, value)create_talk(params, path)titleauthordateabstractslidesurlimagekeywordsevent"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#get_image_link",
+    "href": "03-graphics-blog/index.html#get_image_link",
+    "title": "Building a CV/Blog Automatically",
+    "section": "get_image_link()",
+    "text": "get_image_link()\nGoal: Get something to use as a cover image\n\nIf there is an image value in the spreadsheet:\n\nspecified image link from the talk\nscreenshot of specific slide\n\nOtherwise\n\nscreenshot of first slide\nempty field"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#pub_to_params",
+    "href": "03-graphics-blog/index.html#pub_to_params",
+    "title": "Building a CV/Blog Automatically",
+    "section": "pub_to_params()",
+    "text": "pub_to_params()\nGoal: Format all the components of the qmd post, keeping results in a data frame\nWorks similarly to talk_to_params() but:\n\nhandles dates from bibtex files (not always ymd format)\nadds bibliographic citation and bibtex code to entry text"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#talk-functions",
+    "href": "03-graphics-blog/index.html#talk-functions",
+    "title": "Building a CV/Blog Automatically",
+    "section": "Talk Functions",
+    "text": "Talk Functions\n\nformat functions - create markup for specific fields\ne.g. format_post_name, format_abstract, format_slides, format_keywords, format_event\nyaml_kv for fixing up yaml entries properly\ntalk_to_params - create data frame with columns that map to key-value pairs\ncreate_talk - creates whole qmd file from parameters\nget_image_link - creates an image for the talk"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#paper-functions",
+    "href": "03-graphics-blog/index.html#paper-functions",
+    "title": "Building a CV/Blog Automatically",
+    "section": "Paper Functions",
+    "text": "Paper Functions\n\nyaml_kv for fixing up yaml entries properly\npub_to_params - create data frame with columns that map to key-value pairs\ncreate_paper - creates whole qmd file from parameters"
   }
 ]
