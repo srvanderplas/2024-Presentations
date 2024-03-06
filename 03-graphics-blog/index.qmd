@@ -93,9 +93,28 @@ Goal: Get something to use as a cover image
   - empty field
 
 
+## Paper Layout
+
+![](paper-layout.png)
+
+
+![](bibtex-layout.png){.fragment}
+
+
+## Paper Layout
+::: {layout-ncol=2}
+
+![](paper-post-layout.png)
+
+![](bibtex-layout.png)
+:::
+
 ## Paper Functions
 
 - `yaml_kv` for fixing up yaml entries properly
+
+- format functions - create markup for specific fields    
+e.g. `format_title`, `format_github`, `format_addendum`, `format_citation`, `format_bibtex
 
 - `pub_to_params` - create data frame with columns that map to key-value pairs
 
@@ -113,4 +132,114 @@ Works similarly to `talk_to_params()` but:
 ## `create_paper()`
 
 Goal: Create a qmd file from  a single row of data
+
+::: {layout-ncol=2}
+
+![](yaml-layout-paper.png)
+
+![](paper-post-layout.png)
+
+:::
+
+
+# Github Actions
+
+![](big-brain.gif)
+
+## General Process
+
+![](actions-workflow.svg)
+
+## In cv-data repository {.scrollable .small}
+
+```
+name: 'Trigger update of CV and srvanderplas.github.io'
+
+on:
+  push:
+    branches: main
+      
+jobs:
+  trigger_workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo workflow name
+        shell: bash
+        run: |
+          echo "I am workflow of cv-data"
+      - name: Trigger site repo build
+        uses: convictional/trigger-workflow-and-wait@v1.6.1
+        with: # Set up for each dependency
+          owner: srvanderplas
+          repo: srvanderplas.github.io
+          github_token: ${{ secrets.GH_TOKEN }}
+          workflow_file_name: publish.yml
+          ref: main
+          wait_interval: 100
+          propagate_failure: false
+          trigger_workflow: true
+          wait_workflow: false
+
+```
+
+## In repos using cv-data submodules:
+
+The important part:
+
+```
+on:
+  workflow_dispatch:
+  push:
+    branches: main
+```
+
+Everything else:
+```
+name: Quarto Publish
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Install libcurl on Linux
+        if: runner.os == 'Linux'
+        run: sudo apt-get update -y && sudo apt-get install -y libcurl4-openssl-dev
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: false
+
+      - name: Quarto version
+        run: |
+          quarto --version
+
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Setup renv
+        uses: r-lib/actions/setup-renv@v2
+        with:
+          cache-version: 1
+
+      - name: Publish
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+        env:
+          GS_AUTH: ${{ secrets.GS_AUTH }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
 

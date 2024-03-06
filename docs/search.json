@@ -452,6 +452,48 @@
     "href": "03-graphics-blog/index.html#paper-functions",
     "title": "Building a CV/Blog Automatically",
     "section": "Paper Functions",
-    "text": "Paper Functions\n\nyaml_kv for fixing up yaml entries properly\npub_to_params - create data frame with columns that map to key-value pairs\ncreate_paper - creates whole qmd file from parameters"
+    "text": "Paper Functions\n\nyaml_kv for fixing up yaml entries properly\nformat functions - create markup for specific fields\ne.g. format_title, format_github, format_addendum, format_citation, `format_bibtex\npub_to_params - create data frame with columns that map to key-value pairs\ncreate_paper - creates whole qmd file from parameters"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#paper-layout",
+    "href": "03-graphics-blog/index.html#paper-layout",
+    "title": "Building a CV/Blog Automatically",
+    "section": "Paper Layout",
+    "text": "Paper Layout"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#paper-layout-1",
+    "href": "03-graphics-blog/index.html#paper-layout-1",
+    "title": "Building a CV/Blog Automatically",
+    "section": "Paper Layout",
+    "text": "Paper Layout"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#create_paper",
+    "href": "03-graphics-blog/index.html#create_paper",
+    "title": "Building a CV/Blog Automatically",
+    "section": "create_paper()",
+    "text": "create_paper()\nGoal: Create a qmd file from a single row of data"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#general-process",
+    "href": "03-graphics-blog/index.html#general-process",
+    "title": "Building a CV/Blog Automatically",
+    "section": "General Process",
+    "text": "General Process\n\ncv-data submodulesrvanderplas.github.ioCVcv-data submodulecv-databuild sitebuild document"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#in-cv-data-repository",
+    "href": "03-graphics-blog/index.html#in-cv-data-repository",
+    "title": "Building a CV/Blog Automatically",
+    "section": "In cv-data repository",
+    "text": "In cv-data repository\nname: 'Trigger update of CV and srvanderplas.github.io'\n\non:\n  push:\n    branches: main\n      \njobs:\n  trigger_workflow:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Echo workflow name\n        shell: bash\n        run: |\n          echo \"I am workflow of cv-data\"\n      - name: Trigger site repo build\n        uses: convictional/trigger-workflow-and-wait@v1.6.1\n        with: # Set up for each dependency\n          owner: srvanderplas\n          repo: srvanderplas.github.io\n          github_token: ${{ secrets.GH_TOKEN }}\n          workflow_file_name: publish.yml\n          ref: main\n          wait_interval: 100\n          propagate_failure: false\n          trigger_workflow: true\n          wait_workflow: false"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#in-repos-using-cv-data-submodules",
+    "href": "03-graphics-blog/index.html#in-repos-using-cv-data-submodules",
+    "title": "Building a CV/Blog Automatically",
+    "section": "In repos using cv-data submodules:",
+    "text": "In repos using cv-data submodules:\nThe important part:\non:\n  workflow_dispatch:\n  push:\n    branches: main\nEverything else:\nname: Quarto Publish\n\njobs:\n  build-deploy:\n    runs-on: ubuntu-latest\n\n    permissions:\n      contents: write\n\n    steps:\n      - name: Install libcurl on Linux\n        if: runner.os == 'Linux'\n        run: sudo apt-get update -y && sudo apt-get install -y libcurl4-openssl-dev\n\n      - name: Set up Quarto\n        uses: quarto-dev/quarto-actions/setup@v2\n        with:\n          tinytex: false\n\n      - name: Quarto version\n        run: |\n          quarto --version\n\n      - name: Check out repository\n        uses: actions/checkout@v4\n        with:\n          submodules: recursive\n          token: ${{ secrets.GITHUB_TOKEN }}\n\n      - name: Install R\n        uses: r-lib/actions/setup-r@v2\n        with:\n          use-public-rspm: true\n\n      - name: Setup renv\n        uses: r-lib/actions/setup-renv@v2\n        with:\n          cache-version: 1\n\n      - name: Publish\n        uses: quarto-dev/quarto-actions/publish@v2\n        with:\n          target: gh-pages\n        env:\n          GS_AUTH: ${{ secrets.GS_AUTH }}\n          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}"
   }
 ]
