@@ -1,0 +1,3 @@
+name: RevealFullscreen
+script: [fullscreen.js]
+stylesheet: ["fullscreen.css"]

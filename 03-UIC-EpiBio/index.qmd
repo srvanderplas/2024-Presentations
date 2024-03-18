@@ -1,0 +1,853 @@
+---
+bibliography: refs.bib
+from: markdown+emoji
+format: 
+  revealjs:
+    navigation-mode: vertical
+    logo: ../libs/unl/N.svg
+    theme: ../libs/unl/inverse.scss
+    includes:
+      in_header: ../libs/unl/header.html
+    lib_dir: ../libs
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = F, cache = T, 
+                      dpi = 300, fig.width = 6, fig.height = 15/4, 
+                      message = F, warning = F, 
+                      dev.args=list(bg="transparent"))
+
+# Read in the data from NYT
+library(tidyverse)
+library(lubridate)
+library(zoo)
+library(ggrepel)
+library(gridExtra)
+
+my_theme <- theme_bw() + 
+  theme(plot.background = element_rect(fill = "transparent", color = NA), 
+        panel.background = element_rect(fill = "transparent", color = NA), 
+        legend.background = element_rect(fill = "transparent", color = NA),
+        axis.text.y = element_text(angle = 90, hjust = 0.5)) 
+theme_set(my_theme)
+
+```
+
+```{r colorpals, include = F}
+main_colors <- c("#d00000", "#f5f1e7", "#c7c8ca")
+
+# use as accents
+secondary_colors <- c("#001226", "#249ab5")
+
+# These are only to be used for infographics/charts
+tertiary_colors <- c("#bccb2a", "#f58a1f", "#005d84", "#ffd74f", "#a5228d")
+
+color_palette <- c("#d00000", "#249ab5",  "#1B8500", "#f58a1f", "#a5228d", "#001226", "#B1EB66", "#005d84", "#c25700")
+
+heat_color_palette <- c("#ffd74f", "#f58a1f", "#c25700", "#d00000", "#9D0000", "#6A0000")
+
+blueseqpal <- c("001226", "06293E", "0C3F56", "12566E", "186D85", "1E839D", 
+                "249AB5", 
+                "39ABC1", "4EBCCE", "64CDDA", "79DDE6", "8EEEF3", "A3FFFF") %>% 
+  paste0("#", .) %>% rev()
+
+blueseqpal_lt <- rev(c("#B2FFFF", "#C2FFFF", "#D1FFFF", "#E0FFFF", "#F0FFFF"))
+
+darkblueseqpal <- colorspace::darken(blueseqpal, .2)
+lightblueseqpal <- colorspace::lighten(blueseqpal, .2)
+```
+
+# Outline {.center}
+
+```{css}
+@import url('https://fonts.googleapis.com/css2?family=Handlee&family=Montserrat:ital,wght@0,400;0,500;1,400;1,500&family=Roboto:ital,wght@0,500;1,500&display=swap');
+```
+
+::: columns
+::: {.column width="60%"}
+1.  [How Do We Test Graphics?](#testing)
+
+2.  [Multimodal Testing In Practice](#logscales)
+
+3.  [Challenges of Multimodal Testing](#challenges)
+:::
+
+::: {.column width="40%"}
+```{r}
+#| fig-width: 5
+#| fig-height: 5
+#| fig-align: 'center'
+#| echo: false
+#| message: false
+#| warning: false
+library(qrcode)
+code <- qr_code("https://srvanderplas.github.io/Presentations/2023-12-ASC/")
+plot(code)
+```
+:::
+:::
+
+# How Do We Test Graphics? {#testing .center}
+
+![](fig/Chart-Perception-Process.svg)
+
+## Lineups
+
+::: columns
+::: {.column width="50%"}
+![Question: Can participants identify different growth rates on a linear scale?](fig/linear-lineup-example.png)
+:::
+
+::: {.column .smaller width="50%"}
+[A "Visual Hypothesis Test"]{.cerulean .emph}
+
+-   Embed the question in array of charts
+
+-   Can people identify the different plot?
+
+-   Null model can be tricky to create
+
+-   Test statistic is the visual evaluation
+
+::: small
+@bujaStatisticalInferenceExploratory2009\
+@loyDiagnosticToolsHierarchical2013\
+@majumderValidationVisualStatistical2013\
+@vanderplasClustersBeatTrend2017\
+@vanderplasStatisticalSignificanceCalculations2021
+:::
+:::
+:::
+
+## Numerical Estimation
+
+::: columns
+::: column
+![@eellsRelativeMeritsCircles1926](fig/Eells_1926.png){width="80%" fig-align="center"}
+
+![@vonhuhnFurtherStudiesGraphic1927](fig/vonHuhn_1927.png){width="80%" fig-align="center"}
+:::
+
+::: column
+::: smaller
+-   Size of region?\
+    @eellsRelativeMeritsCircles1926; @croxtonBarChartsCircle1927; @vanderplasFramedReproducingRevisiting2019
+-   With scales?\
+    @vonhuhnFurtherStudiesGraphic1927
+-   Size of relationship compared to another region\
+    @croxtonGraphicComparisonsBars1932
+-   Very sensitive to question phrasing
+:::
+:::
+:::
+
+## Forced Choice
+
+::: columns
+::: column
+![Which bar is larger? @hughesJustNoticeableDifferences2001](fig/hughes_2001_larger.png){width="30%" fig-align="center"}
+
+![@hegartyChoosingUsingGeospatial2012](fig/padilla-visual-fit.png){width="100%" fig-align="center"}
+:::
+
+::: column
+::: smaller
+-   Force participants to answer a specific question
+
+-   May be a size judgment (which is larger?)
+
+    -   common in psychophysics experiments
+
+-   May be a more complex decision incorporating other information
+
+@hughesJustNoticeableDifferences2001\
+@xiongBiasedAveragePosition2020\
+@luModelingJustNoticeable2022
+:::
+:::
+:::
+
+## Eye Tracking
+
+::: columns
+::: {.column width="60%"}
+-   Infer cognitive processes from directed (conscious) attention
+
+-   May be accompanied by direct estimation or other protocols
+
+<!-- - Can be combined with other methods -->
+
+::: smaller
+@gegenfurtnerExpertiseDifferencesComprehension2011\
+@goldbergEyeTrackingVisualization2011\
+@zhaoMindReadingUsing2013a\
+@netzelComparativeEyetrackingEvaluation2017\
+@liuChoosingOptimalMeans2023
+:::
+:::
+
+::: {.column width="40%"}
+![@goldbergComparingInformationGraphics2010](fig/Goldberg_2010.png){width="90%"}
+
+![@wollercarterCommunicatingDistortingRisks2012](fig/woller_2012.png){width="90%"}
+:::
+:::
+
+## Think Aloud and Free Response
+
+-   Stream of consciousness narration [@guanValidityStimulatedRetrospective2006; @cookeAssessingConcurrentThinkAloud2010]{.smaller}
+
+-   Reasoning to justify a decision
+
+![Why did you choose this panel? @vanderplasClustersBeatTrend2017](fig/vanderplas_2017.png)
+
+## Direct Annotation
+
+::: columns
+::: column
+![@mostellerEyeFittingStraight1981](fig/Mosteller_1981.png)
+:::
+
+::: {.column .smaller}
+-   Have participants visually fit statistics
+
+    -   Usually directly annotating the chart with e.g. a regression line
+
+-   Compare visual statistics to numerical calculations
+
+-   Differences tell us about our implicit perception of data\
+    [e.g. visual regression is more robust to outliers]{.smaller}
+
+-   Also useful as a teaching tool
+
+::: smaller
+@bajgierVisualFitsTeaching1989\
+@robinsonEyeFittingStraight2022\
+@robinsonYouDrawIt2023
+:::
+:::
+:::
+
+## How Do We Test Graphics?
+
+![](fig/Chart-Perception-Process.svg)
+
+-   Testing method needs to be matched to level of engagement
+
+-   Need to examine graphical choices across levels of engagement
+
+# Multimodal Graphical Testing <br>[in Practice]{.emph .cerulean .center} {#logscales .center}
+
+## Perception: Exp. Growth & Log Scales {.r-fit-text}
+
+::: {.large .cerulean .emph .fragment}
+3 different ways of engaging with the data
+:::
+
+Can we
+
+-   Q1: **perceive** differences in [    ... Perceptual]{.fragment .emph .red}
+-   Q2: **forecast** trends from [    ... Tactile]{.fragment .emph .green}
+-   Q3: **estimate** and **use** [    ... Numerical]{.fragment .emph .blue}
+
+graphs of exponential growth with log and linear scales?
+
+[300 participants completed all 3 experiments]{.fragment .emph .cerulean}
+
+::: notes
+I'm a huge fan of lineups, but one of the issues I had with the COVID graphs I was seeing was that I wasn't convinced people were *interpreting* the data correctly.
+
+I started thinking about why lineups wouldn't test things at the level I was hoping for, and eventually came up with this hierarchy - first, you have to be able to recognize that there is a difference between two things. Then, you have to be able to predict and forecast to map "data from the past" onto the future. Finally, you have to actually be able to read data off of the graph and act on it - doing numerical calculations and the like.
+
+These are distinct psychological tasks, and they require different ways of interacting with a chart. So I'm going to describe 3 experiments that we've conducted relating to log scales.
+
+These experiments were inspired by COVID, but we worked hard to not go anywhere near COVID data because while we were designing these experiments, it was a bit emotionally loaded. Even now that pandemic measures have ended, it's still too politically sensitive to touch, so we'll continue using non-covid data on follow-up studies.
+:::
+
+## Q1: Perception of Differences {.center}
+
+## Q1: Perception of Differences
+
+::: {layout-ncol="2"}
+![Log Scale](fig/log-lineup-example.png)
+
+![Linear Scale](fig/linear-lineup-example.png)
+:::
+
+::: notes
+Our first level of engagement is basic perception - can we actually distinguish different growth rates/levels of curvature on a linear and log scale. This is the most basic thing -- if we can't do this, then we probably won't be able to predict things well or read information off the graph well (though, that last point is arguable).
+
+-   Factorial Experiment:
+    -   Log/linear scale (2 levels)
+    -   Lineup composition: (6 levels)
+        -   Target plot - high, medium, low curvature
+        -   Null plots - high, medium, low curvature
+        -   Exclude combinations where target/null are the same
+    -   Low/High variability (2 levels)
+-   Included 6 Rorschach plots (3 curvature levels x log or linear scale)
+
+[12 lineups + 1 Rorshcach plots = 13 evaluations per person]{.emph .cerulean}
+
+Here are a couple of example lineups from this experiment - the first is on a linear scale, the 2nd is on a log scale. While I generally tried throughout these experiments to make it clear that we were on a log scale, it is a very subtle difference in these lineups, and fixing that wasn't necessarily relevant to the question at hand -- since all sub-panels have the same axis breaks, we're actually testing whether we can distinguish the data, not the scales.
+:::
+
+<!-- XXX Go create a chart showing experiment layout factors XXX -->
+
+## Q1: Perception of Differences {.r-fit-text}
+
+```{r odds-ratio-plot, eval = F, fig.width = 5, fig.height = 2, fig.align='center', message = F, warning = F}
+library(tidyverse)
+slice_curvature <- read_csv("results/jsm-student-paper-slicediffs.csv") %>%
+  select(SimpleEffectLevel, test_param,	"_test_param", OddsRatio,	Alpha,	Lower,	Upper,	AdjLower,	AdjUpper,	LowerOR,	UpperOR,	AdjLowerOR,	AdjUpperOR) %>%
+  na.omit() %>%
+  extract(SimpleEffectLevel, into = c("Target", "Null"), "curvature t-([MEH])_n-([EMH])", remove = F) %>%
+  mutate(Target = factor(Target, levels = c("E", "M", "H"), labels = c("High", "Medium", "Low")),
+         Null = factor(Null, levels = c("E", "M", "H"), labels = c("High", "Medium", "Low")))
+
+dodge <- position_dodge(width=0.9)
+odds_ratio_plot <- slice_curvature %>%
+  ggplot(aes(x = OddsRatio, y = Null, color = Target, shape = Target)) + 
+  geom_point(position = dodge, size = 3) + 
+  geom_errorbar(aes(xmin = LowerOR, xmax = UpperOR), position = dodge, width = .1) +
+  geom_vline(xintercept = 1) +
+  theme_bw()  +
+  theme(axis.title = element_text(size = 8),
+        axis.text = element_text(size = 8),
+        legend.title = element_text(size = 8),
+        legend.text  = element_text(size = 8),
+        legend.key.size = unit(0.7, "line")
+        ) +
+  scale_y_discrete("Null Plot Curvature") +
+  scale_x_continuous("Odds ratio (on log scale) \n (Log vs Linear)", trans = "log10") + 
+  scale_color_manual("Target Plot Curvature", values = c("#004400", "#116611", "#55aa55")) + 
+  scale_shape_discrete("Target Plot Curvature")
+odds_ratio_plot
+```
+
+![](fig/odds-ratio-plot-full.png)
+
+[Conclusion:]{.emph .cerulean} It's easier to spot a curve among lines than it is to spot a line among curves
+
+@robinsonPerceptionCognitiveImplications2023 [ ]{.smaller}\[[Under review]{.smaller}\]
+
+::: notes
+We used a generalized linear mixed effects model to assess the probability of a correct target identification given factors like target and null plot type, participant skill level, and random effects due to the data generating process. The plot shown here is the resulting log odds ratio for log vs. linear scales, and we see that it is easier to detect curvature among a field of null lines than it is to detect linearity among a field of curved lines. In addition, we see that when there is a lot of contrast between the null and the target plot, that is, when the nulls are very curved and the target is very straight, there isn't much difference between the two graphs. However, if there is less contrast, the log scale allows us to perceive the differences better than the linear scale.
+
+-   Log scales make us more sensitive to slight changes in curvature:
+    -   Low Curvature Null vs. Medium Curvature Target on log scale is curve vs. line\
+        (it's hard to see the straight-line target vs. the curved nulls)
+    -   With Medium or High curvature Null plots, it's easier to spot the target on the log scale than on the linear scale
+:::
+
+## Q2: Forecasting Exponential Trends {.center}
+
+::: notes
+The next question we had was whether we can accurately predict/forecast exponential trends. This study is quite different from the last one - users were asked to draw lines on graphs interactively.
+:::
+
+## Q2: Inspiration {.smaller}
+
+::: columns
+::: column
+-   [D. J. Finney (1951) Subjective Judgment in Statistical Analysis: An Experimental Study. *Journal of the Royal Statistical Society*](https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.2517-6161.1951.tb00093.x)
+
+-   [Frederick Mosteller et al. (1981) Eye Fitting Straight Lines. *The American Statistician*](https://www.tandfonline.com/doi/abs/10.1080/00031305.1981.10479335)
+
+-   New York Times' 'You Draw It' features:
+
+    -   [Family Income affects college chances](https://www.nytimes.com/interactive/2015/05/28/upshot/you-draw-it-how-family-income-affects-childrens-college-chances.html)
+    -   [Just How Bad Is the Drug Overdose Epidemic?](https://www.nytimes.com/interactive/2017/04/14/upshot/drug-overdose-epidemic-you-draw-it.html)
+    -   [What Got Better or Worse During Obama's Presidency](https://www.nytimes.com/interactive/2017/01/15/us/politics/you-draw-obama-legacy.html?_r=0)
+:::
+
+::: column
+![](fig/NYT_YDI_ex.gif)
+:::
+:::
+
+::: notes
+There have been a number of statistical experiments with "eye fitting" regression models. The first was driven by the desire to reduce computation time; the second is much more psychological in nature. That study had students line up a transparency with a straight line on it to fit a regression line to some data. They found that students tended to fit the slope of the first PC rather than the least squares line.
+
+More recently, The New York Times has used a really cool setup to have people predict data before showing them the actual trend. They use javascript and have people draw directly on the plot. The line can be curved, jagged, etc. - it's not restricted to a strictly linear set-up. We decided to adopt this approach because we didn't want to impose a specific functional form, because it's not totally clear that people are thinking exponentially or are actually good at drawing exponential curves.
+
+The methods changed a bit, but the basic concept is the same.
+:::
+
+```{r, include = F}
+
+library(RSQLite)
+library(DBI)
+library(here)
+library(readr)
+library(digest)
+
+library(openssl)
+library(mgcv)
+library(lme4)
+`%notin%` <- Negate(`%in%`)
+
+
+estimation_data <- read.csv("https://raw.githubusercontent.com/earobinson95/log-perception-prolific/main/analyses/03-estimation/data/estimation-model-data.csv", na = "")
+```
+
+## Q2: Forecasting (You-Draw-It) Goals
+
+1.  Replicate Eye Fitting Straight Lines using the you-draw-it tool (4 charts) @robinsonEyeFittingStraight2022
+
+2.  Explore exponential growth predictions on log and linear scale (8 charts)
+
+    -   Points end 50% or 75% of the way across x-axis
+    -   Rate of growth of $\beta$ = 0.1, 0.23
+    -   Log or Linear scale
+
+[12 total graphs to complete]{.emph .cerulean .large}
+
+::: notes
+First, we wanted to validate the "Eye fitting straight lines" method using You Draw it, by using datasets from the 1981 study, on the original linear scale. This would serve as a validation of the method and also help us test out our analysis method on data that was a bit more straightforward.
+
+Then, the (main) goal is to see how terrible we are at predicting exponential growth when using a log scale and a linear scale.
+
+We set things up with varying amounts of data -- so you have data to base your regression line up to either halfway or 3/4 of the way through the graph, and you have to then extend beyond the data by 25% or 50%.
+
+We used two different rates of growth, and then either had a graph with a log or linear scale.
+
+If you're keeping track, then there are 4 straight lines, and 8 sets of exponential data (generated on the fly from basic parameters). We saved both the data shown on the plot and the drawn smooth lines.
+:::
+
+## Q2: Forecasting (You-Draw-It)
+
+::: {layout-ncol="2"}
+![Data from Mosteller et al. (1981)](fig/linear1-orig.gif)
+
+![Exp data, linear scale, 50% complete](fig/exponential-orig.gif)
+:::
+
+```{r coord_cartesian_panels}
+# From https://gist.github.com/r2evans/6057f7995c117bb787495dc14a228d5d
+coord_cartesian_panels <- function(..., panel_limits = NULL,
+                                   expand = TRUE, default = FALSE, clip = "on") {
+  if (is.null(panel_limits)) panel_limits <- tibble::tibble(...)
+  ggplot2::ggproto(NULL, UniquePanelCoords,
+                   panel_limits = panel_limits,
+                   expand = expand, default = default, clip = clip)
+}
+
+UniquePanelCoords <- ggplot2::ggproto(
+  "UniquePanelCoords", ggplot2::CoordCartesian,
+  
+  num_of_panels = 1,
+  panel_counter = 1,
+  layout = NULL,
+  
+  setup_layout = function(self, layout, params) {
+    self$num_of_panels <- length(unique(layout$PANEL))
+    self$panel_counter <- 1
+    self$layout <- layout # store for later
+    layout
+  },
+  
+  setup_panel_params =  function(self, scale_x, scale_y, params = list()) {
+    train_cartesian <- function(scale, limits, name, given_range = c(NA, NA)) {
+      if (anyNA(given_range)) {
+        expansion <- ggplot2:::default_expansion(scale, expand = self$expand)
+        range <- ggplot2:::expand_limits_scale(scale, expansion, coord_limits = limits)
+        isna <- is.na(given_range)
+        given_range[isna] <- range[isna]
+      }
+      # https://stackoverflow.com/a/75861761/3358272
+      if (scale$is_discrete()) limits <- scale$get_limits()
+      #
+      out <- list(
+        ggplot2:::view_scale_primary(scale, limits, given_range),
+        sec = ggplot2:::view_scale_secondary(scale, limits, given_range),
+        arrange = scale$axis_order(),
+        range = given_range
+      )
+      names(out) <- c(name, paste0(name, ".", names(out)[-1]))
+      out
+    }
+
+    this_layout <- self$layout[ self$panel_counter,, drop = FALSE ]
+    self$panel_counter <- 
+      if (self$panel_counter < self$num_of_panels) {
+        self$panel_counter + 1
+      } else 1
+
+    # determine merge column names by removing all "standard" names
+    layout_names <- setdiff(names(this_layout),
+                            c("PANEL", "ROW", "COL", "SCALE_X", "SCALE_Y"))
+    limits_names <- setdiff(names(self$panel_limits),
+                            c("xmin", "xmax", "ymin", "ymax"))
+
+    limits_extras <- setdiff(limits_names, layout_names)
+    if (length(limits_extras) > 0) {
+      stop("facet names in 'panel_limits' not found in 'layout': ",
+           paste(sQuote(limits_extras), collapse = ","))
+    } else if (length(limits_names) == 0 && NROW(self$panel_limits) == 1) {
+      # no panels in 'panel_limits'
+      this_panel_limits <- cbind(this_layout, self$panel_limits)
+    } else {
+      this_panel_limits <- merge(this_layout, self$panel_limits, all.x = TRUE, by = limits_names)
+    }
+
+    if (isTRUE(NROW(this_panel_limits) > 1)) {
+      stop("multiple matches for current panel in 'panel_limits'")
+    }
+
+    # add missing min/max columns, default to "no override" (NA)
+    this_panel_limits[, setdiff(c("xmin", "xmax", "ymin", "ymax"),
+                                names(this_panel_limits)) ] <- NA
+
+    c(train_cartesian(scale_x, self$limits$x, "x",
+                      unlist(this_panel_limits[, c("xmin", "xmax"), drop = TRUE])),
+      train_cartesian(scale_y, self$limits$y, "y",
+                      unlist(this_panel_limits[, c("ymin", "ymax"), drop = TRUE])))
+  }
+)
+```
+
+## Q2: Forecasting (You-Draw-It)
+
+```{r, fig.width = 6, fig.height = 4, out.width = "100%"}
+#| fig-width: 10
+#| fig-height: 6
+#| out-width: 100%
+participant_data <- read_csv("https://github.com/earobinson95/log-perception-prolific/raw/main/analyses/02a-you-draw-it/data/youdrawit-model-data.csv")
+
+# sim_data
+participant_data <- participant_data %>%
+  mutate(points = ifelse(points_truncated == 10, "Points to 50% of x", "Points to 75% of x") %>%
+           factor(levels = c("Points to 75% of x", "Points to 50% of x")),
+         curve = ifelse(beta == "beta0.1", "Slight Curve", "Very Curved") %>%
+           factor(levels = c("Slight Curve", "Very Curved"))) 
+
+p <- 
+  ggplot(participant_data, 
+       aes(x = x, group = interaction(participant_id, plot_id), color = scale, fill = scale)) +
+  geom_line(aes(y = ydrawn), alpha = 0.1) +
+  facet_grid(curve ~ points, scales = "free") +
+  scale_color_manual("Scale", values = c("steelblue", "darkorange")) + 
+  scale_y_continuous("Drawn Lines") +
+  guides(color = guide_legend(override.aes = list(alpha = 1))) + 
+  theme_bw() + 
+  theme(axis.title.x = element_blank(), legend.position = c(0, 1), legend.justification = c(0,1))
+
+p + 
+coord_cartesian_panels(
+  panel_limits = tibble::tribble(
+    ~curve, ~points, ~ymin, ~ymax
+  , "Slight Curve"      , "Points to 50% of x"     ,     0, 15
+  , "Slight Curve"      , "Points to 75% of x"     ,     0, 15 
+  , "Very Curved"      , "Points to 50% of x"     ,     0, 200
+  , "Very Curved"      , "Points to 75% of x"     ,     0, 200
+  )
+)
+```
+
+::: notes
+Here, I'm showing you the actual drawn lines for each of the exponential conditions, and you can see that there are a few interesting features:
+
+1.  Not everyone drew very smooth lines -- we probably need to do some data cleaning based on the number of sharp "jumps" in the data -- possibly excluding those cases or smoothing over them.
+
+2.  The amount of deviation in the final prediction value is (surprisingly) not much larger when there is less data -- this was really shocking for me
+
+3.  Linear scale predictions seem to be lower than log scale predictions, in particular when beta is higher -- it's not that noticeable when beta is low. So the under-prediction bias is stronger for linear scales than it is for log scales. That doesn't necessarily mean that everyone underpredicts, but you do see way more orange lines on top in the lower right panel.
+:::
+
+```{r exponential-data, message=FALSE, warning=FALSE, echo = F}
+youdrawit_model_data      <- read_csv("https://raw.githubusercontent.com/earobinson95/log-perception-prolific/main/analyses/02a-you-draw-it/data/youdrawit-model-data.csv")  %>%
+  mutate(points = ifelse(points_truncated == 10, "Points to 50% of x", "Points to 75% of x") %>%
+           factor(levels = c("Points to 75% of x", "Points to 50% of x")),
+         curve = ifelse(beta == "beta0.1", "Slight Curve", "Very Curved") %>%
+           factor(levels = c("Slight Curve", "Very Curved")))
+
+youdrawit_simulated_band <- youdrawit_model_data %>%
+  group_by(curve, points, x) %>%
+  summarize(min_ynls = min(ynls),
+            max_ynls = max(ynls))
+
+youdrawit_simulated_data  <- read_csv("https://raw.githubusercontent.com/earobinson95/log-perception-prolific/main/analyses/02a-you-draw-it/data/youdrawit-simulated-data.csv")  %>%
+  mutate(points = ifelse(points_truncated == 10, "Points to 50% of x", "Points to 75% of x") %>%
+           factor(levels = c("Points to 75% of x", "Points to 50% of x")),
+         curve = ifelse(beta == "beta0.1", "Slight Curve", "Very Curved") %>%
+           factor(levels = c("Slight Curve", "Very Curved")))
+
+youdrawit_preds_gamm_0.1  <- read_csv("https://raw.githubusercontent.com/earobinson95/log-perception-prolific/main/analyses/02a-you-draw-it/data/youdrawit-exponential-prediction-gamm-preds-0.1.csv") %>%
+  mutate(points = ifelse(points_truncated == 10, "Points to 50% of x", "Points to 75% of x") %>%
+           factor(levels = c("Points to 75% of x", "Points to 50% of x")),
+         curve = ifelse(beta == "beta0.1", "Slight Curve", "Very Curved") %>%
+           factor(levels = c("Slight Curve", "Very Curved")))
+
+youdrawit_preds_gamm_0.23 <- read_csv("https://raw.githubusercontent.com/earobinson95/log-perception-prolific/main/analyses/02a-you-draw-it/data/youdrawit-exponential-prediction-gamm-preds-0.23.csv") %>%
+  mutate(points = ifelse(points_truncated == 10, "Points to 50% of x", "Points to 75% of x") %>%
+           factor(levels = c("Points to 75% of x", "Points to 50% of x")),
+         curve = ifelse(beta == "beta0.1", "Slight Curve", "Very Curved") %>%
+           factor(levels = c("Slight Curve", "Very Curved")))
+
+```
+
+## Q2: Forecasting (You-Draw-It)
+
+```{r}
+#| fig-width: 10
+#| fig-height: 6
+#| out-width: 100%
+set.seed(68505)
+participant_sample2 <- sample(unique(youdrawit_model_data$prolific_id), 150)
+
+p <- ggplot(youdrawit_model_data, 
+       aes(x = x, group = scale, color = scale, fill = scale)) +
+  geom_line(aes(x = x, y = residual_nls_drawn, group = plot_id), alpha = 0.1) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  facet_grid(curve ~ points, scales = "free") +
+  theme_bw() +
+  theme(axis.title.x = element_blank(), legend.position = c(0, 1), legend.justification = c(0,1)) +
+  scale_y_continuous("Residual (ydrawn - ynls)") +
+  scale_color_manual("Scale", values = c("steelblue", "orange2"), labels = c("Linear", "Log")) +
+  guides(color = guide_legend(override.aes = list(alpha = 1)))
+
+p + 
+coord_cartesian_panels(
+  panel_limits = tibble::tribble(
+    ~curve, ~points, ~ymin, ~ymax
+  , "Slight Curve"      , "Points to 50% of x"     ,     -5,     5
+  , "Slight Curve"      , "Points to 75% of x"     ,     -5,     5
+  , "Very Curved"      , "Points to 50% of x"     ,     -100,     100
+  , "Very Curved"      , "Points to 75% of x"     ,     -100,     100
+  )
+)
+```
+
+::: notes
+If we look at the residuals instead, we see that there is still some under-prediction even with the log scale when beta is high, but our basic conclusions from the original plots still hold.
+:::
+
+## Q2: Forecasting (You-Draw-It)
+
+```{r}
+#| fig-width: 10
+#| fig-height: 6
+#| out-width: 100%
+
+gamm_data <- bind_rows( youdrawit_preds_gamm_0.1, youdrawit_preds_gamm_0.23)
+
+p <- ggplot(youdrawit_model_data %>% filter(prolific_id %in% participant_sample2), 
+       aes(x = x, group = scale, color = scale, fill = scale)) +
+  geom_line(aes(x = x, y = residual_nls_drawn, group = plot_id), alpha = 0.1) +
+  geom_ribbon(data = gamm_data, aes(y = estimate, ymin = lower, ymax = upper), color = NA, alpha = 0.4) +
+  geom_line(data = gamm_data, aes( y = estimate)) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  facet_grid(curve ~ points, scales = "free") +
+  theme_bw() +
+  theme(axis.title.x = element_blank(), legend.position = c(0, 1), legend.justification = c(0,1)) +
+  scale_y_continuous("Residual (ydrawn - ynls)") +
+  scale_color_manual("Scale", values = c("steelblue", "orange2"), labels = c("Linear", "Log")) +
+  scale_fill_manual("Scale", values = c("steelblue", "orange2"), labels = c("Linear", "Log")) +
+  guides(color = guide_legend(override.aes = list(alpha = 1)),
+         fill = guide_legend(override.aes = list(alpha = 0.2)))
+
+
+p + 
+coord_cartesian_panels(
+  panel_limits = tibble::tribble(
+    ~curve, ~points, ~ymin, ~ymax
+  , "Slight Curve"      , "Points to 50% of x"    ,      -2.5,     2.5
+  , "Slight Curve"      , "Points to 75% of x"    ,      -2.5,     2.5
+  , "Very Curved"      , "Points to 50% of x"     ,      -35,     35
+  , "Very Curved"      , "Points to 75% of x"     ,      -35,     35
+  )
+)
+```
+
+::: notes
+We can make this even clearer by modeling the residuals using a generalized additive model, which has a flexible form and doesn't require too many assumptions about model structure.
+:::
+
+## Q3: Numerical Estimation {.center}
+
+## Q3: Numerical Estimation
+
+-   Next level of engagement is estimating quantities from a graph
+
+-   This is a much harder experiment to set up
+
+    -   Phrasing matters a lot!
+    -   Data matters a lot!
+
+[How to make it generalizable?]{.center .large .emph .cerulean}
+
+::: notes
+One of my favorite parts of graphical inference is that it totally sidesteps this question of phrasing by encoding all of what would have been verbal questions into the graph itself.
+
+This really is a huge improvement over past graphical methods -- there were studies showing that pie charts sucked from the early 1900s, but they were hampered by the generalizability of the questions - if you asked for someone to estimate the percentage of a pie slice, you got different conclusions than if you asked someone to make a judgement between two pieces of the pie.
+:::
+
+## Q3: Numerical Estimation
+
+-   Use Ewoks and Tribbles - creatures that might multiply exponentially
+-   One set on the linear scale, one set on log scale
+-   Underlying trend is the same (within transformed x axis)
+-   Different variability around the line
+
+![Ewoks and Tribbles (with apologies to Allison Horst)](https://github.com/earobinson95/log-perception-prolific/blob/main/perception-of-statistical-graphics/www/ewok-tribble.jpg?raw=true){width="50%" fig-align="center"}
+
+## Q3: Numerical Estimation
+
+Free response: Between $t_1$ and $t_2$, how does the population of $X$ change?
+
+::: {layout="[-5, 40, -10, 40, -5]"}
+![Linear Scale](fig/03-01-linear.png)
+
+![Log Scale](fig/03-01-log.png)
+:::
+
+## Q3: Numerical Estimation
+
+Estimating Population given a year
+
+[Process Sketch]{.emph .cerulean}
+
+::: {layout-ncol="2"}
+![Linear scale](fig/03-01-linear-sketch.png)
+
+![Log scale](fig/03-01-log-sketch.png)
+:::
+
+## Q3: Numerical Estimation
+
+Estimating Population given a year
+
+![Deviation from Closest Point](fig/03-01-boxplots.png){width="100%"}
+
+::: notes
+-   More variability in estimation on linear scale (which makes sense due to the fact that it's compressed into a small area of the plot)
+
+-   Participants anchor estimates to specific points, not to an overall fitted trend
+:::
+
+## Q3: Numerical Estimation
+
+From `Year1` to `Year2`, the population increases by \_\_\_\_ individuals
+
+[Process Sketch]{.emph .cerulean}
+
+::: {layout-ncol="2"}
+![Linear scale](fig/03-04-sketch-linear.png)
+
+![Log scale](fig/03-04-sketch-log.png)
+:::
+
+## Q3: Numerical Estimation
+
+From `Year1` to `Year2`, the population increases by \_\_\_\_ individuals
+
+![](fig/03-04-density.png)
+
+::: notes
+-   in dataset 1, both points were close to the underlying value, and the estimates bear that out.
+
+-   in dataset 2, one point was a bit of an outlier, and so we can see different estimation strategies appear: some participants answered using an overall trend/visual regression, while others answered using actual points.\
+:::
+
+## Q3: Numerical Estimation
+
+How many times more creatures are there in `Year2` than `Year1`?
+
+[Process Sketch]{.emph .cerulean}
+
+::: {layout-ncol="2"}
+![Linear scale](fig/03-05-sketch-linear.png)
+
+![Log scale](fig/03-05-sketch-log.png)
+:::
+
+## Q3: Numerical Estimation
+
+How many times more creatures are there in `Year2` than `Year1`?
+
+![](fig/03-05-answers.png)
+
+::: notes
+-   the results show a fundamental lack of understanding on the part of many participants
+:::
+
+## Q3: Numerical Estimation
+
+How many times more creatures are there in `Year2` than `Year1`?
+
+![](fig/03-05-density.png)
+
+::: notes
+-   When we look only at people who answered in a reasonable range given the question (e.g. didn't assume we meant additive estimation), we see a lot of variability and a few more things to look into here - such as why there's a peak in dataset 1 that is around 15, even though the closest point and the true value are both near 10.
+:::
+
+## Q3: Numerical Estimation
+
+How many times more creatures are there in `Year2` than `Year1`?
+
+![](fig/03-05-boxplots-true.png)
+
+::: notes
+-   As the questions get more mathematically complex, we also see that participants start using model-based strategies for estimation - they don't have the mental bandwidth to hold all of the estimates for specific points, arithmatic, etc. in their heads, so they take shortcuts like working off of a mental trendline.
+
+-   Here, for the first time, the true deviation (deviation from the underling model) is a better match to participant estimates than the closest point deviation.
+:::
+
+## Q3: Numerical Estimation
+
+How long does it take for the population in `Year 1` to double?
+
+[Process Sketch]{.emph .cerulean}
+
+::: {layout-ncol="2"}
+![Linear scale](fig/03-06-linear-sketch.png)
+
+![Log scale](fig/03-06-log-sketch.png)
+:::
+
+## Q3: Numerical Estimation
+
+How long does it take for the population in `Year 1` to double?
+
+![](fig/03-06-density.png)
+
+::: notes
+-   strong anchoring effect at multiples of 5
+
+-   Some conflict between true and closest point value in dataset 1 (mediated by rounding tendencies); dataset 2 was clear enough that participants could estimate 6
+
+-   a lot more variability on the linear scale than the log scale in both cases
+:::
+
+# [Challenges]{.emph .red} & [Benefits]{.emph .cerulean} of Multimodal Graphical Testing {#challenges}
+
+## [Challenges]{.emph .red} & [Benefits]{.emph .cerulean}
+
+::: incremental
+1.  [Conflicting results]{.red} can be hard to reconcile
+
+2.  Conducting multiple studies is [multiple times the work]{.red}\
+    [(multiple times the payoff?)]{.cerulean .emph}
+
+3.  [Greater insight]{.cerulean} into the tradeoffs of design decisions
+:::
+
+## Challenges & Benefits
+
+![](fig/Chart-Perception-Process.svg)
+
+-   Testing method needs to be matched to level of engagement
+
+-   Need to examine graphical choices across levels of engagement
+
+## Packages
+
+![](fig/pkgs.png)
+
+## References {.microscopic}
+
+::: {#refs}
+:::
+
+## Questions? {.center}
