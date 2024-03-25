@@ -403,7 +403,7 @@
     "href": "index.html",
     "title": "Presentations in 2024",
     "section": "",
-    "text": "Cultivating Insights: Harnessing the Power of Data Visualization in Agriculture\n\n\n\nSusan Vanderplas\n\n\nJan 9, 2024\n\n\n\n\n\nLocation\n\n\nInternational Conference for On-Farm Precision Experimentation, Corpus Christi, TX\n\n\n\n\nTopics\n\n\ngraphics,agriculture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Git Submodules\n\n\n\nSusan Vanderplas\n\n\nFeb 8, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\ngit,reproducibility,teaching\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV with a Spreadsheet\n\n\n\nSusan Vanderplas\n\n\nFeb 15, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV/Blog Automatically\n\n\n\nSusan Vanderplas\n\n\nMar 7, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEscaping Flatland\n\n\n\nTyler Wiederich, Erin Blankenship & Susan Vanderplas\n\n\nJul 1, 2024\n\n\n\n\n\nLocation\n\n\nHuman Computer Interaction International, Washington DC\n\n\n\n\nTopics\n\n\nteaching,graphics,user-study\n\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Cultivating Insights: Harnessing the Power of Data Visualization in Agriculture\n\n\n\nSusan Vanderplas\n\n\nJan 9, 2024\n\n\n\n\n\n\nLocation\n\n\nInternational Conference for On-Farm Precision Experimentation, Corpus Christi, TX\n\n\n\n\nTopics\n\n\ngraphics,agriculture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Git Submodules\n\n\n\nSusan Vanderplas\n\n\nFeb 8, 2024\n\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\ngit,reproducibility,teaching\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV with a Spreadsheet\n\n\n\nSusan Vanderplas\n\n\nFeb 15, 2024\n\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV/Blog Automatically\n\n\n\nSusan Vanderplas\n\n\nMar 7, 2024\n\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEscaping Flatland\n\n\n\nTyler Wiederich, Erin Blankenship & Susan Vanderplas\n\n\nJul 1, 2024\n\n\n\n\n\n\nLocation\n\n\nHuman Computer Interaction International, Washington DC\n\n\n\n\nTopics\n\n\nteaching,graphics,user-study\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGraphical Perception in a Pandemic\n\n\n\nSusan Vanderplas, Emily Robinson, and Reka Howard\n\n\n\n\n\n\nLocation\n\n\nUniversity of Illinois Chicago School of Public Health, Division of Epidemiology and Biostatistics\n\n\n\n\nTopics\n\n\ngraphics,user-studies\n\n\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "07-HCII/index.html#references",
@@ -495,5 +495,453 @@
     "title": "Building a CV/Blog Automatically",
     "section": "In repos using cv-data submodules:",
     "text": "In repos using cv-data submodules:\nThe important part:\non:\n  workflow_dispatch:\n  push:\n    branches: main\nEverything else:\nname: Quarto Publish\n\njobs:\n  build-deploy:\n    runs-on: ubuntu-latest\n\n    permissions:\n      contents: write\n\n    steps:\n      - name: Install libcurl on Linux\n        if: runner.os == 'Linux'\n        run: sudo apt-get update -y && sudo apt-get install -y libcurl4-openssl-dev\n\n      - name: Set up Quarto\n        uses: quarto-dev/quarto-actions/setup@v2\n        with:\n          tinytex: false\n\n      - name: Quarto version\n        run: |\n          quarto --version\n\n      - name: Check out repository\n        uses: actions/checkout@v4\n        with:\n          submodules: recursive\n          token: ${{ secrets.GITHUB_TOKEN }}\n\n      - name: Install R\n        uses: r-lib/actions/setup-r@v2\n        with:\n          use-public-rspm: true\n\n      - name: Setup renv\n        uses: r-lib/actions/setup-renv@v2\n        with:\n          cache-version: 1\n\n      - name: Publish\n        uses: quarto-dev/quarto-actions/publish@v2\n        with:\n          target: gh-pages\n        env:\n          GS_AUTH: ${{ secrets.GS_AUTH }}\n          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#flu-pandemic",
+    "href": "03-UIC-EpiBio/index.html#flu-pandemic",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "1918 Flu Pandemic",
+    "text": "1918 Flu Pandemic\n\nReproduction from the Journal of the American Medical Association, Jan 11, 1919. Image source"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#flu-pandemic-1",
+    "href": "03-UIC-EpiBio/index.html#flu-pandemic-1",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "1918 Flu Pandemic",
+    "text": "1918 Flu Pandemic\n\nAll-cause mortality in Major Cities, 1918-1919 Image source"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#s-london-cholera-mortality-and-temperature",
+    "href": "03-UIC-EpiBio/index.html#s-london-cholera-mortality-and-temperature",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "1840s London Cholera Mortality and Temperature",
+    "text": "1840s London Cholera Mortality and Temperature\n\nExcess Mortality and Temperature, 1840s London. From Report on the mortality of cholera in England, 1848-49, by William Farr (1952). Image Source"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#cholera-plague-in-london",
+    "href": "03-UIC-EpiBio/index.html#cholera-plague-in-london",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Cholera & Plague in London",
+    "text": "Cholera & Plague in London\n\nCholera & Plague in London (Created 1852) Image source"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19",
+    "href": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "An Explosion of Graphics: COVID-19",
+    "text": "An Explosion of Graphics: COVID-19\n\nMay 6 2020: Three graphs that show a global slowdown in COVID-19 deaths, Image Source"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-1",
+    "href": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-1",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "An Explosion of Graphics: COVID-19",
+    "text": "An Explosion of Graphics: COVID-19\n\nActive Cases vs. Total Deaths, Reddit, May 9 2020 Image source"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-2",
+    "href": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-2",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "An Explosion of Graphics: COVID-19",
+    "text": "An Explosion of Graphics: COVID-19\n\nTests vs. Cases, Our World in Data (May 19 2020)"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-3",
+    "href": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-3",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "An Explosion of Graphics: COVID-19",
+    "text": "An Explosion of Graphics: COVID-19\n ## An Explosion of Graphics: COVID-19\n\n\n\n91-DIVOC Diagonal Reference Lines. May 11, 2020."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-4",
+    "href": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-4",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "An Explosion of Graphics: COVID-19",
+    "text": "An Explosion of Graphics: COVID-19\n\nFinancial Times March 23, 2020. John Burn-Murdoch Image source"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-5",
+    "href": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-5",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "An Explosion of Graphics: COVID-19",
+    "text": "An Explosion of Graphics: COVID-19\n\nThe complexity of log scales. Nov 12, 2020. Mark Gubrud ((mgubrud?)) Image source"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-6",
+    "href": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-6",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "An Explosion of Graphics: COVID-19",
+    "text": "An Explosion of Graphics: COVID-19\n\nThe complexity of log scales. Nov 12, 2020. Mark Gubrud ((mgubrud?)) Image source"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#how-should-we-represent-exponentialish-data",
+    "href": "03-UIC-EpiBio/index.html#how-should-we-represent-exponentialish-data",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "How should we represent exponential(ish) data?",
+    "text": "How should we represent exponential(ish) data?\n\nLog or linear scales?\nReference lines?\nAligning x-axis to date? Days since ___ cases?\n“Pace” of the case counts vs. raw counts?\nComparing across populations – size, policies, susceptibility…"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#why-visualize-data",
+    "href": "03-UIC-EpiBio/index.html#why-visualize-data",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Why Visualize Data?",
+    "text": "Why Visualize Data?\nPowerful communication tool!\n\n\nTo inform\n\n\nNumeric accuracy\nComparative accuracy\nOverall trajectory\n\n\n\nTo aid individual decision-making\n\n\nDecision outcome supported by evidence?\nRisk vs. raw case counts\nUncertainty quantification\n\n\n\n\n\n\n\n\nTo aid policy development\n\n\nUncertainty quantification\nRisk/reward of different options\n\n\n\n\nDifferent goals = different charts"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#testing",
+    "href": "03-UIC-EpiBio/index.html#testing",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "How Do We Test Graphics?",
+    "text": "How Do We Test Graphics?\n\n\nThe question is not What is the best chart?\n\n\nbut… What is the best chart for this purpose?\n\n\nFor an answer, we need to subject charts to a full spectrum of user tests."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#perception-exp.-growth-log-scales",
+    "href": "03-UIC-EpiBio/index.html#perception-exp.-growth-log-scales",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Perception: Exp. Growth & Log Scales",
+    "text": "Perception: Exp. Growth & Log Scales\n\n3 different ways of engaging with the data\n\nCan we\n\nQ1: perceive differences in     … Perceptual\nQ2: forecast trends from     … Tactile\nQ3: estimate and use     … Numerical\n\ngraphs of exponential growth with log and linear scales?\n300 participants completed all 3 experiments\n\nI’m a huge fan of lineups, but one of the issues I had with the COVID graphs I was seeing was that I wasn’t convinced people were interpreting the data correctly.\nI started thinking about why lineups wouldn’t test things at the level I was hoping for, and eventually came up with this hierarchy - first, you have to be able to recognize that there is a difference between two things. Then, you have to be able to predict and forecast to map “data from the past” onto the future. Finally, you have to actually be able to read data off of the graph and act on it - doing numerical calculations and the like.\nThese are distinct psychological tasks, and they require different ways of interacting with a chart. So I’m going to describe 3 experiments that we’ve conducted relating to log scales.\nThese experiments were inspired by COVID, but we worked hard to not go anywhere near COVID data because while we were designing these experiments, it was a bit emotionally loaded. Even now that pandemic measures have ended, it’s still too politically sensitive to touch, so we’ll continue using non-covid data on follow-up studies."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q1-perception-of-differences",
+    "href": "03-UIC-EpiBio/index.html#q1-perception-of-differences",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q1: Perception of Differences",
+    "text": "Q1: Perception of Differences"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q1-perception-of-differences-1",
+    "href": "03-UIC-EpiBio/index.html#q1-perception-of-differences-1",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q1: Perception of Differences",
+    "text": "Q1: Perception of Differences\n\n\n\n\n\n\nLog Scale\n\n\n\n\n\n\n\nLinear Scale\n\n\n\n\n\n\nOur first level of engagement is basic perception - can we actually distinguish different growth rates/levels of curvature on a linear and log scale. This is the most basic thing – if we can’t do this, then we probably won’t be able to predict things well or read information off the graph well (though, that last point is arguable).\n\nFactorial Experiment:\n\nLog/linear scale (2 levels)\nLineup composition: (6 levels)\n\nTarget plot - high, medium, low curvature\nNull plots - high, medium, low curvature\nExclude combinations where target/null are the same\n\nLow/High variability (2 levels)\n\nIncluded 6 Rorschach plots (3 curvature levels x log or linear scale)\n\n12 lineups + 1 Rorshcach plots = 13 evaluations per person\nHere are a couple of example lineups from this experiment - the first is on a linear scale, the 2nd is on a log scale. While I generally tried throughout these experiments to make it clear that we were on a log scale, it is a very subtle difference in these lineups, and fixing that wasn’t necessarily relevant to the question at hand – since all sub-panels have the same axis breaks, we’re actually testing whether we can distinguish the data, not the scales."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q1-perception-of-differences-2",
+    "href": "03-UIC-EpiBio/index.html#q1-perception-of-differences-2",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q1: Perception of Differences",
+    "text": "Q1: Perception of Differences\n\nConclusion: It’s easier to spot a curve among lines than it is to spot a line among curves\nRobinson, Howard, and Vanderplas (2023a)\n\nWe used a generalized linear mixed effects model to assess the probability of a correct target identification given factors like target and null plot type, participant skill level, and random effects due to the data generating process. The plot shown here is the resulting log odds ratio for log vs. linear scales, and we see that it is easier to detect curvature among a field of null lines than it is to detect linearity among a field of curved lines. In addition, we see that when there is a lot of contrast between the null and the target plot, that is, when the nulls are very curved and the target is very straight, there isn’t much difference between the two graphs. However, if there is less contrast, the log scale allows us to perceive the differences better than the linear scale.\n\nLog scales make us more sensitive to slight changes in curvature:\n\nLow Curvature Null vs. Medium Curvature Target on log scale is curve vs. line\n(it’s hard to see the straight-line target vs. the curved nulls)\nWith Medium or High curvature Null plots, it’s easier to spot the target on the log scale than on the linear scale"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q2-forecasting-exponential-trends",
+    "href": "03-UIC-EpiBio/index.html#q2-forecasting-exponential-trends",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q2: Forecasting Exponential Trends",
+    "text": "Q2: Forecasting Exponential Trends\n\nThe next question we had was whether we can accurately predict/forecast exponential trends. This study is quite different from the last one - users were asked to draw lines on graphs interactively."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q2-inspiration",
+    "href": "03-UIC-EpiBio/index.html#q2-inspiration",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q2: Inspiration",
+    "text": "Q2: Inspiration\n\n\n\nD. J. Finney (1951) Subjective Judgment in Statistical Analysis: An Experimental Study. Journal of the Royal Statistical Society\nFrederick Mosteller et al. (1981) Eye Fitting Straight Lines. The American Statistician\nNew York Times’ ‘You Draw It’ features:\n\nFamily Income affects college chances\nJust How Bad Is the Drug Overdose Epidemic?\nWhat Got Better or Worse During Obama’s Presidency\n\n\n\n\n\n\n\nThere have been a number of statistical experiments with “eye fitting” regression models. The first was driven by the desire to reduce computation time; the second is much more psychological in nature. That study had students line up a transparency with a straight line on it to fit a regression line to some data. They found that students tended to fit the slope of the first PC rather than the least squares line.\nMore recently, The New York Times has used a really cool setup to have people predict data before showing them the actual trend. They use javascript and have people draw directly on the plot. The line can be curved, jagged, etc. - it’s not restricted to a strictly linear set-up. We decided to adopt this approach because we didn’t want to impose a specific functional form, because it’s not totally clear that people are thinking exponentially or are actually good at drawing exponential curves.\nThe methods changed a bit, but the basic concept is the same."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q2-forecasting-you-draw-it-goals",
+    "href": "03-UIC-EpiBio/index.html#q2-forecasting-you-draw-it-goals",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q2: Forecasting (You-Draw-It) Goals",
+    "text": "Q2: Forecasting (You-Draw-It) Goals\n\nReplicate Eye Fitting Straight Lines using the you-draw-it tool (4 charts) Robinson, Howard, and Vanderplas (2022)\nExplore exponential growth predictions on log and linear scale (8 charts)\n\nPoints end 50% or 75% of the way across x-axis\nRate of growth of \\(\\beta\\) = 0.1, 0.23\nLog or Linear scale\n\n\n12 total graphs to complete\n\nFirst, we wanted to validate the “Eye fitting straight lines” method using You Draw it, by using datasets from the 1981 study, on the original linear scale. This would serve as a validation of the method and also help us test out our analysis method on data that was a bit more straightforward.\nThen, the (main) goal is to see how terrible we are at predicting exponential growth when using a log scale and a linear scale.\nWe set things up with varying amounts of data – so you have data to base your regression line up to either halfway or 3/4 of the way through the graph, and you have to then extend beyond the data by 25% or 50%.\nWe used two different rates of growth, and then either had a graph with a log or linear scale.\nIf you’re keeping track, then there are 4 straight lines, and 8 sets of exponential data (generated on the fly from basic parameters). We saved both the data shown on the plot and the drawn smooth lines."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q2-forecasting-you-draw-it",
+    "href": "03-UIC-EpiBio/index.html#q2-forecasting-you-draw-it",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q2: Forecasting (You-Draw-It)",
+    "text": "Q2: Forecasting (You-Draw-It)\n\n\n\n\n\n\nData from Mosteller et al. (1981)\n\n\n\n\n\n\n\nExp data, linear scale, 50% complete"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q2-forecasting-you-draw-it-1",
+    "href": "03-UIC-EpiBio/index.html#q2-forecasting-you-draw-it-1",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q2: Forecasting (You-Draw-It)",
+    "text": "Q2: Forecasting (You-Draw-It)\n\n\n\n\n\n\nHere, I’m showing you the actual drawn lines for each of the exponential conditions, and you can see that there are a few interesting features:\n\nNot everyone drew very smooth lines – we probably need to do some data cleaning based on the number of sharp “jumps” in the data – possibly excluding those cases or smoothing over them.\nThe amount of deviation in the final prediction value is (surprisingly) not much larger when there is less data – this was really shocking for me\nLinear scale predictions seem to be lower than log scale predictions, in particular when beta is higher – it’s not that noticeable when beta is low. So the under-prediction bias is stronger for linear scales than it is for log scales. That doesn’t necessarily mean that everyone underpredicts, but you do see way more orange lines on top in the lower right panel."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q2-forecasting-you-draw-it-2",
+    "href": "03-UIC-EpiBio/index.html#q2-forecasting-you-draw-it-2",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q2: Forecasting (You-Draw-It)",
+    "text": "Q2: Forecasting (You-Draw-It)\n\n\n\n\n\n\nIf we look at the residuals instead, we see that there is still some under-prediction even with the log scale when beta is high, but our basic conclusions from the original plots still hold."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q2-forecasting-you-draw-it-3",
+    "href": "03-UIC-EpiBio/index.html#q2-forecasting-you-draw-it-3",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q2: Forecasting (You-Draw-It)",
+    "text": "Q2: Forecasting (You-Draw-It)\n\n\n\n\n\n\nWe can make this even clearer by modeling the residuals using a generalized additive model, which has a flexible form and doesn’t require too many assumptions about model structure."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation",
+    "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q3: Numerical Estimation",
+    "text": "Q3: Numerical Estimation"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation-1",
+    "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation-1",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q3: Numerical Estimation",
+    "text": "Q3: Numerical Estimation\n\nNext level of engagement is estimating quantities from a graph\nThis is a much harder experiment to set up\n\nPhrasing matters a lot!\nData matters a lot!\n\n\nHow to make it generalizable?\n\nOne of my favorite parts of graphical inference is that it totally sidesteps this question of phrasing by encoding all of what would have been verbal questions into the graph itself.\nThis really is a huge improvement over past graphical methods – there were studies showing that pie charts sucked from the early 1900s, but they were hampered by the generalizability of the questions - if you asked for someone to estimate the percentage of a pie slice, you got different conclusions than if you asked someone to make a judgement between two pieces of the pie."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation-2",
+    "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation-2",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q3: Numerical Estimation",
+    "text": "Q3: Numerical Estimation\n\nUse Ewoks and Tribbles - creatures that might multiply exponentially\nOne set on the linear scale, one set on log scale\nUnderlying trend is the same (within transformed x axis)\nDifferent variability around the line\n\n\n\n\nEwoks and Tribbles (with apologies to Allison Horst)"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation-3",
+    "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation-3",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q3: Numerical Estimation",
+    "text": "Q3: Numerical Estimation\nFree response: Between \\(t_1\\) and \\(t_2\\), how does the population of \\(X\\) change?\n\n\n\n \n\n\n\n\n\nLinear Scale\n\n\n\n\n \n\n\n\n\n\nLog Scale"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation-4",
+    "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation-4",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q3: Numerical Estimation",
+    "text": "Q3: Numerical Estimation\nEstimating Population given a year\nProcess Sketch\n\n\n\n\n\n\nLinear scale\n\n\n\n\n\n\n\nLog scale"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation-5",
+    "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation-5",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q3: Numerical Estimation",
+    "text": "Q3: Numerical Estimation\nEstimating Population given a year\n\n\n\nDeviation from Closest Point\n\n\n\n\nMore variability in estimation on linear scale (which makes sense due to the fact that it’s compressed into a small area of the plot)\nParticipants anchor estimates to specific points, not to an overall fitted trend"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation-6",
+    "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation-6",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q3: Numerical Estimation",
+    "text": "Q3: Numerical Estimation\nFrom Year1 to Year2, the population increases by ____ individuals\nProcess Sketch\n\n\n\n\n\n\nLinear scale\n\n\n\n\n\n\n\nLog scale"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation-7",
+    "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation-7",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q3: Numerical Estimation",
+    "text": "Q3: Numerical Estimation\nFrom Year1 to Year2, the population increases by ____ individuals\n\n\n\nin dataset 1, both points were close to the underlying value, and the estimates bear that out.\nin dataset 2, one point was a bit of an outlier, and so we can see different estimation strategies appear: some participants answered using an overall trend/visual regression, while others answered using actual points."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation-8",
+    "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation-8",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q3: Numerical Estimation",
+    "text": "Q3: Numerical Estimation\nHow many times more creatures are there in Year2 than Year1?\nProcess Sketch\n\n\n\n\n\n\nLinear scale\n\n\n\n\n\n\n\nLog scale"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation-9",
+    "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation-9",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q3: Numerical Estimation",
+    "text": "Q3: Numerical Estimation\nHow many times more creatures are there in Year2 than Year1?\n\n\n\nthe results show a fundamental lack of understanding on the part of many participants"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation-10",
+    "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation-10",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q3: Numerical Estimation",
+    "text": "Q3: Numerical Estimation\nHow many times more creatures are there in Year2 than Year1?\n\n\n\nWhen we look only at people who answered in a reasonable range given the question (e.g. didn’t assume we meant additive estimation), we see a lot of variability and a few more things to look into here - such as why there’s a peak in dataset 1 that is around 15, even though the closest point and the true value are both near 10."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation-11",
+    "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation-11",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q3: Numerical Estimation",
+    "text": "Q3: Numerical Estimation\nHow many times more creatures are there in Year2 than Year1?\n\n\n\nAs the questions get more mathematically complex, we also see that participants start using model-based strategies for estimation - they don’t have the mental bandwidth to hold all of the estimates for specific points, arithmatic, etc. in their heads, so they take shortcuts like working off of a mental trendline.\nHere, for the first time, the true deviation (deviation from the underling model) is a better match to participant estimates than the closest point deviation."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation-12",
+    "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation-12",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q3: Numerical Estimation",
+    "text": "Q3: Numerical Estimation\nHow long does it take for the population in Year 1 to double?\nProcess Sketch\n\n\n\n\n\n\nLinear scale\n\n\n\n\n\n\n\nLog scale"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation-13",
+    "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation-13",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Q3: Numerical Estimation",
+    "text": "Q3: Numerical Estimation\nHow long does it take for the population in Year 1 to double?\n\n\n\nstrong anchoring effect at multiples of 5\nSome conflict between true and closest point value in dataset 1 (mediated by rounding tendencies); dataset 2 was clear enough that participants could estimate 6\na lot more variability on the linear scale than the log scale in both cases"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#challenges-benefits",
+    "href": "03-UIC-EpiBio/index.html#challenges-benefits",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Challenges & Benefits",
+    "text": "Challenges & Benefits\n\n\nConflicting results can be hard to reconcile\nConducting multiple studies is multiple times the work\n(multiple times the payoff?)\nGreater insight into the tradeoffs of design decisions"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#challenges-benefits-1",
+    "href": "03-UIC-EpiBio/index.html#challenges-benefits-1",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Challenges & Benefits",
+    "text": "Challenges & Benefits\n\n\nTesting method needs to match level of engagement\nExamine graphical choices across engagement levels"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#packages",
+    "href": "03-UIC-EpiBio/index.html#packages",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Packages",
+    "text": "Packages"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#references",
+    "href": "03-UIC-EpiBio/index.html#references",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "References",
+    "text": "References\n\n\nBajgier, Steve M., Maryanne Atkinson, and Victor R. Prybutok. 1989. “Visual Fits in the Teaching of Regression Concepts.” The American Statistician 43 (4): 229–34. https://doi.org/10.1080/00031305.1989.10475664.\n\n\nBuja, Andreas, Dianne Cook, Heike Hofmann, Michael Lawrence, Eun-Kyung Lee, Deborah F Swayne, and Hadley Wickham. 2009. “Statistical Inference for Exploratory Data Analysis and Model Diagnostics.” Philosophical Transactions of the Royal Society of London A: Mathematical, Physical and Engineering Sciences 367 (1906): 4361–83. https://doi.org/10.1098/rsta.2009.0120.\n\n\nCooke, L. 2010. “Assessing Concurrent Think-Aloud Protocol as a Usability Test Method: A Technical Communication Approach.” IEEE Transactions on Professional Communication 53 (3): 202–15. https://doi.org/10.1109/TPC.2010.2052859.\n\n\nCroxton, F. E., and H. Stein. 1932. “Graphic Comparisons by Bars, Squares, Circles, and Cubes.” Journal of the American Statistical Association 27 (177): 54–60. https://doi.org/10.1080/01621459.1932.10503227.\n\n\nCroxton, F. E., and R. E. Stryker. 1927. “Bar Charts Versus Circle Diagrams.” Journal of the American Statistical Association 22 (160): 473–82. https://doi.org/10.2307/2276829.\n\n\nEells, W. C. 1926. “The Relative Merits of Circles and Bars for Representing Component Parts.” Journal of the American Statistical Association 21 (154): 119–32. https://doi.org/10.1080/01621459.1926.10502165.\n\n\nGegenfurtner, Andreas, Erno Lehtinen, and Roger Säljö. 2011. “Expertise Differences in the Comprehension of Visualizations: A Meta-Analysis of Eye-Tracking Research in Professional Domains.” Educational Psychology Review 23 (4): 523–52. https://doi.org/10.1007/s10648-011-9174-7.\n\n\nGoldberg, Joseph H., and Jonathan I. Helfman. 2010. “Comparing Information Graphics: A Critical Look at Eye Tracking.” In Proceedings of the 3rd BELIV’10 Workshop on BEyond Time and Errors: Novel evaLuation Methods for Information Visualization - BELIV ’10, 71–78. Atlanta, Georgia: ACM Press. https://doi.org/10.1145/2110192.2110203.\n\n\nGoldberg, Joseph, and Jonathan Helfman. 2011. “Eye Tracking for Visualization Evaluation: Reading Values on Linear Versus Radial Graphs.” Information Visualization 10 (3): 182–95. https://doi.org/10.1177/1473871611406623.\n\n\nGuan, Zhiwei, Shirley Lee, Elisabeth Cuddihy, and Judith Ramey. 2006. “The Validity of the Stimulated Retrospective Think-Aloud Method as Measured by Eye Tracking.” In Proceedings of the SIGCHI Conference on Human Factors in Computing Systems - CHI ’06, 1253. Montr&#233;al, Qu&#233;bec, Canada: ACM Press. https://doi.org/10.1145/1124772.1124961.\n\n\nHegarty, Mary, Harvey S. Smallman, and Andrew T. Stull. 2012. “Choosing and Using Geospatial Displays: Effects of Design on Performance and Metacognition.” Journal of Experimental Psychology: Applied 18 (1): 1–17. https://doi.org/10.1037/a0026625.supp.\n\n\nHughes, B. M. 2001. “Just Noticeable Differences in 2d and 3d Bar Charts: A Psychophysical Analysis of Chart Readability.” Perceptual and Motor Skills 92 (2): 495–503.\n\n\nLiu, Chan, Hao Liu, and Zhanglu Tan. 2023. “Choosing Optimal Means of Knowledge Visualization Based on Eye Tracking for Online Education.” Education and Information Technologies, May. https://doi.org/10.1007/s10639-023-11815-4.\n\n\nLoy, Adam, and Heike Hofmann. 2013. “Diagnostic Tools for Hierarchical Linear Models.” Wiley Interdisciplinary Reviews: Computational Statistics 5 (1): 48–61. https://doi.org/10.1002/wics.1238.\n\n\nLu, Min, Joel Lanir, Chufeng Wang, Yucong Yao, Wen Zhang, Oliver Deussen, and Hui Huang. 2022. “Modeling Just Noticeable Differences in Charts.” IEEE Transactions on Visualization and Computer Graphics 28 (1): 718–26. https://doi.org/10.1109/TVCG.2021.3114874.\n\n\nMajumder, Mahbubul, Heike Hofmann, and Dianne Cook. 2013. “Validation of Visual Statistical Inference, Applied to Linear Models.” Journal of the American Statistical Association 108 (503): 942–56. https://doi.org/10.1080/01621459.2013.808157.\n\n\nMosteller, Frederick, Andrew F. Siegel, Edward Trapido, and Cleo Youtz. 1981. “Eye Fitting Straight Lines.” The American Statistician 35 (3): 150–52. https://doi.org/10.1080/00031305.1981.10479335.\n\n\nNetzel, Rudolf, Jenny Vuong, Ulrich Engelke, Seán O’Donoghue, Daniel Weiskopf, and Julian Heinrich. 2017. “Comparative Eye-Tracking Evaluation of Scatterplots and Parallel Coordinates.” Visual Informatics 1 (2): 118–31. https://doi.org/10.1016/j.visinf.2017.11.001.\n\n\nRobinson, Emily A., Reka Howard, and Susan Vanderplas. 2022. “Eye Fitting Straight Lines in the Modern Era.” Journal of Computational and Graphical Statistics 0 (0): 1–8. https://doi.org/10.1080/10618600.2022.2140668.\n\n\n———. 2023a. “Perception and Cognitive Implications of Logarithmic Scales for Exponentially Increasing Data: Perceptual Sensitivity Tested with Statistical Lineups.” Journal of Computational and Graphical Statistics Under Review. https://earobinson95.github.io/logarithmic-lineups/logarithmic-lineups-revisions.pdf.\n\n\n———. 2023b. “‘You Draw It’: Implementation of Visually Fitted Trends with R2d3.” Journal of Data Science 21 (2): 281–94. https://doi.org/10.6339/22-JDS1083.\n\n\nTimmers, Han, and Willem A. Wagenaar. 1977. “Inverse Statistics and Misperception of Exponential Growth.” Perception & Psychophysics 21 (6): 558–62. https://doi.org/10.3758/bf03198737.\n\n\nVanderPlas, S, R C Goluch, and H Hofmann. 2019. “Framed! Reproducing and Revisiting 150-Year-Old Charts.” Journal of Computational and Graphical Statistics 28 (3): 620–34. https://doi.org/10.1080/10618600.2018.1562937.\n\n\nVanderplas, S, and H Hofmann. 2017. “Clusters Beat Trend⁉ Testing Feature Hierarchy in Statistical Graphics.” Journal of Computational and Graphical Statistics 26 (2): 231–42. https://doi.org/10.1080/10618600.2016.1209116.\n\n\nVanderPlas, S, C Röttger, D Cook, and H Hofmann. 2021. “Statistical Significance Calculations for Scenarios in Visual Inference.” Stat 10 (1). https://doi.org/10.1002/sta4.337.\n\n\nvon Huhn, R. 1927. “Further Studies in the Graphic Use of Circles and Bars.” Journal of the American Statistical Association 22 (157): 31–36. https://doi.org/10.1080/01621459.1927.10502938.\n\n\nWagenaar, William A., and Sabato D. Sagaria. 1975. “Misperception of Exponential Growth.” Perception & Psychophysics 18 (6): 416–22. https://doi.org/10.3758/BF03204114.\n\n\nWoller-Carter, Margo M., Yasmina Okan, Edward T. Cokely, and Rocio Garcia-Retamero. 2012. “Communicating and Distorting Risks with Graphs: An Eye-Tracking Study.” Proceedings of the Human Factors and Ergonomics Society Annual Meeting 56 (1): 1723–27. https://doi.org/10.1177/1071181312561345.\n\n\nXiong, Cindy, Cristina R. Ceja, Casimir J. H. Ludwig, and Steven Franconeri. 2020. “Biased Average Position Estimates in Line and Bar Graphs: Underestimation, Overestimation, and Perceptual Pull.” IEEE Transactions on Visualization and Computer Graphics 26 (1): 301–10. https://doi.org/10.1109/TVCG.2019.2934400.\n\n\nZhao, Yifan, Dianne Cook, Heike Hofmann, Mahbubul Majumder, and Niladri Roy Chowdhury. 2013. “Mind Reading: Using an Eye-Tracker to See How People Are Looking at Lineups.” International Journal of Intelligent Technologies & Applied Statistics 6 (4): 393–413. https://doi.org/10.6148/IJITAS.2013.0604.05."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#questions",
+    "href": "03-UIC-EpiBio/index.html#questions",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Questions?",
+    "text": "Questions?"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#lineups",
+    "href": "03-UIC-EpiBio/index.html#lineups",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Lineups",
+    "text": "Lineups\n\n\n\n\n\nQuestion: Can participants identify different growth rates on a linear scale?\n\n\n\nA “Visual Hypothesis Test”\n\nEmbed the question in array of charts\nCan people identify the different plot?\nNull model can be tricky to create\nTest statistic is the visual evaluation\n\n\nBuja et al. (2009)\nLoy and Hofmann (2013)\nMajumder, Hofmann, and Cook (2013)\nVanderplas and Hofmann (2017)\nVanderPlas et al. (2021)"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#numerical-estimation",
+    "href": "03-UIC-EpiBio/index.html#numerical-estimation",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Numerical Estimation",
+    "text": "Numerical Estimation\n\n\n\n\n\nEells (1926)\n\n\n\n\n\nvon Huhn (1927)\n\n\n\n\n\nSize of region?\nEells (1926); Croxton and Stryker (1927); VanderPlas, Goluch, and Hofmann (2019)\nWith scales?\nvon Huhn (1927)\nSize of relationship compared to another region\nCroxton and Stein (1932)\nVery sensitive to question phrasing"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#forced-choice",
+    "href": "03-UIC-EpiBio/index.html#forced-choice",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Forced Choice",
+    "text": "Forced Choice\n\n\n\n\n\nWhich bar is larger? Hughes (2001)\n\n\n\n\n\nHegarty, Smallman, and Stull (2012)\n\n\n\n\n\nForce participants to answer a specific question\nMay be a size judgment (which is larger?)\n\ncommon in psychophysics experiments\n\nMay be a more complex decision incorporating other information\n\nHughes (2001)\nXiong et al. (2020)\nLu et al. (2022)"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#eye-tracking",
+    "href": "03-UIC-EpiBio/index.html#eye-tracking",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Eye Tracking",
+    "text": "Eye Tracking\n\n\n\nInfer cognitive processes from directed (conscious) attention\nMay be accompanied by direct estimation or other protocols\n\n\n\nGegenfurtner, Lehtinen, and Säljö (2011)\nJ. Goldberg and Helfman (2011)\nZhao et al. (2013)\nNetzel et al. (2017)\nLiu, Liu, and Tan (2023)\n\n\n\n\n\nJ. H. Goldberg and Helfman (2010)\n\n\n\n\n\nWoller-Carter et al. (2012)"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#think-aloud-and-free-response",
+    "href": "03-UIC-EpiBio/index.html#think-aloud-and-free-response",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Think Aloud and Free Response",
+    "text": "Think Aloud and Free Response\n\nStream of consciousness narration Guan et al. (2006); Cooke (2010)\nReasoning to justify a decision\n\n\n\n\nWhy did you choose this panel? Vanderplas and Hofmann (2017)"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#direct-annotation",
+    "href": "03-UIC-EpiBio/index.html#direct-annotation",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Direct Annotation",
+    "text": "Direct Annotation\n\n\n\n\n\nMosteller et al. (1981)\n\n\n\n\nHave participants visually fit statistics\n\nUsually directly annotating the chart with e.g. a regression line\n\nCompare visual statistics to numerical calculations\nDifferences tell us about our implicit perception of data\ne.g. visual regression is more robust to outliers\nAlso useful as a teaching tool\n\n\nBajgier, Atkinson, and Prybutok (1989)\nRobinson, Howard, and Vanderplas (2022)\nRobinson, Howard, and Vanderplas (2023b)"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#how-do-we-test-graphics",
+    "href": "03-UIC-EpiBio/index.html#how-do-we-test-graphics",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "How Do We Test Graphics?",
+    "text": "How Do We Test Graphics?\n\n\nTesting method needs to be matched to level of engagement\nNeed to examine graphical choices across levels of engagement"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#representing-exponentialish-data",
+    "href": "03-UIC-EpiBio/index.html#representing-exponentialish-data",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Representing Exponential(ish) Data",
+    "text": "Representing Exponential(ish) Data\n\n\nLog or linear scales?\nReference lines?\nAligning x-axis to date? Days since ___ cases?\n“Pace” of the case counts vs. raw counts?\nComparing across populations – size, policies, susceptibility…"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#s-london",
+    "href": "03-UIC-EpiBio/index.html#s-london",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "1840s London:",
+    "text": "1840s London:\nCholera Mortality and Temperature\n\nExcess Mortality and Temperature, 1840s London. From Report on the mortality of cholera in England, 1848-49, by William Farr (1952). Image Source"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#exponential-growth",
+    "href": "03-UIC-EpiBio/index.html#exponential-growth",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Exponential Growth",
+    "text": "Exponential Growth\n\n\n\n\n\nWhat is the purpose of this chart?\n\nTo help people predict what is likely to happen?\n\n\n(It doesn’t do that very well)\n\n\nNote that even if the growth is polynomial, we would still end up underestimating the number of cases. So if our goal is to help people make good decisions (like, hey, cases are increasing exponentially, I should stay home), then a graph like this may not be the best way to go about it, because we know for a fact that people don’t make effective forecasts from these types of plots.\nThe natural way to correct for graphs showing exponential growth is to use a log y-axis scale, which solves some problems and creates a whole host of new problems."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#exponential-growth-1",
+    "href": "03-UIC-EpiBio/index.html#exponential-growth-1",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Exponential Growth",
+    "text": "Exponential Growth\n\n\n\n\n\nWhat is the purpose of this chart?\nTo help people predict what is likely to happen?\nHumans are awful at predicting exponential growth\nWagenaar and Sagaria (1975); Timmers and Wagenaar (1977)\n\nNote that even if the growth is polynomial, we would still end up underestimating the number of cases. So if our goal is to help people make good decisions (like, hey, cases are increasing exponentially, I should stay home), then a graph like this may not be the best way to go about it, because we know for a fact that people don’t make effective forecasts from these types of plots.\nThe natural way to correct for graphs showing exponential growth is to use a log y-axis scale, which solves some problems and creates a whole host of new problems."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics",
+    "href": "03-UIC-EpiBio/index.html#covid-19-graphics",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "COVID-19 Graphics",
+    "text": "COVID-19 Graphics\n\nMay 6 2020: Three graphs that show a global slowdown in COVID-19 deaths, Image Source"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics-1",
+    "href": "03-UIC-EpiBio/index.html#covid-19-graphics-1",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "COVID-19 Graphics",
+    "text": "COVID-19 Graphics\n\nActive Cases vs. Total Deaths, Reddit, May 9 2020 Image source"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics-2",
+    "href": "03-UIC-EpiBio/index.html#covid-19-graphics-2",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "COVID-19 Graphics",
+    "text": "COVID-19 Graphics\n\nTests vs. Cases, Our World in Data (May 19 2020)"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics-3",
+    "href": "03-UIC-EpiBio/index.html#covid-19-graphics-3",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "COVID-19 Graphics",
+    "text": "COVID-19 Graphics\n\nRate of Death Change, March 28, 2020. Romain Vuillemot (@romsson) Image source"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics-4",
+    "href": "03-UIC-EpiBio/index.html#covid-19-graphics-4",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "COVID-19 Graphics",
+    "text": "COVID-19 Graphics\n\n91-DIVOC Diagonal Reference Lines. May 11, 2020."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics-5",
+    "href": "03-UIC-EpiBio/index.html#covid-19-graphics-5",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "COVID-19 Graphics",
+    "text": "COVID-19 Graphics\n\n\n\nFinancial Times March 23, 2020. John Burn-Murdoch Image source"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics-6",
+    "href": "03-UIC-EpiBio/index.html#covid-19-graphics-6",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "COVID-19 Graphics",
+    "text": "COVID-19 Graphics\n\n\n\nThe complexity of log scales. Nov 12, 2020. Mark Gubrud (@mgubrud) Image source"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#why-visualize-data-communication",
+    "href": "03-UIC-EpiBio/index.html#why-visualize-data-communication",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Why Visualize Data? Communication!",
+    "text": "Why Visualize Data? Communication!\n\n\nTo inform\n\n\nNumeric accuracy\nComparative accuracy\nOverall trajectory\n\n\n\nTo aid individual decision-making\n\n\nDecision outcome supported by evidence?\nRisk vs. raw case counts\nUncertainty quantification\n\n\n\n\n\n\n\n\nTo aid policy development\n\n\nUncertainty quantification\nRisk/reward of different options\n\n\n\n\n\nDifferent goals = different charts"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#perception-log-scales",
+    "href": "03-UIC-EpiBio/index.html#perception-log-scales",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Perception: Log Scales",
+    "text": "Perception: Log Scales\n\n3 different ways of engaging with the data\n\nCan we\n\nQ1: perceive differences in     … Perceptual\nQ2: forecast trends from     … Tactile\nQ3: estimate and use     … Numerical\n\ngraphs of exponential growth with log and linear scales?\n300 participants completed all 3 experiments\n\nI’m a huge fan of lineups, but one of the issues I had with the COVID graphs I was seeing was that I wasn’t convinced people were interpreting the data correctly.\nI started thinking about why lineups wouldn’t test things at the level I was hoping for, and eventually came up with this hierarchy - first, you have to be able to recognize that there is a difference between two things. Then, you have to be able to predict and forecast to map “data from the past” onto the future. Finally, you have to actually be able to read data off of the graph and act on it - doing numerical calculations and the like.\nThese are distinct psychological tasks, and they require different ways of interacting with a chart. So I’m going to describe 3 experiments that we’ve conducted relating to log scales.\nThese experiments were inspired by COVID, but we worked hard to not go anywhere near COVID data because while we were designing these experiments, it was a bit emotionally loaded. Even now that pandemic measures have ended, it’s still too politically sensitive to touch, so we’ll continue using non-covid data on follow-up studies."
   }
 ]

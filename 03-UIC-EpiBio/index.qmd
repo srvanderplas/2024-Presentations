@@ -1,8 +1,11 @@
 ---
 bibliography: refs.bib
+title: Graphical Perception in a Pandemic
+subtitle: Log Scales, Exponential Growth, and the Importance of User Testing
 from: markdown+emoji
 format: 
   revealjs:
+    auto-stretch: false
     navigation-mode: vertical
     logo: ../libs/unl/N.svg
     theme: ../libs/unl/inverse.scss
@@ -65,15 +68,16 @@ lightblueseqpal <- colorspace::lighten(blueseqpal, .2)
 ```
 
 ::: columns
-::: {.column width="60%"}
-1.  [How Do We Test Graphics?](#testing)
+::: {.column width="70%"}
+1.  [A Short History of Pandemic Charts](#pandemic)
 
-2.  [Multimodal Testing In Practice](#logscales)
+2.  [Full-spectrum Graphics Testing](#logscales)
 
-3.  [Challenges of Multimodal Testing](#challenges)
+3.  [Challenges of Full-spectrum Testing](#challenges)
 :::
 
-::: {.column width="40%"}
+::: {.column width="30%"}
+
 ```{r}
 #| fig-width: 5
 #| fig-height: 5
@@ -81,165 +85,329 @@ lightblueseqpal <- colorspace::lighten(blueseqpal, .2)
 #| echo: false
 #| message: false
 #| warning: false
+#| fig-cap: Slide Link
 library(qrcode)
-code <- qr_code("https://srvanderplas.github.io/Presentations/2023-12-ASC/")
+code <- qr_code("https://srvanderplas.github.io/2024-Presentations/03-UIC-EpiBio/")
 plot(code)
 ```
 :::
 :::
 
-# How Do We Test Graphics? {#testing .center}
+# Pandemic Graphics: <br>🕰️[History and Present Day]{.emph .cerulean .center}💻 {#pandemic .center}
 
-![](fig/Chart-Perception-Process.svg)
+## 1918 Flu Pandemic {.r-stretch}
 
-## Lineups
+![Reproduction from the Journal of the American Medical Association, Jan 11, 1919. [Image source](https://flickr.com/photos/medicalmuseum/40347344610/)](fig/1918-Funston.png){.r-stretch width="100%"}
 
-::: columns
-::: {.column width="50%"}
-![Question: Can participants identify different growth rates on a linear scale?](fig/linear-lineup-example.png)
+## 1918 Flu Pandemic {.r-stretch}
+
+![All-cause mortality in Major Cities, 1918-1919 [Image source](https://johnmahaffie.com/bart-mahaffie-part-introduction/)](fig/Influenza-1919-majorcities.png){.r-stretch width="100%"}
+
+## 1840s London:
+#### Cholera Mortality and Temperature
+
+![Excess Mortality and Temperature, 1840s London. From Report on the mortality of cholera in England, 1848-49, by William Farr (1952). [Image Source](https://www.sciencephoto.com/media/1290326/view/relationship-of-mortality-rate-temperature-1840-1850)](fig/1840_cholera_mortality_temperature_london.png){.r-stretch width="100%" fig-alt="Graphs showing the relationship between the mean temperature and the relative mortality rate of London, UK, from 1840 to 1850. The 10 year average is at bottom right. Every other circle represents one year and is divided into 52 weeks. The concentric circles represent increments of 100 deaths and 10 degrees Fahrenheit. The outer black shaded areas show the extent by which the weekly deaths exceed the average weekly deaths, and the yellow shaded areas the extent to which they are below average. The inner red shaded areas show the extent by which the weekly mean temperature exceeded the average weekly temperature of the preceding 79 years, and the inner black area where it was below that average. The cholera epidemic of 1848-1849 can be clearly seen in the increase of excess deaths. From Report on the mortality of cholera in England, 1848-49, by William Farr (1952)."}
+
+## Cholera & Plague in London
+
+
+![Cholera & Plague in London (Created 1852) [Image source](https://wellcomecollection.org/works/acv8r4bv/images?id=bg5jwak4)](fig/Cholera_plague_london.png){.r-stretch width="100%"}
+
+
+## [COVID-19]{.emph .red} Graphics
+
+![May 6 2020: Three graphs that show a global slowdown in COVID-19 deaths, [Image Source](https://theconversation.com/three-graphs-that-show-a-global-slowdown-in-covid-19-deaths-135756)](fig/abomination.png){.r-stretch width="100%"}
+
+
+## [COVID-19]{.emph .red} Graphics
+
+![Active Cases vs. Total Deaths, Reddit, May 9 2020 [Image source](https://i.redd.it/8lasbu2rspx41.png)](fig/bubble-charts.png){.r-stretch width="100%"}
+
+## [COVID-19]{.emph .red} Graphics
+
+![Tests vs. Cases, Our World in Data (May 19 2020)](fig/tests-vs-cases.png){.r-stretch width="100%"}
+
+
+## [COVID-19]{.emph .red} Graphics
+
+![Rate of Death Change, March 28, 2020. Romain Vuillemot (\@romsson) [Image source](https://twitter.com/romsson/status/1244316295094505472)](fig/triangles.png){.r-stretch width="100%"}
+
+
+## [COVID-19]{.emph .red} Graphics
+
+![91-DIVOC Diagonal Reference Lines. May 11, 2020.](fig/divoc-91-log-reference.png){.r-stretch width="100%"}
+
+## [COVID-19]{.emph .red} Graphics
+
+
+
+![Financial Times March 23, 2020. John Burn-Murdoch [Image source](https://eagereyes.org/blog/2020/in-praise-of-the-diagonal-reference-line)](fig/ft-covid-19-deaths.png){width="100%"}
+
+## [COVID-19]{.emph .red} Graphics
+
+
+![The complexity of log scales. Nov 12, 2020. Mark Gubrud (\@mgubrud) [Image source](https://twitter.com/mgubrud/status/1326784082399944704)](fig/log-scale-complex.jpeg){width="100%"}
+
+
+
+## Exponential Growth
+
+```{r exp-growth2, fig.height = 2.5, fig.width = 8, cache = T}
+# Read in the data from NYT
+library(tidyverse)
+library(lubridate)
+library(zoo)
+library(ggrepel)
+library(gridExtra)
+cvstate <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv")
+
+cvstate <- cvstate %>%
+  group_by(state, fips) %>%
+  mutate(date_100th_case = min(date[cases >= 100]),
+         days_100th_case = date - date_100th_case,
+         daily_cases = cases - lag(cases, 1, default = 0),
+         week_avg_cases = rollmean(cases, 7, align = "right", fill = c(0, NA, NA), na.pad = T, na.rm = T),
+         daily_avg_cases = rollmean(daily_cases, 7, align = "right", fill = c(0, NA, NA), na.pad = T, na.rm = T),
+         daily_deaths = deaths - lag(deaths, 1, default = 0),
+         week_avg_deaths = rollmean(deaths, 7, align = "right", fill = c(0, NA, NA), na.pad = T, na.rm = T),
+         daily_avg_deaths = rollmean(daily_deaths, 7, align = "right", fill = c(0, NA, NA), na.pad = T, na.rm = T)) %>%
+  ungroup() %>%
+  mutate(state = factor(state))
+
+download.file("https://www2.census.gov/programs-surveys/popest/tables/2010-2019/state/totals/nst-est2019-01.xlsx", destfile = "census_pop_state.xlsx", quiet = T, mode = "wb")
+pop_data <- readxl::read_xlsx("census_pop_state.xlsx", col_names = c("state", "pop2019"), col_types = c("text", rep("skip", 11), "numeric"), skip = 9) %>%
+  mutate(state = str_remove(state, "[[:punct:]]"))
+
+cvstate <- left_join(cvstate, pop_data, by = "state")
+
+my_theme <- theme_bw() + 
+  theme(plot.background = element_rect(fill = "transparent", color = NA), 
+        panel.background = element_rect(fill = "transparent", color = NA), 
+        legend.background = element_rect(fill = "transparent", color = NA),
+        axis.text.y = element_text(angle = 90, hjust = 0.5)) 
+theme_set(my_theme)
+
+show_states <- c("California", "Texas", "New York", "Arizona", "Iowa", "Washington")
+
+tmp2 <- cvstate %>%
+  filter(state %in% show_states) %>%
+  filter(date <= (ymd("2020-03-20"))) %>%
+  mutate(state = factor(state)) %>%
+  filter(state == "New York")
+
+# Days used to anchor
+tmp2.5 <- filter(tmp2, max(date) - date <= 1) %>%
+  select(date, state, daily_avg_cases)
+
+# Adjustment
+tmp3 <- bind_rows(
+  tmp2.5 %>%
+    filter(date == max(date)),
+  tmp2.5 %>% 
+    group_by(state) %>% 
+    mutate(daily_case_increase = daily_avg_cases[2] - daily_avg_cases[1]) %>%
+    filter(date == max(date)) %>%
+    mutate(date = date + days(5), 
+           daily_avg_cases = daily_avg_cases + 5*daily_case_increase)
+)
+
+tmpsum2 <- tmp2 %>% group_by(state) %>% 
+  filter(daily_avg_cases == max(daily_avg_cases)) %>%
+  filter(date == min(date))
+
+ggplot() + 
+  geom_line(data = tmp2, 
+            aes(x = date, y = daily_avg_cases, color = state)) + 
+  geom_point(data = tmp2.5, 
+            aes(x = date, y = daily_avg_cases, color = state)) + 
+  geom_line(data = tmp3, 
+            aes(x = date, y = daily_avg_cases, color = state), linetype = "dotted") + 
+  geom_text_repel(data = tmpsum2, 
+                  aes(x = date, y = daily_avg_cases, 
+                      label = state, color = state), 
+                  hjust = 1, nudge_x = 1, segment.alpha = .2) + 
+  guides(color = F) + 
+  scale_color_manual(values = color_palette, drop = F) + 
+  scale_x_date(expand = expansion(mult = c(.05, .2)), limits = ymd(c("2020-03-01", "2020-03-31")),
+               date_breaks = "1 week", date_labels = "%B %d") + 
+  scale_y_continuous("Daily cases (7 day rolling average)") +
+  coord_cartesian(ylim = c(0, 5000)) + 
+  my_theme + 
+  theme(axis.title.x = element_blank())
+
+
+```
+
+### [What is the purpose of this chart?]{.emph .cerulean .center}
+
+::: fragment
+
+[To help people predict what is likely to happen?]{.center}
 :::
 
-::: {.column .smaller width="50%"}
-[A "Visual Hypothesis Test"]{.cerulean .emph}
+::: fragment
 
--   Embed the question in array of charts
+[(It doesn't do that very well)]{.center}
+:::
 
--   Can people identify the different plot?
+::: notes
 
--   Null model can be tricky to create
+Note that even if the growth is polynomial, we would still end up underestimating the number of cases. 
+So if our goal is to help people make good decisions (like, hey, cases are increasing exponentially, I should stay home), then a graph like this may not be the best way to go about it, because we know for a fact that people don't make effective forecasts from these types of plots.
 
--   Test statistic is the visual evaluation
+The natural way to correct for graphs showing exponential growth is to use a log y-axis scale, which solves some problems and creates a whole host of new problems. 
+
+:::
+
+## Exponential Growth
+
+
+
+```{r, fig.height = 2.5, fig.width = 8, cache = T}
+
+tmp2 <- cvstate %>%
+  filter(state %in% show_states) %>%
+  filter(date <= (ymd("2020-03-25"))) %>%
+  mutate(state = factor(state)) %>%
+  filter(state == "New York")
+
+tmpsum2 <- tmp2 %>% group_by(state) %>% 
+  filter(daily_avg_cases == max(daily_avg_cases)) %>%
+  filter(date == min(date))
+
+ggplot() + 
+  geom_line(data = tmp2, 
+            aes(x = date, y = daily_avg_cases, color = state)) + 
+  geom_point(data = tmp2.5, 
+            aes(x = date, y = daily_avg_cases, color = state)) + 
+  geom_line(data = tmp3, 
+            aes(x = date, y = daily_avg_cases, color = state), linetype = "dotted") + 
+  geom_text_repel(data = tmpsum2, 
+                  aes(x = date, y = daily_avg_cases, 
+                      label = state, color = state), 
+                  hjust = 1, nudge_x = 1, segment.alpha = .2) + 
+  guides(color = F) + 
+  scale_color_manual(values = color_palette, drop = F) + 
+  scale_x_date(expand = expansion(mult = c(.05, .2)), limits = ymd(c("2020-03-01", "2020-03-31")),
+               date_breaks = "1 week", date_labels = "%B %d") + 
+  scale_y_continuous("Daily cases (7 day rolling average)") +
+  coord_cartesian(ylim = c(0, 5000)) + 
+  my_theme + 
+  theme(axis.title.x = element_blank())
+
+
+```
+
+
+### [What is the purpose of this chart?]{.emph .cerulean .center}
+
+
+
+[To help people predict what is likely to happen?]{.center}
+
+
+Humans are awful at predicting exponential growth    
+[@wagenaarMisperceptionExponentialGrowth1975; @timmersInverseStatisticsMisperception1977]{.smaller}
+
+::: notes
+
+Note that even if the growth is polynomial, we would still end up underestimating the number of cases. 
+So if our goal is to help people make good decisions (like, hey, cases are increasing exponentially, I should stay home), then a graph like this may not be the best way to go about it, because we know for a fact that people don't make effective forecasts from these types of plots.
+
+The natural way to correct for graphs showing exponential growth is to use a log y-axis scale, which solves some problems and creates a whole host of new problems. 
+
+:::
+
+
+## Representing Exponential[(ish)]{.emph .cerulean} Data
+
+::: r-stack
+
+- Log or linear scales?
+
+- Reference lines?
+
+- Aligning x-axis to date? Days since ___ cases? 
+
+- "Pace" of the case counts vs. raw counts?
+
+- Comparing across populations -- size, policies, susceptibility...
+
+
+::: fragment
+
+![](fig/elmo-pass-out.gif){width="100%"}
+<!-- [Image source](https://tenor.com/view/elmo-pass-out-black-out-faint-unconscious-gif-12708224) -->
+:::
+
+:::
+
+## Why Visualize Data? [Communication!]{.emph .cerulean .fragment}
+
+::: columns
+
+::: {.column width="40%" .fragment}
+To inform
 
 ::: small
-@bujaStatisticalInferenceExploratory2009\
-@loyDiagnosticToolsHierarchical2013\
-@majumderValidationVisualStatistical2013\
-@vanderplasClustersBeatTrend2017\
-@vanderplasStatisticalSignificanceCalculations2021
+  - Numeric accuracy
+  - Comparative accuracy
+  - Overall trajectory
+  
 :::
 :::
-:::
+::: {.column width="60%" .fragment}
+To aid individual decision-making
 
-## Numerical Estimation
-
+::: small
+  - Decision outcome supported by evidence?
+  - Risk vs. raw case counts
+  - Uncertainty quantification
+  
+:::
+:::
+:::
 ::: columns
-::: column
-![@eellsRelativeMeritsCircles1926](fig/Eells_1926.png){width="80%" fig-align="center"}
+::: {.column width="20%"}
+:::
+::: {.column width="60%" .fragment}
+To aid policy development
 
-![@vonhuhnFurtherStudiesGraphic1927](fig/vonHuhn_1927.png){width="80%" fig-align="center"}
+::: small
+  - Uncertainty quantification
+  - Risk/reward of different options
+    
 :::
 
-::: column
-::: smaller
--   Size of region?\
-    @eellsRelativeMeritsCircles1926; @croxtonBarChartsCircle1927; @vanderplasFramedReproducingRevisiting2019
--   With scales?\
-    @vonhuhnFurtherStudiesGraphic1927
--   Size of relationship compared to another region\
-    @croxtonGraphicComparisonsBars1932
--   Very sensitive to question phrasing
-:::
 :::
 :::
 
-## Forced Choice
-
-::: columns
-::: column
-![Which bar is larger? @hughesJustNoticeableDifferences2001](fig/hughes_2001_larger.png){width="30%" fig-align="center"}
-
-![@hegartyChoosingUsingGeospatial2012](fig/padilla-visual-fit.png){width="100%" fig-align="center"}
+::: {.center .fragment}
+    
+[Different goals = different charts]{.emph .red .large}
 :::
 
-::: column
-::: smaller
--   Force participants to answer a specific question
-
--   May be a size judgment (which is larger?)
-
-    -   common in psychophysics experiments
-
--   May be a more complex decision incorporating other information
-
-@hughesJustNoticeableDifferences2001\
-@xiongBiasedAveragePosition2020\
-@luModelingJustNoticeable2022
-:::
-:::
-:::
-
-## Eye Tracking
-
-::: columns
-::: {.column width="60%"}
--   Infer cognitive processes from directed (conscious) attention
-
--   May be accompanied by direct estimation or other protocols
-
-<!-- - Can be combined with other methods -->
-
-::: smaller
-@gegenfurtnerExpertiseDifferencesComprehension2011\
-@goldbergEyeTrackingVisualization2011\
-@zhaoMindReadingUsing2013a\
-@netzelComparativeEyetrackingEvaluation2017\
-@liuChoosingOptimalMeans2023
-:::
-:::
-
-::: {.column width="40%"}
-![@goldbergComparingInformationGraphics2010](fig/Goldberg_2010.png){width="90%"}
-
-![@wollercarterCommunicatingDistortingRisks2012](fig/woller_2012.png){width="90%"}
-:::
-:::
-
-## Think Aloud and Free Response
-
--   Stream of consciousness narration [@guanValidityStimulatedRetrospective2006; @cookeAssessingConcurrentThinkAloud2010]{.smaller}
-
--   Reasoning to justify a decision
-
-![Why did you choose this panel? @vanderplasClustersBeatTrend2017](fig/vanderplas_2017.png)
-
-## Direct Annotation
-
-::: columns
-::: column
-![@mostellerEyeFittingStraight1981](fig/Mosteller_1981.png)
-:::
-
-::: {.column .smaller}
--   Have participants visually fit statistics
-
-    -   Usually directly annotating the chart with e.g. a regression line
-
--   Compare visual statistics to numerical calculations
-
--   Differences tell us about our implicit perception of data\
-    [e.g. visual regression is more robust to outliers]{.smaller}
-
--   Also useful as a teaching tool
-
-::: smaller
-@bajgierVisualFitsTeaching1989\
-@robinsonEyeFittingStraight2022\
-@robinsonYouDrawIt2023
-:::
-:::
-:::
-
-## How Do We Test Graphics?
+## How Do We Test Graphics? {#testing .center}
 
 ![](fig/Chart-Perception-Process.svg)
 
--   Testing method needs to be matched to level of engagement
 
--   Need to examine graphical choices across levels of engagement
+::: fragment
+The question is not [What is the best chart?]{.large .red .emph}
+:::
 
-# Multimodal Graphical Testing <br>[in Practice]{.emph .cerulean .center} {#logscales .center}
+::: fragment
+but... [What is the best chart for this purpose?]{.large .cerulean .emph}
+:::
 
-## Perception: Exp. Growth & Log Scales {.r-fit-text}
+::: {.fragment .smaller} 
+For an answer, we need to subject charts to a full spectrum of user tests.
+:::
+
+
+# Full-spectrum Graphical Testing <br>[in Practice]{.emph .cerulean .center} {#logscales .center}
+
+## Perception: Log Scales {.r-fit-text}
 
 ::: {.large .cerulean .emph .fragment}
 3 different ways of engaging with the data
@@ -294,9 +462,9 @@ Here are a couple of example lineups from this experiment - the first is on a li
 
 <!-- XXX Go create a chart showing experiment layout factors XXX -->
 
-## Q1: Perception of Differences {.r-fit-text}
+## Q1: Perception of Differences {.nostretch .r-fit-text}
 
-```{r odds-ratio-plot, eval = F, fig.width = 5, fig.height = 2, fig.align='center', message = F, warning = F}
+```{r odds-ratio-plot, eval = F, fig.width = 6, fig.height = 2, fig.align='center', message = F, warning = F}
 library(tidyverse)
 slice_curvature <- read_csv("results/jsm-student-paper-slicediffs.csv") %>%
   select(SimpleEffectLevel, test_param,	"_test_param", OddsRatio,	Alpha,	Lower,	Upper,	AdjLower,	AdjUpper,	LowerOR,	UpperOR,	AdjLowerOR,	AdjUpperOR) %>%
@@ -325,11 +493,11 @@ odds_ratio_plot <- slice_curvature %>%
 odds_ratio_plot
 ```
 
-![](fig/odds-ratio-plot-full.png)
+![](fig/odds-ratio-plot-full.png){width="100%"}
 
 [Conclusion:]{.emph .cerulean} It's easier to spot a curve among lines than it is to spot a line among curves
 
-@robinsonPerceptionCognitiveImplications2023 [ ]{.smaller}\[[Under review]{.smaller}\]
+[@robinsonPerceptionCognitiveImplications2023]{.smaller}
 
 ::: notes
 We used a generalized linear mixed effects model to assess the probability of a correct target identification given factors like target and null plot type, participant skill level, and random effects due to the data generating process. The plot shown here is the resulting log odds ratio for log vs. linear scales, and we see that it is easier to detect curvature among a field of null lines than it is to detect linearity among a field of curved lines. In addition, we see that when there is a lot of contrast between the null and the target plot, that is, when the nulls are very curved and the target is very straight, there isn't much difference between the two graphs. However, if there is less contrast, the log scale allows us to perceive the differences better than the linear scale.
@@ -820,7 +988,7 @@ How long does it take for the population in `Year 1` to double?
 -   a lot more variability on the linear scale than the log scale in both cases
 :::
 
-# [Challenges]{.emph .red} & [Benefits]{.emph .cerulean} of Multimodal Graphical Testing {#challenges}
+# [Challenges]{.emph .red} & [Benefits]{.emph .cerulean} of Full-spectrum Graphical Testing {#challenges}
 
 ## [Challenges]{.emph .red} & [Benefits]{.emph .cerulean}
 
@@ -837,9 +1005,9 @@ How long does it take for the population in `Year 1` to double?
 
 ![](fig/Chart-Perception-Process.svg)
 
--   Testing method needs to be matched to level of engagement
+-   Testing method needs to match level of engagement
 
--   Need to examine graphical choices across levels of engagement
+-   Examine graphical choices across engagement levels
 
 ## Packages
 
@@ -851,3 +1019,151 @@ How long does it take for the population in `Year 1` to double?
 :::
 
 ## Questions? {.center}
+
+
+# Testing Graphics
+
+## Lineups
+
+::: columns
+::: {.column width="50%"}
+![Question: Can participants identify different growth rates on a linear scale?](fig/linear-lineup-example.png)
+:::
+
+::: {.column .smaller width="50%"}
+[A "Visual Hypothesis Test"]{.cerulean .emph}
+
+-   Embed the question in array of charts
+
+-   Can people identify the different plot?
+
+-   Null model can be tricky to create
+
+-   Test statistic is the visual evaluation
+
+::: small
+@bujaStatisticalInferenceExploratory2009\
+@loyDiagnosticToolsHierarchical2013\
+@majumderValidationVisualStatistical2013\
+@vanderplasClustersBeatTrend2017\
+@vanderplasStatisticalSignificanceCalculations2021
+:::
+:::
+:::
+
+## Numerical Estimation
+
+::: columns
+::: column
+![@eellsRelativeMeritsCircles1926](fig/Eells_1926.png){width="80%" fig-align="center"}
+
+![@vonhuhnFurtherStudiesGraphic1927](fig/vonHuhn_1927.png){width="80%" fig-align="center"}
+:::
+
+::: column
+::: smaller
+-   Size of region?\
+    @eellsRelativeMeritsCircles1926; @croxtonBarChartsCircle1927; @vanderplasFramedReproducingRevisiting2019
+-   With scales?\
+    @vonhuhnFurtherStudiesGraphic1927
+-   Size of relationship compared to another region\
+    @croxtonGraphicComparisonsBars1932
+-   Very sensitive to question phrasing
+:::
+:::
+:::
+
+## Forced Choice
+
+::: columns
+::: column
+![Which bar is larger? @hughesJustNoticeableDifferences2001](fig/hughes_2001_larger.png){width="30%" fig-align="center"}
+
+![@hegartyChoosingUsingGeospatial2012](fig/padilla-visual-fit.png){width="100%" fig-align="center"}
+:::
+
+::: column
+::: smaller
+-   Force participants to answer a specific question
+
+-   May be a size judgment (which is larger?)
+
+    -   common in psychophysics experiments
+
+-   May be a more complex decision incorporating other information
+
+@hughesJustNoticeableDifferences2001\
+@xiongBiasedAveragePosition2020\
+@luModelingJustNoticeable2022
+:::
+:::
+:::
+
+## Eye Tracking
+
+::: columns
+::: {.column width="60%"}
+-   Infer cognitive processes from directed (conscious) attention
+
+-   May be accompanied by direct estimation or other protocols
+
+<!-- - Can be combined with other methods -->
+
+::: smaller
+@gegenfurtnerExpertiseDifferencesComprehension2011\
+@goldbergEyeTrackingVisualization2011\
+@zhaoMindReadingUsing2013a\
+@netzelComparativeEyetrackingEvaluation2017\
+@liuChoosingOptimalMeans2023
+:::
+:::
+
+::: {.column width="40%"}
+![@goldbergComparingInformationGraphics2010](fig/Goldberg_2010.png){width="90%"}
+
+![@wollercarterCommunicatingDistortingRisks2012](fig/woller_2012.png){width="90%"}
+:::
+:::
+
+## Think Aloud and Free Response
+
+-   Stream of consciousness narration [@guanValidityStimulatedRetrospective2006; @cookeAssessingConcurrentThinkAloud2010]{.smaller}
+
+-   Reasoning to justify a decision
+
+![Why did you choose this panel? @vanderplasClustersBeatTrend2017](fig/vanderplas_2017.png)
+
+## Direct Annotation
+
+::: columns
+::: column
+![@mostellerEyeFittingStraight1981](fig/Mosteller_1981.png)
+:::
+
+::: {.column .smaller}
+-   Have participants visually fit statistics
+
+    -   Usually directly annotating the chart with e.g. a regression line
+
+-   Compare visual statistics to numerical calculations
+
+-   Differences tell us about our implicit perception of data\
+    [e.g. visual regression is more robust to outliers]{.smaller}
+
+-   Also useful as a teaching tool
+
+::: smaller
+@bajgierVisualFitsTeaching1989\
+@robinsonEyeFittingStraight2022\
+@robinsonYouDrawIt2023
+:::
+:::
+:::
+
+## How Do We Test Graphics?
+
+![](fig/Chart-Perception-Process.svg)
+
+-   Testing method needs to be matched to level of engagement
+
+-   Need to examine graphical choices across levels of engagement
