@@ -77,7 +77,6 @@ lightblueseqpal <- colorspace::lighten(blueseqpal, .2)
 :::
 
 ::: {.column width="30%"}
-
 ```{r}
 #| fig-width: 5
 #| fig-height: 5
@@ -93,7 +92,7 @@ plot(code)
 :::
 :::
 
-# Pandemic Graphics: <br>🕰️[History and Present Day]{.emph .cerulean .center}💻 {#pandemic .center}
+# Pandemic Graphics: <br>:mantelpiece_clock:[History and Present Day]{.emph .cerulean .center}:computer: {#pandemic .center}
 
 ## 1918 Flu Pandemic {.r-stretch}
 
@@ -104,20 +103,18 @@ plot(code)
 ![All-cause mortality in Major Cities, 1918-1919 [Image source](https://johnmahaffie.com/bart-mahaffie-part-introduction/)](fig/Influenza-1919-majorcities.png){.r-stretch width="100%"}
 
 ## 1840s London:
+
 #### Cholera Mortality and Temperature
 
 ![Excess Mortality and Temperature, 1840s London. From Report on the mortality of cholera in England, 1848-49, by William Farr (1952). [Image Source](https://www.sciencephoto.com/media/1290326/view/relationship-of-mortality-rate-temperature-1840-1850)](fig/1840_cholera_mortality_temperature_london.png){.r-stretch width="100%" fig-alt="Graphs showing the relationship between the mean temperature and the relative mortality rate of London, UK, from 1840 to 1850. The 10 year average is at bottom right. Every other circle represents one year and is divided into 52 weeks. The concentric circles represent increments of 100 deaths and 10 degrees Fahrenheit. The outer black shaded areas show the extent by which the weekly deaths exceed the average weekly deaths, and the yellow shaded areas the extent to which they are below average. The inner red shaded areas show the extent by which the weekly mean temperature exceeded the average weekly temperature of the preceding 79 years, and the inner black area where it was below that average. The cholera epidemic of 1848-1849 can be clearly seen in the increase of excess deaths. From Report on the mortality of cholera in England, 1848-49, by William Farr (1952)."}
 
 ## Cholera & Plague in London
 
-
 ![Cholera & Plague in London (Created 1852) [Image source](https://wellcomecollection.org/works/acv8r4bv/images?id=bg5jwak4)](fig/Cholera_plague_london.png){.r-stretch width="100%"}
-
 
 ## [COVID-19]{.emph .red} Graphics
 
 ![May 6 2020: Three graphs that show a global slowdown in COVID-19 deaths, [Image Source](https://theconversation.com/three-graphs-that-show-a-global-slowdown-in-covid-19-deaths-135756)](fig/abomination.png){.r-stretch width="100%"}
-
 
 ## [COVID-19]{.emph .red} Graphics
 
@@ -127,11 +124,9 @@ plot(code)
 
 ![Tests vs. Cases, Our World in Data (May 19 2020)](fig/tests-vs-cases.png){.r-stretch width="100%"}
 
-
 ## [COVID-19]{.emph .red} Graphics
 
 ![Rate of Death Change, March 28, 2020. Romain Vuillemot (\@romsson) [Image source](https://twitter.com/romsson/status/1244316295094505472)](fig/triangles.png){.r-stretch width="100%"}
-
 
 ## [COVID-19]{.emph .red} Graphics
 
@@ -139,16 +134,11 @@ plot(code)
 
 ## [COVID-19]{.emph .red} Graphics
 
-
-
 ![Financial Times March 23, 2020. John Burn-Murdoch [Image source](https://eagereyes.org/blog/2020/in-praise-of-the-diagonal-reference-line)](fig/ft-covid-19-deaths.png){width="100%"}
 
 ## [COVID-19]{.emph .red} Graphics
 
-
 ![The complexity of log scales. Nov 12, 2020. Mark Gubrud (\@mgubrud) [Image source](https://twitter.com/mgubrud/status/1326784082399944704)](fig/log-scale-complex.jpeg){width="100%"}
-
-
 
 ## Exponential Growth
 
@@ -241,27 +231,20 @@ ggplot() +
 ### [What is the purpose of this chart?]{.emph .cerulean .center}
 
 ::: fragment
-
 [To help people predict what is likely to happen?]{.center}
 :::
 
 ::: fragment
-
 [(It doesn't do that very well)]{.center}
 :::
 
 ::: notes
+Note that even if the growth is polynomial, we would still end up underestimating the number of cases. So if our goal is to help people make good decisions (like, hey, cases are increasing exponentially, I should stay home), then a graph like this may not be the best way to go about it, because we know for a fact that people don't make effective forecasts from these types of plots.
 
-Note that even if the growth is polynomial, we would still end up underestimating the number of cases. 
-So if our goal is to help people make good decisions (like, hey, cases are increasing exponentially, I should stay home), then a graph like this may not be the best way to go about it, because we know for a fact that people don't make effective forecasts from these types of plots.
-
-The natural way to correct for graphs showing exponential growth is to use a log y-axis scale, which solves some problems and creates a whole host of new problems. 
-
+The natural way to correct for graphs showing exponential growth is to use a log y-axis scale, which solves some problems and creates a whole host of new problems.
 :::
 
 ## Exponential Growth
-
-
 
 ```{r, fig.height = 2.5, fig.width = 8, cache = T}
 
@@ -298,99 +281,82 @@ ggplot() +
 
 ```
 
-
 ### [What is the purpose of this chart?]{.emph .cerulean .center}
-
-
 
 [To help people predict what is likely to happen?]{.center}
 
-
-Humans are awful at predicting exponential growth    
-[@wagenaarMisperceptionExponentialGrowth1975; @timmersInverseStatisticsMisperception1977]{.smaller}
+Humans are awful at predicting exponential growth\
+@wagenaarMisperceptionExponentialGrowth1975[; @timmersInverseStatisticsMisperception1977]{.smaller}
 
 ::: notes
+Note that even if the growth is polynomial, we would still end up underestimating the number of cases. So if our goal is to help people make good decisions (like, hey, cases are increasing exponentially, I should stay home), then a graph like this may not be the best way to go about it, because we know for a fact that people don't make effective forecasts from these types of plots.
 
-Note that even if the growth is polynomial, we would still end up underestimating the number of cases. 
-So if our goal is to help people make good decisions (like, hey, cases are increasing exponentially, I should stay home), then a graph like this may not be the best way to go about it, because we know for a fact that people don't make effective forecasts from these types of plots.
-
-The natural way to correct for graphs showing exponential growth is to use a log y-axis scale, which solves some problems and creates a whole host of new problems. 
-
+The natural way to correct for graphs showing exponential growth is to use a log y-axis scale, which solves some problems and creates a whole host of new problems.
 :::
-
 
 ## Representing Exponential[(ish)]{.emph .cerulean} Data
 
 ::: r-stack
+-   Log or linear scales?
 
-- Log or linear scales?
+-   Reference lines?
 
-- Reference lines?
+-   Aligning x-axis to date? Days since \_\_\_ cases?
 
-- Aligning x-axis to date? Days since ___ cases? 
+-   "Pace" of the case counts vs. raw counts?
 
-- "Pace" of the case counts vs. raw counts?
-
-- Comparing across populations -- size, policies, susceptibility...
-
+-   Comparing across populations -- size, policies, susceptibility...
 
 ::: fragment
-
-![](fig/elmo-pass-out.gif){width="100%"}
-<!-- [Image source](https://tenor.com/view/elmo-pass-out-black-out-faint-unconscious-gif-12708224) -->
+![](fig/elmo-pass-out.gif){width="100%"} <!-- [Image source](https://tenor.com/view/elmo-pass-out-black-out-faint-unconscious-gif-12708224) -->
 :::
-
 :::
 
 ## Why Visualize Data? [Communication!]{.emph .cerulean .fragment}
 
 ::: columns
-
-::: {.column width="40%" .fragment}
+::: {.column .fragment width="40%"}
 To inform
 
 ::: small
-  - Numeric accuracy
-  - Comparative accuracy
-  - Overall trajectory
-  
+-   Numeric accuracy
+-   Comparative accuracy
+-   Overall trajectory
 :::
 :::
-::: {.column width="60%" .fragment}
+
+::: {.column .fragment width="60%"}
 To aid individual decision-making
 
 ::: small
-  - Decision outcome supported by evidence?
-  - Risk vs. raw case counts
-  - Uncertainty quantification
-  
+-   Decision outcome supported by evidence?
+-   Risk vs. raw case counts
+-   Uncertainty quantification
 :::
 :::
 :::
+
 ::: columns
 ::: {.column width="20%"}
 :::
-::: {.column width="60%" .fragment}
+
+::: {.column .fragment width="60%"}
 To aid policy development
 
 ::: small
-  - Uncertainty quantification
-  - Risk/reward of different options
-    
+-   Uncertainty quantification
+-   Risk/reward of different options
 :::
-
 :::
 :::
 
 ::: {.center .fragment}
-    
 [Different goals = different charts]{.emph .red .large}
 :::
 
 ## How Do We Test Graphics? {#testing .center}
 
 ![](fig/Chart-Perception-Process.svg)
-
 
 ::: fragment
 The question is not [What is the best chart?]{.large .red .emph}
@@ -400,10 +366,9 @@ The question is not [What is the best chart?]{.large .red .emph}
 but... [What is the best chart for this purpose?]{.large .cerulean .emph}
 :::
 
-::: {.fragment .smaller} 
+::: {.fragment .smaller}
 For an answer, we need to subject charts to a full spectrum of user tests.
 :::
-
 
 # Full-spectrum Graphical Testing <br>[in Practice]{.emph .cerulean .center} {#logscales .center}
 
@@ -497,7 +462,7 @@ odds_ratio_plot
 
 [Conclusion:]{.emph .cerulean} It's easier to spot a curve among lines than it is to spot a line among curves
 
-[@robinsonPerceptionCognitiveImplications2023]{.smaller}
+@robinsonPerceptionCognitiveImplications2023
 
 ::: notes
 We used a generalized linear mixed effects model to assess the probability of a correct target identification given factors like target and null plot type, participant skill level, and random effects due to the data generating process. The plot shown here is the resulting log odds ratio for log vs. linear scales, and we see that it is easier to detect curvature among a field of null lines than it is to detect linearity among a field of curved lines. In addition, we see that when there is a lot of contrast between the null and the target plot, that is, when the nulls are very curved and the target is very straight, there isn't much difference between the two graphs. However, if there is less contrast, the log scale allows us to perceive the differences better than the linear scale.
@@ -524,9 +489,12 @@ The next question we had was whether we can accurately predict/forecast exponent
 
 -   New York Times' 'You Draw It' features:
 
+::: smaller
     -   [Family Income affects college chances](https://www.nytimes.com/interactive/2015/05/28/upshot/you-draw-it-how-family-income-affects-childrens-college-chances.html)
     -   [Just How Bad Is the Drug Overdose Epidemic?](https://www.nytimes.com/interactive/2017/04/14/upshot/drug-overdose-epidemic-you-draw-it.html)
     -   [What Got Better or Worse During Obama's Presidency](https://www.nytimes.com/interactive/2017/01/15/us/politics/you-draw-obama-legacy.html?_r=0)
+
+:::
 :::
 
 ::: column
@@ -677,10 +645,10 @@ UniquePanelCoords <- ggplot2::ggproto(
 
 ## Q2: Forecasting (You-Draw-It)
 
-```{r, fig.width = 6, fig.height = 4, out.width = "100%"}
+```{r, fig.width = 6, fig.height = 4, out.width = "90%"}
 #| fig-width: 10
 #| fig-height: 6
-#| out-width: 100%
+#| out-width: 90%
 participant_data <- read_csv("https://github.com/earobinson95/log-perception-prolific/raw/main/analyses/02a-you-draw-it/data/youdrawit-model-data.csv")
 
 # sim_data
@@ -760,7 +728,7 @@ youdrawit_preds_gamm_0.23 <- read_csv("https://raw.githubusercontent.com/earobin
 ```{r}
 #| fig-width: 10
 #| fig-height: 6
-#| out-width: 100%
+#| out-width: 90%
 set.seed(68505)
 participant_sample2 <- sample(unique(youdrawit_model_data$prolific_id), 150)
 
@@ -1020,7 +988,6 @@ How long does it take for the population in `Year 1` to double?
 
 ## Questions? {.center}
 
-
 # Testing Graphics
 
 ## Lineups
@@ -1127,7 +1094,7 @@ How long does it take for the population in `Year 1` to double?
 
 ## Think Aloud and Free Response
 
--   Stream of consciousness narration [@guanValidityStimulatedRetrospective2006; @cookeAssessingConcurrentThinkAloud2010]{.smaller}
+-   Stream of consciousness narration @guanValidityStimulatedRetrospective2006[; @cookeAssessingConcurrentThinkAloud2010]{.smaller}
 
 -   Reasoning to justify a decision
 
