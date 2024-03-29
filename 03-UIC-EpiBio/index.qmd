@@ -489,12 +489,10 @@ The next question we had was whether we can accurately predict/forecast exponent
 
 -   New York Times' 'You Draw It' features:
 
-::: smaller
     -   [Family Income affects college chances](https://www.nytimes.com/interactive/2015/05/28/upshot/you-draw-it-how-family-income-affects-childrens-college-chances.html)
     -   [Just How Bad Is the Drug Overdose Epidemic?](https://www.nytimes.com/interactive/2017/04/14/upshot/drug-overdose-epidemic-you-draw-it.html)
     -   [What Got Better or Worse During Obama's Presidency](https://www.nytimes.com/interactive/2017/01/15/us/politics/you-draw-obama-legacy.html?_r=0)
 
-:::
 :::
 
 ::: column
