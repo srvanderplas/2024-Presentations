@@ -98,11 +98,88 @@
     "text": "The Realization"
   },
   {
-    "objectID": "03-graphics-blog/index.html#functions",
-    "href": "03-graphics-blog/index.html#functions",
+    "objectID": "03-graphics-blog/index.html#talk-functions",
+    "href": "03-graphics-blog/index.html#talk-functions",
     "title": "Building a CV/Blog Automatically",
-    "section": "Functions",
-    "text": "Functions\n\nformat functions - create markup for specific fields\ne.g. format_post_name, format_abstract, format_slides, format_keywords, format_event\nyaml_kv for fixing up yaml entries properly\ntalk_to_params - create data frame with columns that map to key-value pairs\ncreate_talk - creates whole qmd file from parameters\nget_image_link - creates an image for the talk"
+    "section": "Talk Functions",
+    "text": "Talk Functions\n\nformat functions - create markup for specific fields\ne.g. format_post_name, format_abstract, format_slides, format_keywords, format_event\nyaml_kv for fixing up yaml entries properly\ntalk_to_params - create data frame with columns that map to key-value pairs\ncreate_talk - creates whole qmd file from parameters\nget_image_link - creates an image for the talk"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#talk_to_params",
+    "href": "03-graphics-blog/index.html#talk_to_params",
+    "title": "Building a CV/Blog Automatically",
+    "section": "talk_to_params()",
+    "text": "talk_to_params()\nGoal: Format all the components of the qmd posts, keeping results in a data frame\n\nformat_post_name(x)format_slides(x)format_event(df)nametitleauthordateabstractslidesurlimagekeywordseventformat_abstract(x)talk_to_params(df)format_keywords(x)"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#create_talk",
+    "href": "03-graphics-blog/index.html#create_talk",
+    "title": "Building a CV/Blog Automatically",
+    "section": "create_talk()",
+    "text": "create_talk()\nGoal: Create a qmd file from a single row of data\n\nget_img_link(params, path)yaml_kv(key, value)create_talk(params, path)titleauthordateabstractslidesurlimagekeywordsevent"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#get_image_link",
+    "href": "03-graphics-blog/index.html#get_image_link",
+    "title": "Building a CV/Blog Automatically",
+    "section": "get_image_link()",
+    "text": "get_image_link()\nGoal: Get something to use as a cover image\n\nIf there is an image value in the spreadsheet:\n\nspecified image link from the talk\nscreenshot of specific slide\n\nOtherwise\n\nscreenshot of first slide\nempty field"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#paper-layout",
+    "href": "03-graphics-blog/index.html#paper-layout",
+    "title": "Building a CV/Blog Automatically",
+    "section": "Paper Layout",
+    "text": "Paper Layout"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#paper-layout-1",
+    "href": "03-graphics-blog/index.html#paper-layout-1",
+    "title": "Building a CV/Blog Automatically",
+    "section": "Paper Layout",
+    "text": "Paper Layout"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#paper-functions",
+    "href": "03-graphics-blog/index.html#paper-functions",
+    "title": "Building a CV/Blog Automatically",
+    "section": "Paper Functions",
+    "text": "Paper Functions\n\nyaml_kv for fixing up yaml entries properly\nformat functions - create markup for specific fields\ne.g. format_title, format_github, format_addendum, format_citation, `format_bibtex\npub_to_params - create data frame with columns that map to key-value pairs\ncreate_paper - creates whole qmd file from parameters"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#pub_to_params",
+    "href": "03-graphics-blog/index.html#pub_to_params",
+    "title": "Building a CV/Blog Automatically",
+    "section": "pub_to_params()",
+    "text": "pub_to_params()\nGoal: Format all the components of the qmd post, keeping results in a data frame\nWorks similarly to talk_to_params() but:\n\nhandles dates from bibtex files (not always ymd format)\nadds bibliographic citation and bibtex code to entry text"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#create_paper",
+    "href": "03-graphics-blog/index.html#create_paper",
+    "title": "Building a CV/Blog Automatically",
+    "section": "create_paper()",
+    "text": "create_paper()\nGoal: Create a qmd file from a single row of data"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#general-process",
+    "href": "03-graphics-blog/index.html#general-process",
+    "title": "Building a CV/Blog Automatically",
+    "section": "General Process",
+    "text": "General Process\n\ncv-data submodulesrvanderplas.github.ioCVcv-data submodulecv-databuild sitebuild document"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#in-cv-data-repository",
+    "href": "03-graphics-blog/index.html#in-cv-data-repository",
+    "title": "Building a CV/Blog Automatically",
+    "section": "In cv-data repository",
+    "text": "In cv-data repository\nname: 'Trigger update of CV and srvanderplas.github.io'\n\non:\n  push:\n    branches: main\n      \njobs:\n  trigger_workflow:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Echo workflow name\n        shell: bash\n        run: |\n          echo \"I am workflow of cv-data\"\n      - name: Trigger site repo build\n        uses: convictional/trigger-workflow-and-wait@v1.6.1\n        with: # Set up for each dependency\n          owner: srvanderplas\n          repo: srvanderplas.github.io\n          github_token: ${{ secrets.GH_TOKEN }}\n          workflow_file_name: publish.yml\n          ref: main\n          wait_interval: 100\n          propagate_failure: false\n          trigger_workflow: true\n          wait_workflow: false"
+  },
+  {
+    "objectID": "03-graphics-blog/index.html#in-repos-using-cv-data-submodules",
+    "href": "03-graphics-blog/index.html#in-repos-using-cv-data-submodules",
+    "title": "Building a CV/Blog Automatically",
+    "section": "In repos using cv-data submodules:",
+    "text": "In repos using cv-data submodules:\nThe important part:\non:\n  workflow_dispatch:\n  push:\n    branches: main\nEverything else:\nname: Quarto Publish\n\njobs:\n  build-deploy:\n    runs-on: ubuntu-latest\n\n    permissions:\n      contents: write\n\n    steps:\n      - name: Install libcurl on Linux\n        if: runner.os == 'Linux'\n        run: sudo apt-get update -y && sudo apt-get install -y libcurl4-openssl-dev\n\n      - name: Set up Quarto\n        uses: quarto-dev/quarto-actions/setup@v2\n        with:\n          tinytex: false\n\n      - name: Quarto version\n        run: |\n          quarto --version\n\n      - name: Check out repository\n        uses: actions/checkout@v4\n        with:\n          submodules: recursive\n          token: ${{ secrets.GITHUB_TOKEN }}\n\n      - name: Install R\n        uses: r-lib/actions/setup-r@v2\n        with:\n          use-public-rspm: true\n\n      - name: Setup renv\n        uses: r-lib/actions/setup-renv@v2\n        with:\n          cache-version: 1\n\n      - name: Publish\n        uses: quarto-dev/quarto-actions/publish@v2\n        with:\n          target: gh-pages\n        env:\n          GS_AUTH: ${{ secrets.GS_AUTH }}\n          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}"
   },
   {
     "objectID": "01-ICOFPE/index.html#why-data-visualization-1",
@@ -158,7 +235,7 @@
     "href": "01-ICOFPE/index.html#understand-results-2",
     "title": "Cultivating Insights: Harnessing the Power of Data Visualization in Agriculture",
     "section": "Understand Results",
-    "text": "Understand Results\n\n\n\n\n\n\n\nParametric Coefficients\n\n\neffect\nEstimate\nStd. Error\nt value\nPr(&gt;|t|)\n\n\n\n\n(Intercept)\n39.5926\n0.2215\n178.7559\n0.0000\n\n\n\n\n\n\n\nApproximate Significance of Smooth Terms\n\n\neffect\nedf\nRef.df\nF\np-value\n\n\n\n\ns(s_rate)\n0.9772\n9.0000\n0.1442\n0.2558\n\n\ns(elev)\n6.0431\n9.0000\n3.2842\n0.0000\n\n\ns(slope)\n4.7708\n9.0000\n2.8008\n0.0000\n\n\ns(clay)\n2.4558\n9.0000\n1.8240\n0.0001\n\n\ns(silt)\n1.4403\n9.0000\n0.7279\n0.0061\n\n\nte(x_coord,y_coord)\n20.3908\n24.0000\n14.1260\n0.0000\n\n\n\n\n\n\n\n\nFirst off, I’d like to point out the idfference between what the model print-out shows and what the graphics show. If you’re like me, tables like this don’t make a terrible amount of sense. I can translate them for you - essentially, in this model, we have smooth curves that model seed rate, elevation, slope, clay and silt percentage, and spatial correlation. The numbers in this table aren’t that useful, because we’re using smoothers - they mostly tell you just whether or not the variable is statistically significant - whether it seems to account for more variability than what would be expected by random chance.\nIn this case, seed rate doesn’t seem to be significant, though all of the variables I included that you have no control over seem to be significant. So that isn’t great - it means that at least according to the parameters of this experiment, seed rate doesn’t matter as much as other factors outside of your control. But mostly, a table of numbers doesn’t give you much to interrogate."
+    "text": "Understand Results\n\n\n\n\n\n\nParametric Coefficients\n\n\neffect\nEstimate\nStd. Error\nt value\nPr(&gt;|t|)\n\n\n\n\n(Intercept)\n39.5926\n0.2215\n178.7559\n0.0000\n\n\n\n\n\n\n\n\n\n\n\nApproximate Significance of Smooth Terms\n\n\neffect\nedf\nRef.df\nF\np-value\n\n\n\n\ns(s_rate)\n0.9772\n9.0000\n0.1442\n0.2558\n\n\ns(elev)\n6.0431\n9.0000\n3.2842\n0.0000\n\n\ns(slope)\n4.7708\n9.0000\n2.8008\n0.0000\n\n\ns(clay)\n2.4558\n9.0000\n1.8240\n0.0001\n\n\ns(silt)\n1.4403\n9.0000\n0.7279\n0.0061\n\n\nte(x_coord,y_coord)\n20.3908\n24.0000\n14.1260\n0.0000\n\n\n\n\n\n\nFirst off, I’d like to point out the idfference between what the model print-out shows and what the graphics show. If you’re like me, tables like this don’t make a terrible amount of sense. I can translate them for you - essentially, in this model, we have smooth curves that model seed rate, elevation, slope, clay and silt percentage, and spatial correlation. The numbers in this table aren’t that useful, because we’re using smoothers - they mostly tell you just whether or not the variable is statistically significant - whether it seems to account for more variability than what would be expected by random chance.\nIn this case, seed rate doesn’t seem to be significant, though all of the variables I included that you have no control over seem to be significant. So that isn’t great - it means that at least according to the parameters of this experiment, seed rate doesn’t matter as much as other factors outside of your control. But mostly, a table of numbers doesn’t give you much to interrogate."
   },
   {
     "objectID": "01-ICOFPE/index.html#understand-model-results",
@@ -186,7 +263,7 @@
     "href": "01-ICOFPE/index.html#make-decisions-2",
     "title": "Cultivating Insights: Harnessing the Power of Data Visualization in Agriculture",
     "section": "Make Decisions",
-    "text": "Make Decisions\n\n\n\n\n\n\n\n\nParametric Coefficients\n\n\neffect\nEstimate\nStd. Error\nt value\nPr(&gt;|t|)\n\n\n\n\n(Intercept)\n246.0769\n1.8919\n130.0671\n0.0000\n\n\nmunameDrummer silty clay loam\n21.3936\n13.0254\n1.6424\n0.1011\n\n\nmunameElpaso silty clay loam\n6.8863\n6.3001\n1.0930\n0.2749\n\n\nmunameHoughton muck\n−1.8043\n12.5800\n−0.1434\n0.8860\n\n\nmunameLisbon silt loam\n−16.0409\n9.4682\n−1.6942\n0.0909\n\n\nmunameOctagon silt loam\n−2.2365\n2.9266\n−0.7642\n0.4451\n\n\n\n\n\n\n\nApproximate Significance of Smooth Terms\n\n\neffect\nedf\nRef.df\nF\np-value\n\n\n\n\ns(n_rate)\n2.0872\n9.0000\n7.9926\n0.0000\n\n\ns(elev)\n8.0000\n9.0000\n3.6272\n0.0000\n\n\ns(slope)\n1.9356\n9.0000\n1.9140\n0.0000\n\n\ns(elev,slope)\n16.5476\n27.0000\n1.7851\n0.0000\n\n\nte(x_coord,y_coord)\n22.3023\n24.0000\n5.7360\n0.0000\n\n\n\n\n\n\n\n\n\nSo just as a starter, in this model for this field, I’m modeling each type of soil as a separate intercept - that is, each soil type is expected to have a different base yield rate, but to respond the same based on nitrogen rate, elevation, slope, etc. (this is obviously ridiculous, I would assume, but again, all models are wrong, some are useful, so let’s work with this simplification because it keeps the table at a manageable size for this presentation. It’s already pretty big.)"
+    "text": "Make Decisions\n\n\n\n\n\n\n\n\nParametric Coefficients\n\n\neffect\nEstimate\nStd. Error\nt value\nPr(&gt;|t|)\n\n\n\n\n(Intercept)\n246.0769\n1.8919\n130.0671\n0.0000\n\n\nmunameDrummer silty clay loam\n21.3936\n13.0254\n1.6424\n0.1011\n\n\nmunameElpaso silty clay loam\n6.8863\n6.3001\n1.0930\n0.2749\n\n\nmunameHoughton muck\n−1.8043\n12.5800\n−0.1434\n0.8860\n\n\nmunameLisbon silt loam\n−16.0409\n9.4682\n−1.6942\n0.0909\n\n\nmunameOctagon silt loam\n−2.2365\n2.9266\n−0.7642\n0.4451\n\n\n\n\n\n\n\n\n\n\n\nApproximate Significance of Smooth Terms\n\n\neffect\nedf\nRef.df\nF\np-value\n\n\n\n\ns(n_rate)\n2.0872\n9.0000\n7.9926\n0.0000\n\n\ns(elev)\n8.0000\n9.0000\n3.6272\n0.0000\n\n\ns(slope)\n1.9356\n9.0000\n1.9140\n0.0000\n\n\ns(elev,slope)\n16.5476\n27.0000\n1.7851\n0.0000\n\n\nte(x_coord,y_coord)\n22.3023\n24.0000\n5.7360\n0.0000\n\n\n\n\n\n\n\n\nSo just as a starter, in this model for this field, I’m modeling each type of soil as a separate intercept - that is, each soil type is expected to have a different base yield rate, but to respond the same based on nitrogen rate, elevation, slope, etc. (this is obviously ridiculous, I would assume, but again, all models are wrong, some are useful, so let’s work with this simplification because it keeps the table at a manageable size for this presentation. It’s already pretty big.)"
   },
   {
     "objectID": "01-ICOFPE/index.html#make-decisions-3",
@@ -214,7 +291,7 @@
     "href": "01-ICOFPE/index.html#make-decisions-6",
     "title": "Cultivating Insights: Harnessing the Power of Data Visualization in Agriculture",
     "section": "Make Decisions",
-    "text": "Make Decisions\n\n\n\n\n\n\n\n\n\n\n\nIn fact, if we plot the partial effects and then also plot the elevation, we can see that this is largely just another way to say higher elevations seem to perform better. Sometimes, there are multiple effects that are correlated and included in the model through separate variables."
+    "text": "Make Decisions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIn fact, if we plot the partial effects and then also plot the elevation, we can see that this is largely just another way to say higher elevations seem to perform better. Sometimes, there are multiple effects that are correlated and included in the model through separate variables."
   },
   {
     "objectID": "01-ICOFPE/index.html#make-decisions-7",
@@ -399,104 +476,6 @@
     "text": "Removing a submodule\ngit submodule deinit &lt;path-to-submodule&gt;\ngit rm &lt;path-to-submodule&gt;\ngit commit -m \"Removed annoying submodule\"\ngit push"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Presentations in 2024",
-    "section": "",
-    "text": "Cultivating Insights: Harnessing the Power of Data Visualization in Agriculture\n\n\n\nSusan Vanderplas\n\n\nJan 9, 2024\n\n\n\n\n\nLocation\n\n\nInternational Conference for On-Farm Precision Experimentation, Corpus Christi, TX\n\n\n\n\nTopics\n\n\ngraphics,agriculture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Git Submodules\n\n\n\nSusan Vanderplas\n\n\nFeb 8, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\ngit,reproducibility,teaching\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV with a Spreadsheet\n\n\n\nSusan Vanderplas\n\n\nFeb 15, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV/Blog Automatically\n\n\n\nSusan Vanderplas\n\n\nMar 7, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEscaping Flatland\n\n\n\nTyler Wiederich, Erin Blankenship & Susan Vanderplas\n\n\nJul 1, 2024\n\n\n\n\n\nLocation\n\n\nHuman Computer Interaction International, Washington DC\n\n\n\n\nTopics\n\n\nteaching,graphics,user-study\n\n\n\n\n\n\n\n\n\n\n\n\n\nGraphical Perception in a Pandemic: Log Scales, Exponential Growth, and the Importance of User Testing\n\n\n\n\n\n\n\n\n\nLocation\n\n\n \n\n\n\n\nTopics\n\n\n \n\n\n\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "07-HCII/index.html#references",
-    "href": "07-HCII/index.html#references",
-    "title": "Escaping Flatland",
-    "section": "",
-    "text": "Carswell, C., Sylvia Frankenberger, and Donald Bernhard. 1991. “Graphing in Depth: Perspectives on the Use of Three-Dimensional Graphs to Represent Lower-Dimensional Data.” Behaviour & Information Technology 10: 459–74. https://doi.org/10.1080/01449299108924304.\n\n\nDay, Ross H, and Erica J Stecher. 1991. “Sine of an Illusion.” Perception 20 (1): 49–55. https://doi.org/10.1068/p200049.\n\n\nFischer, M. H. 2000. “Do Irrelevant Depth Cues Affect the Comprehension of Bar Graphs.” Applied Cognitive Psychology 14: 151–62. https://doi.org/10.1002/(SICI)1099-0720(200003/04)14:2&lt;151::AID-ACP629&gt;3.0.CO;2-Z.\n\n\nVanderPlas, Susan, and Heike Hofmann. 2015. “Signs of the Sine IllusionWhy We Need to Care.” Journal of Computational and Graphical Statistics 24 (4): 1170–90. https://doi.org/10.1080/10618600.2014.951547.\n\n\nZacks, Jeff, Ellen Levy, Barbara Tversky, and Diane J. Schiano. 1998. “Reading Bar Graphs: Effects of Extraneous Depth Cues and Graphical Context.” Journal of Experimental Psychology: Applied 4 (2): 119–38. https://doi.org/10.1037/1076-898X.4.2.119."
-  },
-  {
-    "objectID": "03-graphics-blog/index.html#talk_to_params",
-    "href": "03-graphics-blog/index.html#talk_to_params",
-    "title": "Building a CV/Blog Automatically",
-    "section": "talk_to_params()",
-    "text": "talk_to_params()\nGoal: Format all the components of the qmd posts, keeping results in a data frame\n\nformat_post_name(x)format_slides(x)format_event(df)nametitleauthordateabstractslidesurlimagekeywordseventformat_abstract(x)talk_to_params(df)format_keywords(x)"
-  },
-  {
-    "objectID": "03-graphics-blog/index.html#create_talk",
-    "href": "03-graphics-blog/index.html#create_talk",
-    "title": "Building a CV/Blog Automatically",
-    "section": "create_talk()",
-    "text": "create_talk()\nGoal: Create a qmd file from a single row of data\n\nget_img_link(params, path)yaml_kv(key, value)create_talk(params, path)titleauthordateabstractslidesurlimagekeywordsevent"
-  },
-  {
-    "objectID": "03-graphics-blog/index.html#get_image_link",
-    "href": "03-graphics-blog/index.html#get_image_link",
-    "title": "Building a CV/Blog Automatically",
-    "section": "get_image_link()",
-    "text": "get_image_link()\nGoal: Get something to use as a cover image\n\nIf there is an image value in the spreadsheet:\n\nspecified image link from the talk\nscreenshot of specific slide\n\nOtherwise\n\nscreenshot of first slide\nempty field"
-  },
-  {
-    "objectID": "03-graphics-blog/index.html#pub_to_params",
-    "href": "03-graphics-blog/index.html#pub_to_params",
-    "title": "Building a CV/Blog Automatically",
-    "section": "pub_to_params()",
-    "text": "pub_to_params()\nGoal: Format all the components of the qmd post, keeping results in a data frame\nWorks similarly to talk_to_params() but:\n\nhandles dates from bibtex files (not always ymd format)\nadds bibliographic citation and bibtex code to entry text"
-  },
-  {
-    "objectID": "03-graphics-blog/index.html#talk-functions",
-    "href": "03-graphics-blog/index.html#talk-functions",
-    "title": "Building a CV/Blog Automatically",
-    "section": "Talk Functions",
-    "text": "Talk Functions\n\nformat functions - create markup for specific fields\ne.g. format_post_name, format_abstract, format_slides, format_keywords, format_event\nyaml_kv for fixing up yaml entries properly\ntalk_to_params - create data frame with columns that map to key-value pairs\ncreate_talk - creates whole qmd file from parameters\nget_image_link - creates an image for the talk"
-  },
-  {
-    "objectID": "03-graphics-blog/index.html#paper-functions",
-    "href": "03-graphics-blog/index.html#paper-functions",
-    "title": "Building a CV/Blog Automatically",
-    "section": "Paper Functions",
-    "text": "Paper Functions\n\nyaml_kv for fixing up yaml entries properly\nformat functions - create markup for specific fields\ne.g. format_title, format_github, format_addendum, format_citation, `format_bibtex\npub_to_params - create data frame with columns that map to key-value pairs\ncreate_paper - creates whole qmd file from parameters"
-  },
-  {
-    "objectID": "03-graphics-blog/index.html#paper-layout",
-    "href": "03-graphics-blog/index.html#paper-layout",
-    "title": "Building a CV/Blog Automatically",
-    "section": "Paper Layout",
-    "text": "Paper Layout"
-  },
-  {
-    "objectID": "03-graphics-blog/index.html#paper-layout-1",
-    "href": "03-graphics-blog/index.html#paper-layout-1",
-    "title": "Building a CV/Blog Automatically",
-    "section": "Paper Layout",
-    "text": "Paper Layout"
-  },
-  {
-    "objectID": "03-graphics-blog/index.html#create_paper",
-    "href": "03-graphics-blog/index.html#create_paper",
-    "title": "Building a CV/Blog Automatically",
-    "section": "create_paper()",
-    "text": "create_paper()\nGoal: Create a qmd file from a single row of data"
-  },
-  {
-    "objectID": "03-graphics-blog/index.html#general-process",
-    "href": "03-graphics-blog/index.html#general-process",
-    "title": "Building a CV/Blog Automatically",
-    "section": "General Process",
-    "text": "General Process\n\ncv-data submodulesrvanderplas.github.ioCVcv-data submodulecv-databuild sitebuild document"
-  },
-  {
-    "objectID": "03-graphics-blog/index.html#in-cv-data-repository",
-    "href": "03-graphics-blog/index.html#in-cv-data-repository",
-    "title": "Building a CV/Blog Automatically",
-    "section": "In cv-data repository",
-    "text": "In cv-data repository\nname: 'Trigger update of CV and srvanderplas.github.io'\n\non:\n  push:\n    branches: main\n      \njobs:\n  trigger_workflow:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Echo workflow name\n        shell: bash\n        run: |\n          echo \"I am workflow of cv-data\"\n      - name: Trigger site repo build\n        uses: convictional/trigger-workflow-and-wait@v1.6.1\n        with: # Set up for each dependency\n          owner: srvanderplas\n          repo: srvanderplas.github.io\n          github_token: ${{ secrets.GH_TOKEN }}\n          workflow_file_name: publish.yml\n          ref: main\n          wait_interval: 100\n          propagate_failure: false\n          trigger_workflow: true\n          wait_workflow: false"
-  },
-  {
-    "objectID": "03-graphics-blog/index.html#in-repos-using-cv-data-submodules",
-    "href": "03-graphics-blog/index.html#in-repos-using-cv-data-submodules",
-    "title": "Building a CV/Blog Automatically",
-    "section": "In repos using cv-data submodules:",
-    "text": "In repos using cv-data submodules:\nThe important part:\non:\n  workflow_dispatch:\n  push:\n    branches: main\nEverything else:\nname: Quarto Publish\n\njobs:\n  build-deploy:\n    runs-on: ubuntu-latest\n\n    permissions:\n      contents: write\n\n    steps:\n      - name: Install libcurl on Linux\n        if: runner.os == 'Linux'\n        run: sudo apt-get update -y && sudo apt-get install -y libcurl4-openssl-dev\n\n      - name: Set up Quarto\n        uses: quarto-dev/quarto-actions/setup@v2\n        with:\n          tinytex: false\n\n      - name: Quarto version\n        run: |\n          quarto --version\n\n      - name: Check out repository\n        uses: actions/checkout@v4\n        with:\n          submodules: recursive\n          token: ${{ secrets.GITHUB_TOKEN }}\n\n      - name: Install R\n        uses: r-lib/actions/setup-r@v2\n        with:\n          use-public-rspm: true\n\n      - name: Setup renv\n        uses: r-lib/actions/setup-renv@v2\n        with:\n          cache-version: 1\n\n      - name: Publish\n        uses: quarto-dev/quarto-actions/publish@v2\n        with:\n          target: gh-pages\n        env:\n          GS_AUTH: ${{ secrets.GS_AUTH }}\n          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}"
-  },
-  {
     "objectID": "03-UIC-EpiBio/index.html#flu-pandemic",
     "href": "03-UIC-EpiBio/index.html#flu-pandemic",
     "title": "Graphical Perception in a Pandemic",
@@ -511,11 +490,11 @@
     "text": "1918 Flu Pandemic\n\nAll-cause mortality in Major Cities, 1918-1919 Image source"
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#s-london-cholera-mortality-and-temperature",
-    "href": "03-UIC-EpiBio/index.html#s-london-cholera-mortality-and-temperature",
+    "objectID": "03-UIC-EpiBio/index.html#s-london",
+    "href": "03-UIC-EpiBio/index.html#s-london",
     "title": "Graphical Perception in a Pandemic",
-    "section": "1840s London Cholera Mortality and Temperature",
-    "text": "1840s London Cholera Mortality and Temperature\n\nExcess Mortality and Temperature, 1840s London. From Report on the mortality of cholera in England, 1848-49, by William Farr (1952). Image Source"
+    "section": "1840s London:",
+    "text": "1840s London:\nCholera Mortality and Temperature\n\nExcess Mortality and Temperature, 1840s London. From Report on the mortality of cholera in England, 1848-49, by William Farr (1952). Image Source"
   },
   {
     "objectID": "03-UIC-EpiBio/index.html#cholera-plague-in-london",
@@ -525,67 +504,81 @@
     "text": "Cholera & Plague in London\n\nCholera & Plague in London (Created 1852) Image source"
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19",
-    "href": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19",
+    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics",
+    "href": "03-UIC-EpiBio/index.html#covid-19-graphics",
     "title": "Graphical Perception in a Pandemic",
-    "section": "An Explosion of Graphics: COVID-19",
-    "text": "An Explosion of Graphics: COVID-19\n\nMay 6 2020: Three graphs that show a global slowdown in COVID-19 deaths, Image Source"
+    "section": "COVID-19 Graphics",
+    "text": "COVID-19 Graphics\n\nMay 6 2020: Three graphs that show a global slowdown in COVID-19 deaths, Image Source"
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-1",
-    "href": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-1",
+    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics-1",
+    "href": "03-UIC-EpiBio/index.html#covid-19-graphics-1",
     "title": "Graphical Perception in a Pandemic",
-    "section": "An Explosion of Graphics: COVID-19",
-    "text": "An Explosion of Graphics: COVID-19\n\nActive Cases vs. Total Deaths, Reddit, May 9 2020 Image source"
+    "section": "COVID-19 Graphics",
+    "text": "COVID-19 Graphics\n\nActive Cases vs. Total Deaths, Reddit, May 9 2020 Image source"
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-2",
-    "href": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-2",
+    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics-2",
+    "href": "03-UIC-EpiBio/index.html#covid-19-graphics-2",
     "title": "Graphical Perception in a Pandemic",
-    "section": "An Explosion of Graphics: COVID-19",
-    "text": "An Explosion of Graphics: COVID-19\n\nTests vs. Cases, Our World in Data (May 19 2020)"
+    "section": "COVID-19 Graphics",
+    "text": "COVID-19 Graphics\n\nTests vs. Cases, Our World in Data (May 19 2020)"
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-3",
-    "href": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-3",
+    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics-3",
+    "href": "03-UIC-EpiBio/index.html#covid-19-graphics-3",
     "title": "Graphical Perception in a Pandemic",
-    "section": "An Explosion of Graphics: COVID-19",
-    "text": "An Explosion of Graphics: COVID-19\n ## An Explosion of Graphics: COVID-19\n\n\n\n91-DIVOC Diagonal Reference Lines. May 11, 2020."
+    "section": "COVID-19 Graphics",
+    "text": "COVID-19 Graphics\n\nRate of Death Change, March 28, 2020. Romain Vuillemot (@romsson) Image source"
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-4",
-    "href": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-4",
+    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics-4",
+    "href": "03-UIC-EpiBio/index.html#covid-19-graphics-4",
     "title": "Graphical Perception in a Pandemic",
-    "section": "An Explosion of Graphics: COVID-19",
-    "text": "An Explosion of Graphics: COVID-19\n\nFinancial Times March 23, 2020. John Burn-Murdoch Image source"
+    "section": "COVID-19 Graphics",
+    "text": "COVID-19 Graphics\n\n91-DIVOC Diagonal Reference Lines. May 11, 2020."
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-5",
-    "href": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-5",
+    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics-5",
+    "href": "03-UIC-EpiBio/index.html#covid-19-graphics-5",
     "title": "Graphical Perception in a Pandemic",
-    "section": "An Explosion of Graphics: COVID-19",
-    "text": "An Explosion of Graphics: COVID-19\n\nThe complexity of log scales. Nov 12, 2020. Mark Gubrud ((mgubrud?)) Image source"
+    "section": "COVID-19 Graphics",
+    "text": "COVID-19 Graphics\n\n\n\nFinancial Times March 23, 2020. John Burn-Murdoch Image source"
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-6",
-    "href": "03-UIC-EpiBio/index.html#an-explosion-of-graphics-covid-19-6",
+    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics-6",
+    "href": "03-UIC-EpiBio/index.html#covid-19-graphics-6",
     "title": "Graphical Perception in a Pandemic",
-    "section": "An Explosion of Graphics: COVID-19",
-    "text": "An Explosion of Graphics: COVID-19\n\nThe complexity of log scales. Nov 12, 2020. Mark Gubrud ((mgubrud?)) Image source"
+    "section": "COVID-19 Graphics",
+    "text": "COVID-19 Graphics\n\n\n\nThe complexity of log scales. Nov 12, 2020. Mark Gubrud (@mgubrud) Image source"
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#how-should-we-represent-exponentialish-data",
-    "href": "03-UIC-EpiBio/index.html#how-should-we-represent-exponentialish-data",
+    "objectID": "03-UIC-EpiBio/index.html#exponential-growth",
+    "href": "03-UIC-EpiBio/index.html#exponential-growth",
     "title": "Graphical Perception in a Pandemic",
-    "section": "How should we represent exponential(ish) data?",
-    "text": "How should we represent exponential(ish) data?\n\nLog or linear scales?\nReference lines?\nAligning x-axis to date? Days since ___ cases?\n“Pace” of the case counts vs. raw counts?\nComparing across populations – size, policies, susceptibility…"
+    "section": "Exponential Growth",
+    "text": "Exponential Growth\n\n\n\n\n\n\n\n\n\nWhat is the purpose of this chart?\n\nTo help people predict what is likely to happen?\n\n\n(It doesn’t do that very well)\n\n\nNote that even if the growth is polynomial, we would still end up underestimating the number of cases. So if our goal is to help people make good decisions (like, hey, cases are increasing exponentially, I should stay home), then a graph like this may not be the best way to go about it, because we know for a fact that people don’t make effective forecasts from these types of plots.\nThe natural way to correct for graphs showing exponential growth is to use a log y-axis scale, which solves some problems and creates a whole host of new problems."
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#why-visualize-data",
-    "href": "03-UIC-EpiBio/index.html#why-visualize-data",
+    "objectID": "03-UIC-EpiBio/index.html#exponential-growth-1",
+    "href": "03-UIC-EpiBio/index.html#exponential-growth-1",
     "title": "Graphical Perception in a Pandemic",
-    "section": "Why Visualize Data?",
-    "text": "Why Visualize Data?\nPowerful communication tool!\n\n\nTo inform\n\n\nNumeric accuracy\nComparative accuracy\nOverall trajectory\n\n\n\nTo aid individual decision-making\n\n\nDecision outcome supported by evidence?\nRisk vs. raw case counts\nUncertainty quantification\n\n\n\n\n\n\n\n\nTo aid policy development\n\n\nUncertainty quantification\nRisk/reward of different options\n\n\n\n\nDifferent goals = different charts"
+    "section": "Exponential Growth",
+    "text": "Exponential Growth\n\n\n\n\n\n\n\n\n\nWhat is the purpose of this chart?\nTo help people predict what is likely to happen?\nHumans are awful at predicting exponential growth\nWagenaar and Sagaria (1975; Timmers and Wagenaar 1977)\n\nNote that even if the growth is polynomial, we would still end up underestimating the number of cases. So if our goal is to help people make good decisions (like, hey, cases are increasing exponentially, I should stay home), then a graph like this may not be the best way to go about it, because we know for a fact that people don’t make effective forecasts from these types of plots.\nThe natural way to correct for graphs showing exponential growth is to use a log y-axis scale, which solves some problems and creates a whole host of new problems."
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#representing-exponentialish-data",
+    "href": "03-UIC-EpiBio/index.html#representing-exponentialish-data",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Representing Exponential(ish) Data",
+    "text": "Representing Exponential(ish) Data\n\n\nLog or linear scales?\nReference lines?\nAligning x-axis to date? Days since ___ cases?\n“Pace” of the case counts vs. raw counts?\nComparing across populations – size, policies, susceptibility…"
+  },
+  {
+    "objectID": "03-UIC-EpiBio/index.html#why-visualize-data-communication",
+    "href": "03-UIC-EpiBio/index.html#why-visualize-data-communication",
+    "title": "Graphical Perception in a Pandemic",
+    "section": "Why Visualize Data? Communication!",
+    "text": "Why Visualize Data? Communication!\n\n\nTo inform\n\n\nNumeric accuracy\nComparative accuracy\nOverall trajectory\n\n\n\nTo aid individual decision-making\n\n\nDecision outcome supported by evidence?\nRisk vs. raw case counts\nUncertainty quantification\n\n\n\n\n\n\n\n\nTo aid policy development\n\n\nUncertainty quantification\nRisk/reward of different options\n\n\n\n\n\nDifferent goals = different charts"
   },
   {
     "objectID": "03-UIC-EpiBio/index.html#testing",
@@ -595,11 +588,11 @@
     "text": "How Do We Test Graphics?\n\n\nThe question is not What is the best chart?\n\n\nbut… What is the best chart for this purpose?\n\n\nFor an answer, we need to subject charts to a full spectrum of user tests."
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#perception-exp.-growth-log-scales",
-    "href": "03-UIC-EpiBio/index.html#perception-exp.-growth-log-scales",
+    "objectID": "03-UIC-EpiBio/index.html#perception-log-scales",
+    "href": "03-UIC-EpiBio/index.html#perception-log-scales",
     "title": "Graphical Perception in a Pandemic",
-    "section": "Perception: Exp. Growth & Log Scales",
-    "text": "Perception: Exp. Growth & Log Scales\n\n3 different ways of engaging with the data\n\nCan we\n\nQ1: perceive differences in     … Perceptual\nQ2: forecast trends from     … Tactile\nQ3: estimate and use     … Numerical\n\ngraphs of exponential growth with log and linear scales?\n300 participants completed all 3 experiments\n\nI’m a huge fan of lineups, but one of the issues I had with the COVID graphs I was seeing was that I wasn’t convinced people were interpreting the data correctly.\nI started thinking about why lineups wouldn’t test things at the level I was hoping for, and eventually came up with this hierarchy - first, you have to be able to recognize that there is a difference between two things. Then, you have to be able to predict and forecast to map “data from the past” onto the future. Finally, you have to actually be able to read data off of the graph and act on it - doing numerical calculations and the like.\nThese are distinct psychological tasks, and they require different ways of interacting with a chart. So I’m going to describe 3 experiments that we’ve conducted relating to log scales.\nThese experiments were inspired by COVID, but we worked hard to not go anywhere near COVID data because while we were designing these experiments, it was a bit emotionally loaded. Even now that pandemic measures have ended, it’s still too politically sensitive to touch, so we’ll continue using non-covid data on follow-up studies."
+    "section": "Perception: Log Scales",
+    "text": "Perception: Log Scales\n\n3 different ways of engaging with the data\n\nCan we\n\nQ1: perceive differences in     … Perceptual\nQ2: forecast trends from     … Tactile\nQ3: estimate and use     … Numerical\n\ngraphs of exponential growth with log and linear scales?\n300 participants completed all 3 experiments\n\nI’m a huge fan of lineups, but one of the issues I had with the COVID graphs I was seeing was that I wasn’t convinced people were interpreting the data correctly.\nI started thinking about why lineups wouldn’t test things at the level I was hoping for, and eventually came up with this hierarchy - first, you have to be able to recognize that there is a difference between two things. Then, you have to be able to predict and forecast to map “data from the past” onto the future. Finally, you have to actually be able to read data off of the graph and act on it - doing numerical calculations and the like.\nThese are distinct psychological tasks, and they require different ways of interacting with a chart. So I’m going to describe 3 experiments that we’ve conducted relating to log scales.\nThese experiments were inspired by COVID, but we worked hard to not go anywhere near COVID data because while we were designing these experiments, it was a bit emotionally loaded. Even now that pandemic measures have ended, it’s still too politically sensitive to touch, so we’ll continue using non-covid data on follow-up studies."
   },
   {
     "objectID": "03-UIC-EpiBio/index.html#q1-perception-of-differences",
@@ -613,7 +606,7 @@
     "href": "03-UIC-EpiBio/index.html#q1-perception-of-differences-1",
     "title": "Graphical Perception in a Pandemic",
     "section": "Q1: Perception of Differences",
-    "text": "Q1: Perception of Differences\n\n\n\n\n\nLog Scale\n\n\n\n\n\nLinear Scale\n\n\n\n\n\nOur first level of engagement is basic perception - can we actually distinguish different growth rates/levels of curvature on a linear and log scale. This is the most basic thing – if we can’t do this, then we probably won’t be able to predict things well or read information off the graph well (though, that last point is arguable).\n\nFactorial Experiment:\n\nLog/linear scale (2 levels)\nLineup composition: (6 levels)\n\nTarget plot - high, medium, low curvature\nNull plots - high, medium, low curvature\nExclude combinations where target/null are the same\n\nLow/High variability (2 levels)\n\nIncluded 6 Rorschach plots (3 curvature levels x log or linear scale)\n\n12 lineups + 1 Rorshcach plots = 13 evaluations per person\nHere are a couple of example lineups from this experiment - the first is on a linear scale, the 2nd is on a log scale. While I generally tried throughout these experiments to make it clear that we were on a log scale, it is a very subtle difference in these lineups, and fixing that wasn’t necessarily relevant to the question at hand – since all sub-panels have the same axis breaks, we’re actually testing whether we can distinguish the data, not the scales."
+    "text": "Q1: Perception of Differences\n\n\n\n\n\n\n\n\n\nLog Scale\n\n\n\n\n\n\n\nLinear Scale\n\n\n\n\n\n\nOur first level of engagement is basic perception - can we actually distinguish different growth rates/levels of curvature on a linear and log scale. This is the most basic thing – if we can’t do this, then we probably won’t be able to predict things well or read information off the graph well (though, that last point is arguable).\n\nFactorial Experiment:\n\nLog/linear scale (2 levels)\nLineup composition: (6 levels)\n\nTarget plot - high, medium, low curvature\nNull plots - high, medium, low curvature\nExclude combinations where target/null are the same\n\nLow/High variability (2 levels)\n\nIncluded 6 Rorschach plots (3 curvature levels x log or linear scale)\n\n12 lineups + 1 Rorshcach plots = 13 evaluations per person\nHere are a couple of example lineups from this experiment - the first is on a linear scale, the 2nd is on a log scale. While I generally tried throughout these experiments to make it clear that we were on a log scale, it is a very subtle difference in these lineups, and fixing that wasn’t necessarily relevant to the question at hand – since all sub-panels have the same axis breaks, we’re actually testing whether we can distinguish the data, not the scales."
   },
   {
     "objectID": "03-UIC-EpiBio/index.html#q1-perception-of-differences-2",
@@ -648,28 +641,28 @@
     "href": "03-UIC-EpiBio/index.html#q2-forecasting-you-draw-it",
     "title": "Graphical Perception in a Pandemic",
     "section": "Q2: Forecasting (You-Draw-It)",
-    "text": "Q2: Forecasting (You-Draw-It)\n\n\n\n\n\nData from Mosteller et al. (1981)\n\n\n\n\n\nExp data, linear scale, 50% complete"
+    "text": "Q2: Forecasting (You-Draw-It)\n\n\n\n\n\n\n\n\n\nData from Mosteller et al. (1981)\n\n\n\n\n\n\n\nExp data, linear scale, 50% complete"
   },
   {
     "objectID": "03-UIC-EpiBio/index.html#q2-forecasting-you-draw-it-1",
     "href": "03-UIC-EpiBio/index.html#q2-forecasting-you-draw-it-1",
     "title": "Graphical Perception in a Pandemic",
     "section": "Q2: Forecasting (You-Draw-It)",
-    "text": "Q2: Forecasting (You-Draw-It)\n\n\n\n\n\n\nHere, I’m showing you the actual drawn lines for each of the exponential conditions, and you can see that there are a few interesting features:\n\nNot everyone drew very smooth lines – we probably need to do some data cleaning based on the number of sharp “jumps” in the data – possibly excluding those cases or smoothing over them.\nThe amount of deviation in the final prediction value is (surprisingly) not much larger when there is less data – this was really shocking for me\nLinear scale predictions seem to be lower than log scale predictions, in particular when beta is higher – it’s not that noticeable when beta is low. So the under-prediction bias is stronger for linear scales than it is for log scales. That doesn’t necessarily mean that everyone underpredicts, but you do see way more orange lines on top in the lower right panel."
+    "text": "Q2: Forecasting (You-Draw-It)\n\n\n\n\n\n\n\n\n\n\nHere, I’m showing you the actual drawn lines for each of the exponential conditions, and you can see that there are a few interesting features:\n\nNot everyone drew very smooth lines – we probably need to do some data cleaning based on the number of sharp “jumps” in the data – possibly excluding those cases or smoothing over them.\nThe amount of deviation in the final prediction value is (surprisingly) not much larger when there is less data – this was really shocking for me\nLinear scale predictions seem to be lower than log scale predictions, in particular when beta is higher – it’s not that noticeable when beta is low. So the under-prediction bias is stronger for linear scales than it is for log scales. That doesn’t necessarily mean that everyone underpredicts, but you do see way more orange lines on top in the lower right panel."
   },
   {
     "objectID": "03-UIC-EpiBio/index.html#q2-forecasting-you-draw-it-2",
     "href": "03-UIC-EpiBio/index.html#q2-forecasting-you-draw-it-2",
     "title": "Graphical Perception in a Pandemic",
     "section": "Q2: Forecasting (You-Draw-It)",
-    "text": "Q2: Forecasting (You-Draw-It)\n\n\n\n\n\n\nIf we look at the residuals instead, we see that there is still some under-prediction even with the log scale when beta is high, but our basic conclusions from the original plots still hold."
+    "text": "Q2: Forecasting (You-Draw-It)\n\n\n\n\n\n\n\n\n\n\nIf we look at the residuals instead, we see that there is still some under-prediction even with the log scale when beta is high, but our basic conclusions from the original plots still hold."
   },
   {
     "objectID": "03-UIC-EpiBio/index.html#q2-forecasting-you-draw-it-3",
     "href": "03-UIC-EpiBio/index.html#q2-forecasting-you-draw-it-3",
     "title": "Graphical Perception in a Pandemic",
     "section": "Q2: Forecasting (You-Draw-It)",
-    "text": "Q2: Forecasting (You-Draw-It)\n\n\n\n\n\n\nWe can make this even clearer by modeling the residuals using a generalized additive model, which has a flexible form and doesn’t require too many assumptions about model structure."
+    "text": "Q2: Forecasting (You-Draw-It)\n\n\n\n\n\n\n\n\n\n\nWe can make this even clearer by modeling the residuals using a generalized additive model, which has a flexible form and doesn’t require too many assumptions about model structure."
   },
   {
     "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation",
@@ -697,14 +690,14 @@
     "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation-3",
     "title": "Graphical Perception in a Pandemic",
     "section": "Q3: Numerical Estimation",
-    "text": "Q3: Numerical Estimation\nFree response: Between \\(t_1\\) and \\(t_2\\), how does the population of \\(X\\) change?\n\n\n\n \n\n\n\n\nLinear Scale\n\n\n\n \n\n\n\n\nLog Scale"
+    "text": "Q3: Numerical Estimation\nFree response: Between \\(t_1\\) and \\(t_2\\), how does the population of \\(X\\) change?\n\n\n\n\n\n\n \n\n\n\n\n\nLinear Scale\n\n\n\n\n \n\n\n\n\n\nLog Scale"
   },
   {
     "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation-4",
     "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation-4",
     "title": "Graphical Perception in a Pandemic",
     "section": "Q3: Numerical Estimation",
-    "text": "Q3: Numerical Estimation\nEstimating Population given a year\nProcess Sketch\n\n\n\n\n\nLinear scale\n\n\n\n\n\nLog scale"
+    "text": "Q3: Numerical Estimation\nEstimating Population given a year\nProcess Sketch\n\n\n\n\n\n\n\n\n\nLinear scale\n\n\n\n\n\n\n\nLog scale"
   },
   {
     "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation-5",
@@ -718,7 +711,7 @@
     "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation-6",
     "title": "Graphical Perception in a Pandemic",
     "section": "Q3: Numerical Estimation",
-    "text": "Q3: Numerical Estimation\nFrom Year1 to Year2, the population increases by ____ individuals\nProcess Sketch\n\n\n\n\n\nLinear scale\n\n\n\n\n\nLog scale"
+    "text": "Q3: Numerical Estimation\nFrom Year1 to Year2, the population increases by ____ individuals\nProcess Sketch\n\n\n\n\n\n\n\n\n\nLinear scale\n\n\n\n\n\n\n\nLog scale"
   },
   {
     "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation-7",
@@ -732,7 +725,7 @@
     "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation-8",
     "title": "Graphical Perception in a Pandemic",
     "section": "Q3: Numerical Estimation",
-    "text": "Q3: Numerical Estimation\nHow many times more creatures are there in Year2 than Year1?\nProcess Sketch\n\n\n\n\n\nLinear scale\n\n\n\n\n\nLog scale"
+    "text": "Q3: Numerical Estimation\nHow many times more creatures are there in Year2 than Year1?\nProcess Sketch\n\n\n\n\n\n\n\n\n\nLinear scale\n\n\n\n\n\n\n\nLog scale"
   },
   {
     "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation-9",
@@ -760,7 +753,7 @@
     "href": "03-UIC-EpiBio/index.html#q3-numerical-estimation-12",
     "title": "Graphical Perception in a Pandemic",
     "section": "Q3: Numerical Estimation",
-    "text": "Q3: Numerical Estimation\nHow long does it take for the population in Year 1 to double?\nProcess Sketch\n\n\n\n\n\nLinear scale\n\n\n\n\n\nLog scale"
+    "text": "Q3: Numerical Estimation\nHow long does it take for the population in Year 1 to double?\nProcess Sketch\n\n\n\n\n\n\n\n\n\nLinear scale\n\n\n\n\n\n\n\nLog scale"
   },
   {
     "objectID": "03-UIC-EpiBio/index.html#q3-numerical-estimation-13",
@@ -837,7 +830,7 @@
     "href": "03-UIC-EpiBio/index.html#think-aloud-and-free-response",
     "title": "Graphical Perception in a Pandemic",
     "section": "Think Aloud and Free Response",
-    "text": "Think Aloud and Free Response\n\nStream of consciousness narration Guan et al. (2006; Cooke 2010){.smaller}\nReasoning to justify a decision\n\n\n\n\nWhy did you choose this panel? Vanderplas and Hofmann (2017)"
+    "text": "Think Aloud and Free Response\n\nStream of consciousness narration Guan et al. (2006; Cooke 2010)\nReasoning to justify a decision\n\n\n\n\nWhy did you choose this panel? Vanderplas and Hofmann (2017)"
   },
   {
     "objectID": "03-UIC-EpiBio/index.html#direct-annotation",
@@ -854,94 +847,66 @@
     "text": "How Do We Test Graphics?\n\n\nTesting method needs to be matched to level of engagement\nNeed to examine graphical choices across levels of engagement"
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#representing-exponentialish-data",
-    "href": "03-UIC-EpiBio/index.html#representing-exponentialish-data",
-    "title": "Graphical Perception in a Pandemic",
-    "section": "Representing Exponential(ish) Data",
-    "text": "Representing Exponential(ish) Data\n\n\nLog or linear scales?\nReference lines?\nAligning x-axis to date? Days since ___ cases?\n“Pace” of the case counts vs. raw counts?\nComparing across populations – size, policies, susceptibility…"
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Presentations in 2024",
+    "section": "",
+    "text": "Cultivating Insights: Harnessing the Power of Data Visualization in Agriculture\n\n\n\nSusan Vanderplas\n\n\nJan 9, 2024\n\n\n\n\n\nLocation\n\n\nInternational Conference for On-Farm Precision Experimentation, Corpus Christi, TX\n\n\n\n\nTopics\n\n\ngraphics,agriculture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Git Submodules\n\n\n\nSusan Vanderplas\n\n\nFeb 8, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\ngit,reproducibility,teaching\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV with a Spreadsheet\n\n\n\nSusan Vanderplas\n\n\nFeb 15, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV/Blog Automatically\n\n\n\nSusan Vanderplas\n\n\nMar 7, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCreating Good Graphics\n\n\n\nSusan Vanderplas\n\n\nJun 26, 2024\n\n\n\n\n\nLocation\n\n\nLove Library South, Room 102\n\n\n\n\nTopics\n\n\ngraphics\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEscaping Flatland\n\n\n\nTyler Wiederich, Erin Blankenship & Susan Vanderplas\n\n\nJul 1, 2024\n\n\n\n\n\nLocation\n\n\nHuman Computer Interaction International, Washington DC\n\n\n\n\nTopics\n\n\nteaching,graphics,user-study\n\n\n\n\n\n\n\n\n\n\n\n\n\nGraphical Perception in a Pandemic\n\n\n\n\n\n\n\n\n\nLocation\n\n\n \n\n\n\n\nTopics\n\n\n \n\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#s-london",
-    "href": "03-UIC-EpiBio/index.html#s-london",
-    "title": "Graphical Perception in a Pandemic",
-    "section": "1840s London:",
-    "text": "1840s London:\nCholera Mortality and Temperature\n\nExcess Mortality and Temperature, 1840s London. From Report on the mortality of cholera in England, 1848-49, by William Farr (1952). Image Source"
+    "objectID": "07-HCII/index.html#references",
+    "href": "07-HCII/index.html#references",
+    "title": "Escaping Flatland",
+    "section": "",
+    "text": "Carswell, C., Sylvia Frankenberger, and Donald Bernhard. 1991. “Graphing in Depth: Perspectives on the Use of Three-Dimensional Graphs to Represent Lower-Dimensional Data.” Behaviour & Information Technology 10: 459–74. https://doi.org/10.1080/01449299108924304.\n\n\nDay, Ross H, and Erica J Stecher. 1991. “Sine of an Illusion.” Perception 20 (1): 49–55. https://doi.org/10.1068/p200049.\n\n\nFischer, M. H. 2000. “Do Irrelevant Depth Cues Affect the Comprehension of Bar Graphs.” Applied Cognitive Psychology 14: 151–62. https://doi.org/10.1002/(SICI)1099-0720(200003/04)14:2&lt;151::AID-ACP629&gt;3.0.CO;2-Z.\n\n\nVanderPlas, Susan, and Heike Hofmann. 2015. “Signs of the Sine IllusionWhy We Need to Care.” Journal of Computational and Graphical Statistics 24 (4): 1170–90. https://doi.org/10.1080/10618600.2014.951547.\n\n\nZacks, Jeff, Ellen Levy, Barbara Tversky, and Diane J. Schiano. 1998. “Reading Bar Graphs: Effects of Extraneous Depth Cues and Graphical Context.” Journal of Experimental Psychology: Applied 4 (2): 119–38. https://doi.org/10.1037/1076-898X.4.2.119."
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#exponential-growth",
-    "href": "03-UIC-EpiBio/index.html#exponential-growth",
-    "title": "Graphical Perception in a Pandemic",
-    "section": "Exponential Growth",
-    "text": "Exponential Growth\n\n\n\n\n\nWhat is the purpose of this chart?\n\nTo help people predict what is likely to happen?\n\n\n(It doesn’t do that very well)\n\n\nNote that even if the growth is polynomial, we would still end up underestimating the number of cases. So if our goal is to help people make good decisions (like, hey, cases are increasing exponentially, I should stay home), then a graph like this may not be the best way to go about it, because we know for a fact that people don’t make effective forecasts from these types of plots.\nThe natural way to correct for graphs showing exponential growth is to use a log y-axis scale, which solves some problems and creates a whole host of new problems."
+    "objectID": "06-REU-graphics/index.html#pie-chart-poll-results",
+    "href": "06-REU-graphics/index.html#pie-chart-poll-results",
+    "title": "Creating Good Graphics",
+    "section": "Pie Chart Poll Results",
+    "text": "Pie Chart Poll Results\n\n\n\n\n\n\n\n\nFigure 1: Scottsbluff Star Herald Reader poll. Source\n\n\n\n\n\n\n\nWhat is wrong with this chart?\nDo you think it might be misleading? If so, how?\nDo you think the mistakes were intentional?"
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#exponential-growth-1",
-    "href": "03-UIC-EpiBio/index.html#exponential-growth-1",
-    "title": "Graphical Perception in a Pandemic",
-    "section": "Exponential Growth",
-    "text": "Exponential Growth\n\n\n\n\n\nWhat is the purpose of this chart?\nTo help people predict what is likely to happen?\nHumans are awful at predicting exponential growth\nWagenaar and Sagaria (1975; Timmers and Wagenaar 1977){.smaller}\n\nNote that even if the growth is polynomial, we would still end up underestimating the number of cases. So if our goal is to help people make good decisions (like, hey, cases are increasing exponentially, I should stay home), then a graph like this may not be the best way to go about it, because we know for a fact that people don’t make effective forecasts from these types of plots.\nThe natural way to correct for graphs showing exponential growth is to use a log y-axis scale, which solves some problems and creates a whole host of new problems."
+    "objectID": "06-REU-graphics/index.html#high-support",
+    "href": "06-REU-graphics/index.html#high-support",
+    "title": "Creating Good Graphics",
+    "section": "High Support",
+    "text": "High Support\n\n\nFigure 2: Source\n\nWhat is wrong with this chart?\nWhat would you change to more accurately represent the data?\nDo you think the mistakes were intentional?"
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics",
-    "href": "03-UIC-EpiBio/index.html#covid-19-graphics",
-    "title": "Graphical Perception in a Pandemic",
-    "section": "COVID-19 Graphics",
-    "text": "COVID-19 Graphics\n\nMay 6 2020: Three graphs that show a global slowdown in COVID-19 deaths, Image Source"
+    "objectID": "06-REU-graphics/index.html#gas-prices",
+    "href": "06-REU-graphics/index.html#gas-prices",
+    "title": "Creating Good Graphics",
+    "section": "Gas Prices",
+    "text": "Gas Prices\n\n\nFigure 3: Gas and Diesel price changes in India (2004 - 2018).\n\nWhat is wrong with this?\nWhat design choices contribute to the problems?\nDo you think this was intentionally designed to be misleading? Why or why not?"
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics-1",
-    "href": "03-UIC-EpiBio/index.html#covid-19-graphics-1",
-    "title": "Graphical Perception in a Pandemic",
-    "section": "COVID-19 Graphics",
-    "text": "COVID-19 Graphics\n\nActive Cases vs. Total Deaths, Reddit, May 9 2020 Image source"
+    "objectID": "06-REU-graphics/index.html#information-overload",
+    "href": "06-REU-graphics/index.html#information-overload",
+    "title": "Creating Good Graphics",
+    "section": "Information Overload",
+    "text": "Information Overload\n\n\n\nWhat problems do you have reading this chart?\nCan you compare the quantities of all 6 variables shown? Why or why not?\n\n(Yes, the blog this chart is taken from is satirical. This is not a recommended graphical form.)"
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics-2",
-    "href": "03-UIC-EpiBio/index.html#covid-19-graphics-2",
-    "title": "Graphical Perception in a Pandemic",
-    "section": "COVID-19 Graphics",
-    "text": "COVID-19 Graphics\n\nTests vs. Cases, Our World in Data (May 19 2020)"
+    "objectID": "06-REU-graphics/index.html#why-graphics-matter",
+    "href": "06-REU-graphics/index.html#why-graphics-matter",
+    "title": "Creating Good Graphics",
+    "section": "Why Graphics Matter",
+    "text": "Why Graphics Matter\nGraphics are a form of external cognition that allow us to think about the data rather than the chart.\nThat is, graphics are a tool to make it easier for us to think about what the data means.\nGood graphics take advantage of how the brain works, leveraging\n\npreattentive processing\nperceptual grouping\nawareness of visual limitations\n\nGood graphics also depend on the data: the chart type should be chosen based on the types of variables you want to display, the amount of data you have, and the results you want to highlight."
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics-3",
-    "href": "03-UIC-EpiBio/index.html#covid-19-graphics-3",
-    "title": "Graphical Perception in a Pandemic",
-    "section": "COVID-19 Graphics",
-    "text": "COVID-19 Graphics\n\nRate of Death Change, March 28, 2020. Romain Vuillemot (@romsson) Image source"
+    "objectID": "06-REU-graphics/index.html#example-hertzsprung-russell-diagram",
+    "href": "06-REU-graphics/index.html#example-hertzsprung-russell-diagram",
+    "title": "Creating Good Graphics",
+    "section": "Example: Hertzsprung Russell Diagram",
+    "text": "Example: Hertzsprung Russell Diagram\n\nThe Hertzsprung Russell diagram. Discovered independently by Ejnar Hertzsprung (1873–1967) and Henry Norris Russell (1877–1957). The diagram plots the color index of the star against the brightness (absolute magnitude) of the star. As a result, it is possible to discern that these two variables are related and change together over a star’s life cycle: a hypothesis that only came to be because of this chart.I’ve used data from the HYG Database to generate this chart. Only stars within 500 AU are shown.\n\nJohn Tukey, a famous statistician often considered the father of statistical graphics, wrote in Exploratory Data Analysis (1977):\n\nThe greatest value of a picture is when it forces us to notice what we never expected to see.\n\n\nWhat variables are mapped to the following chart dimensions?\n\nX location\nY location\ncolor\n\nWhat other information is present on the chart that is not specifically a data value?\nWhat does this chart do well?\nWhat design features “work”?\nWhat don’t you like?"
   },
   {
-    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics-4",
-    "href": "03-UIC-EpiBio/index.html#covid-19-graphics-4",
-    "title": "Graphical Perception in a Pandemic",
-    "section": "COVID-19 Graphics",
-    "text": "COVID-19 Graphics\n\n91-DIVOC Diagonal Reference Lines. May 11, 2020."
-  },
-  {
-    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics-5",
-    "href": "03-UIC-EpiBio/index.html#covid-19-graphics-5",
-    "title": "Graphical Perception in a Pandemic",
-    "section": "COVID-19 Graphics",
-    "text": "COVID-19 Graphics\n\n\n\nFinancial Times March 23, 2020. John Burn-Murdoch Image source"
-  },
-  {
-    "objectID": "03-UIC-EpiBio/index.html#covid-19-graphics-6",
-    "href": "03-UIC-EpiBio/index.html#covid-19-graphics-6",
-    "title": "Graphical Perception in a Pandemic",
-    "section": "COVID-19 Graphics",
-    "text": "COVID-19 Graphics\n\n\n\nThe complexity of log scales. Nov 12, 2020. Mark Gubrud (@mgubrud) Image source"
-  },
-  {
-    "objectID": "03-UIC-EpiBio/index.html#why-visualize-data-communication",
-    "href": "03-UIC-EpiBio/index.html#why-visualize-data-communication",
-    "title": "Graphical Perception in a Pandemic",
-    "section": "Why Visualize Data? Communication!",
-    "text": "Why Visualize Data? Communication!\n\n\nTo inform\n\n\nNumeric accuracy\nComparative accuracy\nOverall trajectory\n\n\n\nTo aid individual decision-making\n\n\nDecision outcome supported by evidence?\nRisk vs. raw case counts\nUncertainty quantification\n\n\n\n\n\n\n\n\nTo aid policy development\n\n\nUncertainty quantification\nRisk/reward of different options\n\n\n\n\n\nDifferent goals = different charts"
-  },
-  {
-    "objectID": "03-UIC-EpiBio/index.html#perception-log-scales",
-    "href": "03-UIC-EpiBio/index.html#perception-log-scales",
-    "title": "Graphical Perception in a Pandemic",
-    "section": "Perception: Log Scales",
-    "text": "Perception: Log Scales\n\n3 different ways of engaging with the data\n\nCan we\n\nQ1: perceive differences in     … Perceptual\nQ2: forecast trends from     … Tactile\nQ3: estimate and use     … Numerical\n\ngraphs of exponential growth with log and linear scales?\n300 participants completed all 3 experiments\n\nI’m a huge fan of lineups, but one of the issues I had with the COVID graphs I was seeing was that I wasn’t convinced people were interpreting the data correctly.\nI started thinking about why lineups wouldn’t test things at the level I was hoping for, and eventually came up with this hierarchy - first, you have to be able to recognize that there is a difference between two things. Then, you have to be able to predict and forecast to map “data from the past” onto the future. Finally, you have to actually be able to read data off of the graph and act on it - doing numerical calculations and the like.\nThese are distinct psychological tasks, and they require different ways of interacting with a chart. So I’m going to describe 3 experiments that we’ve conducted relating to log scales.\nThese experiments were inspired by COVID, but we worked hard to not go anywhere near COVID data because while we were designing these experiments, it was a bit emotionally loaded. Even now that pandemic measures have ended, it’s still too politically sensitive to touch, so we’ll continue using non-covid data on follow-up studies."
+    "objectID": "06-REU-graphics/index.html#preattentive-perception",
+    "href": "06-REU-graphics/index.html#preattentive-perception",
+    "title": "Creating Good Graphics",
+    "section": "Preattentive Perception",
+    "text": "Preattentive Perception\n\nOccurs automatically (no effort)\nColor, shape, angle\nCombinations of preattentive features require attention\n\nDouble-encoding (using multiple features for the same variable) is ok\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) Shape\n\n\n\n\n\n\n\n\n\n\n\n(b) Color\n\n\n\n\n\n\n\nFigure 5: Two scatterplots with one point that is different. Can you easily spot the different point?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) Shape and Color (dual encoded)\n\n\n\n\n\n\n\n\n\n\n\n(b) Shape and Color (different variables)\n\n\n\n\n\n\n\nFigure 6: Two scatterplots. Can you easily spot the different point(s)?"
   }
 ]

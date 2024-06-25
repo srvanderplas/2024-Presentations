@@ -1,0 +1,13 @@
+title: "Creating Good Graphics"
+author: "Susan Vanderplas"
+date: 2024-06-26
+from: markdown+emoji
+location: Love Library South, Room 102
+abstract: |
+  Let's talk about how to create good charts and graphics!
+talk-type: ['seminar', 'web', 'invited', 'contributed', 'other']
+# One or more of seminar, web, invited, contributed, other
+
+image: 3d-stacked-pie-chart.png
+
+keywords: ['graphics']

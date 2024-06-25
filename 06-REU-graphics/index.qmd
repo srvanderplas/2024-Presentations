@@ -1,0 +1,270 @@
+---
+title: "Creating Good Graphics"
+format: 
+  revealjs:
+    navigation-mode: vertical
+    logo: ../libs/unl/N.svg
+    theme: ../libs/unl/inverse.scss
+    includes:
+      in_header: ../libs/unl/header.html
+    lib_dir: libs
+    embed-resources: true
+---
+
+
+# Identifying the Problem
+
+## Pie Chart Poll Results
+
+::: columns
+::: {.column width="40%"}
+![Scottsbluff Star Herald Reader poll. [Source](https://viz.wtf/image/646651837987061760)](starherald_marijuana.png){#fig-neb-mj fig-alt="A newspaper clipping from the Scottsbluff Star-Herald, showing a pie chart of support for the marijuana legalization inititive in Nebraska, from Tuesday, March 16, 2021. The yes slice (which seems to be about 56% of the area) is labeled 44%, while the no slice (which seems to be about 44% of the area) is labeled 56%."}
+:::
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="55%"}
+-   What is wrong with this chart?
+
+-   Do you think it might be misleading?
+    If so, how?
+
+-   Do you think the mistakes were intentional?
+:::
+:::
+
+
+## High Support
+
+![[Source](https://viz.wtf/post/143173587191/high-support)](americans_marijuana.jpg){#fig-cbs-mj fig-alt="A CBS News pie chart of americans who have tried marijuana, showing 51% today, 43% last year, and 34% in 1997. The chyron below the image says 'High support for legalizing marijuana. More than half of Americans say they've tried pot'"}
+
+-   What is wrong with this chart?
+
+-   What would you change to more accurately represent the data?
+
+-   Do you think the mistakes were intentional?
+
+
+## Gas Prices
+
+
+![Gas and Diesel price changes in India (2004 - 2018).](bjp-gas-price.jpg){#fig-gas-india fig-alt="Two bar charts showing the % increase in petrol and diesel prices in India (2018). The first chart shows an increase of 20.5% from 2004 to 2009 (real values of 33.71 to 40.62), an increase of 75.0% from 2009 to 2014 (real values of 40.62 to 71.41), and a 13% decrease from 2014 to 2018 (real values of 71.41 to 80.73). The last bar and arrow are shown in yellow, while the first three bars are shown in green. The second chart shows diesel prices, with real values of 21.74, 30.86, 56.71, and 72.83 in 2004, 2009, 2014, and 2018, respectively. Arrows show the change between each price set, with a 42% increase from 2004 to 2009, an 83.7% increase from 2009 to 2014, and a 28% decrease from 2014 to 2018, which is highlighted in yellow. At the bottom of each chart, an image of Narendra Modi is shown."}
+
+-   What is wrong with this?
+
+-   What design choices contribute to the problems?
+
+-   Do you think this was intentionally designed to be misleading?
+    Why or why not?
+
+## Information Overload
+
+
+![](3d-stacked-pie-chart.png){#fig-stacked-pie}
+
+
+-   What problems do you have reading this chart?
+
+-   Can you compare the quantities of all 6 variables shown?
+    Why or why not?
+
+(Yes, the blog this chart is taken from is satirical. This is *not* a recommended graphical form.)
+
+
+# Designing Good Charts
+
+## Why Graphics Matter
+
+
+Graphics are a form of **external cognition** that allow us to think about the *data* rather than the *chart*.
+
+That is, graphics are a tool to make it easier for us to think about what the data means.
+
+Good graphics take advantage of how the brain works, leveraging
+
+-   preattentive processing
+
+-   perceptual grouping
+
+-   awareness of visual limitations
+
+Good graphics also depend on the data: the chart type should be chosen based on the types of variables you want to display, the amount of data you have, and the results you want to highlight.
+
+## Example: Hertzsprung Russell Diagram
+
+```{r HR-diagram}
+#| fig-width: 8
+#| fig-height: 5
+#| out-width: "100%"
+#| message: false
+#| warning: false
+#| echo: false
+#| fig-cap: "The Hertzsprung Russell diagram. Discovered independently by Ejnar Hertzsprung (1873–1967) and Henry Norris Russell (1877–1957). The diagram plots the color index of the star against the brightness (absolute magnitude) of the star. As a result, it is possible to discern that these two variables are related and change together over a star's life cycle: a hypothesis that only came to be because of this chart."
+#| fig-alt: "A scatter plot showing the color index of a star on the x-axis and the absolute magnitude (brightness) of the star on the y-axis. Points are colored by spectral class, which varies from blue to white to yellow to red as the color index increases and the star's temperature decreases. Points are primarily located along a downward-sloping line from the top left to the bottom right, which is labeled the 'main sequence'. There is another set of points which diverges from the main sequence and extends out horizontally in the middle of the graph; these are labeled 'giants', and a few outliers that are above the giant cluster are labeled 'supergiants'. Below the main sequence stars, there are outliers which are labeled 'dwarfs'."
+#| fig-dpi: 300
+if (!file.exists("stars.csv")) download.file("https://raw.githubusercontent.com/astronexus/HYG-Database/main/hyg/v3/hyg_v38.csv", destfile = "stars.csv")
+library(magrittr)
+library(dplyr)
+library(stringr)
+library(ggplot2)
+stars <- readr::read_csv("stars.csv")
+
+stars <- stars %>%
+  mutate(Spectral.Class = str_extract(spect, "^.") %>%
+           str_to_upper() %>%
+           factor(levels = c("O", "B", "A", "F", "G", "K", "M"), ordered = T),
+         EarlyLate = str_extract(spect, ".(\\d)") %>%
+           str_replace_all("[^\\d]", "") %>% as.numeric(),
+         Temp = 4600*(1/(.92*ci + 1.7) + 1/(.92*ci) + 0.62)) %>%
+  filter(!is.na(Spectral.Class) & !is.na(EarlyLate) & !is.na(hip)) %>%
+  arrange(Spectral.Class, EarlyLate) %>%
+  mutate(SpectralClass2 = paste0(Spectral.Class, EarlyLate) %>% factor(., levels = unique(.)))
+
+ggplot(data = filter(stars, dist < 500)) + 
+  # annotate(x = -.25, xend = .75, y = -2, yend = -6.5, arrow = arrow(ends = "both", length = unit(.1, "cm")), geom = "segment", color = "grey") + 
+  annotate(x = 0.125, xend = 2, y = 4.25, yend = 4.25, arrow = arrow(ends = "both", length = unit(.1, "cm")), geom = "segment", color = "grey") + 
+  geom_point(aes(x = ci, y = -absmag, color = Spectral.Class), alpha = .3) + 
+  scale_x_continuous("B-V Color Index", breaks = c(0, .5, 1, 1.5, 2), labels = c("Hot  0.0       ", "0.5", "1.0", "1.5", "           2.0  Cool")) + 
+  scale_y_continuous("Absolute Magnitude (Brightness)", breaks = c(-8, -4, 0, 4), labels = c(8, 4, 0, -4)) + 
+  scale_color_manual("Spectral\nClass", values = c("#2E478C", "#426DB9", "#B5D7E3", "white", "#FAF685", "#E79027", "#DA281F")) + 
+  annotate(x = .25, y = -5.5, label = "Dwarfs", geom = "text", angle = -25, color = "white") + 
+  annotate(x = .5, y = -3.75, label = "Main Sequence", geom = "text", angle = -28) + 
+  annotate(x = 1.125, y = 0, label = "Giants", geom = "text") + 
+  annotate(x = 1, y = 4.5, label = "Supergiants", geom = "text", color = "white") +
+  theme(panel.background = element_rect(fill = "#000000"),
+        legend.key = element_blank(), 
+        panel.grid = element_line(colour = "grey40"),
+        axis.text = element_text(color = "white"),
+        text = element_text(size = 18, color = "white"), 
+        legend.background = element_rect(fill = "#000000"),
+        plot.background = element_rect(fill = "#000000")) + 
+  ggtitle("Hertzsprung-Russell Diagram") + 
+  coord_cartesian(xlim = c(-.25, 2.25), ylim = c(-12, 7)) + 
+  guides(color = guide_legend(override.aes = list(alpha = 1)))
+```
+
+I've used data from the [HYG Database](https://github.com/astronexus/HYG-Database) to generate this chart.
+Only stars within 500 AU are shown.
+
+::: notes
+
+John Tukey, a famous statistician often considered the father of statistical graphics, wrote in Exploratory Data Analysis (1977):
+
+> The greatest value of a picture is when it forces us to notice what we never expected to see.
+
+
+-   What variables are mapped to the following chart dimensions?
+
+    -   X location
+    -   Y location
+    -   color
+
+-   What other information is present on the chart that is not specifically a data value?
+
+-   What does this chart do well?
+
+-   What design features "work"?
+
+-   What don't you like?
+
+:::
+
+## Preattentive Perception
+
+
+-   Occurs automatically (no effort)
+
+-   Color, shape, angle
+
+-   Combinations of preattentive features require attention
+
+    -   Double-encoding (using multiple features for the same variable) is ok
+
+```{r preattentive1}
+#| echo: false
+#| fig-width: 4
+#| fig-height: 4
+#| label: fig-preattentive1
+#| fig-cap: "Two scatterplots with one point that is different. Can you easily spot the different point?"
+#| fig-subcap: 
+#|   - "Shape"
+#|   - "Color"
+#| layout-ncol: 2
+
+set.seed(153253)
+data <- data.frame(expand.grid(x=1:6, y=1:6), color=sample(c(1,2), 36, replace=TRUE))
+data$x <- data$x+rnorm(36, 0, .25)
+data$y <- data$y+rnorm(36, 0, .25)
+suppressWarnings(library(ggplot2))
+new_theme_empty <- theme_bw()
+new_theme_empty$line <- element_blank()
+# new_theme_empty$rect <- element_blank()
+new_theme_empty$strip.text <- element_blank()
+new_theme_empty$axis.text <- element_blank()
+new_theme_empty$plot.title <- element_blank()
+new_theme_empty$axis.title <- element_blank()
+# new_theme_empty$plot.margin <- structure(c(0, 0, -1, -1), unit = "lines", valid.unit = 3L, class = "unit")
+
+data$shape <- c(rep(2, 15), 1, rep(2,20))
+library(scales)
+ggplot(data=data, aes(x=x, y=y, color=factor(1, levels=c(1,2)), shape=factor(shape), size=I(5))) + 
+  geom_point() +
+  scale_shape_manual(guide="none", values=c(19, 15)) + 
+  scale_color_discrete(guide="none") + 
+  new_theme_empty
+
+data$shape <- c(rep(2, 25), 1, rep(2,10))
+ggplot(data=data, aes(x=x, y=y, color=factor(shape), shape=I(19), size=I(5)))+
+  geom_point() +  
+  scale_color_discrete(guide="none") + 
+  new_theme_empty
+```
+
+```{r preattentive2}
+#| echo: false
+#| fig-width: 4
+#| fig-height: 4
+#| label: fig-preattentive2
+#| fig-cap: "Two scatterplots. Can you easily spot the different point(s)?"
+#| fig-subcap: 
+#|   - "Shape and Color (dual encoded)"
+#|   - "Shape and Color (different variables)"
+#| layout-ncol: 2
+set.seed(1532534)
+data <- data.frame(expand.grid(x=1:6, y=1:6), color=sample(c(1,2), 36, replace=TRUE))
+data$x <- data$x+rnorm(36, 0, .25)
+data$y <- data$y+rnorm(36, 0, .25)
+suppressWarnings(library(ggplot2))
+new_theme_empty <- theme_bw()
+new_theme_empty$line <- element_blank()
+# new_theme_empty$rect <- element_blank()
+new_theme_empty$strip.text <- element_blank()
+new_theme_empty$axis.text <- element_blank()
+new_theme_empty$plot.title <- element_blank()
+new_theme_empty$axis.title <- element_blank()
+# new_theme_empty$plot.margin <- structure(c(0, 0, -1, -1), unit = "lines", valid.unit = 3L, class = "unit")
+
+data$shape <- data$color
+ggplot(data=data, aes(x=x, y=y, 
+                      color=factor(color), 
+                      shape=factor(shape))) + 
+  geom_point(size = 5) +
+  scale_shape_manual(guide="none", values=c(19, 15)) +
+  scale_color_discrete(guide="none") + 
+  new_theme_empty
+
+data <- data %>%
+  mutate(sample = row_number() %in% sample(1:n(), 4)) %>%
+  mutate(shape = if_else(sample, if_else(shape == 1, 2, 1), shape))
+
+ggplot(data=data, aes(x=x, y=y, 
+                      color=factor(color), 
+                      shape=factor(shape))) + 
+  geom_point(size = 5) +
+  scale_shape_manual(guide="none", values=c(19, 15)) +
+  scale_color_discrete(guide="none") + 
+  new_theme_empty
+# qplot(data=data, x=x, y=y, color=factor(color), shape=factor(shape), size=I(5))+scale_shape_manual(guide="none", values=c(19, 15)) + scale_color_discrete(guide="none") + new_theme_empty
+```
+
