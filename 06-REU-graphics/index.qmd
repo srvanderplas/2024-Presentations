@@ -13,7 +13,7 @@ format:
 
 # Identifying the Problem
 
-## Pie Chart Poll Results
+## Pie Chart Poll Results {.r-fit-text}
 
 ::: columns
 ::: {.column width="40%"}
@@ -32,7 +32,7 @@ format:
 :::
 :::
 
-## High Support
+## High Support {.r-fit-text}
 
 ![[Source](https://viz.wtf/post/143173587191/high-support)](americans_marijuana.jpg){#fig-cbs-mj fig-alt="A CBS News pie chart of americans who have tried marijuana, showing 51% today, 43% last year, and 34% in 1997. The chyron below the image says 'High support for legalizing marijuana. More than half of Americans say they've tried pot'"}
 
@@ -42,7 +42,7 @@ format:
 
 -   Do you think the mistakes were intentional?
 
-## Gas Prices
+## Gas Prices {.r-fit-text}
 
 ![Gas and Diesel price changes in India (2004 - 2018).](bjp-gas-price.jpg){#fig-gas-india fig-alt="Two bar charts showing the % increase in petrol and diesel prices in India (2018). The first chart shows an increase of 20.5% from 2004 to 2009 (real values of 33.71 to 40.62), an increase of 75.0% from 2009 to 2014 (real values of 40.62 to 71.41), and a 13% decrease from 2014 to 2018 (real values of 71.41 to 80.73). The last bar and arrow are shown in yellow, while the first three bars are shown in green. The second chart shows diesel prices, with real values of 21.74, 30.86, 56.71, and 72.83 in 2004, 2009, 2014, and 2018, respectively. Arrows show the change between each price set, with a 42% increase from 2004 to 2009, an 83.7% increase from 2009 to 2014, and a 28% decrease from 2014 to 2018, which is highlighted in yellow. At the bottom of each chart, an image of Narendra Modi is shown."}
 
@@ -52,7 +52,7 @@ format:
 
 -   Do you think this was intentionally designed to be misleading? Why or why not?
 
-## Information Overload
+## Information Overload {.r-fit-text}
 
 ![](3d-stacked-pie-chart.png){#fig-stacked-pie}
 
@@ -64,7 +64,7 @@ format:
 
 # Designing Good Charts
 
-## Why Graphics Matter
+## Why Graphics Matter {.r-fit-text}
 
 Graphics are a form of **external cognition** that allow us to think about the *data* rather than the *chart*.
 
@@ -80,7 +80,7 @@ Good graphics take advantage of how the brain works, leveraging
 
 Good graphics also depend on the data: the chart type should be chosen based on the types of variables you want to display, the amount of data you have, and the results you want to highlight.
 
-## Example: Hertzsprung Russell Diagram
+## Example: Hertzsprung Russell Diagram {.r-fit-text}
 
 ```{r HR-diagram}
 #| fig-width: 8
@@ -155,7 +155,7 @@ John Tukey, a famous statistician often considered the father of statistical gra
 -   What don't you like?
 :::
 
-## Preattentive Perception
+## Preattentive Perception  {.r-fit-text}
 
 -   Combinations of preattentive features require attention
 
@@ -201,7 +201,7 @@ ggplot(data=data, aes(x=x, y=y, color=factor(shape), shape=I(19), size=I(5)))+
   new_theme_empty
 ```
 
-## Preattentive Perception
+## Preattentive Perception {.r-fit-text}
 
 
 -   Combinations of preattentive features require attention
@@ -254,7 +254,7 @@ ggplot(data=data, aes(x=x, y=y,
   new_theme_empty
 # qplot(data=data, x=x, y=y, color=factor(color), shape=factor(shape), size=I(5))+scale_shape_manual(guide="none", values=c(19, 15)) + scale_color_discrete(guide="none") + new_theme_empty
 ```
-## Perceptual Grouping
+## Perceptual Grouping  {.r-fit-text}
 
 ::: {layout="[[55,-10,35]]"}
 ![Is this a rabbit or a duck?](rabbitduck.png){#fig-rabbitduck fig-alt="A picture laid out on an x-y coordinate axis. The y-axis is labeled 'Rabbit' and the x-axis is labeled 'Duck'. When viewed with the rabbit axis at the bottom, the image looks like a rabbit with tall ears; when viewed with the duck axis at the bottom, the image looks like a duck, where the ears become the bill."}
@@ -263,7 +263,7 @@ ggplot(data=data, aes(x=x, y=y,
 
 :::
 
-## Perceptual Grouping
+## Perceptual Grouping {.r-fit-text}
 
 ![](gestalt.jpg){fig-alt="An image reading 'GESTALT', where each letter demonstrates a principle of gestalt grouping. G has a white stripe over it, demonstrating closure - the stripe and the G are perceived as separate objects. E is shown as a grid of black squares, with grey squares making up the background; this demonstrates proximity - small objects close together are perceived as being part of the same whole. A bar is woven through the S shape, showing good continuation - the S is perceived as a continuous object that is behind the bar in the middle portion. The two Ts are striped and indicate similarity - they are similarly shaped and patterned and can be perceived as a group. The AL are connected, and the inside of the A seems to have a white tree in the middle, demonstrating figure/ground. The final T is part of the similarity group."}
 
@@ -329,7 +329,7 @@ state_pop %>%
 
 # Perceptual Limitations
 
-## Color
+## Color {.r-fit-text}
 
 - 10% of XY  and 0.2% of XX have color deficiency
 
@@ -338,7 +338,7 @@ state_pop %>%
   
   - avoid "stoplight" color schemes
   
-## Color
+## Color {.r-fit-text}
 - Strategies
   - double encoding (color + shape or linetype)
   - make it work with black and white printers
@@ -358,7 +358,7 @@ state_pop %>%
 - Avoid legends that have more than 7 categories
 
 
-## Accessibility
+## Accessibility {.r-fit-text}
 
 - Provide alt-text for your charts that describe the important information as well as the data source and how it is represented
 
