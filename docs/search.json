@@ -851,7 +851,7 @@
     "href": "index.html",
     "title": "Presentations in 2024",
     "section": "",
-    "text": "Cultivating Insights: Harnessing the Power of Data Visualization in Agriculture\n\n\n\nSusan Vanderplas\n\n\nJan 9, 2024\n\n\n\n\n\nLocation\n\n\nInternational Conference for On-Farm Precision Experimentation, Corpus Christi, TX\n\n\n\n\nTopics\n\n\ngraphics,agriculture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Git Submodules\n\n\n\nSusan Vanderplas\n\n\nFeb 8, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\ngit,reproducibility,teaching\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV with a Spreadsheet\n\n\n\nSusan Vanderplas\n\n\nFeb 15, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV/Blog Automatically\n\n\n\nSusan Vanderplas\n\n\nMar 7, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCreating Good Graphics\n\n\n\nSusan Vanderplas\n\n\nJun 26, 2024\n\n\n\n\n\nLocation\n\n\nLove Library South, Room 102\n\n\n\n\nTopics\n\n\ngraphics\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEscaping Flatland\n\n\n\nTyler Wiederich, Erin Blankenship & Susan Vanderplas\n\n\nJul 1, 2024\n\n\n\n\n\nLocation\n\n\nHuman Computer Interaction International, Washington DC\n\n\n\n\nTopics\n\n\nteaching,graphics,user-study\n\n\n\n\n\n\n\n\n\n\n\n\n\nGraphical Perception in a Pandemic\n\n\n\n\n\n\n\n\n\nLocation\n\n\n \n\n\n\n\nTopics\n\n\n \n\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Cultivating Insights: Harnessing the Power of Data Visualization in Agriculture\n\n\n\nSusan Vanderplas\n\n\nJan 9, 2024\n\n\n\n\n\n\nLocation\n\n\nInternational Conference for On-Farm Precision Experimentation, Corpus Christi, TX\n\n\n\n\nTopics\n\n\ngraphics,agriculture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Git Submodules\n\n\n\nSusan Vanderplas\n\n\nFeb 8, 2024\n\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\ngit,reproducibility,teaching\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV with a Spreadsheet\n\n\n\nSusan Vanderplas\n\n\nFeb 15, 2024\n\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV/Blog Automatically\n\n\n\nSusan Vanderplas\n\n\nMar 7, 2024\n\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCreating Good Graphics\n\n\n\nSusan Vanderplas\n\n\nJun 26, 2024\n\n\n\n\n\n\nLocation\n\n\nLove Library South, Room 102\n\n\n\n\nTopics\n\n\ngraphics\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEscaping Flatland\n\n\n\nTyler Wiederich, Erin Blankenship & Susan Vanderplas\n\n\nJul 1, 2024\n\n\n\n\n\n\nLocation\n\n\nHuman Computer Interaction International, Washington DC\n\n\n\n\nTopics\n\n\nteaching,graphics,user-study\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGraphical Perception in a Pandemic\n\n\n\n\n\n\n\n\n\n\nLocation\n\n\n\n\n\n\nTopics\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "07-HCII/index.html#references",
@@ -865,28 +865,28 @@
     "href": "06-REU-graphics/index.html#pie-chart-poll-results",
     "title": "Creating Good Graphics",
     "section": "Pie Chart Poll Results",
-    "text": "Pie Chart Poll Results\n\n\n\n\n\n\n\n\nFigure 1: Scottsbluff Star Herald Reader poll. Source\n\n\n\n\n\n\n\nWhat is wrong with this chart?\nDo you think it might be misleading? If so, how?\nDo you think the mistakes were intentional?"
+    "text": "Pie Chart Poll Results\n\n\n\n\n\nFigure 1: Scottsbluff Star Herald Reader poll. Source\n\n\n\n\n\n\nWhat is wrong with this chart?\nDo you think it might be misleading? If so, how?\nDo you think the mistakes were intentional?"
   },
   {
     "objectID": "06-REU-graphics/index.html#high-support",
     "href": "06-REU-graphics/index.html#high-support",
     "title": "Creating Good Graphics",
     "section": "High Support",
-    "text": "High Support\n\n\nFigure 2: Source\n\nWhat is wrong with this chart?\nWhat would you change to more accurately represent the data?\nDo you think the mistakes were intentional?"
+    "text": "High Support\n\nFigure 2: Source\nWhat is wrong with this chart?\nWhat would you change to more accurately represent the data?\nDo you think the mistakes were intentional?"
   },
   {
     "objectID": "06-REU-graphics/index.html#gas-prices",
     "href": "06-REU-graphics/index.html#gas-prices",
     "title": "Creating Good Graphics",
     "section": "Gas Prices",
-    "text": "Gas Prices\n\n\nFigure 3: Gas and Diesel price changes in India (2004 - 2018).\n\nWhat is wrong with this?\nWhat design choices contribute to the problems?\nDo you think this was intentionally designed to be misleading? Why or why not?"
+    "text": "Gas Prices\n\nFigure 3: Gas and Diesel price changes in India (2004 - 2018).\nWhat is wrong with this?\nWhat design choices contribute to the problems?\nDo you think this was intentionally designed to be misleading? Why or why not?"
   },
   {
     "objectID": "06-REU-graphics/index.html#information-overload",
     "href": "06-REU-graphics/index.html#information-overload",
     "title": "Creating Good Graphics",
     "section": "Information Overload",
-    "text": "Information Overload\n\n\n\nWhat problems do you have reading this chart?\nCan you compare the quantities of all 6 variables shown? Why or why not?\n\n(Yes, the blog this chart is taken from is satirical. This is not a recommended graphical form.)"
+    "text": "Information Overload\n\n\nWhat problems do you have reading this chart?\nCan you compare the quantities of all 6 variables shown? Why or why not?\n\n(Yes, the blog this chart is taken from is satirical. This is not a recommended graphical form.)"
   },
   {
     "objectID": "06-REU-graphics/index.html#why-graphics-matter",
@@ -907,6 +907,69 @@
     "href": "06-REU-graphics/index.html#preattentive-perception",
     "title": "Creating Good Graphics",
     "section": "Preattentive Perception",
-    "text": "Preattentive Perception\n\nOccurs automatically (no effort)\nColor, shape, angle\nCombinations of preattentive features require attention\n\nDouble-encoding (using multiple features for the same variable) is ok\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) Shape\n\n\n\n\n\n\n\n\n\n\n\n(b) Color\n\n\n\n\n\n\n\nFigure 5: Two scatterplots with one point that is different. Can you easily spot the different point?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) Shape and Color (dual encoded)\n\n\n\n\n\n\n\n\n\n\n\n(b) Shape and Color (different variables)\n\n\n\n\n\n\n\nFigure 6: Two scatterplots. Can you easily spot the different point(s)?"
+    "text": "Preattentive Perception\n\nCombinations of preattentive features require attention\n\nDouble-encoding (using multiple features for the same variable) is ok\n\n\n\n\n\n\n\n\n\n(a) Shape\n\n\n\n\n\n\n\n(b) Color\n\n\n\n\nFigure 4: Two scatterplots with one point that is different. Can you easily spot the different point?"
+  },
+  {
+    "objectID": "06-REU-graphics/index.html#preattentive-perception-1",
+    "href": "06-REU-graphics/index.html#preattentive-perception-1",
+    "title": "Creating Good Graphics",
+    "section": "Preattentive Perception",
+    "text": "Preattentive Perception\n\nCombinations of preattentive features require attention\n\nDouble-encoding (using multiple features for the same variable) is ok\n\n\n\n\n\n\n\n\n\n(a) Shape and Color (dual encoded)\n\n\n\n\n\n\n\n(b) Shape and Color (different variables)\n\n\n\n\nFigure 5: Two scatterplots. Can you easily spot the different point(s)?"
+  },
+  {
+    "objectID": "06-REU-graphics/index.html#perceptual-grouping",
+    "href": "06-REU-graphics/index.html#perceptual-grouping",
+    "title": "Creating Good Graphics",
+    "section": "Perceptual Grouping",
+    "text": "Perceptual Grouping\n\n\n\n\n\n\nFigure 6: Is this a rabbit or a duck?\n\n\n\n\n \n\n\n\n\n\nFigure 7: What do you see in this image?"
+  },
+  {
+    "objectID": "06-REU-graphics/index.html#perceptual-grouping-1",
+    "href": "06-REU-graphics/index.html#perceptual-grouping-1",
+    "title": "Creating Good Graphics",
+    "section": "Perceptual Grouping",
+    "text": "Perceptual Grouping"
+  },
+  {
+    "objectID": "06-REU-graphics/index.html#grouping-in-charts",
+    "href": "06-REU-graphics/index.html#grouping-in-charts",
+    "title": "Creating Good Graphics",
+    "section": "Grouping in Charts",
+    "text": "Grouping in Charts\n\n\n\n\n\n\nBar chart, showing 5 states\n\n\n\n\n\n\nThree versions of the same data that emphasize different aspects of the dataset."
+  },
+  {
+    "objectID": "06-REU-graphics/index.html#color",
+    "href": "06-REU-graphics/index.html#color",
+    "title": "Creating Good Graphics",
+    "section": "Color",
+    "text": "Color\n\n10% of XY and 0.2% of XX have color deficiency\nAvoid rainbow color schemes\n\nunequal perception of different colors (we see more shades of green) = misleading idea of distance\navoid “stoplight” color schemes"
+  },
+  {
+    "objectID": "06-REU-graphics/index.html#color-1",
+    "href": "06-REU-graphics/index.html#color-1",
+    "title": "Creating Good Graphics",
+    "section": "Color",
+    "text": "Color\n\nStrategies\n\ndouble encoding (color + shape or linetype)\nmake it work with black and white printers\nuse monochromatic (single color) gradients where possible\nif you use bidirectional scale (e.g. blue to red), go through white or light yellow"
+  },
+  {
+    "objectID": "06-REU-graphics/index.html#color-2",
+    "href": "06-REU-graphics/index.html#color-2",
+    "title": "Creating Good Graphics",
+    "section": "Color",
+    "text": "Color\n\nBe conscious of what some colors “mean” to use implicit understandings\nAvoid pink = female, blue = male"
+  },
+  {
+    "objectID": "06-REU-graphics/index.html#working-memory",
+    "href": "06-REU-graphics/index.html#working-memory",
+    "title": "Creating Good Graphics",
+    "section": "Working Memory",
+    "text": "Working Memory\n\nyou can remember between 5 and 9 (7 plus or minus 2) things without writing them down\nAvoid legends that have more than 7 categories"
+  },
+  {
+    "objectID": "06-REU-graphics/index.html#accessibility",
+    "href": "06-REU-graphics/index.html#accessibility",
+    "title": "Creating Good Graphics",
+    "section": "Accessibility",
+    "text": "Accessibility\n\nProvide alt-text for your charts that describe the important information as well as the data source and how it is represented\nUse larger text to make it easy for people with vis deficiencies to read\nSome fonts are easier for people with dyslexia to read – if you’re working with someone with dyslexia, ask them what font they prefer."
   }
 ]
