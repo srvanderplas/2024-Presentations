@@ -105,21 +105,8 @@ oldConvertBBox = FALSE)
 
 ![](designsvg.svg)
 
-## Participants
-
 - Integrated into introductory statistics classes:    
 Summer 23, Fall 23, Spring 24
-
-- Online students: 
-  - 2D, 
-  - 3D Fixed, 
-  - 3D rendered
-
-- In person students: 
-  - 2D,
-  - 3D Fixed, (Spring 24)
-  - 3D Rendered, 
-  - 3D printed
 
 ## Process 
 
@@ -232,13 +219,15 @@ ggplot(results, aes(x = factor(ratioLabel), fill = plot)) +
 ```
 
 Post semester inventory indicates that some kits disappeared... 
+
 ## Results
 
 ```{r}
 #| label: fig-violin-accuracy
-#| fig-width: 8
-#| fig-height: 2
+#| fig-width: 9
+#| fig-height: 3
 #| echo: false
+#| fig-cap: Violin plots of response accuracy by true ratio value. The data is highly variable, but most responses are reasonably close to the true value. Rounding to 5 artifacts are clearly visible. 
 
 results %>%
 ggplot(aes(x = ratioLabel, y = byHowMuch)) + 
@@ -315,10 +304,21 @@ predict_gam(gammod, exclude_terms = "s(participantno)") %>%
 
 - "I believe every graph was randomized for every student. I also believe the practice was meant to be a bit of the control group."
 - "Randomization was used as participants all received different sets of graphs to examine. A person wasn't assigned to a certain set of graphs and it was up to random chance on which set of graphs they received."
+
+
+## Elements of Experimental Design
+
 - "I think that there is randomization but not a control group in my opinion, because there isn't one group that is left alone or not studied...."
 - "Randomization was not used because it was offered as an extra credit assignment in class."
 
 ## Conclusions
 
-- 
+- No evidence of large differences between perception of 2D and 3D bars in this sample
+    - Students may be less motivated to guess accurately
+    - Students used to 3D effects may be less impacted by computer graphics
+
+- Integrating graphics research into the classroom is fun for students!
+... but data may not be of the same quality as paid samples
+
+
 # References

@@ -1075,14 +1075,14 @@
     "href": "07-HCII/index.html#data-distribution",
     "title": "Escaping Flatland",
     "section": "Data Distribution",
-    "text": "Data Distribution\n\n\n\n\n\nFigure 2: Number of trials across ratio and plot display type.\n\n\n\n\nPost semester inventory indicates that some kits disappeared… ## Results\n\n\n\n\n\nFigure 3: ?(caption)"
+    "text": "Data Distribution\n\nFigure 2: Number of trials across ratio and plot display type.Post semester inventory indicates that some kits disappeared…"
   },
   {
     "objectID": "07-HCII/index.html#results",
     "href": "07-HCII/index.html#results",
     "title": "Escaping Flatland",
     "section": "Results",
-    "text": "Results\nAccuracy: \\(\\frac{\\text{Estimated Percent} - \\text{True Percent}}{\\text{True Percent}}\\)"
+    "text": "Results\n\nFigure 3: Violin plots of response accuracy by true ratio value. The data is highly variable, but most responses are reasonably close to the true value. Rounding to 5 artifacts are clearly visible."
   },
   {
     "objectID": "07-HCII/index.html#hypotheses",
@@ -1103,13 +1103,27 @@
     "href": "07-HCII/index.html#elements-of-experimental-design",
     "title": "Escaping Flatland",
     "section": "Elements of Experimental Design",
-    "text": "Elements of Experimental Design\n\n“I believe every graph was randomized for every student. I also believe the practice was meant to be a bit of the control group.”\n“Randomization was used as participants all received different sets of graphs to examine. A person wasn’t assigned to a certain set of graphs and it was up to random chance on which set of graphs they received.”\n“I think that there is randomization but not a control group in my opinion, because there isn’t one group that is left alone or not studied….”\n“Randomization was not used because it was offered as an extra credit assignment in class.”"
+    "text": "Elements of Experimental Design\n\n“I believe every graph was randomized for every student. I also believe the practice was meant to be a bit of the control group.”\n“Randomization was used as participants all received different sets of graphs to examine. A person wasn’t assigned to a certain set of graphs and it was up to random chance on which set of graphs they received.”"
   },
   {
     "objectID": "07-HCII/index.html#conclusions",
     "href": "07-HCII/index.html#conclusions",
     "title": "Escaping Flatland",
     "section": "Conclusions",
-    "text": "Conclusions\n\nReferences\n\n\n\n\n\n\n\n\nCarswell, C., Sylvia Frankenberger, and Donald Bernhard. 1991. “Graphing in Depth: Perspectives on the Use of Three-Dimensional Graphs to Represent Lower-Dimensional Data.” Behaviour & Information Technology 10: 459–74. https://doi.org/10.1080/01449299108924304.\n\n\nCleveland, William S., and Robert McGill. 1984. “Graphical Perception: Theory, Experimentation, and Application to the Development of Graphical Methods.” Journal of the American Statistical Association 79 (387): 531–54. https://doi.org/10.1080/01621459.1984.10478080.\n\n\nDay, Ross H, and Erica J Stecher. 1991. “Sine of an Illusion.” Perception 20 (1): 49–55. https://doi.org/10.1068/p200049.\n\n\nFischer, M. H. 2000. “Do Irrelevant Depth Cues Affect the Comprehension of Bar Graphs.” Applied Cognitive Psychology 14: 151–62. https://doi.org/10.1002/(SICI)1099-0720(200003/04)14:2&lt;151::AID-ACP629&gt;3.0.CO;2-Z.\n\n\nVanderPlas, Susan, and Heike Hofmann. 2015. “Signs of the Sine IllusionWhy We Need to Care.” Journal of Computational and Graphical Statistics 24 (4): 1170–90. https://doi.org/10.1080/10618600.2014.951547.\n\n\nZacks, Jeff, Ellen Levy, Barbara Tversky, and Diane J. Schiano. 1998b. “Reading Bar Graphs: Effects of Extraneous Depth Cues and Graphical Context.” Journal of Experimental Psychology: Applied 4 (2): 119–38. https://doi.org/10.1037/1076-898X.4.2.119.\n\n\n———. 1998a. “Reading Bar Graphs: Effects of Extraneous Depth Cues and Graphical Context.” Journal of Experimental Psychology: Applied 4 (2): 119–38. https://doi.org/10.1037/1076-898X.4.2.119."
+    "text": "Conclusions\n\nNo evidence of large differences between perception of 2D and 3D bars in this sample\n\nStudents may be less motivated to guess accurately\nStudents used to 3D effects may be less impacted by computer graphics\n\nIntegrating graphics research into the classroom is fun for students! … but data may not be of the same quality as paid samples"
+  },
+  {
+    "objectID": "07-HCII/index.html#results-1",
+    "href": "07-HCII/index.html#results-1",
+    "title": "Escaping Flatland",
+    "section": "Results",
+    "text": "Results\nAccuracy: \\(\\frac{\\text{Estimated Percent} - \\text{True Percent}}{\\text{True Percent}}\\)"
+  },
+  {
+    "objectID": "07-HCII/index.html#elements-of-experimental-design-1",
+    "href": "07-HCII/index.html#elements-of-experimental-design-1",
+    "title": "Escaping Flatland",
+    "section": "Elements of Experimental Design",
+    "text": "Elements of Experimental Design\n\n“I think that there is randomization but not a control group in my opinion, because there isn’t one group that is left alone or not studied….”\n“Randomization was not used because it was offered as an extra credit assignment in class.”"
   }
 ]
