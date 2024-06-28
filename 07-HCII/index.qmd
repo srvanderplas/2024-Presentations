@@ -321,4 +321,4 @@ predict_gam(gammod, exclude_terms = "s(participantno)") %>%
 ... but data may not be of the same quality as paid samples
 
 
-# References
+# References {.tiny}
