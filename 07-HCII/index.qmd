@@ -9,3 +9,316 @@ format:
     lib_dir: libs
     embed-resources: true
 ---
+
+# Perception and Dimensionality
+
+## @clevelandGraphicalPerceptionTheory1984
+
+![Figure 4, Cleveland & McGill (1984). Different types of comparisons with bar charts.](CM-comparisons.png)
+
+- Hierarchy of visual features: 
+  - Accuracy for length > area > volume
+  - Experiments manipulated position and angle    
+  (no actual area/volume experiments)
+
+- Type 1 vs. 3 comparisons: cognitive grouping
+
+## @zacksReadingBarGraphs1998
+
+![Common Graph Types. (Modified from Figure 2)](DepthCues.png)
+
+- Matching task: higher error on volume than area
+
+- Estimation task: Error for volume >  line > area 
+
+## Illusions and Context
+
+::: columns
+::: column
+```{r sine-illusion, include = T, echo = F, message = F, warning = F}
+source("sine-functions.r")
+library(ggplot2)
+
+f <- function(x) 2*sin(x)
+fprime <- function(x) 2*cos(x)
+f2prime <- function(x) -2*sin(x)
+
+dframe <- createSine(n = 50, len = 1, f=f, fprime=fprime, f2prime=f2prime)
+
+ggplot(dframe, aes(x = xstart, xend = xend, y = ystart, yend = yend)) + geom_segment() + coord_fixed() + 
+  theme_void()
+```
+:::
+::: column
+- Optical Illusions where 3D heuristics are applied to 2D objects
+  - Muller-Lyer
+  - Sine Illusion
+  - Color constancy
+
+:::
+:::
+
+## Developments in 3D Graphics
+
+
+```{r}
+#| fig-width: 8
+#| fig-height: 4
+#| out-width: 50%
+#| style: "position:absolute;top=0;right=0"
+source("plot-code.R")
+library(rgl)
+# pars <- scene3d()
+# dput(pars, "scene.txt")
+pars <- source("scene.txt")
+options(rgl.printRglwidget = TRUE)
+rglwidget(scene3d(pars),
+Bar3D("Set63-Type1-Rep01-fix.stl", color = "skyblue3"),
+width = 800, height = 400,
+controllers = NULL,
+elementId = NULL, 
+reuse = FALSE,
+webGLoptions = list(preserveDrawingBuffer = TRUE), 
+shared = NULL, minimal = TRUE, 
+shinyBrush = NULL, 
+altText = "3D plot",
+oldConvertBBox = FALSE)
+```
+
+::: {style="position:absolute;top=0;left=0"}
+
+- Generated with `OpenSCAD` or `rayshader` in R
+
+- Realistic environment
+  - Rotation
+  - Zoom
+  - Interactivity
+
+:::
+
+
+## Developments in 3D Graphics
+
+![3D printed charts](Kit_of_charts.png)
+
+# Experiment: Is 3D that bad?
+
+![](designsvg.svg)
+
+## Participants
+
+- Integrated into introductory statistics classes:    
+Summer 23, Fall 23, Spring 24
+
+- Online students: 
+  - 2D, 
+  - 3D Fixed, 
+  - 3D rendered
+
+- In person students: 
+  - 2D,
+  - 3D Fixed, (Spring 24)
+  - 3D Rendered, 
+  - 3D printed
+
+## Process 
+
+Integrated into the course to align with current topics
+
+  0. Informed Consent
+  1. Reflection: process of scientific research
+  2. experiment participation
+  3. Reflection: experiment purpose, hypothesis, error, variables, randomization 
+  4. Reflection: what students learned from 2-page abstract
+  5. Reflection: How 15 minute conference presentation differed from abstract
+
+## Stimuli
+
+
+::: {#fig-chart-types layout="[[1,1,1,1]]" layout-valign="bottom"}
+![2D](2d-bar-1.png)
+
+![3D fixed](static3d-7-1.png)
+
+![3D rendered](id04-type1-rep01-rendered.png) 
+
+![3D printed](id04-type1-rep01-printed.png)
+
+Rendering types used in this experiment. All charts show the same data.
+:::
+
+## Demographics
+
+```{r demographics1}
+#| fig-width: 6
+#| fig-height: 3
+#| fig-show: "hold"
+#| echo: false
+#| warning: false
+#| message: false
+#| error: false
+library(ggplot2)
+library(dplyr)
+library(purrr)
+library(tidyr)
+knitr::opts_knit$set(message = F, warning = F, error = F, echo = F, fig.show = 'hold', dpi=300)
+
+theme_set(theme_bw())
+source("code/data_cleaning.R")
+
+user218 %>%
+ggplot(aes(x = age)) + geom_bar() + theme_bw() + ggtitle("Age of Participants") + theme(axis.title = element_blank()) + geom_text(aes(x = age, y = after_stat(count), label = after_stat(count)), stat = "count", vjust = 0, nudge_y = 1) + 
+  scale_y_continuous(expand = expansion(0, 25))
+```
+
+## Demographics
+```{r demographics2}
+#| fig-width: 6
+#| fig-height: 3
+#| out-width: "100%"
+#| fig-show: "hold"
+#| echo: false
+#| warning: false
+#| message: false
+#| error: false
+user218 %>%
+ggplot(aes(x = gender)) + geom_bar() + theme_bw() + ggtitle("Gender Identity of Participants") + theme(axis.title = element_blank()) + geom_text(aes(x = gender, y = after_stat(count), label = after_stat(count)), stat = "count", vjust = 0, nudge_y = 1) + 
+  scale_y_continuous(expand = expansion(0, 25))
+```
+
+## Demographics
+```{r demographics3}
+#| fig-width: 6
+#| fig-height: 3
+#| out-width: "100%"
+#| fig-show: "hold"
+#| echo: false
+#| warning: false
+#| message: false
+#| error: false
+edlab <- data.frame(education = ed_levels, lab = c("High\nSchool", "Some\nUG", "UG\nDegree", "Some\nGrad", "Grad\nDegree", "No\nAnswer") %>% factor(., levels = ., ordered = T))
+user218 %>%
+  left_join(edlab, by = "education") %>%
+ggplot(aes(x = lab)) + geom_bar() + theme_bw() + ggtitle("Education Level of Participants") + theme(axis.title = element_blank()) + geom_text(aes(x = lab, y = after_stat(count), label = after_stat(count)), stat = "count", vjust = 0, nudge_y = 1) + 
+  scale_y_continuous(expand = expansion(0, 25))
+```
+
+## Data Cleaning
+
+```{r}
+userno[-c(1:4),] |>
+set_names(c("Data Cleaning Step", "Participants", "Trials")) |>
+knitr::kable()
+```
+
+
+Analysis is of `r nrow(results)` trials completed by `r length(unique(engaged_user_data$participantID))` participants
+
+## Data Distribution
+
+
+```{r}
+#| label: fig-summary
+#| fig-width: 8
+#| fig-height: 2
+#| fig-cap: Number of trials across ratio and plot display type.
+#| echo: false
+ggplot(results, aes(x = factor(ratioLabel), fill = plot)) + 
+  geom_bar(position = "stack") + 
+  guides(fill = guide_legend(title = "Plot Type")) + 
+  ylab("# Trials") + 
+  xlab("Correct Ratio") + 
+  ggtitle("Trial Distribution by Plot Type and Ratio")
+```
+
+Post semester inventory indicates that some kits disappeared... 
+## Results
+
+```{r}
+#| label: fig-violin-accuracy
+#| fig-width: 8
+#| fig-height: 2
+#| echo: false
+
+results %>%
+ggplot(aes(x = ratioLabel, y = byHowMuch)) + 
+  geom_abline(slope = 1, intercept = 0, color = "grey") + 
+  geom_jitter(alpha = .25) + 
+  geom_violin(aes(group = factor(ratioLabel)), alpha = .5, draw_quantiles = c(.25, .5, .75)) + 
+  facet_wrap(~plot, nrow = 1) + theme_bw() + 
+  scale_x_continuous("True Bar Ratio", breaks = round(unique(results$true_ratio*100)), minor_breaks = NULL, limits = c(0, 100)) + 
+  scale_y_continuous("Estimated Bar Ratio", breaks = seq(0, 100, 20), minor_breaks = seq(0, 100, 5)) + 
+  coord_fixed()
+```
+## Results
+
+Accuracy: $\frac{\text{Estimated Percent} - \text{True Percent}}{\text{True Percent}}$
+
+```{r}
+#| fig-width: 8
+#| fig-height: 4
+#| cache: true
+
+results <- results |>
+  group_by(participantID,db) |>
+  arrange(plotStartTime) |>
+  mutate(trial_no = 1:n())|>
+  mutate(plot_lab = as.character(plot) |> as.factor()) |>
+  mutate(ratio = factor(ratioLabel)) |>
+  mutate(participantno = factor(participantID))
+
+library(mgcv)
+library(tidygam)
+gamdat <- select(results, appStartTime, absdiff, absdiffnorm, byHowMuch, graphtype, ratioLabel, plot, plot_lab, participantno) 
+  # filter(year(appStartTime)<2024)
+
+gammod <- gam(absdiffnorm ~ plot_lab + 
+                s(ratioLabel, by = plot_lab, bs = "tp", k = 4) +
+                s(participantno, bs = 're'),
+              data = gamdat, method = 'REML')
+
+
+predict_gam(gammod, exclude_terms = "s(participantno)") %>%
+  # mutate(graphtype = factor(graphtype, levels = c("Type1", "Type3"))) %>%
+  ggplot(aes(x = ratioLabel, y = absdiffnorm, ymin = lower_ci, ymax = upper_ci, 
+             fill = plot_lab, color = plot_lab)) +
+  geom_line() + 
+  geom_ribbon(alpha = .05, color = NA) + 
+  # facet_wrap(~graphtype) + 
+  scale_color_discrete("Plot Type") + 
+  scale_fill_discrete("Plot Type") + 
+  theme(legend.position = c(.5, 1), legend.justification = c(.5, 1.05), legend.direction = "horizontal") + 
+  ylab("(Estimate - True Ratio)/(True Ratio)") + xlab("Ratio") 
+```
+
+# Student Responses
+
+
+## Hypotheses
+
+- "Students will get progressively less accurate as questions were asked"
+- "Do students change their answers when asked the same question over and over?"
+- "3D printed bar charts will lead to more accurate ratio judgments compared to 2D or 3D digital charts."
+- "That 2d is preferred over 3d. It cleans up the data presentation."
+- "The public can more accurately understand data when it is provided to them in a 2-D graph format."
+
+
+
+## Sources of Error
+
+- "Fatigue effect over the course of making many judgments, learning patterns from seeing the same ratios multiple times, possibly difference in eyesight among participants."
+- "There are no line values to help measure it when there is a small difference between the graphs."
+- "People that are guessing"
+- "People in the sample misunderstanding directions."
+
+## Elements of Experimental Design
+
+- "I believe every graph was randomized for every student. I also believe the practice was meant to be a bit of the control group."
+- "Randomization was used as participants all received different sets of graphs to examine. A person wasn't assigned to a certain set of graphs and it was up to random chance on which set of graphs they received."
+- "I think that there is randomization but not a control group in my opinion, because there isn't one group that is left alone or not studied...."
+- "Randomization was not used because it was offered as an extra credit assignment in class."
+
+## Conclusions
+
+- 
+# References

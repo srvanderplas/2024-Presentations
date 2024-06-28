@@ -971,5 +971,145 @@
     "title": "Creating Good Graphics",
     "section": "Accessibility",
     "text": "Accessibility\n\nProvide alt-text for your charts that describe the important information as well as the data source and how it is represented\nUse larger text to make it easy for people with vis deficiencies to read\nSome fonts are easier for people with dyslexia to read – if you’re working with someone with dyslexia, ask them what font they prefer."
+  },
+  {
+    "objectID": "07-HCII/index.html#cleveland-mcgill-1984",
+    "href": "07-HCII/index.html#cleveland-mcgill-1984",
+    "title": "Escaping Flatland",
+    "section": "Cleveland & McGill (1984)",
+    "text": "Cleveland & McGill (1984)\n\nFigure 4, Cleveland & McGill (1984). Different types of comparisons with bar charts.\nHierarchy of visual features:\n\nAccuracy for length &gt; area &gt; volume\nExperiments manipulated position and angle\n(no actual area/volume experiments)\n\nType 1 vs. 3 comparisons: cognitive grouping"
+  },
+  {
+    "objectID": "07-HCII/index.html#zacks-levy-tversky-schiano-1998",
+    "href": "07-HCII/index.html#zacks-levy-tversky-schiano-1998",
+    "title": "Escaping Flatland",
+    "section": "Zacks, Levy, Tversky, Schiano (1998)",
+    "text": "Zacks, Levy, Tversky, Schiano (1998)\n\nCommon Graph Types. (Modified from Figure 2)\nMatching task: higher error on volume than area\nEstimation task: Error for volume &gt; line &gt; area"
+  },
+  {
+    "objectID": "07-HCII/index.html#zacksreadingbargraphs1998",
+    "href": "07-HCII/index.html#zacksreadingbargraphs1998",
+    "title": "Escaping Flatland",
+    "section": "Zacks et al. (1998b)",
+    "text": "Zacks et al. (1998b)\n\nCommon Graph Types. (Modified from Figure 2)\nMatching task: higher error on volume than area\nEstimation task: Error for volume &gt; line &gt; area"
+  },
+  {
+    "objectID": "07-HCII/index.html#clevelandgraphicalperceptiontheory1984",
+    "href": "07-HCII/index.html#clevelandgraphicalperceptiontheory1984",
+    "title": "Escaping Flatland",
+    "section": "Cleveland and McGill (1984)",
+    "text": "Cleveland and McGill (1984)\n\nFigure 4, Cleveland & McGill (1984). Different types of comparisons with bar charts.\nHierarchy of visual features:\n\nAccuracy for length &gt; area &gt; volume\nExperiments manipulated position and angle\n(no actual area/volume experiments)\n\nType 1 vs. 3 comparisons: cognitive grouping"
+  },
+  {
+    "objectID": "07-HCII/index.html#illusions-and-context",
+    "href": "07-HCII/index.html#illusions-and-context",
+    "title": "Escaping Flatland",
+    "section": "Illusions and Context",
+    "text": "Illusions and Context\n\n\n\n\n\n\n\n\n\nOptical Illusions where 3D heuristics are applied to 2D objects\n\nMuller-Lyer\nSine Illusion\nColor constancy"
+  },
+  {
+    "objectID": "07-HCII/index.html#developments-in-3d-graphics",
+    "href": "07-HCII/index.html#developments-in-3d-graphics",
+    "title": "Escaping Flatland",
+    "section": "Developments in 3D Graphics",
+    "text": "Developments in 3D Graphics\n\n\n\n\n\n\n\n\nGenerated with OpenSCAD or rayshader in R\nRealistic environment\n\nRotation\nZoom\nInteractivity"
+  },
+  {
+    "objectID": "07-HCII/index.html#developments-in-3d-graphics-1",
+    "href": "07-HCII/index.html#developments-in-3d-graphics-1",
+    "title": "Escaping Flatland",
+    "section": "Developments in 3D Graphics",
+    "text": "Developments in 3D Graphics\n\n3D printed charts"
+  },
+  {
+    "objectID": "07-HCII/index.html#participants",
+    "href": "07-HCII/index.html#participants",
+    "title": "Escaping Flatland",
+    "section": "Participants",
+    "text": "Participants\n\nIntegrated into introductory statistics classes:\nSummer 23, Fall 23, Spring 24\nOnline students:\n\n2D,\n3D Fixed,\n3D rendered\n\nIn person students:\n\n2D,\n3D Fixed, (Spring 24)\n3D Rendered,\n3D printed"
+  },
+  {
+    "objectID": "07-HCII/index.html#stimuli",
+    "href": "07-HCII/index.html#stimuli",
+    "title": "Escaping Flatland",
+    "section": "Stimuli",
+    "text": "Stimuli\n\n\n\n\n\n\n\n2D\n\n\n\n\n\n\n\n3D fixed\n\n\n\n\n\n\n\n3D rendered\n\n\n\n\n\n\n\n3D printed\n\n\n\n\nFigure 1: Rendering types used in this experiment. All charts show the same data."
+  },
+  {
+    "objectID": "07-HCII/index.html#demographics",
+    "href": "07-HCII/index.html#demographics",
+    "title": "Escaping Flatland",
+    "section": "Demographics",
+    "text": "Demographics"
+  },
+  {
+    "objectID": "07-HCII/index.html#process",
+    "href": "07-HCII/index.html#process",
+    "title": "Escaping Flatland",
+    "section": "Process",
+    "text": "Process\nIntegrated into the course to align with current topics\n\nInformed Consent\nReflection: process of scientific research\nexperiment participation\nReflection: experiment purpose, hypothesis, error, variables, randomization\nReflection: what students learned from 2-page abstract\nReflection: How 15 minute conference presentation differed from abstract"
+  },
+  {
+    "objectID": "07-HCII/index.html#demographics-1",
+    "href": "07-HCII/index.html#demographics-1",
+    "title": "Escaping Flatland",
+    "section": "Demographics",
+    "text": "Demographics"
+  },
+  {
+    "objectID": "07-HCII/index.html#demographics-2",
+    "href": "07-HCII/index.html#demographics-2",
+    "title": "Escaping Flatland",
+    "section": "Demographics",
+    "text": "Demographics"
+  },
+  {
+    "objectID": "07-HCII/index.html#data-cleaning",
+    "href": "07-HCII/index.html#data-cleaning",
+    "title": "Escaping Flatland",
+    "section": "Data Cleaning",
+    "text": "Data Cleaning\n\n\n\n\n\nData Cleaning Step\nParticipants\nTrials\n\n\n\n\nIn Stat 218\n353\n6171\n\n\nCompleted 10+ trials\n344\n6126\n\n\nCorrect Shape ID\n333\n5922\n\n\nSelects 50% less than half the time\n325\n5831\n\n\n\n\n\nAnalysis is of 5831 trials completed by 325 participants"
+  },
+  {
+    "objectID": "07-HCII/index.html#data-distribution",
+    "href": "07-HCII/index.html#data-distribution",
+    "title": "Escaping Flatland",
+    "section": "Data Distribution",
+    "text": "Data Distribution\n\n\n\n\n\nFigure 2: Number of trials across ratio and plot display type.\n\n\n\n\nPost semester inventory indicates that some kits disappeared… ## Results\n\n\n\n\n\nFigure 3: ?(caption)"
+  },
+  {
+    "objectID": "07-HCII/index.html#results",
+    "href": "07-HCII/index.html#results",
+    "title": "Escaping Flatland",
+    "section": "Results",
+    "text": "Results\nAccuracy: \\(\\frac{\\text{Estimated Percent} - \\text{True Percent}}{\\text{True Percent}}\\)"
+  },
+  {
+    "objectID": "07-HCII/index.html#hypotheses",
+    "href": "07-HCII/index.html#hypotheses",
+    "title": "Escaping Flatland",
+    "section": "Hypotheses",
+    "text": "Hypotheses\n\n“Students will get progressively less accurate as questions were asked”\n“Do students change their answers when asked the same question over and over?”\n“3D printed bar charts will lead to more accurate ratio judgments compared to 2D or 3D digital charts.”\n“That 2d is preferred over 3d. It cleans up the data presentation.”\n“The public can more accurately understand data when it is provided to them in a 2-D graph format.”"
+  },
+  {
+    "objectID": "07-HCII/index.html#sources-of-error",
+    "href": "07-HCII/index.html#sources-of-error",
+    "title": "Escaping Flatland",
+    "section": "Sources of Error",
+    "text": "Sources of Error\n\n“Fatigue effect over the course of making many judgments, learning patterns from seeing the same ratios multiple times, possibly difference in eyesight among participants.”\n“There are no line values to help measure it when there is a small difference between the graphs.”\n“People that are guessing”\n“People in the sample misunderstanding directions.”"
+  },
+  {
+    "objectID": "07-HCII/index.html#elements-of-experimental-design",
+    "href": "07-HCII/index.html#elements-of-experimental-design",
+    "title": "Escaping Flatland",
+    "section": "Elements of Experimental Design",
+    "text": "Elements of Experimental Design\n\n“I believe every graph was randomized for every student. I also believe the practice was meant to be a bit of the control group.”\n“Randomization was used as participants all received different sets of graphs to examine. A person wasn’t assigned to a certain set of graphs and it was up to random chance on which set of graphs they received.”\n“I think that there is randomization but not a control group in my opinion, because there isn’t one group that is left alone or not studied….”\n“Randomization was not used because it was offered as an extra credit assignment in class.”"
+  },
+  {
+    "objectID": "07-HCII/index.html#conclusions",
+    "href": "07-HCII/index.html#conclusions",
+    "title": "Escaping Flatland",
+    "section": "Conclusions",
+    "text": "Conclusions\n\nReferences\n\n\n\n\n\n\n\n\nCarswell, C., Sylvia Frankenberger, and Donald Bernhard. 1991. “Graphing in Depth: Perspectives on the Use of Three-Dimensional Graphs to Represent Lower-Dimensional Data.” Behaviour & Information Technology 10: 459–74. https://doi.org/10.1080/01449299108924304.\n\n\nCleveland, William S., and Robert McGill. 1984. “Graphical Perception: Theory, Experimentation, and Application to the Development of Graphical Methods.” Journal of the American Statistical Association 79 (387): 531–54. https://doi.org/10.1080/01621459.1984.10478080.\n\n\nDay, Ross H, and Erica J Stecher. 1991. “Sine of an Illusion.” Perception 20 (1): 49–55. https://doi.org/10.1068/p200049.\n\n\nFischer, M. H. 2000. “Do Irrelevant Depth Cues Affect the Comprehension of Bar Graphs.” Applied Cognitive Psychology 14: 151–62. https://doi.org/10.1002/(SICI)1099-0720(200003/04)14:2&lt;151::AID-ACP629&gt;3.0.CO;2-Z.\n\n\nVanderPlas, Susan, and Heike Hofmann. 2015. “Signs of the Sine IllusionWhy We Need to Care.” Journal of Computational and Graphical Statistics 24 (4): 1170–90. https://doi.org/10.1080/10618600.2014.951547.\n\n\nZacks, Jeff, Ellen Levy, Barbara Tversky, and Diane J. Schiano. 1998b. “Reading Bar Graphs: Effects of Extraneous Depth Cues and Graphical Context.” Journal of Experimental Psychology: Applied 4 (2): 119–38. https://doi.org/10.1037/1076-898X.4.2.119.\n\n\n———. 1998a. “Reading Bar Graphs: Effects of Extraneous Depth Cues and Graphical Context.” Journal of Experimental Psychology: Applied 4 (2): 119–38. https://doi.org/10.1037/1076-898X.4.2.119."
   }
 ]
