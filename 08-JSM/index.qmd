@@ -1,0 +1,230 @@
+---
+format: 
+  revealjs:
+    navigation-mode: vertical
+    logo: ../libs/unl/N.svg
+    theme: ../libs/unl/inverse.scss
+    includes:
+      in_header: ../libs/unl/header.html
+    lib_dir: ../libs
+---
+
+## Coauthors
+
+::: columns
+
+::: column
+
+![Weihao (Patrick) Li](Patrick.jpg)
+:::
+
+::: column
+::: {layout-ncol=2}
+
+![Di Cook](dicook.jpg)
+
+![Emi Tanaka](emitanaka.jpg)
+
+![Klaus Ackermann](klausackermann.png)
+:::
+:::
+
+:::
+
+# Residuals and Lineups
+
+## 🔍Regression Diagnostics
+
+Diagnostics are the key to determining whether there is anything **importantly wrong** with a regression model. 
+
+<br>
+
+$$\underbrace{\boldsymbol{e}}_\textrm{Residuals} = \underbrace{\boldsymbol{y}}_\textrm{Observations} - \underbrace{f(\boldsymbol{x})}_\textrm{Fitted values}$$
+
+**Residuals**: what the regression model does **not capture**.
+
+Checked by:
+
+- **Numerical summaries**: variance, skewness, quantiles
+- **Statistical tests**: F-test, BP test
+- **Diagnostic plots**: residual plots, Q-Q plots
+
+## Diagnostic Plots
+
+::: fragment
+
+> Residual plots are usually **revealing** when the assumptions are violated.
+
+@draper1998applied, @belsleyRegressionDiagnosticsIdentifying1980
+:::
+
+::: fragment
+
+> **Graphical methods are easier to use**.
+
+@cookCriticismInfluenceAnalysis1982
+:::
+
+::: fragment
+
+> **Residual plots are more informative in most practical situations** than the corresponding conventional hypothesis tests.
+
+@montgomeryIntroductionLinearRegression1982
+:::
+
+
+## 🤔 Interpretation Challenges
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+What do you see?
+
+```{r fig.width=4, fig.height=4, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(visage)
+set.seed(10131)
+ori_x <- rand_lognormal()
+mod <- heter_model(b = 0, x = closed_form(~-ori_x))
+ori_dat <- mod$gen(300)
+
+ori_dat %>%
+  VI_MODEL$plot(theme = theme_light(base_size = 18), size = 1, remove_grid_line = TRUE, ) +
+  # geom_line(aes(x = .fitted, y = (3.5 + 0.3 * .fitted)), col = "red") +
+  # geom_line(aes(x = .fitted, y = -(3.5 + 0.3 * .fitted)), col = "red") +
+  xlab("Fitted values") +
+  ylab("Residuals")
+```
+
+:::
+
+::: {.column width="60%"}
+
+- Vertical spread of the points varies with the fitted values.    
+[=> [heteroskedasticity?]{.blue .emph}]{.fragment}
+
+::: fragment
+- Triangle shape is actually from skewed distribution in x
+:::
+::: fragment
+- Fitted model is fine!
+:::
+
+:::
+::: {.fragment}
+We need an [inferential framework]{ .emph .green} to [calibrate expectations]{.emph .purple} when reading residual plots!
+:::
+::::
+
+## 🔬Visual Inference
+
+Suggested by @bujaStatisticalInferenceExploratory2009
+
+```{r lineupdemo}
+#| fig-width: 7
+#| fig-height: 7
+#| out-height: "100%"
+#| fig-dpi: 300
+set.seed(10131)
+mod$gen_lineup(300, k = 20, pos = 11) %>%
+  filter(null != FALSE) %>%
+  bind_rows(ori_dat %>% mutate(k = 11, null = FALSE)) %>%
+  VI_MODEL$plot_lineup(theme = theme_light(base_size = 12),
+                       remove_grid_line = TRUE,
+                       remove_axis = TRUE)
+```
+
+::: notes
+
+What do you observe from this residual plot?
+
+- Vertical spread of the points varies with the fitted values.
+- This often indicates **the existence of heteroskedasticity**.
+
+- The real data is in plot 11.
+:::
+
+
+## 🔬Visual Inference
+::: columns
+::: column
+```{r lineupdemo}
+#| fig-width: 7
+#| fig-height: 7
+#| out-height: "100%"
+#| fig-dpi: 300
+```
+:::
+
+::: column
+
+Typically, a **lineup** of residual plots consists of 
+
+<!-- - $m$ randomly placed plots -->
+- one **data plot**
+- $19$ **null plots** containing residuals **simulated from the fitted model**.
+
+:::
+:::
+
+
+## 🔬Visual Inference
+::: columns
+::: column
+```{r lineupdemo}
+#| fig-width: 7
+#| fig-height: 7
+#| out-height: "100%"
+#| fig-dpi: 300
+```
+:::
+
+::: column
+
+To perform a visual test
+
+- Observer(s) select the **most different plot(s)**.
+- P-value ("see value") can be calculated using the **beta-binomial model** [@vanderplasStatisticalSignificanceCalculations2021]
+
+
+:::
+:::
+
+## Why are residual plots so important? {.center}
+
+# Experiment
+Compare **conventional hypothesis testing** with **visual testing**
+
+
+## 🧪Design
+
+::: columns
+::: column
+### **Non-linearity**
+
+$$\boldsymbol{y} = \boldsymbol{1}_n + \boldsymbol{x} + \boldsymbol{z} + \boldsymbol{\varepsilon}$$
+- $\boldsymbol{z} \propto He_j(\boldsymbol{x})$, $j$th order Hermite polynomial
+- $\boldsymbol{\varepsilon} \sim N(\boldsymbol{0}_n, \sigma^2\boldsymbol{I}_n)$
+:::
+::: column
+### **Null model:**
+
+$$\boldsymbol{y} = \beta_0 + \beta_1\boldsymbol{x} + \boldsymbol{u}$$
+- \boldsymbol{u} \sim N(\boldsymbol{0}_n, \sigma^2\boldsymbol{I}_n)
+:::
+
+:::
+
+
+### **Heteroskedasticity model:**
+
+$$\boldsymbol{y} = 1 + \boldsymbol{x} + \boldsymbol{\varepsilon},~ \boldsymbol{\varepsilon} \sim N(\boldsymbol{0}, 1 + (2 - |a|)(\boldsymbol{x} - a)^2b \boldsymbol{I}),$$
+
+\noindent where $\boldsymbol{y}$, $\boldsymbol{x}$, $\boldsymbol{\varepsilon}$ are vectors of size $n$, and $\boldsymbol{1}_n$ is a vector of ones of size $n$.
+
+### **Null regression model:**
+
+$$\boldsymbol{y} = \beta_0 + \beta_1\boldsymbol{x} + \boldsymbol{u}, ~\boldsymbol{u} \sim N(\boldsymbol{0}_n, \sigma^2\boldsymbol{I}_n).$$
+
+# References {.tiny}
