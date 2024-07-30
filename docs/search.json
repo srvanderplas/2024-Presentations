@@ -851,7 +851,7 @@
     "href": "index.html",
     "title": "Presentations in 2024",
     "section": "",
-    "text": "Cultivating Insights: Harnessing the Power of Data Visualization in Agriculture\n\n\n\nSusan Vanderplas\n\n\nJan 9, 2024\n\n\n\n\n\n\nLocation\n\n\nInternational Conference for On-Farm Precision Experimentation, Corpus Christi, TX\n\n\n\n\nTopics\n\n\ngraphics,agriculture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Git Submodules\n\n\n\nSusan Vanderplas\n\n\nFeb 8, 2024\n\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\ngit,reproducibility,teaching\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV with a Spreadsheet\n\n\n\nSusan Vanderplas\n\n\nFeb 15, 2024\n\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV/Blog Automatically\n\n\n\nSusan Vanderplas\n\n\nMar 7, 2024\n\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCreating Good Graphics\n\n\n\nSusan Vanderplas\n\n\nJun 26, 2024\n\n\n\n\n\n\nLocation\n\n\nLove Library South, Room 102\n\n\n\n\nTopics\n\n\ngraphics\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEscaping Flatland\n\n\n\nTyler Wiederich, Erin Blankenship & Susan Vanderplas\n\n\nJul 1, 2024\n\n\n\n\n\n\nLocation\n\n\nHuman Computer Interaction International, Washington DC\n\n\n\n\nTopics\n\n\nteaching,graphics,user-study\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGraphical Perception in a Pandemic\n\n\n\n\n\n\n\n\n\n\nLocation\n\n\n\n\n\n\nTopics\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Cultivating Insights: Harnessing the Power of Data Visualization in Agriculture\n\n\n\nSusan Vanderplas\n\n\nJan 9, 2024\n\n\n\n\n\nLocation\n\n\nInternational Conference for On-Farm Precision Experimentation, Corpus Christi, TX\n\n\n\n\nTopics\n\n\ngraphics,agriculture\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Git Submodules\n\n\n\nSusan Vanderplas\n\n\nFeb 8, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\ngit,reproducibility,teaching\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV with a Spreadsheet\n\n\n\nSusan Vanderplas\n\n\nFeb 15, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding a CV/Blog Automatically\n\n\n\nSusan Vanderplas\n\n\nMar 7, 2024\n\n\n\n\n\nLocation\n\n\nOnline\n\n\n\n\nTopics\n\n\nreproducibility,automation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCreating Good Graphics\n\n\n\nSusan Vanderplas\n\n\nJun 26, 2024\n\n\n\n\n\nLocation\n\n\nLove Library South, Room 102\n\n\n\n\nTopics\n\n\ngraphics\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEscaping Flatland\n\n\n\nTyler Wiederich, Erin Blankenship & Susan Vanderplas\n\n\nJul 1, 2024\n\n\n\n\n\nLocation\n\n\nHuman Computer Interaction International, Washington DC\n\n\n\n\nTopics\n\n\nteaching,graphics,user-study\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nA Plot is Worth a Thousand Tests\n\n\n\nWeihao (Patrick) Li, Di Cook, Emi Tanaka, Klaus Ackermann, Susan Vanderplas\n\n\nAug 7, 2024\n\n\n\n\n\nLocation\n\n\nJoint Statistical Meetings, Portland, OR\n\n\n\n\nTopics\n\n\nvisual-inference,lineup,computer-vision,graphics,user-study\n\n\n\n\n\n\n\n\n\n\n\n\n\nGraphical Perception in a Pandemic\n\n\n\n\n\n\n\n\n\nLocation\n\n\n \n\n\n\n\nTopics\n\n\n \n\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "07-HCII/index.html#references",
@@ -1125,5 +1125,96 @@
     "title": "Escaping Flatland",
     "section": "Elements of Experimental Design",
     "text": "Elements of Experimental Design\n\n“I think that there is randomization but not a control group in my opinion, because there isn’t one group that is left alone or not studied….”\n“Randomization was not used because it was offered as an extra credit assignment in class.”"
+  },
+  {
+    "objectID": "08-JSM/index.html#introduction",
+    "href": "08-JSM/index.html#introduction",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "Introduction",
+    "text": "Introduction\n\n\n\n\n\n\n\n\n\nWeihao (Patrick) Li\n\n\n\n\n \n\n\n\n\n\n\n\nDi Cook\n\n\n\n\n\n\n\nEmi Tanaka"
+  },
+  {
+    "objectID": "08-JSM/index.html#coauthors",
+    "href": "08-JSM/index.html#coauthors",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "Coauthors",
+    "text": "Coauthors\n\n\n\n\n\nWeihao (Patrick) Li\n\n\n\n\n\n\n\n\n\n\n\n\nDi Cook\n\n\n\n\n\n\n\nEmi Tanaka\n\n\n\n\n\n\n\n\n\nKlaus Ackermann"
+  },
+  {
+    "objectID": "08-JSM/index.html#regression-diagnostics",
+    "href": "08-JSM/index.html#regression-diagnostics",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "🔍Regression Diagnostics",
+    "text": "🔍Regression Diagnostics\nDiagnostics are the key to determining whether there is anything importantly wrong with a regression model.\n\n\\[\\underbrace{\\boldsymbol{e}}_\\textrm{Residuals} = \\underbrace{\\boldsymbol{y}}_\\textrm{Observations} - \\underbrace{f(\\boldsymbol{x})}_\\textrm{Fitted values}\\]\nResiduals: what the regression model does not capture.\nChecked by:\n\nNumerical summaries: variance, skewness, quantiles\nStatistical tests: F-test, BP test\nDiagnostic plots: residual plots, Q-Q plots"
+  },
+  {
+    "objectID": "08-JSM/index.html#diagnostic-plots",
+    "href": "08-JSM/index.html#diagnostic-plots",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "Diagnostic Plots",
+    "text": "Diagnostic Plots\n\n\nResidual plots are usually revealing when the assumptions are violated.\n\nDraper and Smith (1998), Belsley, Kuh, and Welsch (1980)\n\n\n\nGraphical methods are easier to use.\n\nCook and Weisberg (1982)\n\n\n\nResidual plots are more informative in most practical situations than the corresponding conventional hypothesis tests.\n\nMontgomery and Peck (1982)"
+  },
+  {
+    "objectID": "08-JSM/index.html#challenges-in-interpreting-residual-plots",
+    "href": "08-JSM/index.html#challenges-in-interpreting-residual-plots",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "🤔Challenges in Interpreting Residual Plots",
+    "text": "🤔Challenges in Interpreting Residual Plots\n\n\n\n\n\n\n\n\n\n\n\nWhat do you see?\n\n\nVertical spread of the points varies with the fitted values.\n=&gt; heteroskedasticity?\n\n\n\nTriangle shape is actually from skewed distribution in x\n\n\n\n\nFitted model is fine!\n\n\n\nWe need an inferential framework to calibrate expectations when reading residual plots!"
+  },
+  {
+    "objectID": "08-JSM/index.html#interpretation-challenges",
+    "href": "08-JSM/index.html#interpretation-challenges",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "🤔 Interpretation Challenges",
+    "text": "🤔 Interpretation Challenges\n\n\nWhat do you see?\n\n\n\n\n\n\n\n\n\n\n\nVertical spread of the points varies with the fitted values.\n=&gt; heteroskedasticity?\n\n\n\nTriangle shape is actually from skewed distribution in x\n\n\n\n\nFitted model is fine!\n\n\n\nWe need an inferential framework to calibrate expectations when reading residual plots!"
+  },
+  {
+    "objectID": "08-JSM/index.html#visual-inference",
+    "href": "08-JSM/index.html#visual-inference",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "🔬Visual Inference",
+    "text": "🔬Visual Inference\nSuggested by Buja et al. (2009)\n\n\n\n\n\n\n\n\n\n\nWhat do you observe from this residual plot?\n\nVertical spread of the points varies with the fitted values.\nThis often indicates the existence of heteroskedasticity.\nThe real data is in plot 11."
+  },
+  {
+    "objectID": "08-JSM/index.html#visual-inference-1",
+    "href": "08-JSM/index.html#visual-inference-1",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "🔬Visual Inference",
+    "text": "🔬Visual Inference\n\n\n\n\n\n\n\n\n\n\n\n\nTypically, a lineup of residual plots consists of\n\n\none data plot\n\\(19\\) null plots containing residuals simulated from the fitted model."
+  },
+  {
+    "objectID": "08-JSM/index.html#visual-inference-2",
+    "href": "08-JSM/index.html#visual-inference-2",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "🔬Visual Inference",
+    "text": "🔬Visual Inference\n\n\n\n\n\n\n\n\n\n\n\n\nTo perform a visual test\n\nObserver(s) select the most different plot(s).\nP-value (“see value”) can be calculated using the beta-binomial model (VanderPlas et al. 2021)"
+  },
+  {
+    "objectID": "08-JSM/index.html#visual-inference-3",
+    "href": "08-JSM/index.html#visual-inference-3",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "🔬Visual Inference",
+    "text": "🔬Visual Inference"
+  },
+  {
+    "objectID": "08-JSM/index.html#conventional-vs.-visual",
+    "href": "08-JSM/index.html#conventional-vs.-visual",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "⚔️Conventional vs. Visual",
+    "text": "⚔️Conventional vs. Visual\nTo understand why regression experts consistently recommend plotting residuals for regression diagnostics, we conducted an experiment to compare conventional hypothesis testing with visual testing."
+  },
+  {
+    "objectID": "08-JSM/index.html#design",
+    "href": "08-JSM/index.html#design",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "🧪Design",
+    "text": "🧪Design\n\n\nNon-linearity\n\\[\\boldsymbol{y} = \\boldsymbol{1}_n + \\boldsymbol{x} + \\boldsymbol{z} + \\boldsymbol{\\varepsilon}\\] - \\(\\boldsymbol{z} \\propto He_j(\\boldsymbol{x})\\), \\(j\\)th order Hermite polynomial - \\(\\boldsymbol{\\varepsilon} \\sim N(\\boldsymbol{0}_n, \\sigma^2\\boldsymbol{I}_n)\\)\n\nNull model:\n\\[\\boldsymbol{y} = \\beta_0 + \\beta_1\\boldsymbol{x} + \\boldsymbol{u}\\] - N(_n, ^2_n)\n\n\nHeteroskedasticity model:\n\\[\\boldsymbol{y} = 1 + \\boldsymbol{x} + \\boldsymbol{\\varepsilon},~ \\boldsymbol{\\varepsilon} \\sim N(\\boldsymbol{0}, 1 + (2 - |a|)(\\boldsymbol{x} - a)^2b \\boldsymbol{I}),\\]\nwhere \\(\\boldsymbol{y}\\), \\(\\boldsymbol{x}\\), \\(\\boldsymbol{\\varepsilon}\\) are vectors of size \\(n\\), and \\(\\boldsymbol{1}_n\\) is a vector of ones of size \\(n\\).\nNull regression model:\n\\[\\boldsymbol{y} = \\beta_0 + \\beta_1\\boldsymbol{x} + \\boldsymbol{u}, ~\\boldsymbol{u} \\sim N(\\boldsymbol{0}_n, \\sigma^2\\boldsymbol{I}_n).\\]"
+  },
+  {
+    "objectID": "08-JSM/index.html#why-are-residual-plots-so-important",
+    "href": "08-JSM/index.html#why-are-residual-plots-so-important",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "Why are residual plots so important?",
+    "text": "Why are residual plots so important?"
   }
 ]
