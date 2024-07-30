@@ -1,0 +1,752 @@
+---
+format: 
+  revealjs:
+    transition-speed: fast
+    slide-number: c/t
+    css: custom.css
+    transition: fade
+    incremental: true 
+    theme: default
+    footer: "Slides URL: <https://patrickli-use-r-1.netlify.app>"
+    logo: figures/monash-stacked-blue-rgb.png
+    self-contained: true
+---
+
+## A Plot is Worth a Thousand Tests: Assessing Residual Diagnostics with the Lineup Protocol {.center style="text-align: right;"}
+
+::: {style="color: #5A5A5A"}
+
+{insert event} 2024
+
+:::
+
+
+#### Weihao (Patrick) Li {style="margin-top: 40px; font-size: 0.9em"}
+
+::: {style="font-size: 0.9em"}
+
+Monash University, Australia
+
+:::
+
+<!-- <br> -->
+
+<!-- ::: {style="font-size:60%"} -->
+
+<!-- ^1^Monash University, Australia. ^2^Australian National University, Australia. ^3^University of Nebraska, USA. -->
+
+<!-- ::: -->
+
+---
+
+## About Me
+
+I am a PhD student in the department of Econometrics and Business Statistics, Monash University, Australia. 
+
+---
+
+## ✍️Co-authors
+
+::: {.columns style="font-size:50%"}
+
+::: {.column width="33%"}
+
+![](figures/dicook.jpg){style="object-fit: cover; width: 100%; aspect-ratio: 1 / 1;"}
+
+Professor Dianne Cook, Department of Econometrics and Business Statistics, Melbourne, Monash University, Australia
+
+:::
+
+
+::: {.column width="33%"}
+
+![](figures/emitanaka.jpg){style="object-fit: cover; width: 100%; aspect-ratio: 1 / 1;"}
+
+Dr. Emi Tanaka, Biological Data Science Institute, Australian National University, Canberra, Australia
+
+:::
+
+::: {.column width="33%"}
+
+![](figures/susan.jpg){style="object-fit: cover; width: 100%; aspect-ratio: 1 / 1;"}
+
+Assistant Professor Susan VanderPlas, Statistics Department, University of Nebraska, Lincoln, USA
+
+:::
+
+:::
+
+
+<!-- Li et al. (2023) A Plot is Worth a Thousand Tests: Assessing Residual Diagnostics with the Lineup Protocol. arXiv preprint. URL: http://arxiv.org/abs/2308.05964 -->
+
+---
+
+## 🔍Regression Diagnostics {visibility="hidden"}
+
+
+
+Diagnostics are the key to determining whether there is anything **importantly wrong** with a regression model. 
+
+<br>
+
+$$\underbrace{\boldsymbol{e}}_\textrm{Residuals} = \underbrace{\boldsymbol{y}}_\textrm{Observations} - \underbrace{f(\boldsymbol{x})}_\textrm{Fitted values}$$
+
+**Residuals** summarise what is **not captured by the regression model**.
+
+---
+
+## 🔍Regression Diagnostics {visibility="hidden"}
+
+
+Residuals can be checked in multiple ways:
+
+- **Numerical summaries**: variance, skewness, quantiles, etc.
+- **Statistical tests**: F-test, BP test, etc.  
+- **Diagnostic plots**: residual plots, Q-Q plots, etc.
+
+---
+
+## 📜Liteature of Regression Diagnostics
+
+::: {style="font-size:80%"}
+
+Graphical approaches (plots) are the recommended methods for diagnosing residuals.
+:::
+::: {style="font-size:55%"}
+
+::: {.fragment}
+::: {.nonincremental}
+- Draper and Smith (1998) and Belsley, Kuh, and Welsch (1980):
+:::
+
+> Residual plots are usually **revealing** when the assumptions are violated.
+:::
+
+::: {.fragment}
+::: {.nonincremental}
+- Cook and Weisberg (1982):
+:::
+
+> **Graphical methods are easier to use**.
+:::
+
+
+::: {.fragment}
+::: {.nonincremental}
+- Montgomery and Peck (1982):
+:::
+
+> **Residual plots are more informative in most practical situations** than the corresponding conventional hypothesis tests.
+:::
+
+:::
+
+---
+
+## 🔍Objectives {visibility="hidden"}
+
+Regression experts **consistently recommend plotting residuals for regression diagnostics**, despite the existence of numerous hypothesis test procedures. 
+
+Our study aims to **provide evidence** for this practice by utilizing data from a **visual inference experiment**, highlighting how visual inference enhances the reliability and consistency of residual plot interpretation in regression diagnostics.
+
+
+---
+
+## 🤔Challenges in Interpreting Residual Plots
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+```{r fig.width=5, fig.height=5, fig.retina=3, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(visage)
+set.seed(10131)
+ori_x <- rand_lognormal()
+mod <- heter_model(b = 0, x = closed_form(~-ori_x))
+ori_dat <- mod$gen(300)
+
+ori_dat %>%
+  VI_MODEL$plot(theme = theme_light(base_size = 18), size = 1, remove_grid_line = TRUE, ) +
+  # geom_line(aes(x = .fitted, y = (3.5 + 0.3 * .fitted)), col = "red") +
+  # geom_line(aes(x = .fitted, y = -(3.5 + 0.3 * .fitted)), col = "red") +
+  xlab("Fitted values") +
+  ylab("Residuals")
+```
+
+:::
+
+
+::: {.column width="60%"}
+
+What do you observe from this residual plot?
+
+- Vertical spread of the points varies with the fitted values.
+- This often indicates **the existence of heteroskedasticity**.
+
+:::
+
+::::
+
+---
+
+## 🤔Challenges in Interpreting Residual Plots
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+```{r fig.width=5, fig.height=5, fig.retina=3}
+set.seed(10131)
+ori_x <- rand_lognormal()
+mod <- heter_model(b = 0, x = closed_form(~-ori_x))
+ori_dat <- mod$gen(300)
+
+ori_dat %>%
+  VI_MODEL$plot(theme = theme_light(base_size = 18), size = 1, remove_grid_line = TRUE, ) +
+  xlab("Fitted values") +
+  ylab("Residuals")
+```
+
+:::
+
+
+::: {.column width="50%"}
+
+- However, this is an **over-interpretation**.
+
+- The fitted model is **correctly specified**!
+
+- The triangle shape is caused by the **skewed distribution of the regressors**.
+
+:::
+
+::::
+
+---
+
+## We need to use an **inferential framework** to **calibrate** the reading of residual plots! {.center visibility="hidden"}
+
+
+---
+
+## 🔬Visual Inference
+
+::: {style="font-size:70%"}
+
+The reading of residual plots can be **calibrated** by an **inferential framework** called **visual inference** (Buja, et al. 2009).
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+
+```{r fig.width=5, fig.height=5, fig.retina=3}
+set.seed(10131)
+mod$gen_lineup(300, k = 20, pos = 11) %>%
+  filter(null != FALSE) %>%
+  bind_rows(ori_dat %>% mutate(k = 11, null = FALSE)) %>%
+  VI_MODEL$plot_lineup(theme = theme_light(base_size = 12),
+                       remove_grid_line = TRUE,
+                       remove_axis = TRUE)
+```
+
+:::
+
+::: {.column width="50%"}
+
+::: {.fragment}
+
+Typically, a **lineup** of residual plots consists of 
+
+<!-- - $m$ randomly placed plots -->
+- one **data plot**
+- $19$ **null plots** containing residuals **simulated from the fitted model**.
+
+:::
+
+::: {.fragment}
+
+To perform a visual test
+
+- Observer(s) will be asked to select the **most different plot(s)**.
+- The p-value can be calculated using the **beta-binomial model** (VanderPlas et al., 2021).
+
+:::
+
+:::
+
+
+::::
+
+:::
+
+---
+
+
+## 🔬Visual Inference {visibility="hidden"}
+
+
+This framework is called **visual inference** (Buja, et al. 2009).
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+
+```{r fig.width=5, fig.height=5, fig.retina=3}
+set.seed(10131)
+mod$gen_lineup(300, k = 20, pos = 11) %>%
+  filter(null != FALSE) %>%
+  bind_rows(ori_dat %>% mutate(k = 11, null = FALSE)) %>%
+  VI_MODEL$plot_lineup(theme = theme_light(base_size = 12),
+                       remove_grid_line = TRUE,
+                       remove_axis = TRUE)
+```
+
+:::
+
+::: {.column width="50%"}
+
+<!-- - Can you now identify the real residual plot? -->
+
+<!-- - If the most different plot is the  -->
+
+<!-- - Which one is the most different plot? -->
+
+<!-- - If the real residual plot is identified, then there is evidence to reject the null hypothesis.  -->
+
+<!-- To perform a **visual test**, observer(s) will be asked to select the **most different plot(s)** from the lineup.  -->
+
+<!-- And we check if the data plot is identified. -->
+
+Can you now identify the real residual plot? 
+
+<!-- - Probably not. (It is plot No.11) -->
+
+- It is **not uncommon** for residual plots (No. 11) of this model to exhibit a triangle shape.
+
+- **The visual discovery is calibrated via comparison**.
+
+:::
+
+
+::::
+
+
+---
+
+## 🔬Visual Inference {visibility="hidden"}
+
+This framework is called **visual inference** (Buja, et al. 2009).
+
+A **lineup** consists of 
+
+- $m$ randomly placed plots
+- one plot is the **data plot** 
+- remaining $m − 1$ plots (**null plots**) containing data **consistent with the null hypothesis**.
+
+::: {.fragment}
+
+To perform a **visual test**, observer(s) will be asked to select the **most different plot(s)** from the lineup. And we check if the data plot is identified.
+
+:::
+---
+
+## 🎲Simulate Residuals from the Fitted Model {visibility="hidden"}
+
+For **classical normal linear regression model**, the **residual rotation technique** (Buja, et al. 2009) can be applied:
+
+```{.r code-line-numbers="2"}
+fitted_mod <- lm(y ~ x1 + x2 + ... + xp, data = dat)
+w <- rnorm(n, mean = 0, sd = 1)
+new_mod <- lm(w ~ x1 + x2 + ... + xp, data = dat)
+rotated_residuals <- resid(new_mod) * sqrt(rss(fitted_mod)/rss(new_mod))
+```
+
+::: {.nonincremental}
+1. Generate $w_i, i=1,...,n$ from $N(0, 1)$.
+:::
+
+---
+
+## 🎲Simulate Residuals from the Fitted Model {visibility="hidden"}
+
+For **classical normal linear regression model**, the **residual rotation technique** (Buja, et al. 2009) can be applied:
+
+```{.r code-line-numbers="3"}
+fitted_mod <- lm(y ~ x1 + x2 + ... + xp, data = dat)
+w <- rnorm(n, mean = 0, sd = 1)
+new_mod <- lm(w ~ x1 + x2 + ... + xp, data = dat)
+rotated_residuals <- resid(new_mod) * sqrt(rss(fitted_mod)/rss(new_mod))
+```
+
+::: {.nonincremental}
+1. Generate $w_i, i=1,...,n$ from $N(0, 1)$.
+2. Regress $\boldsymbol{w}$ on $\boldsymbol{x}$ and obtain the residuals $r_i, i=1,...,n$.
+:::
+
+---
+
+## 🎲Simulate Residuals from the Fitted Model {visibility="hidden"}
+
+For **classical normal linear regression model**, the **residual rotation technique** (Buja, et al. 2009) can be applied:
+
+```{.r code-line-numbers="4"}
+fitted_mod <- lm(y ~ x1 + x2 + ... + xp, data = dat)
+w <- rnorm(n, mean = 0, sd = 1)
+new_mod <- lm(w ~ x1 + x2 + ... + xp, data = dat)
+rotated_residuals <- resid(new_mod) * sqrt(rss(fitted_mod)/rss(new_mod))
+```
+
+::: {.nonincremental}
+1. Generate $w_i, i=1,...,n$ from $N(0, 1)$.
+2. Regress $\boldsymbol{w}$ on $\boldsymbol{x}$ and obtain the residuals $r_i, i=1,...,n$.
+3. Rescale $r_i$ by $\sqrt{RSS_{fitted}/RSS_{new}}$ .
+:::
+
+---
+
+## 📈Statistical Significance {visibility="hidden"}
+
+The p-value can be calculated using the **beta-binomial model** proposed in VanderPlas et al. (2021).
+
+Given $c_i$, the **number of observers identify the data plot**,
+
+$$P(C \geq c_i) = \sum_{x=c_i}^{K}{K \choose x}\frac{B(x + \alpha, K - x + (m - 1)\alpha)}{B(\alpha, (m-1)\alpha)},\text{ for } c_i \in \mathbb{Z}_0^+,$$
+
+where $B(.)$ is the beta function, $\alpha$ is the parameter of the Dirichlet distribution reflecting the attractiveness of each plot in a lineup, and $K$ is the total number of observers. 
+
+---
+
+## ⚔️Conventional vs. Visual
+
+To understand why regression experts **consistently recommend plotting residuals** for regression diagnostics, we conducted an experiment to compare **conventional hypothesis testing** with **visual testing**.
+
+
+---
+
+## 🧪Experimental Design
+
+### **Non-linearity model:**
+
+$$\boldsymbol{y} = \boldsymbol{1}_n + \boldsymbol{x} + \boldsymbol{z} + \boldsymbol{\varepsilon},~ \boldsymbol{z} \propto He_j(\boldsymbol{x}) \text{ and } \boldsymbol{\varepsilon} \sim N(\boldsymbol{0}_n, \sigma^2\boldsymbol{I}_n),$$
+
+\noindent where $\boldsymbol{y}$, $\boldsymbol{x}$, $\boldsymbol{\varepsilon}$ are vectors of size $n$, $\boldsymbol{1}_n$ is a vector of ones of size $n$, and $He_{j}(.)$ is the $j$th-order probabilist's Hermite polynomials.
+
+### **Null regression model:**
+
+$$\boldsymbol{y} = \beta_0 + \beta_1\boldsymbol{x} + \boldsymbol{u}, ~\boldsymbol{u} \sim N(\boldsymbol{0}_n, \sigma^2\boldsymbol{I}_n).$$
+
+---
+
+## 🧪Experimental Design
+
+### **Heteroskedasticity model:**
+
+$$\boldsymbol{y} = 1 + \boldsymbol{x} + \boldsymbol{\varepsilon},~ \boldsymbol{\varepsilon} \sim N(\boldsymbol{0}, 1 + (2 - |a|)(\boldsymbol{x} - a)^2b \boldsymbol{I}),$$
+
+\noindent where $\boldsymbol{y}$, $\boldsymbol{x}$, $\boldsymbol{\varepsilon}$ are vectors of size $n$, and $\boldsymbol{1}_n$ is a vector of ones of size $n$.
+
+### **Null regression model:**
+
+$$\boldsymbol{y} = \beta_0 + \beta_1\boldsymbol{x} + \boldsymbol{u}, ~\boldsymbol{u} \sim N(\boldsymbol{0}_n, \sigma^2\boldsymbol{I}_n).$$
+
+---
+
+## 🧪Experimental Design
+
+```{r fig.align='center'}
+magick::image_read_pdf("figures/different-shape-of-herimite-1.pdf", pages = 1)
+magick::image_read_pdf("figures/different-sigma-1.pdf", pages = 1)
+```
+
+---
+
+## 🧪Experimental Design
+
+
+```{r out.width = "80%", fig.align='center'}
+magick::image_read("figures/unnamed-chunk-14-1.png")
+magick::image_read_pdf("figures/different-b-1.pdf", pages = 1)
+```
+
+---
+
+## 🧪Experimental Design
+
+```{r out.width = "80%", fig.align='center'}
+magick::image_read_pdf("figures/different-dist-1.pdf", pages = 1)
+magick::image_read_pdf("figures/different-n-1.pdf", pages = 1)
+```
+
+---
+
+## 📏Effect size {visibility="hidden"}
+
+
+We have chosen to use an approach based on **Kullback-Leibler divergence** (Kullback and Leibler, 1951).
+
+The effect size is defined as
+
+::: {style="font-size:80%"}
+
+\begin{align*}
+E &= \frac{1}{2}\left(\log\frac{|\text{diag}(\boldsymbol{R}\boldsymbol{V}\boldsymbol{R}')|}{|\text{diag}(\boldsymbol{R}\widehat{\sigma}^2)|} - n + \text{tr}(\text{diag}(\boldsymbol{R}\boldsymbol{V}\boldsymbol{R}')^{-1}\text{diag}(\boldsymbol{R}\widehat{\sigma}^2)) + \boldsymbol{\mu}_z'(\boldsymbol{R}\boldsymbol{V}\boldsymbol{R}')^{-1}\boldsymbol{\mu}_z\right), \\
+\boldsymbol{\mu}_z &= \boldsymbol{R}\boldsymbol{Z},\\
+\boldsymbol{R} &= \boldsymbol{I}_n - \boldsymbol{X}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}',
+\end{align*}
+
+where $diag(.)$ is the diagonal matrix constructed from the diagonal elements of a matrix, and $\boldsymbol{V}$ is the actual covariance matrix of the error term.
+
+:::
+
+
+
+---
+
+## 📏Effect size {visibility="hidden"}
+
+And the effect size of the **heteroskedasticity model** is
+
+$$E = \frac{1}{2}\left(log\frac{|diag(\boldsymbol{R}\boldsymbol{V}\boldsymbol{R}')|}{|diag(\boldsymbol{R})|} - n + tr(diag(\boldsymbol{R}\boldsymbol{V}\boldsymbol{R}')^{-1}diag(\boldsymbol{R}))\right),$$
+where $\boldsymbol{V}$ is the actual covariance matrix of the error term.
+
+---
+
+## 💪Power of Visual Tests
+
+We use the **logistic regression** to estimate the power:
+
+$$Pr(\text{reject}~H_0|H_1,E) = \Lambda\left(log\left(\frac{0.05}{0.95}\right) + \beta_1 E\right),$$
+
+where $\Lambda(.)$ is the standard logistic function given as $\Lambda(z) = exp(z)/(1+exp(z))$. 
+
+- The **effect size $E$** is the only predictor calculated using the KL-divergence (Kullback and Leibler, 1951).
+
+- The **intercept is fixed** to $log(0.05/0.95)$ so that $\hat{Pr}(\text{reject}~H_0|H_1,E = 0) = 0.05$.
+
+---
+
+## 🛠️Experimental Setup
+
+::: {.fragment}
+
+Prolific (Palan and Schitter, 2018):
+
+- 7974 evaluations
+- 1152 unique lineups
+- 443 subjects
+
+:::
+
+<!-- Overall, we collected **7974 evaluations** on **1152 unique lineups** performed by **443 subjects** recruited from an crowd-sourcing platform called **Prolific** (Palan and Schitter, 2018). -->
+
+::: {.fragment}
+
+Every subject was asked to:
+
+- Evaluate **a block of 20 lineups**.
+- Select **one or more** plots that are **most different** from others.
+
+:::
+
+<!-- - Briefly explain their selections. -->
+
+<!-- Provide **reasons** for their selections and evaluate **perceived difference** from other plots. -->
+<!-- - Evaluate **how different** they think the selected plots are from others. -->
+
+---
+
+## 🛠️Experimental Setup {visibility="hidden"}
+
+::: {.fragment}
+
+If there is **no noticeable difference** between plots in a lineup, subjects are permitted to **select zero plots** without providing the reason.
+
+:::
+
+
+::: {.fragment}
+
+A subject’s submission is only accepted if the data plot is identified for **at least one attention check**.
+
+:::
+
+
+::: {.fragment}
+
+Overall, we collected **7974 evaluations** on **1152 unique lineups** performed by **443 subjects** throughout three data collection periods.
+
+:::
+
+---
+
+## 🌐Study Website {visibility="hidden"}
+
+```{r fig.align='center'}
+knitr::include_graphics("figures/lineup1.png")
+```
+
+---
+
+## ⚖️Main Results: Power Comparison of Conventional Tests and Visual Tests {.center}
+
+---
+
+## ⚖️Non-linearity Patterns
+
+```{r fig.align='center'}
+knitr::include_graphics("figures/polypower-1.png")
+```
+
+---
+
+## ⚖️Heteroskedasticity Patterns
+
+```{r fig.align='center'}
+knitr::include_graphics("figures/heterpower-1.png")
+```
+
+
+---
+
+
+The visual test rejects **less frequently** than the conventional test, and (almost) **only rejects when the conventional test does**.
+
+```{r fig.align='center', out.width="80%"}
+magick::image_read_pdf("figures/p-value-comparison-1.pdf", pages = 1)
+```
+
+---
+
+## 🌟An example of conventional tests being too sensitive
+
+::: {style="font-size:80%"}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+::: {.fragment}
+Data plot (No.1):
+
+- **undistinguishable** from null plots
+- extremely small effect size (\\(log_e(E) = -0.48\\))
+- non-linearity pattern (S-shape) is **totally undetectable**
+:::
+
+::: {.fragment}
+RESET test rejects the pattern ($p\text{-value} = 0.004$).
+:::
+
+::: {.fragment}
+Visual test produces more practical $p\text{-value} = 0.813$.
+:::
+
+:::
+
+
+::: {.column width="50%"}
+```{r}
+knitr::include_graphics("figures/230.png")
+```
+:::
+
+::::
+
+:::
+
+---
+
+## ✅Advantages of visual tests in regression diagnostics  {visibility="hidden"}
+
+- Do not require specifying the pattern **ahead of time**.
+- Rely purely on **whether the data plot is distinguishable** from "good" residual plots.
+- Perform **equally well** regardless of the type of residual departures.
+- **Remove any subjective arguments** about whether a pattern is visible or not.
+
+---
+
+## ⚖️Results: Other Interesting Findings {.center visibility="hidden"}
+
+---
+
+## {visibility="hidden"}
+
+The default RESET tests **under-performs significantly** in detecting the "triple-U" shape.
+
+To achieve a similar power as other shapes, a **higher order polynomial parameter** needs to be used for the RESET test, but this is higher than the recommended value (4).
+
+```{r fig.align='center'}
+magick::image_read_pdf("figures/poly-power-uniform-j-1.pdf", pages = 1)
+```
+
+---
+
+## {visibility="hidden"}
+
+The butterfly shape has higher power in both tests.
+
+Curiously, the visual test has **slightly higher power** for the "left-triangle" than the "right-triangle" shape.
+
+```{r fig.align='center'}
+magick::image_read_pdf("figures/heter-power-uniform-a-1.pdf", pages = 1)
+```
+
+---
+
+## {visibility="hidden"}
+
+::: {style="font-size:80%"}
+Surprisingly, the fitted value distribution has produces **more variability** in the power of conventional tests than visual tests.
+
+**Uneven distributions** (normal and lognormal distributions) tend to yield lower power.
+:::
+
+
+```{r fig.align='center'}
+knitr::include_graphics("figures/different-x-dist-poly-power-1.png")
+```
+
+
+---
+
+## 🧐Limitation and Practicality {visibility="hidden"}
+
+
+For this study, we used simulated data and only focused on the **most commonly used**, residual vs fitted value plots.
+
+However, we expect the behavior of the conventional test and the visual test to be **similar** when observed residuals are diagnosed with this type of plot or other residual plots.
+
+
+
+---
+
+## 🧐Main Conclusions
+
+1. Conventional tests are **more sensitive to weak departures**.
+
+2. Conventional tests often reject when departures are **not visibly different** from null residual plots.
+
+3. In these cases, visual tests provide a **more practical solution**. 
+
+4. Regression experts are right. Residual plots are **indispensable methods** for assessing model fit.
+
+---
+
+## Thanks! Any questions? {.center}
+
+<br>
+
+### Relevant links
+
+::: {.nonincremental}
+
+- 📦 [R Package: TengMCing/visage](https://github.com/TengMCing/visage){target="_blank"}
+
+- ![](figures/github-mark/github-mark.png){height=1em width=1em style="vertical-align:middle"} [Github repo for slides: TengMCing/use_r/paper_1](https://github.com/TengMCing/use_r/paper_1){target="_blank"}
+
+- 📄 [DOI: 10.1080/10618600.2024.2344612](https://doi.org/10.1080/10618600.2024.2344612){target="_blank"}
+
+:::

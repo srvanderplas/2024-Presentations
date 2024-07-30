@@ -1,0 +1,18 @@
+abstract:
+
+Visual assessment of residual plots is crucial for evaluating linear regression model assumptions and fit, but accurately interpreting these plots can be challenging. The 'autovi' package provides an automated solution in R by leveraging computer vision models. Taking a residual plot as input, 'autovi' approximates a distance metric that quantifies the divergence of the actual residual distribution from the reference distribution expected under correct model specification. This approximated distance enables formal statistical tests and provides a holistic approach to collectively assess different model assumptions. This talk will introduce the functionality of 'autovi', demonstrate its performance across diverse regression scenarios, and discuss opportunities to extend the package.
+
+include:
+1. about me
+2. co-author
+3. intoduce the purpose and the idea of lineup
+4. point out the problem of lineup
+5. introduce our solution/overview
+6. what is the distance metric we defined
+6. how we train the model
+7. package interface
+8. regression examples
+9. web application
+10. pakcage extension (for other regression models or null simulation methods)
+11. conclusion
+12. contact & links & QA
