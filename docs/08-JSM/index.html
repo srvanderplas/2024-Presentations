@@ -342,6 +342,8 @@
       margin-right: 0; 
     }
   </style>
+  <link href="../site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+  <link href="../site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -797,14 +799,14 @@ Weihao (Patrick) Li, Di Cook, Emi Tanaka, Klaus Ackermann, Susan Vanderplas
 </ol>
 <div class="fragment">
 <ol start="2" type="1">
-<li>Lineups have <strong>high labor costs</strong> and can be <strong>time consuming</strong> to evaluate</li>
+<li>Lineups have 💰 <strong>high labor costs</strong> and can be 🕑 <strong>time consuming</strong> to evaluate</li>
 </ol>
 </div>
 <p><span class="fragment">➡️ Make the 🖥️ do it for us with 🪄 <span class="emph blue large">Computer Vision</span> 🤖</span></p>
 </section>
 <section id="measure-the-difference" class="slide level2">
 <h2>📏Measure the Difference</h2>
-<p>To develop computer vision models assessing lineups of residual plots, we need to define a <strong>numerical measure</strong> of <span class="emph red">“difference”</span> or <span class="emph blue">“distance”</span> between plots</p>
+<p>We need a 📏 <strong>numerical measure</strong> of <span class="emph red">“difference”</span>/<span class="emph blue">“distance”</span> between plots</p>
 <ul>
 <li>pixel-wise sum of square differences</li>
 <li>Structural Similarity Index Measure (SSIM)</li>
@@ -830,8 +832,8 @@ Weihao (Patrick) Li, Di Cook, Emi Tanaka, Klaus Ackermann, Susan Vanderplas
 <li><p>The <span class="math inline">\(p\)</span>-value is the proportion of null plots having estimated distance <strong>greater than or equal to</strong> the observed one.</p></li>
 </ul>
 </section>
-<section id="training-various-model-violations" class="slide level2">
-<h2>💡Training: Various Model Violations</h2>
+<section id="training-model-violations" class="slide level2">
+<h2>💡Training: Model Violations</h2>
 <div class="columns">
 <div class="column" style="width:30%;">
 <p><strong>Non-linearity + Heteroskedasticity</strong></p>
@@ -861,6 +863,36 @@ Weihao (Patrick) Li, Di Cook, Emi Tanaka, Klaus Ackermann, Susan Vanderplas
 </div>
 </div>
 </div>
+</div>
+</section>
+<section id="training-predictor-distribution" class="slide level2">
+<h2>💡Training: Predictor Distribution</h2>
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><strong>Distribution of predictor</strong></p>
+</div><div class="column" style="width:70%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-17-1.png" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="autovi-package" class="slide level2">
+<h2><i class="fab fa-r-project" role="presentation" aria-label="r-project icon"></i> <code>autovi</code> Package</h2>
+<div style="font-size:80%">
+<p>The <code>autovi</code> package provides automated visual inference with <strong>computer vision models</strong>. It is available on CRAN and Github.</p>
+<h4 id="core-methods">Core Methods</h4>
+<ul>
+<li>Null residuals simulation: <code>rotate_resid()</code></li>
+<li>Visual signal strength: <code>vss()</code></li>
+<li>Comprehensive checks: <code>check()</code> and <code>summary_plot()</code></li>
+</ul>
 </div>
 </section></section>
 <section id="references" class="title-slide slide level1 tiny smaller scrollable">

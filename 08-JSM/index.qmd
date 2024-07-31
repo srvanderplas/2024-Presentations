@@ -1199,14 +1199,14 @@ mod$gen_lineup(300, k = 20, pos = 15) %>%
     - a **large number of lineups**
 
 ::: fragment
-2.  Lineups have **high labor costs** and can be **time consuming** to evaluate
+2.  Lineups have 💰 **high labor costs** and can be 🕑 **time consuming** to evaluate
 :::
 
 [➡️ Make the 🖥️ do it for us with 🪄 [Computer Vision]{.emph .blue .large} 🤖]{.fragment}
 
 ## 📏Measure the Difference
 
-To develop computer vision models assessing lineups of residual plots, we need to define a **numerical measure** of ["difference"]{.emph .red} or ["distance"]{.emph .blue} between plots
+We need a 📏 **numerical measure** of ["difference"]{.emph .red}/["distance"]{.emph .blue} between plots
 
 -   pixel-wise sum of square differences
 -   Structural Similarity Index Measure (SSIM)
@@ -1234,7 +1234,7 @@ The **null distribution** of $D$ can be estimated by predicting $\widehat{D}$ fo
 -   The $p$-value is the proportion of null plots having estimated distance **greater than or equal to** the observed one.
 
 
-## 💡Training: Various Model Violations
+## 💡Training: Model Violations
 
 ::: columns
 ::: {.column width="30%"}
@@ -1297,5 +1297,213 @@ data_multshapes %>%
 ```
 :::
 :::
+
+## 💡Training: Predictor Distribution
+
+::: columns
+::: {.column width="30%"}
+**Distribution of predictor**
+:::
+
+::: {.column width="70%"}
+```{r fig.width=8, fig.height=6}
+set.seed(10086)
+
+# Data for uniform distribution
+dat_dist_1 <- poly_model(shape = 1, 
+                      x = {
+                        raw_x <- rand_uniform(-1, 1);
+                        closed_form(~stand_dist(raw_x))
+                        }, 
+                      sigma = 0.5)$gen(300) %>%
+  mutate(x_dist = "uniform")
+
+# Generate data for other distributions
+dat_dist_2 <- poly_model(shape = 1,
+                         x = {
+                           raw_x <- rand_normal(sigma = 0.3); 
+                           closed_form(~stand_dist(raw_x))
+                           }, 
+                         sigma = 0.5)$
+  gen(300, computed = select(dat_dist_1, e)) %>%
+  mutate(x_dist = "normal")
+
+dat_dist_3 <- poly_model(shape = 1,
+                         x = {
+                           raw_x <- rand_lognormal(sigma = 0.6); 
+                           closed_form(~stand_dist(raw_x/3 - 1))
+                           }, 
+                         sigma = 0.5)$
+  gen(300, computed = select(dat_dist_1, e)) %>%
+  mutate(x_dist = "lognormal")
+
+dat_dist_4 <- poly_model(shape = 1,
+                         x = {
+                           raw_x <- rand_uniform_d(k = 5, even = TRUE); 
+                           closed_form(~stand_dist(raw_x))
+                           }, 
+                         sigma = 0.5)$
+  gen(300, computed = select(dat_dist_1, e)) %>%
+  mutate(x_dist = "discrete")
+
+# Generate and plot data for discrete uniform distribution
+bind_rows(dat_dist_1, dat_dist_2, dat_dist_3, dat_dist_4) %>%
+  mutate(x_dist = factor(x_dist, 
+                         levels = c("discrete", 
+                                    "lognormal", 
+                                    "normal", 
+                                    "uniform"))) %>%
+  VI_MODEL$plot(remove_axis = TRUE, remove_grid_line = TRUE, theme = theme_light(base_size = 15)) +
+  xlab("Fitted values") +
+  ylab("Residuals") +
+  facet_wrap(~x_dist, ncol = 2, scales = "free")
+```
+:::
+:::
+
+## `r fontawesome::fa_i("r-project")` `autovi` Package
+
+::: {style="font-size:80%"}
+The `autovi` package provides automated visual inference with **computer vision models**. It is available on CRAN and Github.
+
+#### Core Methods
+
+-   Null residuals simulation: `rotate_resid()`
+-   Visual signal strength: `vss()`
+-   Comprehensive checks: `check()` and `summary_plot()`
+:::
+
+
+## 💡Example: Boston Housing
+
+```{r}
+housing <- read_csv("data/housing.csv")
+```
+
+```{r}
+#| echo: true
+#| fig-height: 4
+#| fig-width: 6
+fitted_model <- lm(MEDV ~ RM + LSTAT + PTRATIO, data = housing)
+ggplot() +
+  geom_point(aes(fitted(fitted_model), 
+                 resid(fitted_model))) +
+  theme_void()
+```
+
+
+```{r}
+#| echo: false
+#| message: false
+#| fig-height: 4
+#| fig-width: 6
+library(autovi)
+checker <- auto_vi(fitted_model = fitted_model, 
+                   keras_model = get_keras_model("vss_phn_32"))
+checker$check_result <- readRDS("data/check_result_1.rds")
+```
+
+------------------------------------------------------------------------
+
+## `r fontawesome::fa_i("r-project")` `rotate_resid()`
+
+Null residuals are simulated from the fitted model assuming it is **correctly specified**.
+
+::: columns
+::: {.column width="50%"}
+``` r
+checker <- auto_vi(fitted_model = fitted_model, 
+                   keras_model = get_keras_model("vss_phn_32"))
+checker$rotate_resid()
+```
+
+```{r}
+#| echo: false
+#| message: false
+checker$rotate_resid()
+```
+:::
+
+::: {.column width="50%"}
+``` r
+checker$rotate_resid() |>
+  checker$plot_resid()
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| fig-height: 4
+#| fig-width: 6
+checker$rotate_resid() |>
+  checker$plot_resid()
+```
+:::
+:::
+:::
+
+------------------------------------------------------------------------
+
+## `r fontawesome::fa_i("r-project")` `vss()`
+
+::: {style="font-size:80%"}
+::: columns
+::: {.column width="50%"}
+#### Visual signal strength of the actual residual plot
+
+``` r
+checker$vss()
+```
+
+```{r}
+#| echo: false
+#| message: true
+checker$vss()
+```
+:::
+
+::: {.column width="50%"}
+#### Visual signal strength of a null plot
+
+``` r
+checker$rotate_resid() |>
+  checker$vss()
+```
+
+```{r}
+#| echo: false
+#| message: true
+checker$rotate_resid() |>
+  checker$vss()
+```
+:::
+:::
+:::
+
+------------------------------------------------------------------------
+
+## `r fontawesome::fa_i("r-project")` `check()`
+
+``` r
+checker$check()
+checker
+```
+
+```{r}
+#| echo: false
+#| message: true
+checker
+```
+
+------------------------------------------------------------------------
+
+## `r fontawesome::fa_i("r-project")` `summary_plot()`
+
+```{r}
+#| echo: true
+checker$summary_plot()
+```
+
+------------------------------------------------------------------------
 
 # References {.tiny}

@@ -1292,14 +1292,14 @@
     "href": "08-JSM/index.html#measure-the-difference",
     "title": "A Plot is Worth a Thousand Tests",
     "section": "📏Measure the Difference",
-    "text": "📏Measure the Difference\nTo develop computer vision models assessing lineups of residual plots, we need to define a numerical measure of “difference” or “distance” between plots\n\npixel-wise sum of square differences\nStructural Similarity Index Measure (SSIM)\nscagnostics\nKL-Divergence (actual vs. null)"
+    "text": "📏Measure the Difference\nWe need a 📏 numerical measure of “difference”/“distance” between plots\n\npixel-wise sum of square differences\nStructural Similarity Index Measure (SSIM)\nscagnostics\nKL-Divergence (actual vs. null)"
   },
   {
     "objectID": "08-JSM/index.html#limitations-of-lineup-protocol-1",
     "href": "08-JSM/index.html#limitations-of-lineup-protocol-1",
     "title": "A Plot is Worth a Thousand Tests",
     "section": "⚠️ Limitations of Lineup Protocol",
-    "text": "⚠️ Limitations of Lineup Protocol\n\nHumans cannot (easily) evaluate\n\nlineups w/ many plots\na large number of lineups\n\n\n\n\nLineups have high labor costs and can be time consuming to evaluate\n\n\n➡️ Make the 🖥️ do it for us with 🪄 Computer Vision 🤖"
+    "text": "⚠️ Limitations of Lineup Protocol\n\nHumans cannot (easily) evaluate\n\nlineups w/ many plots\na large number of lineups\n\n\n\n\nLineups have 💰 high labor costs and can be 🕑 time consuming to evaluate\n\n\n➡️ Make the 🖥️ do it for us with 🪄 Computer Vision 🤖"
   },
   {
     "objectID": "08-JSM/index.html#conclusions-1",
@@ -1349,5 +1349,26 @@
     "title": "A Plot is Worth a Thousand Tests",
     "section": "💡Training: Various Model Violations",
     "text": "💡Training: Various Model Violations\n\n\nNon-linearity + Heteroskedasticity\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNon-normality + Heteroskedasticity"
+  },
+  {
+    "objectID": "08-JSM/index.html#training-model-violations",
+    "href": "08-JSM/index.html#training-model-violations",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "💡Training: Model Violations",
+    "text": "💡Training: Model Violations\n\n\nNon-linearity + Heteroskedasticity\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNon-normality + Heteroskedasticity"
+  },
+  {
+    "objectID": "08-JSM/index.html#training-predictor-distribution",
+    "href": "08-JSM/index.html#training-predictor-distribution",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "💡Training: Predictor Distribution",
+    "text": "💡Training: Predictor Distribution\n\n\nDistribution of predictor"
+  },
+  {
+    "objectID": "08-JSM/index.html#autovi-package",
+    "href": "08-JSM/index.html#autovi-package",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": " autovi Package",
+    "text": "autovi Package\n\nThe autovi package provides automated visual inference with computer vision models. It is available on CRAN and Github.\nCore Methods\n\nNull residuals simulation: rotate_resid()\nVisual signal strength: vss()\nComprehensive checks: check() and summary_plot()"
   }
 ]
