@@ -26,75 +26,59 @@ library(glue)
 ## autovi: Automated Assessment of Residual Plots Using Computer Vision {.center style="text-align: right;"}
 
 ::: {style="color: #5A5A5A"}
-
 useR! 2024
-
 :::
-
 
 #### Weihao (Patrick) Li {style="margin-top: 40px; font-size: 0.9em"}
 
 ::: {style="font-size: 0.9em"}
-
 Monash University
-
 :::
 
----
+------------------------------------------------------------------------
 
 ## ✍️Co-authors {visibility="hidden"}
 
 ::: {.columns style="font-size:50%"}
-
 ::: {.column width="25%"}
-
 ![](figures/dicook.jpg){style="object-fit: cover; width: 100%; aspect-ratio: 1 / 1;"}
 
 Professor Dianne Cook, Department of Econometrics and Business Statistics, Melbourne, Monash University, Australia
-
 :::
 
 ::: {.column width="25%"}
-
 ![](figures/emitanaka.jpg){style="object-fit: cover; width: 100%; aspect-ratio: 1 / 1;"}
 
 Dr. Emi Tanaka, Biological Data Science Institute, Australian National University, Canberra, Australia
-
 :::
 
-
 ::: {.column width="25%"}
-
 ![](figures/susan.jpg){style="object-fit: cover; width: 100%; aspect-ratio: 1 / 1;"}
 
 Assistant Professor Susan VanderPlas, Statistics Department, University of Nebraska, Lincoln, USA
-
 :::
 
 ::: {.column width="25%"}
-
 ![](figures/klaus.jpeg){style="object-fit: cover; width: 100%; aspect-ratio: 1 / 1;"}
 
 Senior Lecturer Klaus Ackermann, Department of Econometrics and Business Statistics, Melbourne, Monash University, Australia
-
+:::
 :::
 
-:::
-
----
+------------------------------------------------------------------------
 
 ## 📝Overview
 
-1. Brief introduction to lineup
-2. Outline of the computer vision model
-3. `autovi` Package
-4. Shiny app demo
+1.  Brief introduction to lineup
+2.  Outline of the computer vision model
+3.  `autovi` Package
+4.  Shiny app demo
 
----
+------------------------------------------------------------------------
 
 ## 🔍Regression Diagnostics
 
-Diagnostics are the key to determining whether there is anything **importantly wrong** with a regression model. 
+Diagnostics are the key to determining whether there is anything **importantly wrong** with a regression model.
 
 <br>
 
@@ -102,15 +86,12 @@ $$\underbrace{\boldsymbol{e}}_\textrm{Residuals} = \underbrace{\boldsymbol{y}}_\
 
 **Graphical approaches (plots)** are the recommended methods for diagnosing residuals.
 
-
----
+------------------------------------------------------------------------
 
 ## 🤔Challenges
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="40%"}
-
 ```{r fig.width=5, fig.height=5, fig.retina=3, warning=FALSE, message=FALSE}
 library(tidyverse)
 library(visage)
@@ -126,38 +107,26 @@ ori_dat %>%
   xlab("Fitted values") +
   ylab("Residuals")
 ```
-
 :::
-
 
 ::: {.column width="60%"}
+-   Vertical spread of the points varies with the fitted values indicates **the existence of heteroskedasticity**.
 
-- Vertical spread of the points varies with the fitted values indicates **the existence of heteroskedasticity**.
+-   However, this is an **over-interpretation**.
 
-- However, this is an **over-interpretation**.
-
-- The visual pattern is caused by a **skewed distribution of the predictor**.
-
-
-
+-   The visual pattern is caused by a **skewed distribution of the predictor**.
+:::
 :::
 
-::::
-
-
----
+------------------------------------------------------------------------
 
 ## 🔬Visual Inference
 
 ::: {style="font-size:70%"}
-
 The reading of residual plots can be **calibrated** by an **inferential framework** called **visual inference** (Buja, et al. 2009).
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-
-
 ```{r fig.width=5, fig.height=5, fig.retina=3}
 set.seed(452)
 mod$gen_lineup(300, k = 20, pos = 11) %>%
@@ -167,73 +136,63 @@ mod$gen_lineup(300, k = 20, pos = 11) %>%
                        remove_grid_line = TRUE,
                        remove_axis = TRUE)
 ```
-
 :::
 
 ::: {.column width="50%"}
-
-::: {.fragment}
-
-Typically, a **lineup** of residual plots consists of 
+::: fragment
+Typically, a **lineup** of residual plots consists of
 
 <!-- - $m$ randomly placed plots -->
-- one **actual residual plot**
-- $19$ **null plots** containing residuals **simulated from the fitted model**.
 
+-   one **actual residual plot**
+-   $19$ **null plots** containing residuals **simulated from the fitted model**.
 :::
 
-::: {.fragment}
-
+::: fragment
 To perform a visual test
 
-- Observer(s) will be asked to select the **most different plot(s)**.
-- The p-value can be calculated using the **beta-binomial model** (VanderPlas et al., 2021).
-
+-   Observer(s) will be asked to select the **most different plot(s)**.
+-   The p-value can be calculated using the **beta-binomial model** (VanderPlas et al., 2021).
+:::
+:::
+:::
 :::
 
-:::
-
-
-::::
-
-:::
-
-
----
+------------------------------------------------------------------------
 
 ## 🚫Limitations of Lineup Protocol
 
-::: {.fragment}
-1. Human can not 
+::: fragment
+1.  Human can not
 
-- evaluate lineup consisted of a **large number of plots**.
-- evaluate a **large number of lineups**.
+-   evaluate lineup consisted of a **large number of plots**.
+-   evaluate a **large number of lineups**.
 :::
 
-::: {.fragment}
-2. Evaluation of lineup is **high in labour cost** and **time consuming**.
+::: fragment
+2.  Evaluation of lineup is **high in labour cost** and **time consuming**.
 :::
 
----
+------------------------------------------------------------------------
 
 ## 🤖Computer Vision Model
 
-Modern **computer vision models** are well-suited for addressing this challenge. 
+Modern **computer vision models** are well-suited for addressing this challenge.
 
 ![Source: https://en.wikipedia.org/wiki/Convolutional_neural_network](figures/Typical_cnn.png)
 
----
+------------------------------------------------------------------------
 
 ## 📏Measure the Difference
 
 To develop computer vision models assessing lineups of residual plots, we need to define a **numerical measure** of **"difference"** or **"distance"** between plots.
 
-- pixel-wise sum of square differences
-- Structural Similarity Index Measure (SSIM)
-- scagnostics
-- ...
+-   pixel-wise sum of square differences
+-   Structural Similarity Index Measure (SSIM)
+-   scagnostics
+-   ...
 
----
+------------------------------------------------------------------------
 
 ## 🎲Residual Distribution {visibility="hidden"}
 
@@ -243,98 +202,86 @@ $$\boldsymbol{y} = \boldsymbol{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}, 
 
 By the **Frisch-Waugh-Lowell theorem**,
 
-$$\boldsymbol{e} = \boldsymbol{R}\boldsymbol{\varepsilon},$$
-where $\boldsymbol{R}=\boldsymbol{I}_n -\boldsymbol{X}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}'$.
+$$\boldsymbol{e} = \boldsymbol{R}\boldsymbol{\varepsilon},$$ where $\boldsymbol{R}=\boldsymbol{I}_n -\boldsymbol{X}(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}'$.
 
 We treat $\boldsymbol{e}$ as **a vector of random variables** here.
 
----
-
+------------------------------------------------------------------------
 
 ## 🎲Residual Distribution {visibility="hidden"}
 
-For a **correctly specified model**, $$\boldsymbol{e} \sim N(\boldsymbol{0}_n, \text{diag}(\boldsymbol{R}\sigma^2)).$$ 
+For a **correctly specified model**, $$\boldsymbol{e} \sim N(\boldsymbol{0}_n, \text{diag}(\boldsymbol{R}\sigma^2)).$$
 
 For simplicity, we will replace $\text{cov}(\boldsymbol{e}, \boldsymbol{e}) = \boldsymbol{R}\boldsymbol{R}'\sigma^2 = \boldsymbol{R}\sigma^2$ with a **full-rank diagonal matrix** $\text{diag}(\boldsymbol{R}\sigma^2)$.
 
-Symbol $Q$ will be used to represent this **reference residual distribution**. 
+Symbol $Q$ will be used to represent this **reference residual distribution**.
 
-
-
----
+------------------------------------------------------------------------
 
 ## 🎲Residual Distribution {visibility="hidden"}
 
 ::: {style="font-size:80%"}
-
 However, if the model is **misspecified**, then the **actual residual distribution** denoted as $P$, will be **different** from $Q$.
 
-- If $\boldsymbol{\varepsilon} \sim N(\boldsymbol{0}_n,\boldsymbol{V})$, where $\boldsymbol{V} \neq \sigma^2\boldsymbol{I}_n$,  $$\boldsymbol{e} \sim N(\boldsymbol{0}_n, \text{diag}(\boldsymbol{R}\boldsymbol{V}\boldsymbol{R})) \implies \text{Heteroskedasticity}.$$
+-   If $\boldsymbol{\varepsilon} \sim N(\boldsymbol{0}_n,\boldsymbol{V})$, where $\boldsymbol{V} \neq \sigma^2\boldsymbol{I}_n$, $$\boldsymbol{e} \sim N(\boldsymbol{0}_n, \text{diag}(\boldsymbol{R}\boldsymbol{V}\boldsymbol{R})) \implies \text{Heteroskedasticity}.$$
 
-- And if some necessary higher-order predictors $\boldsymbol{Z}$ are also omitted, $$\boldsymbol{e} \sim N(\boldsymbol{R}\boldsymbol{Z}\boldsymbol{\beta}_z, \text{diag}(\boldsymbol{R}\boldsymbol{V}\boldsymbol{R})) \implies \text{Non-linearity}~ \& ~\text{Heteroskedasticity}.$$
-
+-   And if some necessary higher-order predictors $\boldsymbol{Z}$ are also omitted, $$\boldsymbol{e} \sim N(\boldsymbol{R}\boldsymbol{Z}\boldsymbol{\beta}_z, \text{diag}(\boldsymbol{R}\boldsymbol{V}\boldsymbol{R})) \implies \text{Non-linearity}~ \& ~\text{Heteroskedasticity}.$$
 :::
 
----
+------------------------------------------------------------------------
 
 ## 📏KL Divergence of $P$ from $Q$
 
 ::: {style="font-size:80%"}
-
 We defined a **distance measure** based on **Kullback-Leibler divergence** to quantify the **extent of model violations**
 
+```{=tex}
 \begin{align}
 \label{eq:kl-0}
 D &= \log\left(1 + \int_{\mathbb{R}^{n}}\log\frac{p(\boldsymbol{e})}{q(\boldsymbol{e})}p(\boldsymbol{e})d\boldsymbol{e}\right), \\
 \end{align}
+```
+-   $P$: **reference residual distribution** assumed under correct model specification.
 
-- $P$: **reference residual distribution** assumed under correct model specification.
-- $Q$: **actual residual distribution**.
+-   $Q$: **actual residual distribution**.
 
-- $D = 0$ if and only if $P \equiv Q$.
-- However, $Q$ is typically unknown $\Rightarrow$ $D$ can not be computed.
+-   $D = 0$ if and only if $P \equiv Q$.
 
+-   However, $Q$ is typically unknown $\Rightarrow$ $D$ can not be computed.
 :::
 
-
----
+------------------------------------------------------------------------
 
 ## 🎯Estimation of the Distance
 
-::: {.fragment}
-
+::: fragment
 We can train a **computer vision model** to estimate $D$ with **a residual plot**
 
+```{=tex}
 \begin{equation}
 \label{eq:d-approx}
 \widehat{D} = f_{CV}(V_{h \times w}(\boldsymbol{e}, \boldsymbol{\hat{y}})),
 \end{equation}
-
-where $V_{h \times w}(.)$ is a **plotting function** that saves a residual plot as an image with $h \times w$ pixels, and  $f_{CV}(.)$ is a **computer vision model** which predicts distance in $[0, +\infty)$.
-
+```
+where $V_{h \times w}(.)$ is a **plotting function** that saves a residual plot as an image with $h \times w$ pixels, and $f_{CV}(.)$ is a **computer vision model** which predicts distance in $[0, +\infty)$.
 :::
 
----
+------------------------------------------------------------------------
 
 ## 🔬Statistical Testing
 
-The **null distribution** can be estimated by predicting $\widehat{D}$ for **a large number of null plots**. 
+The **null distribution** can be estimated by predicting $\widehat{D}$ for **a large number of null plots**.
 
-- The **critical value** can be estimated by the **sample quantile** (e.g. $Q_{null}(0.95)$) of the null distribution.
+-   The **critical value** can be estimated by the **sample quantile** (e.g. $Q_{null}(0.95)$) of the null distribution.
 
-- The **$p$-value** is the proportion of null plots having estimated distance **greater than or equal to** the observed one.
+-   The $p$-value is the proportion of null plots having estimated distance **greater than or equal to** the observed one.
 
-
-
----
+------------------------------------------------------------------------
 
 ## 💡Non-linearity {visibility="hidden"}
 
-
-:::: {.columns}
-
+::: columns
 ::: {.column width="70%"}
-
 ```{r fig.width=10, fig.height=4}
 set.seed(10086)
 
@@ -355,16 +302,11 @@ bind_rows(dat_shape_1) %>%
   VI_MODEL$plot(remove_axis = TRUE, remove_grid_line = TRUE, theme = theme_light(base_size = 15)) +
   facet_wrap(~j, scales = "free", labeller = label_parsed, ncol = 5)
 ```
-
+:::
 :::
 
-:::
-
-
-:::: {.columns}
-
+::: columns
 ::: {.column width="70%"}
-
 ```{r fig.width=8, fig.height=2}
 set.seed(10086)
 
@@ -385,22 +327,15 @@ bind_rows(dat_shape_1) %>%
   VI_MODEL$plot(remove_axis = TRUE, remove_grid_line = TRUE, theme = theme_light(base_size = 15)) +
   facet_wrap(~e_sigma, scales = "free", labeller = label_parsed, ncol = 5)
 ```
-
+:::
 :::
 
-:::
-
----
-
+------------------------------------------------------------------------
 
 ## 💡Heteroskedasticity {visibility="hidden"}
 
-
-
-:::: {.columns}
-
+::: columns
 ::: {.column width="70%"}
-
 ```{r fig.width=10, fig.height=4}
 set.seed(10085)
 
@@ -428,16 +363,11 @@ map(c(-0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1), function(a) {
   xlab("Fitted values") +
   ylab("Residuals")
 ```
-
+:::
 :::
 
-:::
-
-
-:::: {.columns}
-
+::: columns
 ::: {.column width="70%"}
-
 ```{r fig.width=8, fig.height=2}
 set.seed(10085)
 
@@ -465,28 +395,19 @@ map(c(3, 1.5, 1, 0.5), function(b) {
   xlab("Fitted values") +
   ylab("Residuals")
 ```
-
+:::
 :::
 
-:::
-
----
+------------------------------------------------------------------------
 
 ## 💡Non-normality {visibility="hidden"}
 
-
-
-:::: {.columns}
-
+::: columns
 ::: {.column width="30%"}
-
-
-**Distribution of $\varepsilon$**
-
+**Distribution of** $\varepsilon$
 :::
 
 ::: {.column width="70%"}
-
 ```{r fig.width=8, fig.height=6}
 set.seed(10086)
 
@@ -508,28 +429,19 @@ bind_rows(dat_shape_1, dat_shape_2, dat_shape_3, dat_shape_4) %>%
   VI_MODEL$plot(remove_axis = TRUE, remove_grid_line = TRUE, theme = theme_light(base_size = 15)) +
   facet_wrap(~e_dist, scales = "free", labeller = label_parsed, ncol = 2)
 ```
-
+:::
 :::
 
-:::
-
-
----
-
+------------------------------------------------------------------------
 
 ## 💡Training: Various Model Violations
 
-::: {.columns}
-
+::: columns
 ::: {.column width="30%"}
-
 **Non-linearity + Heteroskedasticity**
-
 :::
 
 ::: {.column width="70%"}
-
-
 ```{r fig.width=10, fig.height=4}
 set.seed(10086)
 
@@ -550,23 +462,15 @@ map_df(3:11, function(j) {
   VI_MODEL$plot(remove_axis = TRUE, remove_grid_line = TRUE, theme = theme_light(base_size = 15)) +
   facet_wrap(~j, scales = "free", labeller = label_parsed, ncol = 5)
 ```
-
+:::
 :::
 
-:::
-
-
-::: {.columns}
-
+::: columns
 ::: {.column width="30%"}
-
 **Non-normality + Heteroskedasticity**
-
 :::
 
 ::: {.column width="70%"}
-
-
 ```{r fig.width=8, fig.height=2}
 set.seed(10085)
 
@@ -588,27 +492,19 @@ bind_rows(dat_shape_1, dat_shape_2, dat_shape_3, dat_shape_4) %>%
   VI_MODEL$plot(remove_axis = TRUE, remove_grid_line = TRUE, theme = theme_light(base_size = 15)) +
   facet_wrap(~e_dist, scales = "free", labeller = label_parsed, ncol = 4)
 ```
-
+:::
 :::
 
-:::
-
----
+------------------------------------------------------------------------
 
 ## 💡Training: Predictor Distribution
 
-
-::: {.columns}
-
+::: columns
 ::: {.column width="30%"}
-
 **Distribution of predictor**
-
 :::
 
 ::: {.column width="70%"}
-
-
 ```{r fig.width=8, fig.height=6}
 set.seed(10086)
 
@@ -663,29 +559,19 @@ bind_rows(dat_dist_1, dat_dist_2, dat_dist_3, dat_dist_4) %>%
   ylab("Residuals") +
   facet_wrap(~x_dist, ncol = 2, scales = "free")
 ```
-
+:::
 :::
 
-:::
-
----
+------------------------------------------------------------------------
 
 ## 💡Second Predictor {visibility="hidden"}
 
-
-
-
-::: {.columns}
-
+::: columns
 ::: {.column width="30%"}
-
 **Non-linearity + Second predictor**
-
 :::
 
 ::: {.column width="70%"}
-
-
 ```{r fig.width=10, fig.height=4}
 set.seed(10086)
 
@@ -706,12 +592,10 @@ map_df(3:11, function(j) {
   VI_MODEL$plot(remove_axis = TRUE, remove_grid_line = TRUE, theme = theme_light(base_size = 15)) +
   facet_wrap(~j, scales = "free", labeller = label_parsed, ncol = 5)
 ```
-
+:::
 :::
 
-:::
-
----
+------------------------------------------------------------------------
 
 ## 🏛️Model Architecture
 
@@ -721,46 +605,40 @@ The architecture of the computer vision model is adapted from **VGG16** (Simonya
 magick::image_read_pdf("figures/cnn.pdf", pages = 1)
 ```
 
-
----
+------------------------------------------------------------------------
 
 ## 🏋️‍♂️Model Training {visibility="hidden"}
 
 The computer vision model is trained on the **M3 high-performance computing platform** (www.massive.org.au), using **TensorFlow** (Abadi et al. 2016) and **Keras** (Chollet et al. 2015).
 
-- The training, validation and test set contains 64000, 16000 and 8000 images respectively.
+-   The training, validation and test set contains 64000, 16000 and 8000 images respectively.
 
-- The distribution of the target variable $D$ is controlled such that it roughly follows a uniform distribution.
+-   The distribution of the target variable $D$ is controlled such that it roughly follows a uniform distribution.
 
-- Multiple models with different image resolutions are trained, the optimized model has input size $32 \times 32$. 
+-   Multiple models with different image resolutions are trained, the optimized model has input size $32 \times 32$.
 
-
----
+------------------------------------------------------------------------
 
 ## `r fontawesome::fa_i("r-project")` `autovi` Package
 
 ::: {style="font-size:80%"}
-
 The `autovi` package provides automated visual inference with **computer vision models**. It is available on CRAN and Github.
 
 #### Core Methods
 
-- Null residuals simulation: `rotate_resid()`
-- Visual signal strength: `vss()`
-- Comprehensive checks: `check()` and `summary_plot()`
-
+-   Null residuals simulation: `rotate_resid()`
+-   Visual signal strength: `vss()`
+-   Comprehensive checks: `check()` and `summary_plot()`
 :::
 
----
+------------------------------------------------------------------------
 
 ## 💡Example: Boston Housing
 
 ::: {style="font-size:80%"}
-
 ```{r}
 housing <- read_csv(here::here("paper_2/data/housing.csv"))
 ```
-
 
 ```{r}
 #| echo: true
@@ -772,7 +650,6 @@ ggplot() +
                  resid(fitted_model))) +
   theme_void()
 ```
-
 :::
 
 ```{r}
@@ -786,19 +663,16 @@ checker <- auto_vi(fitted_model = fitted_model,
 checker$check_result <- readRDS(here::here("paper_2/data/check_result_1.rds"))
 ```
 
----
+------------------------------------------------------------------------
 
 ## `r fontawesome::fa_i("r-project")` `rotate_resid()`
 
 ::: {style="font-size:80%"}
-
 Null residuals are simulated from the fitted model assuming it is **correctly specified**.
 
-::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-
-```{.r}
+``` r
 checker <- auto_vi(fitted_model = fitted_model, 
                    keras_model = get_keras_model("vss_phn_32"))
 checker$rotate_resid()
@@ -809,16 +683,13 @@ checker$rotate_resid()
 #| message: false
 checker$rotate_resid()
 ```
-
 :::
 
 ::: {.column width="50%"}
-
-```{.r}
+``` r
 checker$rotate_resid() |>
   checker$plot_resid()
 ```
-
 
 ```{r}
 #| echo: false
@@ -828,27 +699,20 @@ checker$rotate_resid() |>
 checker$rotate_resid() |>
   checker$plot_resid()
 ```
-
+:::
+:::
 :::
 
-:::
-
-:::
-
----
+------------------------------------------------------------------------
 
 ## `r fontawesome::fa_i("r-project")` `vss()`
 
-
 ::: {style="font-size:80%"}
-
-::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-
 #### Visual signal strength of the actual residual plot
 
-```{.r}
+``` r
 checker$vss()
 ```
 
@@ -857,18 +721,15 @@ checker$vss()
 #| message: true
 checker$vss()
 ```
-
 :::
 
 ::: {.column width="50%"}
-
 #### Visual signal strength of a null plot
 
-```{.r}
+``` r
 checker$rotate_resid() |>
   checker$vss()
 ```
-
 
 ```{r}
 #| echo: false
@@ -876,19 +737,15 @@ checker$rotate_resid() |>
 checker$rotate_resid() |>
   checker$vss()
 ```
-
-
+:::
+:::
 :::
 
-:::
-
-:::
-
----
+------------------------------------------------------------------------
 
 ## `r fontawesome::fa_i("r-project")` `check()`
 
-```{.r}
+``` r
 checker$check()
 checker
 ```
@@ -899,7 +756,7 @@ checker
 checker
 ```
 
----
+------------------------------------------------------------------------
 
 ## `r fontawesome::fa_i("r-project")` `summary_plot()`
 
@@ -908,14 +765,12 @@ checker
 checker$summary_plot()
 ```
 
-
----
+------------------------------------------------------------------------
 
 ## 💡Example: Left-triangle
 
 ::: {style="font-size:70%"}
-
-Breusch–Pagan test $p$-value = 0.0457
+Breusch--Pagan test $p$-value = 0.0457
 
 ```{r fig.height=4, fig.width=6}
 set.seed(452)
@@ -935,22 +790,18 @@ my_vi$summary_plot() +
 
 patchwork::wrap_plots(p1, p2, ncol = 2)
 ```
-
 :::
 
----
+------------------------------------------------------------------------
 
 ## 💡Example: Dinosaur
 
 ::: {style="font-size:70%"}
-
-::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-
 Ramsey Regression Equation Specification Error test $p$-value = 0.742
 
-Breusch–Pagan test $p$-value = 0.36
+Breusch--Pagan test $p$-value = 0.36
 
 Shapiro-Wilk test $p$-value = 9.21e-05
 
@@ -961,25 +812,20 @@ mod <- lm(y ~ ., data = select(dino, -dataset))
 my_vi <- autovi::auto_vi(fitted_model = mod)
 my_vi$plot_resid()
 ```
-
 :::
 
 ::: {.column width="50%"}
-
 ```{r fig.height=4.5, fig.width=4.5, dpi=300}
 my_vi$check_result <- readRDS(here::here("paper_2/data/dino_check.rds"))
 my_vi$summary_plot() +
   theme(legend.position = "bottom", legend.box="vertical") +
   labs(linetype = "")
 ```
-
+:::
+:::
 :::
 
-:::
-
-:::
-
----
+------------------------------------------------------------------------
 
 ## 🧪Compared to Visual Tests {visibility="hidden"}
 
@@ -987,7 +833,7 @@ my_vi$summary_plot() +
 magick::image_read_pdf("figures/human-mosaic-1.pdf", pages = 1)
 ```
 
----
+------------------------------------------------------------------------
 
 ## 🧪Compared to RESET and BP Tests {visibility="hidden"}
 
@@ -995,7 +841,7 @@ magick::image_read_pdf("figures/human-mosaic-1.pdf", pages = 1)
 magick::image_read_pdf("figures/conv-mosaic-1.pdf", pages = 1)
 ```
 
----
+------------------------------------------------------------------------
 
 ## 🧪Power Comparison {visibility="hidden"}
 
@@ -1003,38 +849,37 @@ magick::image_read_pdf("figures/conv-mosaic-1.pdf", pages = 1)
 magick::image_read_pdf("figures/fig-power-1.pdf", pages = 1)
 ```
 
----
+------------------------------------------------------------------------
 
 ## 🌐Shiny Application {.center}
 
-Don't want to install `TensorFlow`? 
+Don't want to install `TensorFlow`?
 
 Try our shiny web application: <https://shorturl.at/DNWzt>
 
----
+------------------------------------------------------------------------
 
 ## 🧩Extensions
 
 To diagnose models other than the **Classical Normal Linear Regression Model** (CNLRM), one can:
 
-1. Use raw residuals, but be aware that violations **may not be identifiable and the test could be two-sided**.
-2. Use transformed residuals that are **roughly normally distributed**.
-3. **Reuse the pre-trained convolutional blocks** and train a new computer vision model with an appropriate distance measure.
+1.  Use raw residuals, but be aware that violations **may not be identifiable and the test could be two-sided**.
+2.  Use transformed residuals that are **roughly normally distributed**.
+3.  **Reuse the pre-trained convolutional blocks** and train a new computer vision model with an appropriate distance measure.
 
----
+------------------------------------------------------------------------
 
 ## 🎬Takeaway
 
 You can use `autovi` to
 
-- Evaluate lineups of residual plots of linear regression models
+-   Evaluate lineups of residual plots of linear regression models
 
-- **Captures the magnitude of model violations** through visual signal strength
+-   **Captures the magnitude of model violations** through visual signal strength
 
-- Automatically **detect model misspecification** using a visual test
+-   Automatically **detect model misspecification** using a visual test
 
----
-
+------------------------------------------------------------------------
 
 ## Thanks! Any questions? {.center}
 
@@ -1042,17 +887,12 @@ You can use `autovi` to
 
 ### 🔗Relevant links
 
-::: {.nonincremental}
-
+::: nonincremental
 `r fontawesome::fa_i("github")` tengmcing
 
-`r fontawesome::fa_i("envelope")` patrick.li@monash.edu
+`r fontawesome::fa_i("envelope")` patrick.li\@monash.edu
 
 📦 [`autovi`](https://github.com/TengMCing/autovi){target="_blank"}
 
 📜 [Slides](https://github.com/TengMCing/use_r/tree/master/paper_2){target="_blank"}
-
-
 :::
-
-

@@ -1,6 +1,7 @@
 ---
 format: 
-  revealjs:
+  revealjs: 
+    auto-stretch: false
     navigation-mode: vertical
     logo: ../libs/unl/N.svg
     theme: ../libs/unl/inverse.scss
@@ -9,18 +10,271 @@ format:
     lib_dir: ../libs
 ---
 
-## Coauthors
+```{r}
+# OOP supports needed by `visage`
+# remotes::install_github("TengMCing/bandicoot")
+# 
+# Visual inference models and p-value calculation
+# remotes::install_url("https://github.com/TengMCing/visage/raw/master/built/visage_0.1.0.tar.gz")
+# reticulate::use_virtualenv("r-tensorflow")
+library(tidyverse)
+library(visage)
+library(glue)
+library(autovi)
+
+
+theme_lineup <- function(base_size = 12, base_family = ""){
+  theme_bw(base_size = base_size, base_family = base_family) %+replace% 
+    theme(legend.position="none", 
+          axis.text=element_blank(),
+          axis.title=element_blank(),
+          axis.ticks=element_blank(),
+          plot.margin=unit(c(0,0,0,0), "line")
+    )}
+
+
+housing <- read_csv("data/housing.csv")
+fitted_model <- lm(MEDV ~ RM + LSTAT + PTRATIO, data = housing)
+checker <- auto_vi(fitted_model = fitted_model, 
+                   keras_model = get_keras_model("vss_phn_32"))
+checker$check_result <- readRDS("data/check_result_1.rds")
+
+# To control the simulation in this file
+set.seed(10086)
+```
+
+```{r get-lineup-data}
+# Create the dir folder
+if (!dir.exists("data/")) dir.create("data/")
+
+# The lineup data used to draw residual plot needed to be downloaded
+# from the github repo. Cache it.
+if (!file.exists("data/vi_lineup.rds")) {
+  vi_lineup <- get_vi_lineup()
+  saveRDS(vi_lineup, "data/vi_lineup.rds")
+} else {
+  vi_lineup <- readRDS("data/vi_lineup.rds")
+}
+```
+
+```{r poly-conventional-simulation}
+# Ensure the support of the predictor is [-1, 1]
+stand_dist <- function(x) (x - min(x))/max(x - min(x)) * 2 - 1
+
+# Run simulations to get the behaviours of conventional tests
+if (!file.exists("data/poly_conventional_simulation.rds")) {
+  poly_conv_sim <- list()
+  
+  # 100 bootstrap samples
+  for (i in 1:100)
+  {
+    poly_conv_sim[[i]] <- 
+      # Every sample contains 2000 lineups
+      map(1:2000, function(i) {
+        
+        # Sample a set of parameters
+        shape <- sample(1:4, 1)
+        e_sigma <- sample(c(0.5, 1, 2, 4), 1)
+        x_dist <- sample(c("uniform", 
+                           "normal", 
+                           "lognormal", 
+                           "even_discrete"), 1)
+        x <- switch(x_dist,
+                    uniform = rand_uniform(-1, 1),
+                    normal = {
+                      raw_x <- rand_normal(sigma = 0.3)
+                      closed_form(~stand_dist(raw_x))
+                      },
+                    lognormal = {
+                      raw_x <- rand_lognormal(sigma = 0.6)
+                      closed_form(~stand_dist(raw_x/3 - 1))
+                      },
+                    even_discrete = rand_uniform_d(k = 5, even = TRUE))
+        
+        # Build the model
+        mod <- poly_model(shape, x = x, sigma = e_sigma)
+        
+        # Sample the number of observations
+        n <- sample(c(50, 100, 300), 1)
+        
+        # Generate data from the model 
+        tmp_dat <- mod$gen(n)
+        
+        # Return a data frame containing p-values of
+        # F, RESET, BP and SW tests
+        tibble(shape = shape,
+               e_sigma = e_sigma,
+               x_dist = x_dist,
+               n = n,
+               F_p_value = mod$test(tmp_dat)$p_value,
+               RESET3_p_value = mod$test(tmp_dat, 
+                                         test = "RESET", 
+                                         power = 2:3, 
+                                         power_type = "fitted")$p_value,
+               RESET4_p_value = mod$test(tmp_dat, 
+                                         test = "RESET", 
+                                         power = 2:4, 
+                                         power_type = "fitted")$p_value,
+               RESET5_p_value = mod$test(tmp_dat, 
+                                         test = "RESET", 
+                                         power = 2:5, 
+                                         power_type = "fitted")$p_value,
+               RESET6_p_value = mod$test(tmp_dat, 
+                                         test = "RESET", 
+                                         power = 2:6, 
+                                         power_type = "fitted")$p_value,
+               RESET7_p_value = mod$test(tmp_dat, 
+                                         test = "RESET", 
+                                         power = 2:7, 
+                                         power_type = "fitted")$p_value,
+               RESET8_p_value = mod$test(tmp_dat, 
+                                         test = "RESET", 
+                                         power = 2:8, 
+                                         power_type = "fitted")$p_value,
+               RESET9_p_value = mod$test(tmp_dat, 
+                                         test = "RESET", 
+                                         power = 2:9, 
+                                         power_type = "fitted")$p_value,
+               RESET10_p_value = mod$test(tmp_dat, 
+                                          test = "RESET", 
+                                          power = 2:10, 
+                                          power_type = "fitted")$p_value,
+               BP_p_value = HETER_MODEL$test(tmp_dat)$p_value,
+               SW_p_value = shapiro.test(tmp_dat$.resid)$p.value,
+               boot_id = i)
+        }) %>%
+  reduce(bind_rows)
+  }
+  
+  poly_conv_sim <- poly_conv_sim %>%
+    reduce(bind_rows)
+  
+  saveRDS(poly_conv_sim, "data/poly_conventional_simulation.rds")
+} else {
+  poly_conv_sim <- readRDS("data/poly_conventional_simulation.rds")
+}
+```
+
+```{r heter-conventional-simulation}
+# Run simulations to get the behaviours of conventional tests
+if (!file.exists("data/heter_conventional_simulation.rds")) {
+  heter_conv_sim <- list()
+  
+  # 100 bootstrap samples
+  for (i in 1:100)
+  {
+    heter_conv_sim[[i]] <-
+      # Every sample contains 2000 lineups
+      map(1:2000, function(x) {
+        
+        # Sample a set of parameters
+        a <- sample(c(-1, 0, 1), 1)
+        b <- sample(c(0.25, 1, 4, 16, 64), 1)
+        x_dist <- sample(c("uniform", 
+                           "normal", 
+                           "lognormal", 
+                           "even_discrete"), 1)
+        x <- switch(x_dist,
+                    uniform = rand_uniform(-1, 1),
+                    normal = {
+                      raw_x <- rand_normal(sigma = 0.3)
+                      closed_form(~stand_dist(raw_x))
+                      },
+                    lognormal = {
+                      raw_x <- rand_lognormal(sigma = 0.6)
+                      closed_form(~stand_dist(raw_x/3 - 1))
+                      },
+                    even_discrete = rand_uniform_d(-1, 1, k = 5, even = TRUE))
+        
+        # Build the model
+        mod <- heter_model(a = a, b = b, x = x)
+        
+        # Sample the number of observations
+        n <- sample(c(50, 100, 300), 1)
+        
+        # Generate data from the model 
+        tmp_dat <- mod$gen(n)
+        
+        # Return a data frame containing p-values of
+        # F, RESET, BP and SW tests
+        tibble(a = a,
+               b = b,
+               x_dist = x_dist,
+               n = n,
+               F_p_value = POLY_MODEL$test(
+                 
+                 # Create a pseudo z to be able to use F-test
+                 tmp_dat %>%
+                   mutate(z = poly_model()$
+                            gen(n, computed = select(tmp_dat, x)) %>%
+                            pull(z))
+                 )$p_value,
+               RESET3_p_value = POLY_MODEL$test(tmp_dat, 
+                                                test = "RESET", 
+                                                power = 2:3, 
+                                                power_type = "fitted")$p_value,
+               RESET4_p_value = POLY_MODEL$test(tmp_dat, 
+                                                test = "RESET", 
+                                                power = 2:4, 
+                                                power_type = "fitted")$p_value,
+               RESET5_p_value = POLY_MODEL$test(tmp_dat, 
+                                                test = "RESET", 
+                                                power = 2:5, 
+                                                power_type = "fitted")$p_value,
+               RESET6_p_value = POLY_MODEL$test(tmp_dat, 
+                                                test = "RESET", 
+                                                power = 2:6, 
+                                                power_type = "fitted")$p_value,
+               RESET7_p_value = POLY_MODEL$test(tmp_dat, 
+                                                test = "RESET", 
+                                                power = 2:7, 
+                                                power_type = "fitted")$p_value,
+               RESET8_p_value = POLY_MODEL$test(tmp_dat, 
+                                                test = "RESET", 
+                                                power = 2:8, 
+                                                power_type = "fitted")$p_value,
+               RESET9_p_value = POLY_MODEL$test(tmp_dat, 
+                                                test = "RESET", 
+                                                power = 2:9, 
+                                                power_type = "fitted")$p_value,
+               RESET10_p_value = POLY_MODEL$test(tmp_dat, 
+                                                 test = "RESET", 
+                                                 power = 2:10, 
+                                                 power_type = "fitted")$p_value,
+               BP_p_value = mod$test(tmp_dat)$p_value,
+               SW_p_value = shapiro.test(tmp_dat$.resid)$p.value,
+               boot_id = i)
+        }) %>%
+  reduce(bind_rows)
+  }
+  
+  heter_conv_sim <- heter_conv_sim %>%
+    reduce(bind_rows)
+  
+  saveRDS(heter_conv_sim, "data/heter_conventional_simulation.rds")
+} else {
+  heter_conv_sim <- readRDS("data/heter_conventional_simulation.rds")
+}
+```
+
+```{r}
+# Borrow effect size from the survey
+poly_conv_sim <- poly_conv_sim %>%
+  left_join(select(filter(vi_survey, type == "polynomial"), shape, e_sigma, n, x_dist, effect_size))
+
+heter_conv_sim <- heter_conv_sim %>%
+  left_join(select(filter(vi_survey, type == "heteroskedasticity"), a, b, n, x_dist, effect_size))
+```
+
+## Coauthors {visibility="hidden"}
 
 ::: columns
-
 ::: column
-
 ![Weihao (Patrick) Li](Patrick.jpg)
 :::
 
 ::: column
-::: {layout-ncol=2}
-
+::: {layout-ncol="2"}
 ![Di Cook](dicook.jpg)
 
 ![Emi Tanaka](emitanaka.jpg)
@@ -28,57 +282,44 @@ format:
 ![Klaus Ackermann](klausackermann.png)
 :::
 :::
-
 :::
 
 # Residuals and Lineups
 
-## 🔍Regression Diagnostics
+## 🔍 Regression Diagnostics
 
-Diagnostics are the key to determining whether there is anything **importantly wrong** with a regression model. 
+Diagnostics: is anything **importantly wrong** with my model?
 
-<br>
-
+::: smaller
 $$\underbrace{\boldsymbol{e}}_\textrm{Residuals} = \underbrace{\boldsymbol{y}}_\textrm{Observations} - \underbrace{f(\boldsymbol{x})}_\textrm{Fitted values}$$
+:::
 
 **Residuals**: what the regression model does **not capture**.
 
 Checked by:
 
-- **Numerical summaries**: variance, skewness, quantiles
-- **Statistical tests**: F-test, BP test
-- **Diagnostic plots**: residual plots, Q-Q plots
+-   **Numerical summaries**: variance, skewness, quantiles
+-   **Statistical tests**: F-test, BP test
+-   **Diagnostic plots**: residual plots, Q-Q plots
 
-## Diagnostic Plots
+## Diagnostic Plots {.r-fit-text}
 
 ::: fragment
-
-> Residual plots are usually **revealing** when the assumptions are violated.
-
-@draper1998applied, @belsleyRegressionDiagnosticsIdentifying1980
+> Residual plots are usually **revealing** when the assumptions are violated. --@draper1998applied, @belsleyRegressionDiagnosticsIdentifying1980
 :::
 
 ::: fragment
-
-> **Graphical methods are easier to use**.
-
-@cookCriticismInfluenceAnalysis1982
+> **Graphical methods are easier to use**. --@cookCriticismInfluenceAnalysis1982
 :::
 
 ::: fragment
-
-> **Residual plots are more informative in most practical situations** than the corresponding conventional hypothesis tests.
-
-@montgomeryIntroductionLinearRegression1982
+> **Residual plots are more informative in most practical situations** than the corresponding conventional hypothesis tests. --@montgomeryIntroductionLinearRegression1982
 :::
 
+## 🤔 Plot Interpretation Challenges
 
-## 🤔 Interpretation Challenges
-
-:::: {.columns}
-
+::: columns
 ::: {.column width="40%"}
-
 What do you see?
 
 ```{r fig.width=4, fig.height=4, warning=FALSE, message=FALSE}
@@ -96,135 +337,965 @@ ori_dat %>%
   xlab("Fitted values") +
   ylab("Residuals")
 ```
-
 :::
 
 ::: {.column width="60%"}
-
-- Vertical spread of the points varies with the fitted values.    
-[=> [heteroskedasticity?]{.blue .emph}]{.fragment}
+::: fragment
+-   Vertical spread of the points varies with the fitted values.\
+    [=\> [heteroskedasticity?]{.blue .emph}]{.fragment}
+:::
 
 ::: fragment
-- Triangle shape is actually from skewed distribution in x
+-   Triangle shape is actually from skewed distribution in x\
+    [Fitted model is fine!]{.red .emph .fragment}
 :::
+:::
+:::
+
 ::: fragment
-- Fitted model is fine!
+We need an [inferential framework]{.emph .green} to [calibrate expectations]{.emph .purple} when reading residual plots!
 :::
 
-:::
-::: {.fragment}
-We need an [inferential framework]{ .emph .green} to [calibrate expectations]{.emph .purple} when reading residual plots!
-:::
-::::
-
-## 🔬Visual Inference
+## 🔬 Visual Inference
 
 Suggested by @bujaStatisticalInferenceExploratory2009
 
+:::  {.r-stretch}
 ```{r lineupdemo}
 #| fig-width: 7
 #| fig-height: 7
-#| out-height: "100%"
+#| out-width: 50%
+#| fig-align: center
+#| fig-asp: 1
 #| fig-dpi: 300
 set.seed(10131)
 mod$gen_lineup(300, k = 20, pos = 11) %>%
   filter(null != FALSE) %>%
   bind_rows(ori_dat %>% mutate(k = 11, null = FALSE)) %>%
-  VI_MODEL$plot_lineup(theme = theme_light(base_size = 12),
+  VI_MODEL$plot_lineup(theme = theme_bw(base_size = 12),
+                       remove_grid_line = TRUE,
+                       remove_axis = TRUE)
+```
+:::
+
+::: notes
+What do you observe from this residual plot?
+
+-   Vertical spread of the points varies with the fitted values.
+
+-   This often indicates **the existence of heteroskedasticity**.
+
+-   The real data is in plot 11.
+:::
+
+## 🔬 Visual Inference
+
+::: columns
+::: column
+```{r lineupdemo}
+#| fig-width: 7
+#| fig-height: 7
+#| fig-dpi: 300
+```
+:::
+
+::: column
+Typically, a **lineup** of residual plots consists of
+
+<!-- - $m$ randomly placed plots -->
+
+-   1 **data plot**
+-   19 **null plots** w/ residuals **simulated from the fitted model**.
+:::
+:::
+
+## 🔬 Visual Inference
+
+::: columns
+::: column
+```{r lineupdemo}
+#| fig-width: 7
+#| fig-height: 7
+#| out-height: "100%"
+#| fig-dpi: 300
+```
+:::
+
+::: column
+To perform a visual test
+
+-   Observer(s) select the **most different plot(s)**.
+-   P-value ("see value") can be calculated via a **beta-binomial model** [@vanderplasStatisticalSignificanceCalculations2021]
+:::
+:::
+
+---
+## 🤔 Motivation
+Why are residual plots so important?
+
+Why are they recommended over tests?
+
+Possible Explanations:
+
+- Tests are too sensitive?
+- Tests are for specific issues?
+
+
+# 🧪 Experiment
+
+Compare **conventional hypothesis testing** with **visual testing** when evaluating residual plots
+
+## 🖊 Design
+
+| Model | Structure |
+|-------|-----------|
+| Null      | $\boldsymbol{y} = \beta_0 + \beta_1\boldsymbol{x} + \boldsymbol{\varepsilon}$ |
+| Non-linearity      |  $\boldsymbol{y} = \boldsymbol{1} + \boldsymbol{x} + \boldsymbol{z} + \boldsymbol{\varepsilon}$ |
+| Heteroskedasticity      | $\boldsymbol{y} = 1 + \boldsymbol{x} + \boldsymbol{\varepsilon}_h$ | 
+
+where
+
+::: small
+- $\boldsymbol{\varepsilon} \sim N(\boldsymbol{0}, \sigma^2\boldsymbol{I})$
+- $\boldsymbol{z} \propto He_j(\boldsymbol{x})$, the $j^{th}$ order probabilist Hermite polynomial
+- $\boldsymbol{\varepsilon_h} \sim N(\boldsymbol{0}, 1 + (2 - |a|)(\boldsymbol{x} - a)^2b \boldsymbol{I})$
+:::
+
+## {.r-stretch}
+
+**Non-linearity**
+
+```{r}
+#| fig-width: 8
+#| fig-height: 2
+#| out-width: 100%
+
+# Ensure the support of the predictor is [-1, 1]
+stand_dist <- function(x) (x - min(x))/max(x - min(x)) * 2 - 1
+
+# Facet label
+shape_labels <- c('He[2]:"U"', 'He[3]:"S"', 'He[6]:"M"', 'He[18]:"triple-U"')
+
+# Data for shape 1
+dat_shape_1 <- poly_model(shape = 1, 
+                          x = {
+                            raw_x <- rand_uniform(-1, 1);
+                            closed_form(~stand_dist(raw_x))
+                            }, 
+                          sigma = 0.05)$gen(300) %>%
+  mutate(shape = shape_labels[1])
+
+# Generate data for shape 2, 3 and 4. Reuse x and e.
+poly_data <- map_df(2:4, function(shape) {
+  poly_model(shape = shape, 
+                  x = {
+                    raw_x <- rand_uniform(-1, 1); 
+                    closed_form(~stand_dist(raw_x))
+                    }, 
+                  sigma = 0.05)$
+  gen(300, computed = select(dat_shape_1, x, e)) %>%
+  mutate(shape = shape_labels[shape])
+}) %>%
+  
+  # Combined with data for shape 1
+  bind_rows(dat_shape_1) %>%
+  mutate(shape = factor(shape, levels = shape_labels)) 
+
+ggplot(poly_data, aes(x = x, y = .resid)) + 
+  geom_point() + 
+  geom_hline(yintercept = 0, color = "red") + 
+  facet_wrap(~shape, nrow = 1, labeller = label_parsed) + 
+  theme_bw() + 
+  theme(axis.title = element_blank(), axis.text = element_blank(), axis.ticks = element_blank())
+```
+**Heteroskedasticity**
+
+```{r}
+#| fig-width: 8
+#| fig-height: 2
+#| out-width: 100%
+
+set.seed(10086)
+
+a_labels <- c("Left-triangle", "Butterfly", "Right-triangle")
+
+# Generate data for a = -1
+dat_a_n1 <- heter_model(a = -1, 
+                        x = {
+                          raw_x <- rand_uniform(-1, 1);
+                          closed_form(~stand_dist(raw_x))
+                          },
+                        b = 128)$gen(300) %>%
+  mutate(a = a_labels[1])
+
+# Generate data for other a
+hetero_data <- map(c(0, 1), function(a) {
+  heter_model(a = a,
+              x = {
+                raw_x <- rand_uniform(-1, 1); 
+                closed_form(~stand_dist(raw_x))
+                }, 
+              b = 128)$
+    gen(300, computed = select(dat_a_n1, x, e)) %>%
+    mutate(a = a_labels[a + 2])
+}) %>%
+  
+  # Combined with data for a = -1
+  bind_rows(dat_a_n1) %>%
+  mutate(a = factor(a, levels = a_labels)) 
+
+
+
+ggplot(hetero_data, aes(x = x, y = .resid)) + 
+  geom_point() + 
+  geom_hline(yintercept = 0, color = "red") + 
+  facet_wrap(~a, nrow = 1) +
+  theme_bw() + 
+  theme(axis.title = element_blank(), axis.text = element_blank(), axis.ticks = element_blank())
+
+```
+
+## Lineup Generation
+
+- parameters controlling signal strength ($\sigma, b, n$)
+- $4\times 4\times 3 \times 4 = 192$ non-linearity parameter combinations
+- $3\times 5\times 3 \times 4 = 180$ heteroskedasticity parameter combinations
+- 3 replicates per parameter set
+
+- 576 (non linearity) + 540 (heteroskedasticity) lineups tested with at least 5 evaluations
+
+- Additional 36 Rorshach lineups used to estimate $\alpha$ for p-value calculations
+
+
+```{r poly-effect-setup, cache = TRUE}
+# Define the minimum and maximum effect size
+min_poly_es <- vi_survey %>% 
+  filter(!null_lineup, 
+         !attention_check,
+         type == "polynomial", 
+         x_dist == "uniform") %>%
+  pull(effect_size) %>%
+  min()
+max_poly_es <- vi_survey %>% 
+  filter(!null_lineup, 
+         !attention_check,
+         type == "polynomial", 
+         x_dist == "uniform") %>%
+  pull(effect_size) %>%
+  max()
+
+# The glm model for RESET test
+reset_poly_glmmod <- poly_conv_sim %>%
+  filter(x_dist == "uniform") %>%
+  mutate(log_effect_size = log(effect_size)) %>%
+  mutate(reject = as.numeric(RESET4_p_value <= 0.05)) %>%
+  mutate(offset0 = log(0.05/0.95)) %>%
+  select(x_dist, effect_size, log_effect_size, offset0, reject) %>%
+  glm(reject ~ effect_size - 1, family = binomial(), data = ., offset = offset0)
+
+# The prediction for all conventional tests on poly model
+pred_conv_poly <- poly_conv_sim %>%
+  filter(x_dist == "uniform") %>%
+  select(-RESET3_p_value, -(RESET5_p_value:RESET10_p_value), -F_p_value) %>%
+  rename(RESET_p_value = RESET4_p_value) %>%
+  pivot_longer(RESET_p_value:SW_p_value) %>%
+  mutate(name = gsub("_p_value", " test", name)) %>%
+  mutate(reject = value <= 0.05) %>%
+  select(effect_size, name, reject) %>%
+  mutate(offset0 = log(0.05/0.95)) %>%
+  nest(dat = c(effect_size, offset0, reject)) %>%
+  mutate(mod = map(dat, 
+                   ~glm(reject ~ effect_size - 1, 
+                        family = binomial(), 
+                        data = .x,
+                        offset = offset0))) %>%
+  mutate(power = map(mod, function(mod) {
+    result <- data.frame(effect_size = exp(seq(log(min_poly_es), log(max_poly_es), 0.1)),
+                         offset0 = log(0.05/0.95))
+    result$power <- predict(mod, type = "response", newdata = result)
+    result
+  })) %>%
+  select(-dat, -mod) %>%
+  unnest(power) %>%
+  mutate(log_effect_size = log(effect_size))
+
+# Data needed by the visual test
+visual_poly_dat <- vi_survey %>%
+  filter(!null_lineup, 
+         !attention_check, 
+         type == "polynomial", 
+         x_dist == "uniform") %>%
+  group_by(unique_lineup_id) %>%
+  summarise(across(everything(), first)) %>%
+  mutate(reject = as.numeric(p_value <= 0.05)) %>%
+  mutate(offset0 = log(0.05/0.95)) %>%
+  select(effect_size, offset0, reject)
+
+# The glm model for visual test
+visual_poly_glmmod <- glm(reject ~ effect_size - 1, 
+                          family = binomial(), 
+                          data = visual_poly_dat, 
+                          offset = offset0)
+
+# The prediction of the visual test
+pred_visual_poly <- data.frame(effect_size = exp(seq(log(min_poly_es), log(max_poly_es), 0.1)),
+                               offset0 = log(0.05/0.95)) %>%
+  mutate(power = predict(visual_poly_glmmod, 
+                         type = "response",
+                         newdata = data.frame(effect_size = effect_size,
+                                              offset0 = offset0))) %>%
+  mutate(log_effect_size = log(effect_size))
+
+# The prediction of the boot visual test
+pred_visual_poly_boot <- map_df(1:500, function(boot_id) {
+  slice_sample(visual_poly_dat, n = nrow(visual_poly_dat), replace = TRUE) %>%
+    nest(dat = c(effect_size, offset0, reject)) %>%
+    mutate(mod = map(dat, 
+                     ~glm(reject ~ effect_size - 1, 
+                          family = binomial(), 
+                          data = .x,
+                          offset = offset0))) %>%
+    mutate(power = map(mod, function(mod) {
+      result <- data.frame(effect_size = exp(seq(log(min_poly_es), log(max_poly_es), 0.1)),
+                           offset0 = log(0.05/0.95))
+      result$power <- predict(mod, type = "response", newdata = result)
+      result
+    })) %>%
+    select(-dat, -mod) %>%
+    unnest(power) %>%
+    mutate(log_effect_size = log(effect_size)) %>%
+    mutate(boot_id = boot_id)
+  })
+```
+
+```{r poly-effect-power-curves}
+# Analyse uniform polynomial data
+p <- ggplot() +
+  
+  geom_point(data = visual_poly_dat,
+             aes(log(effect_size), reject),
+             alpha = 0.15) +
+  
+  # Draw conventional test power curve
+  geom_line(data = pred_conv_poly,
+            aes(log_effect_size, power, col = name, linetype = name)) +
+  
+  # Draw boot visual test curves
+  geom_line(data = pred_visual_poly_boot,
+            aes(log_effect_size, power, col = "visual test", group = boot_id, linetype = "visual test"),
+            alpha = 0.01) +
+  
+  # Draw visual test power curve
+  geom_line(data = pred_visual_poly,
+            aes(log_effect_size, power, col = "visual test", linetype = "visual test")) +
+  
+  # Theme
+  theme_light(base_size = 12) +
+  theme(panel.grid.major.x =  element_line(colour = "grey70", linewidth = 0.3)) +
+  scale_color_manual(values = rev(rcartocolor::carto_pal(4, "Vivid"))) +
+  scale_x_continuous(breaks = seq(0, 5, 0.5), minor_breaks = NULL) +
+  scale_linetype_manual(values = c("visual test" = 1, "RESET test" = 2, "BP test" = 3, "SW test" = 4)) +
+  xlab(expression(log[e] (Effect_size))) +
+  ylab("Power") +
+  labs(col = "", linetype = "")
+```
+
+
+```{r poly-effect-targets, cache = TRUE}
+# target_sigma is obtained by evaluating a vector of sigma and picking those 
+# with expected effect 0 ~ 5
+
+target_sigma <- c(3.65, 2.84, 2.21, 1.72, 1.34, 1.04, 0.81, 0.63, 0.49, 0.38, 0.3)
+
+# Calculate the effect size 
+es <- map_dbl(target_sigma, 
+              ~log(poly_model(shape = 2, 
+                              x = {raw_x <- rand_normal(sigma = 0.3); closed_form(~stand_dist(raw_x))}, 
+                              sigma = .x)$
+                     average_effect_size(n = 100, type = "kl")
+                   )
+              )
+```
+
+
+```{r polypower, fig.height = 3, fig.width = 5, dev = 'png', dpi = 450}
+
+set.seed(132)
+
+# Base data
+ex_dat <- poly_model(shape = 2, 
+                     x = rand_uniform(-1, 1), 
+                     sigma = 1)$gen(n = 100)
+plist <- list()
+j <- 0
+
+# Obtain data at different effect. Reuse x and recompute e.
+for (i in target_sigma) {
+  j <- j + 1
+  plist[[j]] <- poly_model(shape = 2, 
+                           x = rand_uniform())$
+                    gen(n = 100, 
+                        computed = ex_dat %>%
+                          mutate(e = sqrt(i) * e) %>%
+                          select(x, e)
+                        ) %>%
+    VI_MODEL$plot(theme = theme_light(base_size =  5), 
+                  remove_axis = TRUE, 
+                  remove_grid_line = TRUE, size = 0.25, stroke = 0.25) +
+      ggtitle(round(es[j], 1)) +
+      theme(aspect.ratio = 0.8)
+}
+
+# Use area() to design layout
+A <- map(1:11, ~patchwork::area(21, .x, 22, .x)) %>%
+  reduce(c) %>%
+  c(patchwork::area(3, 1, 20, 11), .) %>%
+  patchwork::wrap_plots(append(plist, list(p + theme(plot.title = element_text(size = 10))), after = 0), design = .)
+```
+
+
+```{r heterocache = TRUE}
+# Define the minimum and maximum effect size
+min_heter_es <- vi_survey %>% 
+  filter(!null_lineup, 
+         !attention_check,
+         type == "heteroskedasticity", 
+         x_dist == "uniform") %>%
+  pull(effect_size) %>%
+  min()
+max_heter_es <- vi_survey %>% 
+  filter(!null_lineup, 
+         !attention_check,
+         type == "heteroskedasticity", 
+         x_dist == "uniform") %>%
+  pull(effect_size) %>%
+  max()
+
+# The prediction for all conventional tests on heter model
+pred_conv_heter <- heter_conv_sim %>%
+  filter(x_dist == "uniform") %>%
+  select(-RESET3_p_value, -(RESET5_p_value:RESET10_p_value), -F_p_value) %>%
+  rename(RESET_p_value = RESET4_p_value) %>%
+  pivot_longer(RESET_p_value:SW_p_value) %>%
+  mutate(name = gsub("_p_value", " test", name)) %>%
+  mutate(reject = value <= 0.05) %>%
+  select(effect_size, name, reject) %>%
+  mutate(offset0 = log(0.05/0.95)) %>%
+  nest(dat = c(effect_size, offset0, reject)) %>%
+  mutate(mod = map(dat, 
+                   ~glm(reject ~ effect_size - 1, 
+                        family = binomial(), 
+                        data = .x,
+                        offset = offset0))) %>%
+  mutate(power = map(mod, function(mod) {
+    result <- data.frame(effect_size = exp(seq(log(min_heter_es), log(max_heter_es), 0.1)),
+                         offset0 = log(0.05/0.95))
+    result$power <- predict(mod, type = "response", newdata = result)
+    result
+  })) %>%
+  select(-dat, -mod) %>%
+  unnest(power) %>%
+  mutate(log_effect_size = log(effect_size))
+
+# Data needed by the visual test
+visual_heter_dat <- vi_survey %>%
+  filter(!null_lineup, 
+         !attention_check, 
+         type == "heteroskedasticity", 
+         x_dist == "uniform") %>%
+  group_by(unique_lineup_id) %>%
+  summarise(across(everything(), first)) %>%
+  mutate(reject = as.numeric(p_value <= 0.05)) %>%
+  mutate(offset0 = log(0.05/0.95)) %>%
+  select(effect_size, offset0, reject)
+
+# The glm model for visual test
+visual_heter_glmmod <- glm(reject ~ effect_size - 1, 
+                           family = binomial(), 
+                           data = visual_heter_dat, 
+                           offset = offset0)
+
+# The prediction of the visual test
+pred_visual_heter <- data.frame(effect_size = exp(seq(log(min_heter_es), log(max_heter_es), 0.1)),
+                                offset0 = log(0.05/0.95)) %>%
+  mutate(power = predict(visual_heter_glmmod, 
+                         type = "response",
+                         newdata = data.frame(effect_size = effect_size,
+                                              offset0 = offset0))) %>%
+  mutate(log_effect_size = log(effect_size))
+
+# The prediction of the boot visual test
+pred_visual_heter_boot <- map_df(1:500, function(boot_id) {
+  slice_sample(visual_heter_dat, n = nrow(visual_heter_dat), replace = TRUE) %>%
+    nest(dat = c(effect_size, offset0, reject)) %>%
+    mutate(mod = map(dat, 
+                     ~glm(reject ~ effect_size - 1, 
+                          family = binomial(), 
+                          data = .x,
+                          offset = offset0))) %>%
+    mutate(power = map(mod, function(mod) {
+      result <- data.frame(effect_size = exp(seq(log(min_heter_es), log(max_heter_es), 0.1)),
+                           offset0 = log(0.05/0.95))
+      result$power <- predict(mod, type = "response", newdata = result)
+      result
+    })) %>%
+    select(-dat, -mod) %>%
+    unnest(power) %>%
+    mutate(log_effect_size = log(effect_size)) %>%
+    mutate(boot_id = boot_id)
+  })
+```
+
+```{r}
+# Analyse uniform heteroskedasticity data
+p <- ggplot() +
+  
+  geom_point(data = visual_heter_dat,
+             aes(log(effect_size), reject),
+             alpha = 0.15) +
+  
+  # Draw conventional test power curve
+  geom_line(data = pred_conv_heter,
+            aes(log_effect_size, power, col = name, linetype = name)) +
+  
+  # Draw boot visual test curves
+  geom_line(data = pred_visual_heter_boot,
+            aes(log_effect_size, power, col = "visual test", group = boot_id, linetype = "visual test"),
+            alpha = 0.01) +
+  
+  # Draw visual test power curve
+  geom_line(data = pred_visual_heter,
+            aes(log_effect_size, power, col = "visual test", linetype = "visual test")) +
+  
+  # Theme
+  theme_light(base_size = 12) +
+  theme(panel.grid.major.x =  element_line(colour = "grey70", linewidth = 0.3)) +
+  scale_color_manual(values = rev(rcartocolor::carto_pal(4, "Vivid"))) +
+  scale_linetype_manual(values = c("visual test" = 1, "RESET test" = 2, "BP test" = 3, "SW test" = 4)) +
+  scale_x_continuous(breaks = seq(0, 5, 0.5), minor_breaks = NULL) +
+  xlab(expression(log[e] (Effect_size))) +
+  ylab("Power") +
+  labs(col = "", linetype = "")
+```  
+
+  
+```{r cache = TRUE}
+# target_b is obtained by evaluating a vector of b and picking those 
+# with expected effect 0 ~ 5
+
+target_b <- c(0.17, 0.23, 0.32, 0.46, 0.67, 1.04, 1.7, 3, 6.3, 16.2, 61)
+
+# Calculate the effect size 
+es <- map_dbl(target_b, 
+              ~log(heter_model(a = 1, 
+                               b = .x, 
+                               x = {raw_x <- rand_normal(sigma = 0.3);closed_form(~stand_dist(raw_x))})$
+                     average_effect_size(n = 100, type = "kl")
+                   )
+              )
+```
+
+```{r nonlinearheterpower, fig.height = 6.5, fig.width = 5, dev = 'png', dpi = 450}
+
+set.seed(135)
+
+# Base data
+ex_dat <- heter_model(a = 1, 
+                      x = rand_uniform(-1, 1), 
+                      b = 1)$gen(n = 100)
+plist <- list()
+j <- 0
+
+# Obtain data at different b
+for (i in target_b) {
+  j <- j + 1
+  plist[[j]] <- heter_model(a = 1, 
+                            b = i, 
+                            x = rand_uniform(-1, 1))$
+                  gen(n = 100, computed = select(ex_dat, x, e)) %>%
+  VI_MODEL$plot(theme = theme_light(base_size =  5),
+                remove_axis = TRUE,
+                remove_grid_line = TRUE, size = 0.25, stroke = 0.25) +
+    ggtitle(round(es[j], 1)) +
+    theme(aspect.ratio = 0.8)
+}
+
+# Use area() to design layout
+B <- map(1:11, ~patchwork::area(21, .x, 22, .x)) %>%
+  reduce(c) %>%
+  c(patchwork::area(3, 1, 20, 11), .) %>%
+patchwork::wrap_plots(append(plist, list(p + 
+  theme(plot.title = element_text(size = 10))), after = 0),
+    design = .)
+```
+
+# 📈 Results
+## 📏 Effect size: Non-linearity
+
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4.2
+#| out-width: 100%
+A + patchwork::plot_layout(guides = "collect")
+```
+
+
+## 📏 Effect size: Heteroskedasticity
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4.2
+#| out-width: 100%
+B + patchwork::plot_layout(guides = "collect")
+```  
+
+## 📊 Test Outcomes
+
+
+```{r}
+# Dataset for p-value comparison
+p_value_cmp_dat <- vi_survey %>%
+  filter(!null_lineup) %>%
+  filter(!attention_check) %>%
+  filter(x_dist == "uniform") %>%
+  mutate(type = ifelse(type == "polynomial", "non-linearity", type)) %>%
+  group_by(unique_lineup_id) %>%
+  summarise(across(everything(), first)) %>%
+  mutate(type = factor(type, levels = c("non-linearity", "heteroskedasticity"))) %>%
+  mutate(conv_reject = ifelse(conventional_p_value <= 0.05, "Reject", "Not"),
+         reject = ifelse(p_value <= 0.05, "Reject", "Not")) %>%
+  mutate(conv_reject = factor(conv_reject, levels = c("Reject", "Not")),
+         reject = factor(reject, levels = c("Reject", "Not"))) %>%
+  select(type, conv_reject, reject)
+
+nr <- p_value_cmp_dat %>% filter(type == "heteroskedasticity") %>% filter(conv_reject == "Not") %>% count(reject)
+```
+```{r}
+
+library(ggmosaic)
+
+# Mosaic plot
+p_value_cmp_dat %>%
+  mutate(type = ifelse(type == "non-linearity", "Non-linearity", "Heteroskedasticity")) %>%
+  mutate(type = factor(type, levels = c("Non-linearity", "Heteroskedasticity"))) %>%
+  ggplot() +
+  geom_mosaic(aes(x = ggmosaic::product(reject, conv_reject), 
+                  fill = reject)) +
+  facet_grid(~type) +
+  ylab("Visual tests") +
+  xlab("Conventional tests") +
+  labs(fill = "Conventional tests") +
+  scale_fill_brewer("", palette = "Dark2") +
+  theme_bw() +
+  theme(legend.position = "none") +
+  coord_fixed()
+```
+
+## 🪩 The Oddball Dataset
+
+```{r}
+
+vi_lineup$heter_331$data %>%
+  ggplot(aes(x = x, y = y)) + geom_point() + facet_wrap(~k) + theme_lineup()
+```
+
+::: notes
+- Plot 17 is the 
+:::
+
+## 📓 Conclusions
+
+
+::: columns
+
+::: {.column .smaller}
+
+#### Visual Test
+
+- One test, multiple violations
+
+:::
+
+::: {.column .smaller}
+
+#### Conventional Test
+
+- Multiple tests required     
+
+| Violation | Test |
+| ------ | ------ |
+| nonlinearity | RESET |
+| heteroskedasticity | Breusch-Pagan |
+| goodness-of-fit | Shapiro-Wilk |
+
+:::
+:::
+
+## 📓 Conclusions
+
+
+::: columns
+
+::: {.column .smaller}
+
+#### Visual Test
+
+- One test, multiple violations
+- Reject ➡️
+    - severe issue w/ model fit
+
+
+:::
+
+::: {.column .smaller}
+
+#### Conventional Test
+
+- Multiple tests required
+- Reject ➡️
+    - minor issue, no model impact OR
+    - major issue, model impact
+  (no way to tell)
+    
+:::
+
+:::
+
+
+## 📓 Conclusions
+
+
+::: columns
+
+::: {.column .smaller}
+
+#### Visual Test
+
+- One test, multiple violations
+- Reject ➡️
+    - severe issue w/ model fit
+    - 99.99% chance conventional test also rejects
+
+:::
+
+::: {.column .smaller}
+
+#### Conventional Test
+
+- Multiple tests required
+- Reject ➡️
+    - minor issue, no model impact OR
+    - major issue, model impact
+  (no way to tell)
+    
+    
+:::
+
+:::
+
+
+
+# 🤖 [AutoVI]{.large .green .emph}: Automated Assessment of Residual Plots with Computer Vision {.center}
+
+
+
+## ⚠️ Limitations of Lineup Protocol
+
+```{r}
+poly_mod_x <- rand_uniform()
+poly_mod <- poly_model(x = closed_form(~-poly_mod_x))
+poly_dat<- poly_mod$gen(300)
+```
+
+```{r big-lineup}
+#| fig-width: 14
+#| fig-height: 14
+#| fig-asp: 1
+#| fig-dpi: 300
+#| include: false
+#| cache: true
+set.seed(10131)
+poly_mod$gen_lineup(300, k = 100, pos = 11) %>%
+  VI_MODEL$plot_lineup(theme = theme_bw(base_size = 12),
+                       remove_grid_line = TRUE,
+                       remove_axis = TRUE) + 
+  theme(strip.text = element_text(size=6), strip.clip = "on")
+```
+
+```{r many-lineups}
+#| fig-width: 7
+#| fig-height: 7
+#| fig-asp: 1
+#| fig-dpi: 300
+#| include: false
+#| cache: true
+
+mod$gen_lineup(300, k = 20, pos = 5) %>%
+  filter(null != FALSE) %>%
+  bind_rows(ori_dat %>% mutate(k = 5, null = FALSE)) %>%
+  VI_MODEL$plot_lineup(theme = theme_bw(base_size = 12),
+                       remove_grid_line = TRUE,
+                       remove_axis = TRUE)
+
+mod$gen_lineup(300, k = 20, pos = 3) %>%
+  filter(null != FALSE) %>%
+  bind_rows(ori_dat %>% mutate(k = 3, null = FALSE)) %>%
+  VI_MODEL$plot_lineup(theme = theme_bw(base_size = 12),
+                       remove_grid_line = TRUE,
+                       remove_axis = TRUE)
+
+mod$gen_lineup(300, k = 20, pos = 12) %>%
+  filter(null != FALSE) %>%
+  bind_rows(ori_dat %>% mutate(k = 12, null = FALSE)) %>%
+  VI_MODEL$plot_lineup(theme = theme_bw(base_size = 12),
+                       remove_grid_line = TRUE,
+                       remove_axis = TRUE)
+
+mod$gen_lineup(300, k = 20, pos = 15) %>%
+  filter(null != FALSE) %>%
+  bind_rows(ori_dat %>% mutate(k = 15, null = FALSE)) %>%
+  VI_MODEL$plot_lineup(theme = theme_bw(base_size = 12),
                        remove_grid_line = TRUE,
                        remove_axis = TRUE)
 ```
 
-::: notes
 
-What do you observe from this residual plot?
+1.  Humans cannot (easily) evaluate
 
-- Vertical spread of the points varies with the fitted values.
-- This often indicates **the existence of heteroskedasticity**.
-
-- The real data is in plot 11.
-:::
-
-
-## 🔬Visual Inference
 ::: columns
 ::: column
-```{r lineupdemo}
-#| fig-width: 7
-#| fig-height: 7
-#| out-height: "100%"
-#| fig-dpi: 300
+
+::: {.fragment fragment-index=2}
+  - lineups w/ **many plots**
+
+![](index_files/figure-revealjs/big-lineup-1.png){.fragment fragment-index=2 width="80%"}
+:::
+:::
+
+::: {.column}
+
+::: {.fragment fragment-index=3}
+
+  - a **large number of lineups**
+
+:::
+
+::: {.r-stack}
+![](index_files/figure-revealjs/many-lineups-1.png){.fragment fragment-index=3 width="80%"}
+
+![](index_files/figure-revealjs/many-lineups-2.png){.fragment fragment-index=4 width="80%"}
+
+![](index_files/figure-revealjs/many-lineups-3.png){.fragment fragment-index=5 width="80%"}
+
+![](index_files/figure-revealjs/many-lineups-4.png){.fragment fragment-index=6 width="80%"}
+:::
+:::
+:::
+
+## ⚠️ Limitations of Lineup Protocol
+1.  Humans cannot (easily) evaluate    
+    - lineups w/ **many plots**
+    - a **large number of lineups**
+
+::: fragment
+2.  Lineups have **high labor costs** and can be **time consuming** to evaluate
+:::
+
+[➡️ Make the 🖥️ do it for us with 🪄 [Computer Vision]{.emph .blue .large} 🤖]{.fragment}
+
+## 📏Measure the Difference
+
+To develop computer vision models assessing lineups of residual plots, we need to define a **numerical measure** of ["difference"]{.emph .red} or ["distance"]{.emph .blue} between plots
+
+-   pixel-wise sum of square differences
+-   Structural Similarity Index Measure (SSIM)
+-   scagnostics
+-   KL-Divergence (actual vs. null)
+
+## 🎯Estimation of the Distance
+
+Approach: Train a **computer vision model** to estimate $D$ with **a residual plot**
+
+$$\widehat{D} = f_{CV}(V_{h \times w}(\boldsymbol{e}, \boldsymbol{\hat{y}}))$$
+
+where
+
+- $V_{h \times w}(.)$ is a **plotting function** that saves a residual plot as an image with $h \times w$ pixels
+- $f_{CV}(.)$ is a **computer vision model** which predicts distance in $[0, +\infty)$
+
+
+## 🔬Statistical Testing
+
+The **null distribution** of $D$ can be estimated by predicting $\widehat{D}$ for **a large number of null plots**.
+
+-   The **critical value** can be estimated by the **sample quantile** (e.g. $Q_{null}(0.95)$) of the null distribution.
+
+-   The $p$-value is the proportion of null plots having estimated distance **greater than or equal to** the observed one.
+
+
+## 💡Training: Various Model Violations
+
+::: columns
+::: {.column width="30%"}
+**Non-linearity + Heteroskedasticity**
+:::
+
+::: {.column width="70%"}
+```{r fig.width=10, fig.height=4}
+set.seed(10086)
+
+# Data for shape 1
+dat_shape_1 <- phn_model(j = 2, a = -1, b = 100, include_x2 = FALSE, sigma = 0.05)$gen(500) %>%
+  mutate(j = 2)
+
+# Generate data for shape 2, 3 and 4. Reuse x and e.
+data_shape_1 <- map_df(3:11, function(j) {
+  phn_model(j = j, a = -1, b = 100, include_x2 = FALSE, sigma = 0.05)$
+    gen(500, computed = select(dat_shape_1, x1, e)) %>%
+  mutate(j = j)
+}) %>%
+  
+  # Combined with data for shape 1
+  bind_rows(dat_shape_1) %>%
+  mutate(j = factor(j)) 
+
+data_shape_1 %>%
+  ggplot(aes(x = x1, y = .resid)) + geom_point() + facet_wrap(~j, ncol = 5) + theme_lineup()
 ```
 :::
-
-::: column
-
-Typically, a **lineup** of residual plots consists of 
-
-<!-- - $m$ randomly placed plots -->
-- one **data plot**
-- $19$ **null plots** containing residuals **simulated from the fitted model**.
-
-:::
 :::
 
-
-## 🔬Visual Inference
 ::: columns
-::: column
-```{r lineupdemo}
-#| fig-width: 7
-#| fig-height: 7
-#| out-height: "100%"
-#| fig-dpi: 300
+::: {.column width="30%"}
+**Non-normality + Heteroskedasticity**
+:::
+
+::: {.column width="70%"}
+```{r fig.width=8, fig.height=2}
+set.seed(10085)
+
+# Data for shape 1
+dat_shape_1 <- phn_model(a = -1, b = 100, include_z = FALSE, include_x2 = FALSE, e = rand_uniform(-1.4, 1.4))$gen(500) %>%
+  mutate(e_dist = "uniform")
+
+dat_shape_2 <- phn_model(a = -1, b = 100, include_z = FALSE, include_x2 = FALSE, sigma = 0.8)$gen(500) %>%
+  mutate(e_dist = "normal")
+
+dat_shape_3 <- phn_model(a = -1, b = 100, include_z = FALSE, include_x2 = FALSE, e = rand_lognormal(sigma = 0.6))$gen(500) %>%
+  mutate(e_dist = "lognormal")
+
+dat_shape_4 <- phn_model(a = -1, b = 100, include_z = FALSE, include_x2 = FALSE, e = rand_uniform_d(-1.4, 1.4, even = TRUE))$gen(500) %>%
+  mutate(e_dist = "discrete")
+
+# Generate data for shape 2, 3 and 4. Reuse x and e.
+data_multshapes <- bind_rows(dat_shape_1, dat_shape_2, dat_shape_3, dat_shape_4)
+
+data_multshapes %>%
+  ggplot(aes(x = x1, y = .resid)) + geom_point() + theme_lineup() +
+  facet_wrap(~e_dist, scales = "free", labeller = label_parsed, ncol = 4)
 ```
 :::
-
-::: column
-
-To perform a visual test
-
-- Observer(s) select the **most different plot(s)**.
-- P-value ("see value") can be calculated using the **beta-binomial model** [@vanderplasStatisticalSignificanceCalculations2021]
-
-
 :::
-:::
-
-## Why are residual plots so important? {.center}
-
-# Experiment
-Compare **conventional hypothesis testing** with **visual testing**
-
-
-## 🧪Design
-
-::: columns
-::: column
-### **Non-linearity**
-
-$$\boldsymbol{y} = \boldsymbol{1}_n + \boldsymbol{x} + \boldsymbol{z} + \boldsymbol{\varepsilon}$$
-- $\boldsymbol{z} \propto He_j(\boldsymbol{x})$, $j$th order Hermite polynomial
-- $\boldsymbol{\varepsilon} \sim N(\boldsymbol{0}_n, \sigma^2\boldsymbol{I}_n)$
-:::
-::: column
-### **Null model:**
-
-$$\boldsymbol{y} = \beta_0 + \beta_1\boldsymbol{x} + \boldsymbol{u}$$
-- \boldsymbol{u} \sim N(\boldsymbol{0}_n, \sigma^2\boldsymbol{I}_n)
-:::
-
-:::
-
-
-### **Heteroskedasticity model:**
-
-$$\boldsymbol{y} = 1 + \boldsymbol{x} + \boldsymbol{\varepsilon},~ \boldsymbol{\varepsilon} \sim N(\boldsymbol{0}, 1 + (2 - |a|)(\boldsymbol{x} - a)^2b \boldsymbol{I}),$$
-
-\noindent where $\boldsymbol{y}$, $\boldsymbol{x}$, $\boldsymbol{\varepsilon}$ are vectors of size $n$, and $\boldsymbol{1}_n$ is a vector of ones of size $n$.
-
-### **Null regression model:**
-
-$$\boldsymbol{y} = \beta_0 + \beta_1\boldsymbol{x} + \boldsymbol{u}, ~\boldsymbol{u} \sim N(\boldsymbol{0}_n, \sigma^2\boldsymbol{I}_n).$$
 
 # References {.tiny}
