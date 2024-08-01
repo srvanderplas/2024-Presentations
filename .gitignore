@@ -1,0 +1,10 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+/.quarto/
+.vscode
+pkg_install.R
+pkg_install_errors.txt
+pkg_install_output.text
+rpkgs_to_install
