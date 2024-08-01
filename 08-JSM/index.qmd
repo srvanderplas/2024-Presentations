@@ -266,23 +266,6 @@ heter_conv_sim <- heter_conv_sim %>%
   left_join(select(filter(vi_survey, type == "heteroskedasticity"), a, b, n, x_dist, effect_size))
 ```
 
-## Coauthors {visibility="hidden"}
-
-::: columns
-::: column
-![Weihao (Patrick) Li](Patrick.jpg)
-:::
-
-::: column
-::: {layout-ncol="2"}
-![Di Cook](dicook.jpg)
-
-![Emi Tanaka](emitanaka.jpg)
-
-![Klaus Ackermann](klausackermann.png)
-:::
-:::
-:::
 
 # Residuals and Lineups
 
@@ -429,7 +412,6 @@ To perform a visual test
 :::
 :::
 
----
 ## 🤔 Motivation
 Why are residual plots so important?
 
@@ -441,7 +423,7 @@ Possible Explanations:
 - Tests are for specific issues?
 
 
-# 🧪 Experiment
+## 🧪 Experiment
 
 Compare **conventional hypothesis testing** with **visual testing** when evaluating residual plots
 
@@ -929,7 +911,6 @@ patchwork::wrap_plots(append(plist, list(p +
     design = .)
 ```
 
-# 📈 Results
 ## 📏 Effect size: Non-linearity
 
 
@@ -995,13 +976,16 @@ p_value_cmp_dat %>%
 ## 🪩 The Oddball Dataset
 
 ```{r}
-
+#| fig-width: 7
+#| fig-height: 7
+#| out-width: 60%
+#| fig-align: center
 vi_lineup$heter_331$data %>%
   ggplot(aes(x = x, y = y)) + geom_point() + facet_wrap(~k) + theme_lineup()
 ```
 
 ::: notes
-- Plot 17 is the 
+- Plot 17 is the target
 :::
 
 ## 📓 Conclusions
@@ -1093,12 +1077,6 @@ vi_lineup$heter_331$data %>%
 :::
 
 :::
-
-
-
-# 🤖 [AutoVI]{.large .green .emph}: Automated Assessment of Residual Plots with Computer Vision {.center}
-
-
 
 ## ⚠️ Limitations of Lineup Protocol
 
@@ -1204,34 +1182,65 @@ mod$gen_lineup(300, k = 20, pos = 15) %>%
 
 [➡️ Make the 🖥️ do it for us with 🪄 [Computer Vision]{.emph .blue .large} 🤖]{.fragment}
 
-## 📏Measure the Difference
-
-We need a 📏 **numerical measure** of ["difference"]{.emph .red}/["distance"]{.emph .blue} between plots
-
--   pixel-wise sum of square differences
--   Structural Similarity Index Measure (SSIM)
--   scagnostics
--   KL-Divergence (actual vs. null)
-
-## 🎯Estimation of the Distance
-
-Approach: Train a **computer vision model** to estimate $D$ with **a residual plot**
-
-$$\widehat{D} = f_{CV}(V_{h \times w}(\boldsymbol{e}, \boldsymbol{\hat{y}}))$$
-
-where
-
-- $V_{h \times w}(.)$ is a **plotting function** that saves a residual plot as an image with $h \times w$ pixels
-- $f_{CV}(.)$ is a **computer vision model** which predicts distance in $[0, +\infty)$
 
 
-## 🔬Statistical Testing
+# 🤖 [AutoVI]{.large .green .emph}: Automated Assessment of Residual Plots with Computer Vision {.center}
 
-The **null distribution** of $D$ can be estimated by predicting $\widehat{D}$ for **a large number of null plots**.
+## 🛣️ Roadmap
 
--   The **critical value** can be estimated by the **sample quantile** (e.g. $Q_{null}(0.95)$) of the null distribution.
+1. Estimate 'visual' distance $D$ between 
+    
+    - an actual residual plot
+    - a plot of residuals generated under the null model
 
--   The $p$-value is the proportion of null plots having estimated distance **greater than or equal to** the observed one.
+2. Compare $\widehat D$ to a distribution of values
+
+3. Calibrate against visual and conventional test results
+<!-- XXX TODO: Illustrate with a picture XXX -->
+
+## 📏 Measuring Distance 
+
+How to measure ["difference"]{.emph .red}/["distance"]{.emph .blue} between plots?
+
+::: {.smaller}
+-  **Statistics**:  KL-Divergence (actual vs. null) [when data generating process is known]{.emph .blue .small}
+-  **Graphics**: scagnostics
+-  **Image Analysis**: 
+    - pixel-wise sum of square differences
+    - Structural Similarity Index Measure (SSIM)
+:::
+
+## 🎯 Estimating Distance
+
+
+$\widehat{D} = f_{CV}(V_{h \times w}(\boldsymbol{e}), n, S(\hat y, \hat e))$, where 
+
+- $V_{h \times w}(.)$ is a $h\times w$ image
+- $n$ observations
+- $S(\hat y, \hat e)$ are Scagnostics
+- Computer Vision algorithm $f_{CV}(.) \rightarrow [0, +\infty)$
+
+
+## 🏗️ Building a Model  {visibility="hidden"}
+
+
+- Inputs: 
+  - Image
+  - Number of observations
+  - Scagnostics computed from `cassowaryr` [@masonNumbatsCassowaryr2024]
+      - "monotonic", "sparse", "splines", "striped"
+
+- Output: $\widehat D$, compared to $D$ using MSE loss
+
+
+
+## 🏗️ Building a Model {visibility="hidden"}
+
+- VGG16 backbone
+- Training Data:  80k images with $D$ uniformly distributed along 49 intervals between $[0, 7]$ and one with $D>7$. 
+- Test Data: 8000 images allocated in the same way
+
+- Result: Model Violation Index $MVI := 10 + \widehat D - \log (n)$ 
 
 
 ## 💡Training: Model Violations
@@ -1361,6 +1370,127 @@ bind_rows(dat_dist_1, dat_dist_2, dat_dist_3, dat_dist_4) %>%
 :::
 :::
 
+## 🔬Statistical Testing
+
+- Estimate null distribution $F(D | H_0)$ empirically:
+    - Generate data under $H_0$ 
+    - Calculate $\widehat{D}$
+
+- Compute critical value $Q_0(0.95)$ as the value $Q$ s.t. $F(D \leq Q | H_0) = 0.95$ 
+
+- $p$-value:  $P(D \geq D^\ast)$ for observed $D^\ast$
+
+## Comparison to Visual Inference
+
+- Each lineup used in the experiment has 1 target and 19 null plots
+- Run each plot through the model to get $\widehat D$ (+ RESET & BP tests)
+- Compare performance metrics
+
+## Comparison to Visual Inference
+
+```{r rd-human}
+vss_32 <- readRDS("data/vss_32.rds")
+
+experiment <- vi_survey %>%
+  group_by(unique_lineup_id) %>%
+  summarise(across(everything(), first)) %>%
+  select(unique_lineup_id, attention_check, null_lineup, prop_detect,
+         answer, effect_size, conventional_p_value,
+         p_value, type, shape, a, b, x_dist, e_dist,
+         e_sigma, include_z, k, n)
+
+experiment <- vss_32 %>%
+  left_join(experiment) %>%
+  mutate(conventional_reject = conventional_p_value <= 0.05) %>%
+  mutate(reject = p_value <= 0.05) %>%
+  mutate(model_reject = vss_p_value <= 0.05) %>%
+  mutate(model_boot_reject = vss_boot_p_value <= 0.05)
+
+experiment <- experiment %>%
+  left_join(readRDS("data/actual_ss.rds"))
+```
+
+```{r hist-null-human, fig.pos =  "!h", fig.cap = "Histogram of predicted distance on null plots used in the human subject experiment. Sample quantiles are drawn in different colors."}
+lineup_vss <- readRDS("data/lineup_vss.rds")
+lineup_vss <- lineup_vss %>%
+  group_by(unique_lineup_id) %>%
+  mutate(delta_diff = vss[!null] - max(vss[null])) %>%
+  mutate(gamma_diff = sum(vss[null] > vss[!null]))
+
+
+experiment <- experiment %>%
+  left_join(lineup_vss %>%
+  filter(null == FALSE) %>%
+  mutate(model_reject_20 = rank == 1) %>%
+  select(unique_lineup_id, rank, model_reject_20))
+```
+
+```{r cache = TRUE}
+vi_lineup <- get_vi_lineup()
+```
+
+```{r fig-pcp}
+
+library(ggpcp)
+pcp_dat <- mutate(experiment, type = ifelse(type == "polynomial", "Non-linearity", "Heteroskedasticity")) %>%
+  mutate(type = factor(type, levels = c("Non-linearity", "Heteroskedasticity"))) %>%
+  filter(!null_lineup, !attention_check) %>%
+  select(type, actual_ss, model_reject_20, reject, conventional_reject) %>%
+  mutate(test = rnorm(n())) %>%
+  mutate(across(c(model_reject_20, conventional_reject, reject), ~ifelse(.x, "Reject", "Not reject"))) %>%
+  mutate(agree = model_reject_20 == reject) %>%
+  mutate(type = factor(type))
+hetero_dat <- filter(pcp_dat, type == "Heteroskedasticity")
+nonlinear_dat <- filter(pcp_dat, type == "Non-linearity")
+p1 <- hetero_dat %>%
+  pcp_select(c(reject, model_reject_20, conventional_reject)) %>%
+  pcp_scale() %>%
+  ungroup() %>%
+  pcp_arrange(method = "from-right") %>%
+  ggplot() +
+  geom_pcp(aes_pcp(color = type), alpha = 0.5) +
+  geom_pcp_boxes(aes_pcp(), fill = "transparent", color = "black") +
+  geom_pcp_labels(aes_pcp()) +
+  # geom_pcp_boxes(aes_pcp(), boxwidth = 0.1) +
+  facet_wrap(~type) + 
+  theme_bw() +
+  scale_x_discrete(labels = c("Lineup", "AutoVI", "Conventional")) +
+  scale_color_discrete(guide = 'none', drop = F) + 
+  ylab("") +
+  xlab("") +
+  theme(#axis.text.x = element_text(angle = 45, hjust = 1), 
+        axis.text.y = element_blank(), 
+        axis.ticks.y = element_blank(), 
+        axis.title = element_blank())
+p2 <- nonlinear_dat %>%
+  pcp_select(c(reject, model_reject_20, conventional_reject)) %>%
+  pcp_scale() %>%
+  ungroup() %>%
+  pcp_arrange(method = "from-right") %>%
+  ggplot() +
+  geom_pcp(aes_pcp(color = type), alpha = 0.5) +
+  geom_pcp_boxes(aes_pcp(), fill = "transparent", color = "black") +
+  geom_pcp_labels(aes_pcp(), color = "black") +
+  facet_wrap(~type) + 
+  theme_bw() +
+  scale_x_discrete(labels = c("Lineup", "AutoVI", "Conventional")) +
+  scale_color_discrete(guide = 'none', drop = F) + 
+  ylab("") +
+  xlab("") +
+  theme(#axis.text.x = element_text(angle = 45, hjust = 1), 
+        axis.text.y = element_blank(), 
+        axis.ticks.y = element_blank(), 
+        axis.title = element_blank())
+
+p1 + p2
+```
+
+::: notes
+
+AutoVI is in between conventional and lineup tests in terms of conservatism. Lineups are still much more likely to not reject than AutoVI, but it is at least a step in the right direction.
+
+:::
+
 ## `r fontawesome::fa_i("r-project")` `autovi` Package
 
 ::: {style="font-size:80%"}
@@ -1381,15 +1511,24 @@ housing <- read_csv("data/housing.csv")
 ```
 
 ```{r}
-#| echo: true
+#| echo: false
 #| fig-height: 4
 #| fig-width: 6
+#| layout-ncol: 2
+#| fig-cap: ['Normal view', 'Pass into `autovi`']
 fitted_model <- lm(MEDV ~ RM + LSTAT + PTRATIO, data = housing)
+
+ggplot() +
+  geom_point(aes(fitted(fitted_model), 
+                 resid(fitted_model)))
+
 ggplot() +
   geom_point(aes(fitted(fitted_model), 
                  resid(fitted_model))) +
   theme_void()
 ```
+
+## 💡Example: Boston Housing
 
 
 ```{r}
@@ -1403,9 +1542,6 @@ checker <- auto_vi(fitted_model = fitted_model,
 checker$check_result <- readRDS("data/check_result_1.rds")
 ```
 
-------------------------------------------------------------------------
-
-## `r fontawesome::fa_i("r-project")` `rotate_resid()`
 
 Null residuals are simulated from the fitted model assuming it is **correctly specified**.
 
@@ -1442,7 +1578,6 @@ checker$rotate_resid() |>
 :::
 :::
 
-------------------------------------------------------------------------
 
 ## `r fontawesome::fa_i("r-project")` `vss()`
 
@@ -1463,24 +1598,21 @@ checker$vss()
 :::
 
 ::: {.column width="50%"}
-#### Visual signal strength of a null plot
+#### Visual signal strength comparison
 
-``` r
-checker$rotate_resid() |>
-  checker$vss()
+```r
+checker$summary_plot()
 ```
+
 
 ```{r}
 #| echo: false
-#| message: true
-checker$rotate_resid() |>
-  checker$vss()
+checker$summary_plot()
 ```
 :::
 :::
 :::
 
-------------------------------------------------------------------------
 
 ## `r fontawesome::fa_i("r-project")` `check()`
 
@@ -1495,15 +1627,88 @@ checker
 checker
 ```
 
-------------------------------------------------------------------------
 
-## `r fontawesome::fa_i("r-project")` `summary_plot()`
+## 💡Example: Dinosaur
 
-```{r}
-#| echo: true
-checker$summary_plot()
+::: columns
+::: {.column width="50%"}
+RESET $p$-value = 0.742    
+B-P $p$-value = 0.36    
+S-W $p$-value = 9.21e-05
+
+```{r fig.height=4, fig.width=6, dpi=300}
+dino <- datasauRus::datasaurus_dozen %>% filter(dataset == "dino")
+mod <- lm(y ~ ., data = select(dino, -dataset))
+
+my_vi <- autovi::auto_vi(fitted_model = mod)
+my_vi$plot_resid()
 ```
+:::
 
-------------------------------------------------------------------------
+::: {.column width="50%"}
+```{r fig.height=4.5, fig.width=4.5, dpi=300}
+my_vi$check_result <- readRDS("data/dino_check.rds")
+my_vi$summary_plot() +
+  theme(legend.position = "bottom", legend.box="vertical") +
+  labs(linetype = "")
+```
+:::
+:::
+:::
+
+## 🌐Shiny Application {.center}
+
+Don't want to install `TensorFlow`?
+
+Try our shiny web application: <https://shorturl.at/DNWzt>
+
+
+## 🧩Extensions
+
+For GLMs and other regrssion models:
+
+1.  Use raw residuals, but violations **may not be identifiable and the test could be two-sided**.
+2.  Use transformed residuals that are **roughly normally distributed**.
+3.  **Reuse the pre-trained convolutional blocks** and train a new computer vision model with an appropriate distance measure.
+
+## 🎬Takeaway
+
+You can use `autovi` to
+
+-   Evaluate lineups of residual plots of linear regression models
+
+-   **Capture the magnitude of model violations** through visual signal strength
+
+-   Automatically **detect model misspecification** using a visual test
+
+## Thanks! Any questions? {.center}
+
+::: columns
+::: {.column width="50%"}
+![Weihao (Patrick) Li](Patrick.jpg){width="50%"}
+
+[did all of the 🦾 work]{.emph .large .blue}
+
+
+`r fontawesome::fa_i("github")` tengmcing
+
+`r fontawesome::fa_i("envelope")` patrick.li\@monash.edu
+
+📦 [`autovi`](https://github.com/TengMCing/autovi){target="_blank"}
+:::
+
+::: {.column width="50%"}
+[Advisors]{.emph .large .green}
+
+::: {layout-ncol=2}
+![Di Cook](dicook.jpg)
+
+![Emi Tanaka](emitanaka.jpg)
+
+![Klaus Ackermann](klausackermann.png)
+:::
+:::
+
+:::
 
 # References {.tiny}

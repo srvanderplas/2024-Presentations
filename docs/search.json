@@ -1292,7 +1292,7 @@
     "href": "08-JSM/index.html#measure-the-difference",
     "title": "A Plot is Worth a Thousand Tests",
     "section": "📏Measure the Difference",
-    "text": "📏Measure the Difference\nWe need a 📏 numerical measure of “difference”/“distance” between plots\n\npixel-wise sum of square differences\nStructural Similarity Index Measure (SSIM)\nscagnostics\nKL-Divergence (actual vs. null)"
+    "text": "📏Measure the Difference\nHow to measure “difference”/“distance” between plots?\n\n\nStatistics: KL-Divergence (actual vs. null) when data generating process is known\nGraphics: scagnostics\nImage Analysis:\n\npixel-wise sum of square differences\nStructural Similarity Index Measure (SSIM)"
   },
   {
     "objectID": "08-JSM/index.html#limitations-of-lineup-protocol-1",
@@ -1327,21 +1327,21 @@
     "href": "08-JSM/index.html#the-oddball-dataset",
     "title": "A Plot is Worth a Thousand Tests",
     "section": "🪩 The Oddball Dataset",
-    "text": "🪩 The Oddball Dataset\n\n\n\n\n\n\n\n\n\n\n\nPlot 17 is the"
+    "text": "🪩 The Oddball Dataset\n\n\n\n\n\n\n\n\n\n\n\nPlot 17 is the target"
   },
   {
     "objectID": "08-JSM/index.html#estimation-of-the-distance",
     "href": "08-JSM/index.html#estimation-of-the-distance",
     "title": "A Plot is Worth a Thousand Tests",
-    "section": "🎯Estimation of the Distance",
-    "text": "🎯Estimation of the Distance\nApproach: Train a computer vision model to estimate \\(D\\) with a residual plot\n\\[\\widehat{D} = f_{CV}(V_{h \\times w}(\\boldsymbol{e}, \\boldsymbol{\\hat{y}}))\\]\nwhere\n\n\\(V_{h \\times w}(.)\\) is a plotting function that saves a residual plot as an image with \\(h \\times w\\) pixels\n\\(f_{CV}(.)\\) is a computer vision model which predicts distance in \\([0, +\\infty)\\)"
+    "section": "🎯 Estimation of the Distance",
+    "text": "🎯 Estimation of the Distance\n\\[\\widehat{D} = f_{CV}(V_{h \\times w}(\\boldsymbol{e}, \\boldsymbol{\\hat{y}}))\\]\nwhere\n\n\\(V_{h \\times w}(.)\\) is a plotting function that saves a residual plot as an image with \\(h \\times w\\) pixels\n\nImage\n# Observations\nScagnostics\n\n\\(f_{CV}(.)\\) is a computer vision model which predicts distance in \\([0, +\\infty)\\)"
   },
   {
     "objectID": "08-JSM/index.html#statistical-testing",
     "href": "08-JSM/index.html#statistical-testing",
     "title": "A Plot is Worth a Thousand Tests",
     "section": "🔬Statistical Testing",
-    "text": "🔬Statistical Testing\nThe null distribution of \\(D\\) can be estimated by predicting \\(\\widehat{D}\\) for a large number of null plots.\n\nThe critical value can be estimated by the sample quantile (e.g. \\(Q_{null}(0.95)\\)) of the null distribution.\nThe \\(p\\)-value is the proportion of null plots having estimated distance greater than or equal to the observed one."
+    "text": "🔬Statistical Testing\n\nEstimate null distribution \\(F(D | H_0)\\) empirically:\n\nGenerate data under \\(H_0\\)\nCalculate \\(\\widehat{D}\\)\n\nCompute critical value \\(Q_0(0.95)\\) as the value \\(Q\\) s.t. \\(F(D \\leq Q | H_0) = 0.95\\)\n\\(p\\)-value: \\(P(D \\geq D^\\ast)\\) for observed \\(D^\\ast\\)"
   },
   {
     "objectID": "08-JSM/index.html#training-various-model-violations",
@@ -1370,5 +1370,166 @@
     "title": "A Plot is Worth a Thousand Tests",
     "section": " autovi Package",
     "text": "autovi Package\n\nThe autovi package provides automated visual inference with computer vision models. It is available on CRAN and Github.\nCore Methods\n\nNull residuals simulation: rotate_resid()\nVisual signal strength: vss()\nComprehensive checks: check() and summary_plot()"
+  },
+  {
+    "objectID": "08-JSM/index.html#rotate_resid",
+    "href": "08-JSM/index.html#rotate_resid",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": " rotate_resid()",
+    "text": "rotate_resid()\nNull residuals are simulated from the fitted model assuming it is correctly specified.\n\n\nchecker &lt;- auto_vi(fitted_model = fitted_model, \n                   keras_model = get_keras_model(\"vss_phn_32\"))\nchecker$rotate_resid()\n\n\n# A tibble: 489 × 2\n   .fitted   .resid\n     &lt;dbl&gt;    &lt;dbl&gt;\n 1 632372.   82404.\n 2 525177.   24363.\n 3 646753.  -16642.\n 4 624848.    7895.\n 5 611817.  -25387.\n 6 551051. -128980.\n 7 504757.  -37748.\n 8 445700.   33616.\n 9 281912.  -17081.\n10 453398. -103580.\n# ℹ 479 more rows\n\n\n\nchecker$rotate_resid() |&gt;\n  checker$plot_resid()\n\n\n\n\n\n\n\n\n\n\n\n:::"
+  },
+  {
+    "objectID": "08-JSM/index.html#vss",
+    "href": "08-JSM/index.html#vss",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": " vss()",
+    "text": "vss()\n\n\n\nVisual signal strength of the actual residual plot\nchecker$vss()\n\n\n✔ Predict visual signal strength for 1 image.\n\n\n# A tibble: 1 × 1\n    vss\n  &lt;dbl&gt;\n1  6.48\n\n\n\nVisual signal strength comparison\nchecker$summary_plot()"
+  },
+  {
+    "objectID": "08-JSM/index.html#check",
+    "href": "08-JSM/index.html#check",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": " check()",
+    "text": "check()\nchecker$check()\nchecker\n\n\n\n\n\n── &lt;AUTO_VI object&gt;\nStatus:\n - Fitted model: lm\n - Keras model: (None, 32, 32, 3) + (None, 5) -&gt; (None, 1)\n    - Output node index: 1\n - Result:\n    - Observed visual signal strength: 6.484 (p-value = 0)\n    - Null visual signal strength: [100 draws]\n       - Mean: 1.169\n       - Quantiles: \n          ╔══════════════════════════════════════════╗\n          ║  25%   50%   75%   80%   90%   95%   99% ║\n          ║1.037 1.120 1.231 1.247 1.421 1.528 1.993 ║\n          ╚══════════════════════════════════════════╝\n    - Bootstrapped visual signal strength: [100 draws]\n       - Mean: 6.28 (p-value = 0)\n       - Quantiles: \n          ╔══════════════════════════════════════════╗\n          ║  25%   50%   75%   80%   90%   95%   99% ║\n          ║5.960 6.267 6.614 6.693 6.891 7.112 7.217 ║\n          ╚══════════════════════════════════════════╝\n    - Likelihood ratio: 0.7064 (boot) / 0 (null) = Extremely large"
+  },
+  {
+    "objectID": "08-JSM/index.html#summary_plot",
+    "href": "08-JSM/index.html#summary_plot",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": " summary_plot()",
+    "text": "summary_plot()\n\nchecker$summary_plot()"
+  },
+  {
+    "objectID": "08-JSM/index.html#example-boston-housing",
+    "href": "08-JSM/index.html#example-boston-housing",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "💡Example: Boston Housing",
+    "text": "💡Example: Boston Housing\n\n\n\n\n\n\n\n\n\nNormal view\n\n\n\n\n\n\n\nPass into autovi"
+  },
+  {
+    "objectID": "08-JSM/index.html#example-dinosaur",
+    "href": "08-JSM/index.html#example-dinosaur",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "💡Example: Dinosaur",
+    "text": "💡Example: Dinosaur\n\n\nRESET \\(p\\)-value = 0.742\nB-P \\(p\\)-value = 0.36\nS-W \\(p\\)-value = 9.21e-05\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n:::"
+  },
+  {
+    "objectID": "08-JSM/index.html#shiny-application",
+    "href": "08-JSM/index.html#shiny-application",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "🌐Shiny Application",
+    "text": "🌐Shiny Application\nDon’t want to install TensorFlow?\nTry our shiny web application: https://shorturl.at/DNWzt"
+  },
+  {
+    "objectID": "08-JSM/index.html#extensions",
+    "href": "08-JSM/index.html#extensions",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "🧩Extensions",
+    "text": "🧩Extensions\nFor GLMs and other regrssion models:\n\nUse raw residuals, but violations may not be identifiable and the test could be two-sided.\nUse transformed residuals that are roughly normally distributed.\nReuse the pre-trained convolutional blocks and train a new computer vision model with an appropriate distance measure."
+  },
+  {
+    "objectID": "08-JSM/index.html#takeaway",
+    "href": "08-JSM/index.html#takeaway",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "🎬Takeaway",
+    "text": "🎬Takeaway\nYou can use autovi to\n\nEvaluate lineups of residual plots of linear regression models\nCapture the magnitude of model violations through visual signal strength\nAutomatically detect model misspecification using a visual test"
+  },
+  {
+    "objectID": "08-JSM/index.html#thanks-any-questions",
+    "href": "08-JSM/index.html#thanks-any-questions",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "Thanks! Any questions?",
+    "text": "Thanks! Any questions?\n\n\n\n\n\nWeihao (Patrick) Li\n\n\ndid all of the 🦾 work\n tengmcing\n patrick.li@monash.edu\n📦 autovi\n\nAdvisors\n\n\n\n\n\n\n\n\n\nDi Cook\n\n\n\n\n\n\n\nEmi Tanaka\n\n\n\n\n\n\n\n\n\nKlaus Ackermann"
+  },
+  {
+    "objectID": "08-JSM/index.html#building-a-model",
+    "href": "08-JSM/index.html#building-a-model",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "🏗️ Building a Model",
+    "text": "🏗️ Building a Model\n\nVGG16 backbone\nInputs:\n\nImage\nNumber of observations\nScagnostics computed from cassowaryr (Mason et al. 2024)\n\n“monotonic”, “sparse”, “splines”, “striped”\n\n\nOutput: \\(\\widehat D\\), compared to \\(D\\) using MSE loss\nTraining Data: 80k images with \\(D\\) uniformly distributed along 49 intervals between \\([0, 7]\\) and one with \\(D&gt;7\\).\nTest Data: 8000 images allocated in the same way"
+  },
+  {
+    "objectID": "08-JSM/index.html#measure-the-difference-visibility-hidden",
+    "href": "08-JSM/index.html#measure-the-difference-visibility-hidden",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "📏Measure the Difference {visibility = “hidden”}",
+    "text": "📏Measure the Difference {visibility = “hidden”}\nHow to measure “difference”/“distance” between plots?\n\nStatistical solution:\n\nKL-Divergence (actual vs. null) when data generating process is known\n\nGraphics Solutions\n\nscagnostics\n\nComputer Vision Solutions\n\npixel-wise sum of square differences\nStructural Similarity Index Measure (SSIM)"
+  },
+  {
+    "objectID": "08-JSM/index.html#building-a-model-visibility-hidden",
+    "href": "08-JSM/index.html#building-a-model-visibility-hidden",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "🏗️ Building a Model {visibility = “hidden”}",
+    "text": "🏗️ Building a Model {visibility = “hidden”}\n\nInputs:\n\nImage\nNumber of observations\nScagnostics computed from cassowaryr (Mason et al. 2024)\n\n“monotonic”, “sparse”, “splines”, “striped”\n\n\nOutput: \\(\\widehat D\\), compared to \\(D\\) using MSE loss"
+  },
+  {
+    "objectID": "08-JSM/index.html#building-a-model-visibility-hidden-1",
+    "href": "08-JSM/index.html#building-a-model-visibility-hidden-1",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "🏗️ Building a Model {visibility = “hidden”}",
+    "text": "🏗️ Building a Model {visibility = “hidden”}\n\nVGG16 backbone\nTraining Data: 80k images with \\(D\\) uniformly distributed along 49 intervals between \\([0, 7]\\) and one with \\(D&gt;7\\).\nTest Data: 8000 images allocated in the same way\nResult: Model Violation Index \\(MVI := 10 + \\widehat D - \\log (n)\\)"
+  },
+  {
+    "objectID": "08-JSM/index.html#comparison-to-visual-inference",
+    "href": "08-JSM/index.html#comparison-to-visual-inference",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "Comparison to Visual Inference",
+    "text": "Comparison to Visual Inference\n\nEach lineup used in the experiment has 1 target and 19 null plots\nRun each plot through the model to get \\(\\widehat D\\) (+ RESET & BP tests)\nCompare performance metrics"
+  },
+  {
+    "objectID": "08-JSM/index.html#experiment",
+    "href": "08-JSM/index.html#experiment",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "🧪 Experiment",
+    "text": "🧪 Experiment\nCompare conventional hypothesis testing with visual testing when evaluating residual plots"
+  },
+  {
+    "objectID": "08-JSM/index.html#results",
+    "href": "08-JSM/index.html#results",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "📈 Results",
+    "text": "📈 Results"
+  },
+  {
+    "objectID": "08-JSM/index.html#distance-between-plots",
+    "href": "08-JSM/index.html#distance-between-plots",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "🛣️ Distance between Plots",
+    "text": "🛣️ Distance between Plots\nApproach: Estimate distance \\(D\\) between\n\nan actual residual plot\na plot of residuals generated under the null model"
+  },
+  {
+    "objectID": "08-JSM/index.html#measuring-distance",
+    "href": "08-JSM/index.html#measuring-distance",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "📏 Measuring Distance",
+    "text": "📏 Measuring Distance\nHow to measure “difference”/“distance” between plots?\n\n\nStatistics: KL-Divergence (actual vs. null) when data generating process is known\nGraphics: scagnostics\nImage Analysis:\n\npixel-wise sum of square differences\nStructural Similarity Index Measure (SSIM)"
+  },
+  {
+    "objectID": "08-JSM/index.html#roadmap",
+    "href": "08-JSM/index.html#roadmap",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "🛣️ Roadmap",
+    "text": "🛣️ Roadmap\n\nEstimate ‘visual’ distance \\(D\\) between\n\nan actual residual plot\na plot of residuals generated under the null model\n\nCompare \\(\\widehat D\\) to a distribution of values\nCalibrate against visual and conventional test results"
+  },
+  {
+    "objectID": "08-JSM/index.html#estimating-distance",
+    "href": "08-JSM/index.html#estimating-distance",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "🎯 Estimating Distance",
+    "text": "🎯 Estimating Distance\n\\(\\widehat{D} = f_{CV}(V_{h \\times w}(\\boldsymbol{e}), n, S(\\hat y, \\hat e))\\), where\n\n\\(V_{h \\times w}(.)\\) is a \\(h\\times w\\) image\n\\(n\\) observations\n\\(S(\\hat y, \\hat e)\\) are Scagnostics\nComputer Vision algorithm \\(f_{CV}(.) \\rightarrow [0, +\\infty)\\)"
+  },
+  {
+    "objectID": "08-JSM/index.html#comparison-to-visual-inference-1",
+    "href": "08-JSM/index.html#comparison-to-visual-inference-1",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "Comparison to Visual Inference",
+    "text": "Comparison to Visual Inference\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAutoVI is in between conventional and lineup tests in terms of conservatism. Lineups are still much more likely to not reject than AutoVI, but it is at least a step in the right direction."
+  },
+  {
+    "objectID": "08-JSM/index.html#example-boston-housing-1",
+    "href": "08-JSM/index.html#example-boston-housing-1",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "💡Example: Boston Housing",
+    "text": "💡Example: Boston Housing\nNull residuals are simulated from the fitted model assuming it is correctly specified.\n\n\nchecker &lt;- auto_vi(fitted_model = fitted_model, \n                   keras_model = get_keras_model(\"vss_phn_32\"))\nchecker$rotate_resid()\n\n\n# A tibble: 489 × 2\n   .fitted   .resid\n     &lt;dbl&gt;    &lt;dbl&gt;\n 1 632372.   24372.\n 2 525177.   13236.\n 3 646753.   54824.\n 4 624848.  -98465.\n 5 611817.  188264.\n 6 551051.  -67975.\n 7 504757.  142250.\n 8 445700. -175323.\n 9 281912. -101298.\n10 453398. -121730.\n# ℹ 479 more rows\n\n\n\nchecker$rotate_resid() |&gt;\n  checker$plot_resid()\n\n\n\n\n\n\n\n\n\n\n\n:::"
   }
 ]

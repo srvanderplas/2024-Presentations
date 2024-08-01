@@ -31,6 +31,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     /* CSS for citations */
     div.csl-bib-body { }
     div.csl-entry {
@@ -363,7 +428,6 @@ Weihao (Patrick) Li, Di Cook, Emi Tanaka, Klaus Ackermann, Susan Vanderplas
 
   <p class="date">2024-08-07</p>
 </section>
-
 <section>
 <section id="residuals-and-lineups" class="title-slide slide level1 center">
 <h1>Residuals and Lineups</h1>
@@ -521,10 +585,9 @@ Weihao (Patrick) Li, Di Cook, Emi Tanaka, Klaus Ackermann, Susan Vanderplas
 <li>Tests are too sensitive?</li>
 <li>Tests are for specific issues?</li>
 </ul>
-</section></section>
-<section>
-<section id="experiment" class="title-slide slide level1 center">
-<h1>🧪 Experiment</h1>
+</section>
+<section id="experiment" class="slide level2">
+<h2>🧪 Experiment</h2>
 <p>Compare <strong>conventional hypothesis testing</strong> with <strong>visual testing</strong> when evaluating residual plots</p>
 </section>
 <section id="design" class="slide level2">
@@ -597,11 +660,6 @@ Weihao (Patrick) Li, Di Cook, Emi Tanaka, Klaus Ackermann, Susan Vanderplas
 <li><p>576 (non linearity) + 540 (heteroskedasticity) lineups tested with at least 5 evaluations</p></li>
 <li><p>Additional 36 Rorshach lineups used to estimate <span class="math inline">\(\alpha\)</span> for p-value calculations</p></li>
 </ul>
-</section></section>
-<section>
-<section id="results" class="title-slide slide level1 center">
-<h1>📈 Results</h1>
-
 </section>
 <section id="effect-size-non-linearity" class="slide level2">
 <h2>📏 Effect size: Non-linearity</h2>
@@ -641,18 +699,18 @@ Weihao (Patrick) Li, Di Cook, Emi Tanaka, Klaus Ackermann, Susan Vanderplas
 </section>
 <section id="the-oddball-dataset" class="slide level2">
 <h2>🪩 The Oddball Dataset</h2>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-13-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
 </figure>
 </div>
 </div>
 </div>
 <aside class="notes">
 <ul>
-<li>Plot 17 is the</li>
+<li>Plot 17 is the target</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -754,11 +812,6 @@ Weihao (Patrick) Li, Di Cook, Emi Tanaka, Klaus Ackermann, Susan Vanderplas
 </ul>
 </div>
 </div>
-</section></section>
-<section>
-<section id="autovi-automated-assessment-of-residual-plots-with-computer-vision" class="title-slide slide level1 center">
-<h1>🤖 <span class="large green emph">AutoVI</span>: Automated Assessment of Residual Plots with Computer Vision</h1>
-
 </section>
 <section id="limitations-of-lineup-protocol" class="slide level2">
 <h2>⚠️ Limitations of Lineup Protocol</h2>
@@ -803,35 +856,51 @@ Weihao (Patrick) Li, Di Cook, Emi Tanaka, Klaus Ackermann, Susan Vanderplas
 </ol>
 </div>
 <p><span class="fragment">➡️ Make the 🖥️ do it for us with 🪄 <span class="emph blue large">Computer Vision</span> 🤖</span></p>
+</section></section>
+<section>
+<section id="autovi-automated-assessment-of-residual-plots-with-computer-vision" class="title-slide slide level1 center">
+<h1>🤖 <span class="large green emph">AutoVI</span>: Automated Assessment of Residual Plots with Computer Vision</h1>
+
 </section>
-<section id="measure-the-difference" class="slide level2">
-<h2>📏Measure the Difference</h2>
-<p>We need a 📏 <strong>numerical measure</strong> of <span class="emph red">“difference”</span>/<span class="emph blue">“distance”</span> between plots</p>
+<section id="roadmap" class="slide level2">
+<h2>🛣️ Roadmap</h2>
+<ol type="1">
+<li><p>Estimate ‘visual’ distance <span class="math inline">\(D\)</span> between</p>
+<ul>
+<li>an actual residual plot</li>
+<li>a plot of residuals generated under the null model</li>
+</ul></li>
+<li><p>Compare <span class="math inline">\(\widehat D\)</span> to a distribution of values</p></li>
+<li><p>Calibrate against visual and conventional test results <!-- XXX TODO: Illustrate with a picture XXX --></p></li>
+</ol>
+</section>
+<section id="measuring-distance" class="slide level2">
+<h2>📏 Measuring Distance</h2>
+<p>How to measure <span class="emph red">“difference”</span>/<span class="emph blue">“distance”</span> between plots?</p>
+<div class="smaller">
+<ul>
+<li><strong>Statistics</strong>: KL-Divergence (actual vs.&nbsp;null) <span class="emph blue small">when data generating process is known</span></li>
+<li><strong>Graphics</strong>: scagnostics</li>
+<li><strong>Image Analysis</strong>:
 <ul>
 <li>pixel-wise sum of square differences</li>
 <li>Structural Similarity Index Measure (SSIM)</li>
-<li>scagnostics</li>
-<li>KL-Divergence (actual vs.&nbsp;null)</li>
+</ul></li>
 </ul>
+</div>
 </section>
-<section id="estimation-of-the-distance" class="slide level2">
-<h2>🎯Estimation of the Distance</h2>
-<p>Approach: Train a <strong>computer vision model</strong> to estimate <span class="math inline">\(D\)</span> with <strong>a residual plot</strong></p>
-<p><span class="math display">\[\widehat{D} = f_{CV}(V_{h \times w}(\boldsymbol{e}, \boldsymbol{\hat{y}}))\]</span></p>
-<p>where</p>
+<section id="estimating-distance" class="slide level2">
+<h2>🎯 Estimating Distance</h2>
+<p><span class="math inline">\(\widehat{D} = f_{CV}(V_{h \times w}(\boldsymbol{e}), n, S(\hat y, \hat e))\)</span>, where</p>
 <ul>
-<li><span class="math inline">\(V_{h \times w}(.)\)</span> is a <strong>plotting function</strong> that saves a residual plot as an image with <span class="math inline">\(h \times w\)</span> pixels</li>
-<li><span class="math inline">\(f_{CV}(.)\)</span> is a <strong>computer vision model</strong> which predicts distance in <span class="math inline">\([0, +\infty)\)</span></li>
+<li><span class="math inline">\(V_{h \times w}(.)\)</span> is a <span class="math inline">\(h\times w\)</span> image</li>
+<li><span class="math inline">\(n\)</span> observations</li>
+<li><span class="math inline">\(S(\hat y, \hat e)\)</span> are Scagnostics</li>
+<li>Computer Vision algorithm <span class="math inline">\(f_{CV}(.) \rightarrow [0, +\infty)\)</span></li>
 </ul>
 </section>
-<section id="statistical-testing" class="slide level2">
-<h2>🔬Statistical Testing</h2>
-<p>The <strong>null distribution</strong> of <span class="math inline">\(D\)</span> can be estimated by predicting <span class="math inline">\(\widehat{D}\)</span> for <strong>a large number of null plots</strong>.</p>
-<ul>
-<li><p>The <strong>critical value</strong> can be estimated by the <strong>sample quantile</strong> (e.g.&nbsp;<span class="math inline">\(Q_{null}(0.95)\)</span>) of the null distribution.</p></li>
-<li><p>The <span class="math inline">\(p\)</span>-value is the proportion of null plots having estimated distance <strong>greater than or equal to</strong> the observed one.</p></li>
-</ul>
-</section>
+
+
 <section id="training-model-violations" class="slide level2">
 <h2>💡Training: Model Violations</h2>
 <div class="columns">
@@ -883,6 +952,55 @@ Weihao (Patrick) Li, Di Cook, Emi Tanaka, Klaus Ackermann, Susan Vanderplas
 </div>
 </div>
 </section>
+<section id="statistical-testing" class="slide level2">
+<h2>🔬Statistical Testing</h2>
+<ul>
+<li><p>Estimate null distribution <span class="math inline">\(F(D | H_0)\)</span> empirically:</p>
+<ul>
+<li>Generate data under <span class="math inline">\(H_0\)</span></li>
+<li>Calculate <span class="math inline">\(\widehat{D}\)</span></li>
+</ul></li>
+<li><p>Compute critical value <span class="math inline">\(Q_0(0.95)\)</span> as the value <span class="math inline">\(Q\)</span> s.t. <span class="math inline">\(F(D \leq Q | H_0) = 0.95\)</span></p></li>
+<li><p><span class="math inline">\(p\)</span>-value: <span class="math inline">\(P(D \geq D^\ast)\)</span> for observed <span class="math inline">\(D^\ast\)</span></p></li>
+</ul>
+</section>
+<section id="comparison-to-visual-inference" class="slide level2">
+<h2>Comparison to Visual Inference</h2>
+<ul>
+<li>Each lineup used in the experiment has 1 target and 19 null plots</li>
+<li>Run each plot through the model to get <span class="math inline">\(\widehat D\)</span> (+ RESET &amp; BP tests)</li>
+<li>Compare performance metrics</li>
+</ul>
+</section>
+<section id="comparison-to-visual-inference-1" class="slide level2">
+<h2>Comparison to Visual Inference</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-pcp" class="quarto-float quarto-figure quarto-figure-center" width="960">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-pcp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="index_files/figure-revealjs/fig-pcp-1.png" id="fig-pcp" width="960">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-pcp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>AutoVI is in between conventional and lineup tests in terms of conservatism. Lineups are still much more likely to not reject than AutoVI, but it is at least a step in the right direction.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="autovi-package" class="slide level2">
 <h2><i class="fab fa-r-project" role="presentation" aria-label="r-project icon"></i> <code>autovi</code> Package</h2>
 <div style="font-size:80%">
@@ -893,6 +1011,247 @@ Weihao (Patrick) Li, Di Cook, Emi Tanaka, Klaus Ackermann, Susan Vanderplas
 <li>Visual signal strength: <code>vss()</code></li>
 <li>Comprehensive checks: <code>check()</code> and <code>summary_plot()</code></li>
 </ul>
+</div>
+</section>
+<section id="example-boston-housing" class="slide level2">
+<h2>💡Example: Boston Housing</h2>
+<div>
+
+</div>
+<div class="cell quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-20-1.png" width="576"></p>
+<figcaption>Normal view</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-20-2.png" width="576"></p>
+<figcaption>Pass into <code>autovi</code></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-boston-housing-1" class="slide level2">
+<h2>💡Example: Boston Housing</h2>
+<p>Null residuals are simulated from the fitted model assuming it is <strong>correctly specified</strong>.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>checker <span class="ot">&lt;-</span> <span class="fu">auto_vi</span>(<span class="at">fitted_model =</span> fitted_model, </span>
+<span id="cb1-2"><a></a>                   <span class="at">keras_model =</span> <span class="fu">get_keras_model</span>(<span class="st">"vss_phn_32"</span>))</span>
+<span id="cb1-3"><a></a>checker<span class="sc">$</span><span class="fu">rotate_resid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 489 × 2
+   .fitted   .resid
+     &lt;dbl&gt;    &lt;dbl&gt;
+ 1 632372.   24372.
+ 2 525177.   13236.
+ 3 646753.   54824.
+ 4 624848.  -98465.
+ 5 611817.  188264.
+ 6 551051.  -67975.
+ 7 504757.  142250.
+ 8 445700. -175323.
+ 9 281912. -101298.
+10 453398. -121730.
+# ℹ 479 more rows</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>checker<span class="sc">$</span><span class="fu">rotate_resid</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a></a>  checker<span class="sc">$</span><span class="fu">plot_resid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-23-1.png" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>:::</p>
+</section>
+<section id="vss" class="slide level2">
+<h2><i class="fab fa-r-project" role="presentation" aria-label="r-project icon"></i> <code>vss()</code></h2>
+<div style="font-size:80%">
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="visual-signal-strength-of-the-actual-residual-plot">Visual signal strength of the actual residual plot</h4>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>checker<span class="sc">$</span><span class="fu">vss</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Predict visual signal strength for 1 image.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+    vss
+  &lt;dbl&gt;
+1  6.48</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="visual-signal-strength-comparison">Visual signal strength comparison</h4>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>checker<span class="sc">$</span><span class="fu">summary_plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-25-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="check" class="slide level2">
+<h2><i class="fab fa-r-project" role="presentation" aria-label="r-project icon"></i> <code>check()</code></h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>checker<span class="sc">$</span><span class="fu">check</span>()</span>
+<span id="cb8-2"><a></a>checker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── &lt;AUTO_VI object&gt;
+Status:
+ - Fitted model: lm
+ - Keras model: (None, 32, 32, 3) + (None, 5) -&gt; (None, 1)
+    - Output node index: 1
+ - Result:
+    - Observed visual signal strength: 6.484 (p-value = 0)
+    - Null visual signal strength: [100 draws]
+       - Mean: 1.169
+       - Quantiles: 
+          ╔══════════════════════════════════════════╗
+          ║  25%   50%   75%   80%   90%   95%   99% ║
+          ║1.037 1.120 1.231 1.247 1.421 1.528 1.993 ║
+          ╚══════════════════════════════════════════╝
+    - Bootstrapped visual signal strength: [100 draws]
+       - Mean: 6.28 (p-value = 0)
+       - Quantiles: 
+          ╔══════════════════════════════════════════╗
+          ║  25%   50%   75%   80%   90%   95%   99% ║
+          ║5.960 6.267 6.614 6.693 6.891 7.112 7.217 ║
+          ╚══════════════════════════════════════════╝
+    - Likelihood ratio: 0.7064 (boot) / 0 (null) = Extremely large </code></pre>
+</div>
+</div>
+</section>
+<section id="example-dinosaur" class="slide level2">
+<h2>💡Example: Dinosaur</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>RESET <span class="math inline">\(p\)</span>-value = 0.742<br>
+B-P <span class="math inline">\(p\)</span>-value = 0.36<br>
+S-W <span class="math inline">\(p\)</span>-value = 9.21e-05</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-27-1.png" width="1800"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-28-1.png" width="1350"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>:::</p>
+</section>
+<section id="shiny-application" class="slide level2 center">
+<h2>🌐Shiny Application</h2>
+<p>Don’t want to install <code>TensorFlow</code>?</p>
+<p>Try our shiny web application: <a href="https://shorturl.at/DNWzt" class="uri">https://shorturl.at/DNWzt</a></p>
+</section>
+<section id="extensions" class="slide level2">
+<h2>🧩Extensions</h2>
+<p>For GLMs and other regrssion models:</p>
+<ol type="1">
+<li>Use raw residuals, but violations <strong>may not be identifiable and the test could be two-sided</strong>.</li>
+<li>Use transformed residuals that are <strong>roughly normally distributed</strong>.</li>
+<li><strong>Reuse the pre-trained convolutional blocks</strong> and train a new computer vision model with an appropriate distance measure.</li>
+</ol>
+</section>
+<section id="takeaway" class="slide level2">
+<h2>🎬Takeaway</h2>
+<p>You can use <code>autovi</code> to</p>
+<ul>
+<li><p>Evaluate lineups of residual plots of linear regression models</p></li>
+<li><p><strong>Capture the magnitude of model violations</strong> through visual signal strength</p></li>
+<li><p>Automatically <strong>detect model misspecification</strong> using a visual test</p></li>
+</ul>
+</section>
+<section id="thanks-any-questions" class="slide level2 center">
+<h2>Thanks! Any questions?</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="Patrick.jpg" style="width:50.0%"></p>
+<figcaption>Weihao (Patrick) Li</figcaption>
+</figure>
+</div>
+<p><span class="emph large blue">did all of the 🦾 work</span></p>
+<p><i class="fab fa-github" role="presentation" aria-label="github icon"></i> tengmcing</p>
+<p><i class="far fa-envelope" role="presentation" aria-label="envelope icon"></i> patrick.li@monash.edu</p>
+<p>📦 <a href="https://github.com/TengMCing/autovi" target="_blank"><code>autovi</code></a></p>
+</div><div class="column" style="width:50%;">
+<p><span class="emph large green">Advisors</span></p>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="dicook.jpg"></p>
+<figcaption>Di Cook</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="emitanaka.jpg"></p>
+<figcaption>Emi Tanaka</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="klausackermann.png"></p>
+<figcaption>Klaus Ackermann</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </section></section>
 <section id="references" class="title-slide slide level1 tiny smaller scrollable">
@@ -916,6 +1275,9 @@ Cook, R. Dennis, and Sanford Weisberg. 1982. <span>“Criticism and Influence An
 </div>
 <div id="ref-draper1998applied" class="csl-entry" role="listitem">
 Draper, N. R., and H. Smith. 1998. <em>Applied Regression Analysis</em>. 1st ed. Wiley Series in Probability and Statistics. Hoboken, <span>NJ</span>: Wiley. <a href="https://books.google.com/books?id=d6NsDwAAQBAJ">https://books.google.com/books?id=d6NsDwAAQBAJ</a>.
+</div>
+<div id="ref-masonNumbatsCassowaryr2024" class="csl-entry" role="listitem">
+Mason, Harriet, Stuart Lee, Ursula Laa, and Dianne Cook. 2024. <span>“Numbats/Cassowaryr.”</span> <span>NUMBATS</span>: Non-Uniform Monash Business Analytics Team repo for joint projects. <a href="https://github.com/numbats/cassowaryr">https://github.com/numbats/cassowaryr</a>.
 </div>
 <div id="ref-montgomeryIntroductionLinearRegression1982" class="csl-entry" role="listitem">
 Montgomery, Douglas C., and Elizabeth A. Peck. 1982. <em>Introduction to Linear Regression Analysis</em>. Hoboken, <span>NJ</span>: John Wiley &amp; Sons.
