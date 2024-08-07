@@ -266,10 +266,7 @@ heter_conv_sim <- heter_conv_sim %>%
   left_join(select(filter(vi_survey, type == "heteroskedasticity"), a, b, n, x_dist, effect_size))
 ```
 
-
-# Residuals and Lineups
-
-## 🔍 Regression Diagnostics
+# 🔍 Regression Diagnostics
 
 Diagnostics: is anything **importantly wrong** with my model?
 
@@ -287,9 +284,8 @@ Checked by:
 
 ## Diagnostic Plots {.r-fit-text}
 
-::: fragment
 > Residual plots are usually **revealing** when the assumptions are violated. --@draper1998applied, @belsleyRegressionDiagnosticsIdentifying1980
-:::
+
 
 ::: fragment
 > **Graphical methods are easier to use**. --@cookCriticismInfluenceAnalysis1982
@@ -343,7 +339,7 @@ We need an [inferential framework]{.emph .green} to [calibrate expectations]{.em
 
 Suggested by @bujaStatisticalInferenceExploratory2009
 
-:::  {.r-stretch}
+::: r-stretch
 ```{r lineupdemo}
 #| fig-width: 7
 #| fig-height: 7
@@ -412,38 +408,27 @@ To perform a visual test
 :::
 :::
 
-## 🤔 Motivation
-Why are residual plots so important?
-
-Why are they recommended over tests?
-
-Possible Explanations:
-
-- Tests are too sensitive?
-- Tests are for specific issues?
-
-
 ## 🧪 Experiment
 
 Compare **conventional hypothesis testing** with **visual testing** when evaluating residual plots
 
 ## 🖊 Design
 
-| Model | Structure |
-|-------|-----------|
-| Null      | $\boldsymbol{y} = \beta_0 + \beta_1\boldsymbol{x} + \boldsymbol{\varepsilon}$ |
-| Non-linearity      |  $\boldsymbol{y} = \boldsymbol{1} + \boldsymbol{x} + \boldsymbol{z} + \boldsymbol{\varepsilon}$ |
-| Heteroskedasticity      | $\boldsymbol{y} = 1 + \boldsymbol{x} + \boldsymbol{\varepsilon}_h$ | 
+| Model              | Structure                                                                                      |
+|----------------------------|--------------------------------------------|
+| Null               | $\boldsymbol{y} = \beta_0 + \beta_1\boldsymbol{x} + \boldsymbol{\varepsilon}$                  |
+| Non-linearity      | $\boldsymbol{y} = \boldsymbol{1} + \boldsymbol{x} + \boldsymbol{z} + \boldsymbol{\varepsilon}$ |
+| Heteroskedasticity | $\boldsymbol{y} = 1 + \boldsymbol{x} + \boldsymbol{\varepsilon}_h$                             |
 
 where
 
 ::: small
-- $\boldsymbol{\varepsilon} \sim N(\boldsymbol{0}, \sigma^2\boldsymbol{I})$
-- $\boldsymbol{z} \propto He_j(\boldsymbol{x})$, the $j^{th}$ order probabilist Hermite polynomial
-- $\boldsymbol{\varepsilon_h} \sim N(\boldsymbol{0}, 1 + (2 - |a|)(\boldsymbol{x} - a)^2b \boldsymbol{I})$
+-   $\boldsymbol{\varepsilon} \sim N(\boldsymbol{0}, \sigma^2\boldsymbol{I})$
+-   $\boldsymbol{z} \propto He_j(\boldsymbol{x})$, the $j^{th}$ order probabilist Hermite polynomial
+-   $\boldsymbol{\varepsilon_h} \sim N(\boldsymbol{0}, 1 + (2 - |a|)(\boldsymbol{x} - a)^2b \boldsymbol{I})$
 :::
 
-## {.r-stretch}
+##  {.r-stretch}
 
 **Non-linearity**
 
@@ -490,6 +475,7 @@ ggplot(poly_data, aes(x = x, y = .resid)) +
   theme_bw() + 
   theme(axis.title = element_blank(), axis.text = element_blank(), axis.ticks = element_blank())
 ```
+
 **Heteroskedasticity**
 
 ```{r}
@@ -539,15 +525,18 @@ ggplot(hetero_data, aes(x = x, y = .resid)) +
 
 ## Lineup Generation
 
-- parameters controlling signal strength ($\sigma, b, n$)
-- $4\times 4\times 3 \times 4 = 192$ non-linearity parameter combinations
-- $3\times 5\times 3 \times 4 = 180$ heteroskedasticity parameter combinations
-- 3 replicates per parameter set
+-   parameters controlling signal strength ($\sigma, b, n$)
 
-- 576 (non linearity) + 540 (heteroskedasticity) lineups tested with at least 5 evaluations
+-   $4\times 4\times 3 \times 4 = 192$ non-linear parameter sets
 
-- Additional 36 Rorshach lineups used to estimate $\alpha$ for p-value calculations
+-   $3\times 5\times 3 \times 4 = 180$ heterosked. parameter sets
 
+-   3 replicates per parameter set
+
+-   576 (non linearity) + 540 (heteroskedasticity) lineups     
+(w/ $\geq$ 5 evaluations$)$)
+
+-   36 Rorshach lineups to estimate $\alpha$ for p-value calcs
 
 ```{r poly-effect-setup, cache = TRUE}
 # Define the minimum and maximum effect size
@@ -682,7 +671,6 @@ p <- ggplot() +
   labs(col = "", linetype = "")
 ```
 
-
 ```{r poly-effect-targets, cache = TRUE}
 # target_sigma is obtained by evaluating a vector of sigma and picking those 
 # with expected effect 0 ~ 5
@@ -698,7 +686,6 @@ es <- map_dbl(target_sigma,
                    )
               )
 ```
-
 
 ```{r polypower, fig.height = 3, fig.width = 5, dev = 'png', dpi = 450}
 
@@ -734,7 +721,6 @@ A <- map(1:11, ~patchwork::area(21, .x, 22, .x)) %>%
   c(patchwork::area(3, 1, 20, 11), .) %>%
   patchwork::wrap_plots(append(plist, list(p + theme(plot.title = element_text(size = 10))), after = 0), design = .)
 ```
-
 
 ```{r heterocache = TRUE}
 # Define the minimum and maximum effect size
@@ -858,9 +844,8 @@ p <- ggplot() +
   xlab(expression(log[e] (Effect_size))) +
   ylab("Power") +
   labs(col = "", linetype = "")
-```  
+```
 
-  
 ```{r cache = TRUE}
 # target_b is obtained by evaluating a vector of b and picking those 
 # with expected effect 0 ~ 5
@@ -913,14 +898,12 @@ patchwork::wrap_plots(append(plist, list(p +
 
 ## 📏 Effect size: Non-linearity
 
-
 ```{r}
 #| fig-width: 7
 #| fig-height: 4.2
 #| out-width: 100%
 A + patchwork::plot_layout(guides = "collect")
 ```
-
 
 ## 📏 Effect size: Heteroskedasticity
 
@@ -929,10 +912,9 @@ A + patchwork::plot_layout(guides = "collect")
 #| fig-height: 4.2
 #| out-width: 100%
 B + patchwork::plot_layout(guides = "collect")
-```  
+```
 
 ## 📊 Test Outcomes
-
 
 ```{r}
 # Dataset for p-value comparison
@@ -952,6 +934,7 @@ p_value_cmp_dat <- vi_survey %>%
 
 nr <- p_value_cmp_dat %>% filter(type == "heteroskedasticity") %>% filter(conv_reject == "Not") %>% count(reject)
 ```
+
 ```{r}
 
 library(ggmosaic)
@@ -985,97 +968,72 @@ vi_lineup$heter_331$data %>%
 ```
 
 ::: notes
-- Plot 17 is the target
+-   Plot 17 is the target
 :::
 
 ## 📓 Conclusions
 
-
 ::: columns
-
 ::: {.column .smaller}
-
 #### Visual Test
 
-- One test, multiple violations
-
+-   One test, multiple violations
 :::
 
 ::: {.column .smaller}
-
 #### Conventional Test
 
-- Multiple tests required     
+-   Multiple tests required
 
-| Violation | Test |
-| ------ | ------ |
-| nonlinearity | RESET |
+| Violation          | Test          |
+|--------------------|---------------|
+| nonlinearity       | RESET         |
 | heteroskedasticity | Breusch-Pagan |
-| goodness-of-fit | Shapiro-Wilk |
-
+| goodness-of-fit    | Shapiro-Wilk  |
 :::
 :::
 
 ## 📓 Conclusions
 
-
 ::: columns
-
 ::: {.column .smaller}
-
 #### Visual Test
 
-- One test, multiple violations
-- Reject ➡️
-    - severe issue w/ model fit
-
-
+-   One test, multiple violations
+-   Reject ➡️
+    -   severe issue w/ model fit
 :::
 
 ::: {.column .smaller}
-
 #### Conventional Test
 
-- Multiple tests required
-- Reject ➡️
-    - minor issue, no model impact OR
-    - major issue, model impact
-  (no way to tell)
-    
+-   Multiple tests required
+-   Reject ➡️
+    -   minor issue, no model impact OR
+    -   major issue, model impact (no way to tell)
 :::
-
 :::
-
 
 ## 📓 Conclusions
 
-
 ::: columns
-
 ::: {.column .smaller}
-
 #### Visual Test
 
-- One test, multiple violations
-- Reject ➡️
-    - severe issue w/ model fit
-    - 99.99% chance conventional test also rejects
-
+-   One test, multiple violations
+-   Reject ➡️
+    -   severe issue w/ model fit
+    -   99.99% chance conventional test also rejects
 :::
 
 ::: {.column .smaller}
-
 #### Conventional Test
 
-- Multiple tests required
-- Reject ➡️
-    - minor issue, no model impact OR
-    - major issue, model impact
-  (no way to tell)
-    
-    
+-   Multiple tests required
+-   Reject ➡️
+    -   minor issue, no model impact OR
+    -   major issue, model impact (no way to tell)
 :::
-
 :::
 
 ## ⚠️ Limitations of Lineup Protocol
@@ -1138,110 +1096,98 @@ mod$gen_lineup(300, k = 20, pos = 15) %>%
                        remove_axis = TRUE)
 ```
 
-
 1.  Humans cannot (easily) evaluate
 
 ::: columns
 ::: column
+::: {.fragment fragment-index="2"}
+-   lineups w/ **many plots**
 
-::: {.fragment fragment-index=2}
-  - lineups w/ **many plots**
-
-![](index_files/figure-revealjs/big-lineup-1.png){.fragment fragment-index=2 width="80%"}
+![](index_files/figure-revealjs/big-lineup-1.png){.fragment fragment-index="2" width="80%"}
 :::
 :::
 
-::: {.column}
-
-::: {.fragment fragment-index=3}
-
-  - a **large number of lineups**
-
+::: column
+::: {.fragment fragment-index="3"}
+-   a **large number of lineups**
 :::
 
-::: {.r-stack}
-![](index_files/figure-revealjs/many-lineups-1.png){.fragment fragment-index=3 width="80%"}
+::: r-stack
+![](index_files/figure-revealjs/many-lineups-1.png){.fragment fragment-index="3" width="80%"}
 
-![](index_files/figure-revealjs/many-lineups-2.png){.fragment fragment-index=4 width="80%"}
+![](index_files/figure-revealjs/many-lineups-2.png){.fragment fragment-index="4" width="80%"}
 
-![](index_files/figure-revealjs/many-lineups-3.png){.fragment fragment-index=5 width="80%"}
+![](index_files/figure-revealjs/many-lineups-3.png){.fragment fragment-index="5" width="80%"}
 
-![](index_files/figure-revealjs/many-lineups-4.png){.fragment fragment-index=6 width="80%"}
+![](index_files/figure-revealjs/many-lineups-4.png){.fragment fragment-index="6" width="80%"}
 :::
 :::
 :::
 
 ## ⚠️ Limitations of Lineup Protocol
-1.  Humans cannot (easily) evaluate    
-    - lineups w/ **many plots**
-    - a **large number of lineups**
+
+1.  Humans cannot (easily) evaluate
+    -   lineups w/ **many plots**
+    -   a **large number of lineups**
 
 ::: fragment
 2.  Lineups have 💰 **high labor costs** and can be 🕑 **time consuming** to evaluate
 :::
 
-[➡️ Make the 🖥️ do it for us with 🪄 [Computer Vision]{.emph .blue .large} 🤖]{.fragment}
-
-
+[➡️ Make the 🖥️ do it for us with 🪄[Computer Vision]{.emph .blue .large} 🤖 ]{.fragment}
 
 # 🤖 [AutoVI]{.large .green .emph}: Automated Assessment of Residual Plots with Computer Vision {.center}
 
 ## 🛣️ Roadmap
 
-1. Estimate 'visual' distance $D$ between 
-    
-    - an actual residual plot
-    - a plot of residuals generated under the null model
+1.  Estimate 'visual' distance $D$ between
 
-2. Compare $\widehat D$ to a distribution of values
+    -   an actual residual plot
+    -   a plot of residuals generated under the null model
 
-3. Calibrate against visual and conventional test results
-<!-- XXX TODO: Illustrate with a picture XXX -->
+2.  Compare $\widehat D$ to a distribution of values
 
-## 📏 Measuring Distance 
+3.  Calibrate against visual and conventional test results <!-- XXX TODO: Illustrate with a picture XXX -->
+
+## 📏 Measuring Distance
 
 How to measure ["difference"]{.emph .red}/["distance"]{.emph .blue} between plots?
 
-::: {.smaller}
--  **Statistics**:  KL-Divergence (actual vs. null) [when data generating process is known]{.emph .blue .small}
--  **Graphics**: scagnostics
--  **Image Analysis**: 
-    - pixel-wise sum of square differences
-    - Structural Similarity Index Measure (SSIM)
+::: smaller
+-   **Statistics**: KL-Divergence (actual vs. null) [when data generating process is known]{.emph .blue .small}
+-   **Graphics**: scagnostics
+-   **Image Analysis**:
+    -   pixel-wise sum of square differences
+    -   Structural Similarity Index Measure (SSIM)
 :::
 
 ## 🎯 Estimating Distance
 
+$\widehat{D} = f_{CV}(V_{h \times w}(\boldsymbol{e}), n, S(\hat y, \hat e))$, where
 
-$\widehat{D} = f_{CV}(V_{h \times w}(\boldsymbol{e}), n, S(\hat y, \hat e))$, where 
-
-- $V_{h \times w}(.)$ is a $h\times w$ image
-- $n$ observations
-- $S(\hat y, \hat e)$ are Scagnostics
-- Computer Vision algorithm $f_{CV}(.) \rightarrow [0, +\infty)$
-
-
-## 🏗️ Building a Model  {visibility="hidden"}
-
-
-- Inputs: 
-  - Image
-  - Number of observations
-  - Scagnostics computed from `cassowaryr` [@masonNumbatsCassowaryr2024]
-      - "monotonic", "sparse", "splines", "striped"
-
-- Output: $\widehat D$, compared to $D$ using MSE loss
-
-
+-   $V_{h \times w}(.)$ is a $h\times w$ image
+-   $n$ observations
+-   $S(\hat y, \hat e)$ are Scagnostics
+-   Computer Vision algorithm $f_{CV}(.) \rightarrow [0, +\infty)$
 
 ## 🏗️ Building a Model {visibility="hidden"}
 
-- VGG16 backbone
-- Training Data:  80k images with $D$ uniformly distributed along 49 intervals between $[0, 7]$ and one with $D>7$. 
-- Test Data: 8000 images allocated in the same way
+-   Inputs:
+    -   Image
+    -   Number of observations
+    -   Scagnostics computed from `cassowaryr` [@masonNumbatsCassowaryr2024]
+        -   "monotonic", "sparse", "splines", "striped"
+-   Output: $\widehat D$, compared to $D$ using MSE loss
 
-- Result: Model Violation Index $MVI := 10 + \widehat D - \log (n)$ 
+## 🏗️ Building a Model {visibility="hidden"}
 
+-   VGG16 backbone
+
+-   Training Data: 80k images with $D$ uniformly distributed along 49 intervals between $[0, 7]$ and one with $D>7$.
+
+-   Test Data: 8000 images allocated in the same way
+
+-   Result: Model Violation Index $MVI := 10 + \widehat D - \log (n)$
 
 ## 💡Training: Model Violations
 
@@ -1372,19 +1318,20 @@ bind_rows(dat_dist_1, dat_dist_2, dat_dist_3, dat_dist_4) %>%
 
 ## 🔬Statistical Testing
 
-- Estimate null distribution $F(D | H_0)$ empirically:
-    - Generate data under $H_0$ 
-    - Calculate $\widehat{D}$
+-   Estimate null distribution $F(D | H_0)$ empirically:
 
-- Compute critical value $Q_0(0.95)$ as the value $Q$ s.t. $F(D \leq Q | H_0) = 0.95$ 
+    -   Generate data under $H_0$
+    -   Calculate $\widehat{D}$
 
-- $p$-value:  $P(D \geq D^\ast)$ for observed $D^\ast$
+-   Compute critical value $Q_0(0.95)$ as the value $Q$ s.t. $F(D \leq Q | H_0) = 0.95$
+
+-   $p$-value: $P(D \geq D^\ast)$ for observed $D^\ast$
 
 ## Comparison to Visual Inference
 
-- Each lineup used in the experiment has 1 target and 19 null plots
-- Run each plot through the model to get $\widehat D$ (+ RESET & BP tests)
-- Compare performance metrics
+-   Each lineup used in the experiment has 1 target and 19 null plots
+-   Run each plot through the model to get $\widehat D$ (+ RESET & BP tests)
+-   Compare performance metrics
 
 ## Comparison to Visual Inference
 
@@ -1486,9 +1433,7 @@ p1 + p2
 ```
 
 ::: notes
-
 AutoVI is in between conventional and lineup tests in terms of conservatism. Lineups are still much more likely to not reject than AutoVI, but it is at least a step in the right direction.
-
 :::
 
 ## `r fontawesome::fa_i("r-project")` `autovi` Package
@@ -1502,7 +1447,6 @@ The `autovi` package provides automated visual inference with **computer vision 
 -   Visual signal strength: `vss()`
 -   Comprehensive checks: `check()` and `summary_plot()`
 :::
-
 
 ## 💡Example: Boston Housing
 
@@ -1530,7 +1474,6 @@ ggplot() +
 
 ## 💡Example: Boston Housing
 
-
 ```{r}
 #| echo: false
 #| message: false
@@ -1541,7 +1484,6 @@ checker <- auto_vi(fitted_model = fitted_model,
                    keras_model = get_keras_model("vss_phn_32"))
 checker$check_result <- readRDS("data/check_result_1.rds")
 ```
-
 
 Null residuals are simulated from the fitted model assuming it is **correctly specified**.
 
@@ -1576,8 +1518,8 @@ checker$rotate_resid() |>
 ```
 :::
 :::
-:::
 
+:::
 
 ## `r fontawesome::fa_i("r-project")` `vss()`
 
@@ -1600,10 +1542,9 @@ checker$vss()
 ::: {.column width="50%"}
 #### Visual signal strength comparison
 
-```r
+``` r
 checker$summary_plot()
 ```
-
 
 ```{r}
 #| echo: false
@@ -1612,7 +1553,6 @@ checker$summary_plot()
 :::
 :::
 :::
-
 
 ## `r fontawesome::fa_i("r-project")` `check()`
 
@@ -1627,13 +1567,12 @@ checker
 checker
 ```
 
-
 ## 💡Example: Dinosaur
 
 ::: columns
 ::: {.column width="50%"}
-RESET $p$-value = 0.742    
-B-P $p$-value = 0.36    
+RESET $p$-value = 0.742\
+B-P $p$-value = 0.36\
 S-W $p$-value = 9.21e-05
 
 ```{r fig.height=4, fig.width=6, dpi=300}
@@ -1654,6 +1593,7 @@ my_vi$summary_plot() +
 ```
 :::
 :::
+
 :::
 
 ## 🌐Shiny Application {.center}
@@ -1662,10 +1602,9 @@ Don't want to install `TensorFlow`?
 
 Try our shiny web application: <https://shorturl.at/DNWzt>
 
-
 ## 🧩Extensions
 
-For GLMs and other regrssion models:
+For GLMs and other regression models:
 
 1.  Use raw residuals, but violations **may not be identifiable and the test could be two-sided**.
 2.  Use transformed residuals that are **roughly normally distributed**.
@@ -1689,7 +1628,6 @@ You can use `autovi` to
 
 [did all of the 🦾 work]{.emph .large .blue}
 
-
 `r fontawesome::fa_i("github")` tengmcing
 
 `r fontawesome::fa_i("envelope")` patrick.li\@monash.edu
@@ -1700,7 +1638,7 @@ You can use `autovi` to
 ::: {.column width="50%"}
 [Advisors]{.emph .large .green}
 
-::: {layout-ncol=2}
+::: {layout-ncol="3"}
 ![Di Cook](dicook.jpg)
 
 ![Emi Tanaka](emitanaka.jpg)
@@ -1708,7 +1646,6 @@ You can use `autovi` to
 ![Klaus Ackermann](klausackermann.png)
 :::
 :::
-
 :::
 
-# References {.tiny}
+## References {.tiny}

@@ -1152,7 +1152,7 @@
     "href": "08-JSM/index.html#diagnostic-plots",
     "title": "A Plot is Worth a Thousand Tests",
     "section": "Diagnostic Plots",
-    "text": "Diagnostic Plots\n\n\nResidual plots are usually revealing when the assumptions are violated. –Draper and Smith (1998), Belsley, Kuh, and Welsch (1980)\n\n\n\n\nGraphical methods are easier to use. –Cook and Weisberg (1982)\n\n\n\n\nResidual plots are more informative in most practical situations than the corresponding conventional hypothesis tests. –Montgomery and Peck (1982)"
+    "text": "Diagnostic Plots\n\nResidual plots are usually revealing when the assumptions are violated. –Draper and Smith (1998), Belsley, Kuh, and Welsch (1980)\n\n\n\nGraphical methods are easier to use. –Cook and Weisberg (1982)\n\n\n\n\nResidual plots are more informative in most practical situations than the corresponding conventional hypothesis tests. –Montgomery and Peck (1982)"
   },
   {
     "objectID": "08-JSM/index.html#challenges-in-interpreting-residual-plots",
@@ -1250,7 +1250,7 @@
     "href": "08-JSM/index.html#lineup-generation",
     "title": "A Plot is Worth a Thousand Tests",
     "section": "Lineup Generation",
-    "text": "Lineup Generation\n\nparameters controlling signal strength (\\(\\sigma, b, n\\))\n\\(4\\times 4\\times 3 \\times 4 = 192\\) non-linearity parameter combinations\n\\(3\\times 5\\times 3 \\times 4 = 180\\) heteroskedasticity parameter combinations\n3 replicates per parameter set\n576 (non linearity) + 540 (heteroskedasticity) lineups tested with at least 5 evaluations\nAdditional 36 Rorshach lineups used to estimate \\(\\alpha\\) for p-value calculations"
+    "text": "Lineup Generation\n\nparameters controlling signal strength (\\(\\sigma, b, n\\))\n\\(4\\times 4\\times 3 \\times 4 = 192\\) non-linear parameter sets\n\\(3\\times 5\\times 3 \\times 4 = 180\\) heterosked. parameter sets\n3 replicates per parameter set\n576 (non linearity) + 540 (heteroskedasticity) lineups\n(w/ \\(\\geq\\) 5 evaluations\\()\\))\n36 Rorshach lineups to estimate \\(\\alpha\\) for p-value calcs"
   },
   {
     "objectID": "08-JSM/index.html#effect-size-non-linearity",
@@ -1299,7 +1299,7 @@
     "href": "08-JSM/index.html#limitations-of-lineup-protocol-1",
     "title": "A Plot is Worth a Thousand Tests",
     "section": "⚠️ Limitations of Lineup Protocol",
-    "text": "⚠️ Limitations of Lineup Protocol\n\nHumans cannot (easily) evaluate\n\nlineups w/ many plots\na large number of lineups\n\n\n\n\nLineups have 💰 high labor costs and can be 🕑 time consuming to evaluate\n\n\n➡️ Make the 🖥️ do it for us with 🪄 Computer Vision 🤖"
+    "text": "⚠️ Limitations of Lineup Protocol\n\nHumans cannot (easily) evaluate\n\nlineups w/ many plots\na large number of lineups\n\n\n\n\nLineups have 💰 high labor costs and can be 🕑 time consuming to evaluate\n\n\n➡️ Make the 🖥️ do it for us with 🪄Computer Vision 🤖"
   },
   {
     "objectID": "08-JSM/index.html#conclusions-1",
@@ -1425,7 +1425,7 @@
     "href": "08-JSM/index.html#extensions",
     "title": "A Plot is Worth a Thousand Tests",
     "section": "🧩Extensions",
-    "text": "🧩Extensions\nFor GLMs and other regrssion models:\n\nUse raw residuals, but violations may not be identifiable and the test could be two-sided.\nUse transformed residuals that are roughly normally distributed.\nReuse the pre-trained convolutional blocks and train a new computer vision model with an appropriate distance measure."
+    "text": "🧩Extensions\nFor GLMs and other regression models:\n\nUse raw residuals, but violations may not be identifiable and the test could be two-sided.\nUse transformed residuals that are roughly normally distributed.\nReuse the pre-trained convolutional blocks and train a new computer vision model with an appropriate distance measure."
   },
   {
     "objectID": "08-JSM/index.html#takeaway",
@@ -1439,7 +1439,7 @@
     "href": "08-JSM/index.html#thanks-any-questions",
     "title": "A Plot is Worth a Thousand Tests",
     "section": "Thanks! Any questions?",
-    "text": "Thanks! Any questions?\n\n\n\n\n\nWeihao (Patrick) Li\n\n\ndid all of the 🦾 work\n tengmcing\n patrick.li@monash.edu\n📦 autovi\n\nAdvisors\n\n\n\n\n\n\n\n\n\nDi Cook\n\n\n\n\n\n\n\nEmi Tanaka\n\n\n\n\n\n\n\n\n\nKlaus Ackermann"
+    "text": "Thanks! Any questions?\n\n\n\n\n\nWeihao (Patrick) Li\n\n\ndid all of the 🦾 work\n tengmcing\n patrick.li@monash.edu\n📦 autovi\n\nAdvisors\n\n\n\n\n\n\n\n\n\nDi Cook\n\n\n\n\n\n\n\nEmi Tanaka\n\n\n\n\n\n\n\nKlaus Ackermann"
   },
   {
     "objectID": "08-JSM/index.html#building-a-model",
@@ -1531,5 +1531,12 @@
     "title": "A Plot is Worth a Thousand Tests",
     "section": "💡Example: Boston Housing",
     "text": "💡Example: Boston Housing\nNull residuals are simulated from the fitted model assuming it is correctly specified.\n\n\nchecker &lt;- auto_vi(fitted_model = fitted_model, \n                   keras_model = get_keras_model(\"vss_phn_32\"))\nchecker$rotate_resid()\n\n\n# A tibble: 489 × 2\n   .fitted   .resid\n     &lt;dbl&gt;    &lt;dbl&gt;\n 1 632372.   24372.\n 2 525177.   13236.\n 3 646753.   54824.\n 4 624848.  -98465.\n 5 611817.  188264.\n 6 551051.  -67975.\n 7 504757.  142250.\n 8 445700. -175323.\n 9 281912. -101298.\n10 453398. -121730.\n# ℹ 479 more rows\n\n\n\nchecker$rotate_resid() |&gt;\n  checker$plot_resid()\n\n\n\n\n\n\n\n\n\n\n\n:::"
+  },
+  {
+    "objectID": "08-JSM/index.html#references",
+    "href": "08-JSM/index.html#references",
+    "title": "A Plot is Worth a Thousand Tests",
+    "section": "References",
+    "text": "References\n\n\n\n\n\n\n\n\n\nBelsley, David A., Edwin Kuh, and Roy E. Welsch. 1980. Regression Diagnostics: Identifying Influential Data and Sources of Collinearity. 14. [pr.]. Wiley Series in Probability and Mathematical Statistics. New York: Wiley.\n\n\nBuja, Andreas, Dianne Cook, Heike Hofmann, Michael Lawrence, Eun-Kyung Lee, Deborah F Swayne, and Hadley Wickham. 2009. “Statistical Inference for Exploratory Data Analysis and Model Diagnostics.” Philosophical Transactions of the Royal Society of London A: Mathematical, Physical and Engineering Sciences 367 (1906): 4361–83. https://doi.org/10.1098/rsta.2009.0120.\n\n\nCook, R. Dennis, and Sanford Weisberg. 1982. “Criticism and Influence Analysis in Regression.” Sociological Methodology 13: 313–61. https://doi.org/10.2307/270724.\n\n\nDraper, N. R., and H. Smith. 1998. Applied Regression Analysis. 1st ed. Wiley Series in Probability and Statistics. Hoboken, NJ: Wiley. https://books.google.com/books?id=d6NsDwAAQBAJ.\n\n\nMason, Harriet, Stuart Lee, Ursula Laa, and Dianne Cook. 2024. “Numbats/Cassowaryr.” NUMBATS: Non-Uniform Monash Business Analytics Team repo for joint projects. https://github.com/numbats/cassowaryr.\n\n\nMontgomery, Douglas C., and Elizabeth A. Peck. 1982. Introduction to Linear Regression Analysis. Hoboken, NJ: John Wiley & Sons.\n\n\nVanderPlas, Susan, Christian Röttger, Dianne Cook, and Heike Hofmann. 2021. “Statistical Significance Calculations for Scenarios in Visual Inference.” Stat 10 (1). https://doi.org/10.1002/sta4.337."
   }
 ]

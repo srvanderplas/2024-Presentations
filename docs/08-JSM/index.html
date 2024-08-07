@@ -429,12 +429,8 @@ Weihao (Patrick) Li, Di Cook, Emi Tanaka, Klaus Ackermann, Susan Vanderplas
   <p class="date">2024-08-07</p>
 </section>
 <section>
-<section id="residuals-and-lineups" class="title-slide slide level1 center">
-<h1>Residuals and Lineups</h1>
-
-</section>
-<section id="regression-diagnostics" class="slide level2">
-<h2>🔍 Regression Diagnostics</h2>
+<section id="regression-diagnostics" class="title-slide slide level1 center">
+<h1>🔍 Regression Diagnostics</h1>
 <p>Diagnostics: is anything <strong>importantly wrong</strong> with my model?</p>
 <div class="smaller">
 <p><span class="math display">\[\underbrace{\boldsymbol{e}}_\textrm{Residuals} = \underbrace{\boldsymbol{y}}_\textrm{Observations} - \underbrace{f(\boldsymbol{x})}_\textrm{Fitted values}\]</span></p>
@@ -449,11 +445,9 @@ Weihao (Patrick) Li, Di Cook, Emi Tanaka, Klaus Ackermann, Susan Vanderplas
 </section>
 <section id="diagnostic-plots" class="slide level2">
 <h2>Diagnostic Plots</h2>
-<div class="fragment">
 <blockquote>
 <p>Residual plots are usually <strong>revealing</strong> when the assumptions are violated. –<span class="citation" data-cites="draper1998applied">Draper and Smith (<a href="#/references" role="doc-biblioref" onclick="">1998</a>)</span>, <span class="citation" data-cites="belsleyRegressionDiagnosticsIdentifying1980">Belsley, Kuh, and Welsch (<a href="#/references" role="doc-biblioref" onclick="">1980</a>)</span></p>
 </blockquote>
-</div>
 <div class="fragment">
 <blockquote>
 <p><strong>Graphical methods are easier to use</strong>. –<span class="citation" data-cites="cookCriticismInfluenceAnalysis1982">Cook and Weisberg (<a href="#/references" role="doc-biblioref" onclick="">1982</a>)</span></p>
@@ -576,16 +570,6 @@ Weihao (Patrick) Li, Di Cook, Emi Tanaka, Klaus Ackermann, Susan Vanderplas
 </div>
 </div>
 </section>
-<section id="motivation" class="slide level2">
-<h2>🤔 Motivation</h2>
-<p>Why are residual plots so important?</p>
-<p>Why are they recommended over tests?</p>
-<p>Possible Explanations:</p>
-<ul>
-<li>Tests are too sensitive?</li>
-<li>Tests are for specific issues?</li>
-</ul>
-</section>
 <section id="experiment" class="slide level2">
 <h2>🧪 Experiment</h2>
 <p>Compare <strong>conventional hypothesis testing</strong> with <strong>visual testing</strong> when evaluating residual plots</p>
@@ -654,11 +638,12 @@ Weihao (Patrick) Li, Di Cook, Emi Tanaka, Klaus Ackermann, Susan Vanderplas
 <h2>Lineup Generation</h2>
 <ul>
 <li><p>parameters controlling signal strength (<span class="math inline">\(\sigma, b, n\)</span>)</p></li>
-<li><p><span class="math inline">\(4\times 4\times 3 \times 4 = 192\)</span> non-linearity parameter combinations</p></li>
-<li><p><span class="math inline">\(3\times 5\times 3 \times 4 = 180\)</span> heteroskedasticity parameter combinations</p></li>
+<li><p><span class="math inline">\(4\times 4\times 3 \times 4 = 192\)</span> non-linear parameter sets</p></li>
+<li><p><span class="math inline">\(3\times 5\times 3 \times 4 = 180\)</span> heterosked. parameter sets</p></li>
 <li><p>3 replicates per parameter set</p></li>
-<li><p>576 (non linearity) + 540 (heteroskedasticity) lineups tested with at least 5 evaluations</p></li>
-<li><p>Additional 36 Rorshach lineups used to estimate <span class="math inline">\(\alpha\)</span> for p-value calculations</p></li>
+<li><p>576 (non linearity) + 540 (heteroskedasticity) lineups<br>
+(w/ <span class="math inline">\(\geq\)</span> 5 evaluations<span class="math inline">\()\)</span>)</p></li>
+<li><p>36 Rorshach lineups to estimate <span class="math inline">\(\alpha\)</span> for p-value calcs</p></li>
 </ul>
 </section>
 <section id="effect-size-non-linearity" class="slide level2">
@@ -855,7 +840,7 @@ Weihao (Patrick) Li, Di Cook, Emi Tanaka, Klaus Ackermann, Susan Vanderplas
 <li>Lineups have 💰 <strong>high labor costs</strong> and can be 🕑 <strong>time consuming</strong> to evaluate</li>
 </ol>
 </div>
-<p><span class="fragment">➡️ Make the 🖥️ do it for us with 🪄 <span class="emph blue large">Computer Vision</span> 🤖</span></p>
+<p><span class="fragment">➡️ Make the 🖥️ do it for us with 🪄<span class="emph blue large">Computer Vision</span> 🤖</span></p>
 </section></section>
 <section>
 <section id="autovi-automated-assessment-of-residual-plots-with-computer-vision" class="title-slide slide level1 center">
@@ -1186,7 +1171,7 @@ S-W <span class="math inline">\(p\)</span>-value = 9.21e-05</p>
 </section>
 <section id="extensions" class="slide level2">
 <h2>🧩Extensions</h2>
-<p>For GLMs and other regrssion models:</p>
+<p>For GLMs and other regression models:</p>
 <ol type="1">
 <li>Use raw residuals, but violations <strong>may not be identifiable and the test could be two-sided</strong>.</li>
 <li>Use transformed residuals that are <strong>roughly normally distributed</strong>.</li>
@@ -1221,9 +1206,9 @@ S-W <span class="math inline">\(p\)</span>-value = 9.21e-05</p>
 <div>
 
 </div>
-<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="dicook.jpg"></p>
@@ -1231,7 +1216,7 @@ S-W <span class="math inline">\(p\)</span>-value = 9.21e-05</p>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="emitanaka.jpg"></p>
@@ -1239,9 +1224,7 @@ S-W <span class="math inline">\(p\)</span>-value = 9.21e-05</p>
 </figure>
 </div>
 </div>
-</div>
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="klausackermann.png"></p>
@@ -1253,9 +1236,9 @@ S-W <span class="math inline">\(p\)</span>-value = 9.21e-05</p>
 </div>
 </div>
 </div>
-</section></section>
-<section id="references" class="title-slide slide level1 tiny smaller scrollable">
-<h1>References</h1>
+</section>
+<section id="references" class="slide level2 tiny smaller scrollable">
+<h2>References</h2>
 
 <div class="quarto-auto-generated-content">
 <p><img src="../libs/unl/N.svg" class="slide-logo"></p>
@@ -1286,7 +1269,7 @@ Montgomery, Douglas C., and Elizabeth A. Peck. 1982. <em>Introduction to Linear 
 VanderPlas, Susan, Christian Röttger, Dianne Cook, and Heike Hofmann. 2021. <span>“Statistical Significance Calculations for Scenarios in Visual Inference.”</span> <em>Stat</em> 10 (1). <a href="https://doi.org/10.1002/sta4.337">https://doi.org/10.1002/sta4.337</a>.
 </div>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
