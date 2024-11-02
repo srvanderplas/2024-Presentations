@@ -1,0 +1,128 @@
+---
+execute: 
+  echo: false
+format: 
+  revealjs:
+    navigation-mode: vertical
+    logo: ../libs/unl/N.svg
+    theme: ../libs/unl/inverse.scss
+    includes:
+      in_header: ../libs/unl/header.html
+    lib_dir: libs
+    embed-resources: true
+---
+
+```{r setup, include = F}
+library(ggplot2)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(magrittr)
+library(stringr)
+library(knitr)
+```
+
+## Outline
+
+::: columns
+::: column
+
+1. Why do we make charts?
+
+2. What chart works for my data?
+
+3. What makes a chart effective?
+
+4. Which chart(s) should I use?
+
+:::
+::: column
+![Flowchart showing different data characteristics and appropriate graphics for each option.](data-to-vis-flowchart.png)
+:::
+
+:::
+
+# Why?
+
+Why do we make charts?
+
+## Tables are Tedious {.scrollable .tiny}
+
+```{r}
+if (!file.exists("../06-REU-graphics/stars.csv")) download.file("https://raw.githubusercontent.com/astronexus/HYG-Database/main/hyg/v3/hyg_v38.csv", destfile = "../06-REU-graphics/stars.csv")
+stars <- read_csv("../06-REU-graphics/stars.csv")
+
+knitr::kable(stars[1:100,c(1, 3, 8, 9, 10, 13, 14, 15, 16)])
+```
+
+::: notes
+
+The obvious reason is that they're prettier to look at than tables, and when you have a lot of data, they're also more concise - you trade accuracy of having every data point for the convenience of being able to actually "see" every data point across a couple of dimensions.
+
+:::
+
+## Charts are easier to read!
+
+```{r HR-diagram}
+#| fig-width: 8
+#| fig-height: 5
+#| out-width: "100%"
+#| message: false
+#| warning: false
+#| echo: false
+#| cache: true
+#| fig-cap: "The Hertzsprung Russell diagram. Discovered independently by Ejnar Hertzsprung (1873–1967) and Henry Norris Russell (1877–1957). The diagram plots the color index of the star against the brightness (absolute magnitude) of the star. As a result, it is possible to discern that these two variables are related and change together over a star's life cycle: a hypothesis that only came to be because of this chart."
+#| fig-alt: "A scatter plot showing the color index of a star on the x-axis and the absolute magnitude (brightness) of the star on the y-axis. Points are colored by spectral class, which varies from blue to white to yellow to red as the color index increases and the star's temperature decreases. Points are primarily located along a downward-sloping line from the top left to the bottom right, which is labeled the 'main sequence'. There is another set of points which diverges from the main sequence and extends out horizontally in the middle of the graph; these are labeled 'giants', and a few outliers that are above the giant cluster are labeled 'supergiants'. Below the main sequence stars, there are outliers which are labeled 'dwarfs'."
+#| fig-dpi: 300
+stars <- stars %>%
+  mutate(Spectral.Class = str_extract(spect, "^.") %>%
+           str_to_upper() %>%
+           factor(levels = c("O", "B", "A", "F", "G", "K", "M"), ordered = T),
+         EarlyLate = str_extract(spect, ".(\\d)") %>%
+           str_replace_all("[^\\d]", "") %>% as.numeric(),
+         Temp = 4600*(1/(.92*ci + 1.7) + 1/(.92*ci) + 0.62)) %>%
+  filter(!is.na(Spectral.Class) & !is.na(EarlyLate) & !is.na(hip)) %>%
+  arrange(Spectral.Class, EarlyLate) %>%
+  mutate(SpectralClass2 = paste0(Spectral.Class, EarlyLate) %>% factor(., levels = unique(.)))
+
+ggplot(data = filter(stars, dist < 500)) + 
+  # annotate(x = -.25, xend = .75, y = -2, yend = -6.5, arrow = arrow(ends = "both", length = unit(.1, "cm")), geom = "segment", color = "grey") + 
+  annotate(x = 0.125, xend = 2, y = 4.25, yend = 4.25, arrow = arrow(ends = "both", length = unit(.1, "cm")), geom = "segment", color = "grey") + 
+  geom_point(aes(x = ci, y = -absmag, color = Spectral.Class), alpha = .3) + 
+  scale_x_continuous("B-V Color Index", breaks = c(0, .5, 1, 1.5, 2), labels = c("Hot  0.0       ", "0.5", "1.0", "1.5", "           2.0  Cool")) + 
+  scale_y_continuous("Absolute Magnitude (Brightness)", breaks = c(-8, -4, 0, 4), labels = c(8, 4, 0, -4)) + 
+  scale_color_manual("Spectral\nClass", values = c("#2E478C", "#426DB9", "#B5D7E3", "white", "#FAF685", "#E79027", "#DA281F")) + 
+  annotate(x = .25, y = -5.5, label = "Dwarfs", geom = "text", angle = -25, color = "white") + 
+  annotate(x = .5, y = -3.75, label = "Main Sequence", geom = "text", angle = -28) + 
+  annotate(x = 1.125, y = 0, label = "Giants", geom = "text") + 
+  annotate(x = 1, y = 4.5, label = "Supergiants", geom = "text", color = "white") +
+  theme(panel.background = element_rect(fill = "#000000"),
+        legend.key = element_blank(), 
+        panel.grid = element_line(colour = "grey40"),
+        axis.text = element_text(color = "white"),
+        text = element_text(size = 18, color = "white"), 
+        legend.background = element_rect(fill = "#000000"),
+        plot.background = element_rect(fill = "#000000")) + 
+  ggtitle("Hertzsprung-Russell Diagram") + 
+  coord_cartesian(xlim = c(-.25, 2.25), ylim = c(-12, 7)) + 
+  guides(color = guide_legend(override.aes = list(alpha = 1)))
+```
+
+
+## Why Charts? {.large}
+
+Graphics are a form of [**external cognition**]{.cerulean .emph} that allow us to think about the [**data**]{.purple .emph} rather than the [**chart**]{.green .emph}.
+
+
+
+## Why Charts?
+
+Good graphics take advantage of how the brain works:
+
+-   preattentive processing
+
+-   perceptual grouping
+
+-   visual limitations
+
+

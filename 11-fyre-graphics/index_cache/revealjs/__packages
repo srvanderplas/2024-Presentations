@@ -1,0 +1,14 @@
+base
+methods
+datasets
+utils
+grDevices
+graphics
+stats
+ggplot2
+readr
+dplyr
+tidyr
+magrittr
+stringr
+knitr

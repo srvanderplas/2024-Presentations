@@ -1,0 +1,13 @@
+title: "Talk Template"
+author: "Susan Vanderplas"
+date: 2024-01-01
+from: markdown+emoji
+location: TBD
+abstract: |
+  Clever abstract here
+talk-type: ['seminar', 'web', 'invited', 'contributed', 'other']
+# One or more of seminar, web, invited, contributed, other
+
+image: <iframe class="slide-deck" src="./" width="100%" height="200px"></iframe>
+
+keywords: ['template']
