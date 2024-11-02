@@ -54,11 +54,11 @@ I generally prefer to focus on getting information from one site if possible - i
 
 -   Hardest part: scrolling so the "next" button is visible in the frame [#JustSeleniumProblems]{.emph .cerulean}
 
-    -   Error handling was essential - sometimes, the scrolling just didn't seem to work.
+    -   Error handling was essential 
 
 -   Decided not to find the max number of pages and instead use a `while` loop and a `break` statement
 
--   Always save data incrementally so you don't have to re-scrape
+-   Save data incrementally -- don't re-scrape
 
 ## BeautifulSoup Coolness
 
