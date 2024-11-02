@@ -1,13 +1,13 @@
-title: "Talk Template"
+title: "Web Scraping Olympics: Python"
 author: "Susan Vanderplas"
-date: 2024-01-01
+date: 2024-11-02
 from: markdown+emoji
-location: TBD
+location: Online
 abstract: |
-  Clever abstract here
-talk-type: ['seminar', 'web', 'invited', 'contributed', 'other']
+  How to use python to web-scrape olympic athletes names, events, and birthdays.
+talk-type: ['web', 'invited']
 # One or more of seminar, web, invited, contributed, other
 
 image: <iframe class="slide-deck" src="./" width="100%" height="200px"></iframe>
 
-keywords: ['template']
+keywords: ['computing', 'web scraping', 'python']

@@ -2,10 +2,249 @@
 format: 
   revealjs:
     navigation-mode: vertical
-    logo: ../libs/unl/N.svg
     theme: ../libs/unl/inverse.scss
+    logo: python.png
     includes:
       in_header: ../libs/unl/header.html
     lib_dir: libs
     embed-resources: true
 ---
+
+## Follow Along
+
+```{r}
+#| echo: false
+#| eval: false
+
+library(qrcode)
+
+code <- qr_code("https://srvanderplas.github.io/2024-data-jamboree-python/python-narrative.html")
+
+generate_svg(code, "qr_code.svg")
+```
+
+[![](./qr_code.svg){width="50%" fig-alt="QR Code to link to my Python code in a quarto notebook."}](https://srvanderplas.github.io/2024-data-jamboree-python/python-narrative.html)
+
+## Basic Game Plan
+
+1.  Try to scrape each sport's athlete table directly
+
+    -   If table is injected with JavaScript, use ![Selenium](selenium-webdriver-logo-1-300x121.png){style="display:inline-block;" width="120px"}
+
+2.  Create a single table of athlete links + sport information
+
+3.  Use info from athlete table to get birthdays
+
+    -   Start out with Olympic website
+    -   Use Wikipedia if that doesn't work
+
+::: notes
+I generally prefer to focus on getting information from one site if possible - it provides a single source of truth, and avoids any issues with athletes who don't have first/last names that are formatted as expected.
+:::
+
+## Scraping Table of Athletes
+
+[**Obstacle**]{.emph .red}: Python's User Agent is blocked by default
+
+[**Solution**]{.emph .cerulean}: Set the User Agent to look like a normal browser.
+
+[(This ended up not mattering)]{.emph .purple}
+
+## Scraping Table of Athletes
+
+-   Hardest part: scrolling so the "next" button is visible in the frame [#JustSeleniumProblems]{.emph .cerulean}
+
+    -   Error handling was essential - sometimes, the scrolling just didn't seem to work.
+
+-   Decided not to find the max number of pages and instead use a `while` loop and a `break` statement
+
+-   Always save data incrementally so you don't have to re-scrape
+
+## BeautifulSoup Coolness
+
+The `SoupStrainer` function is very cool and allows you to screen out anything you don't care about!
+
+```{python, eval = F, echo = T}
+from bs4 import BeautifulSoup, SoupStrainer
+
+items_to_keep = SoupStrainer("a", attrs = {"class": "competitor-container"})
+for link in BeautifulSoup(page, 'html.parser', parse_only=items_to_keep):
+    if link.has_attr('href'):
+        print(link['href'])
+```
+
+## Approach
+
+- Write a function to get all athletes from each sport
+
+    - read table and append 
+    - if "Next" is enabled, scroll down and click it
+
+- map a lambda function over a Series of URLs for each sport
+
+- Use `df.explode()` 💥 to move from one sport per line to one athlete per line
+
+- Convert stub of per-athlete URL to a full URL
+
+## Table of Athletes {.small}
+
+```{python}
+#| echo: true
+import pandas as pd
+
+athlete_urls = pd.read_csv("athlete-addresses.csv")
+```
+```{python, echo = F, eval = T}
+from IPython.display import Markdown, display
+Markdown(athlete_urls.iloc[0:5,1:5].to_markdown(index=False))
+```
+
+## Scraping Athlete Data
+
+- Start with the Olympics website
+
+- Athlete data is in an HTML object with the ID `#PersonInfo`
+
+- This information is not actually a table 😭
+
+    - Get the bold elements -- variable names
+    - Get the full text for each line    
+    variable name : variable value
+    - Process to get a DataFrame - find/replace
+    
+- Return a single row DataFrame
+
+## Scraping Athlete Data {.small .scrollable}
+
+```{python}
+from skimpy import skim
+
+athlete_data = pd.read_csv("Scraped-Athlete-Results.csv")
+skim(athlete_data)
+```
+
+
+## Scraping Athlete Data {.small .scrollable}
+```{python}
+
+from tabulate import tabulate
+
+cols = ['id', 'Age', 'Birth_Country', 'Date_of_Birth', 'name']
+col_ids = athlete_data.columns[athlete_data.columns.isin(cols)]
+tmp=athlete_data[col_ids]
+
+Markdown(tmp.iloc[0:5,:].to_markdown(index=False))
+```
+
+
+## Cleaning
+
+- Create a date variable that's not a string
+
+- Create a decimal_date() function in Python... [missing R...]{.emph .blue}
+
+```{python, echo = T, eval = T}
+
+from datetime import datetime
+
+def decimal_date(date):
+    start_of_year = datetime(date.year, 1, 1)
+    end_of_year = datetime(date.year + 1, 1, 1)
+    days_in_year = (end_of_year - start_of_year).days
+    return date.year + (date - start_of_year).days / days_in_year
+  
+```
+
+
+```{python, echo =F}
+athlete_data['id'] = athlete_data.index
+athlete_urls = athlete_urls.rename(columns={'Unnamed: 0':'id'})
+
+full_athlete_data = pd.merge(athlete_data, athlete_urls)
+
+# Create date variable for birthday
+full_athlete_data['bday'] = pd.to_datetime(full_athlete_data.Date_of_Birth)
+
+# Get specific columns -- declutter, not actually necessary
+athlete_data = full_athlete_data[["id", "type", "sport", "name", "Birth_Country", "Residence_Country", "Gender", "bday", "Age", "events"]].copy()
+
+
+months = ['January', 'February', 'March', 'April', 
+          'May', 'June', 'July', 'August', 
+          'September', 'October', 'November', 'December']
+          
+# Break bday down into separate components
+athlete_data['year'] = athlete_data['bday'].dt.year
+athlete_data['month'] = pd.Categorical(athlete_data['bday'].dt.month_name(), categories =  months)
+athlete_data['day'] = athlete_data['bday'].dt.day
+
+# Decimal date
+athlete_data['ddate'] = [decimal_date(i) for i in athlete_data.bday]
+# Get fractional date - subtract off year
+athlete_data['fdate'] = athlete_data.ddate - athlete_data.year
+```
+
+## Birthdays by Team vs. Indiv
+
+```{python}
+#| echo: true
+#| output-location: column
+import seaborn as sns
+import seaborn.objects as so
+
+p = (
+  so.Plot(athlete_data, y = "month")
+  .add(so.Bar(), so.Count())
+  .facet("type")
+  .scale()
+)
+p.show()
+```
+
+
+## Birthdays by Team vs. Indiv
+
+```{python}
+#| echo: true
+#| output-location: column
+p = (
+  so.Plot(athlete_data, y = "month")
+  .add(
+    so.Bar(), 
+    so.Hist(stat='proportion', 
+            common_norm=False))
+  .facet("type")
+  .scale()
+)
+p.show()
+```
+
+
+
+## Birthdays by Sport
+
+```{python}
+#| echo: true
+#| output-location: slide
+#| fig-width: 8
+#| fig-height: 4
+
+
+p = (
+  so.Plot(athlete_data, y = "month")
+  .add(so.Bar(), so.Hist(stat='proportion', common_norm=False))
+  .facet("sport").share(x=False)
+  .layout(size=(8,4))
+)
+p.show()
+```
+
+::: notes
+
+
+Soccer certainly seems to have fewer people born in the later months of the year; birthdays are relatively uniform across months for volleyball (which has fewer players). Basketball seems to have more summer birthdays, with fewer birthdays in the first few months of the year (though this may be spurious).
+
+Artistic gymnastics has relatively few participants, but October is the most common birthday month, and there are possibly more people with birthdays in the latter half of the year. There are notably more people with birthdays in months with 31 days relative to 30, which is one artifact of the rough method I've used here -- but it's interesting that it shows up in artistic gymnastics, which has relatively fewer participants.
+In swimming, there's a slight overrepresentation of birthdays in Jan/August (and this is over many more athletes). Track and Field athletes seem to be relatively uniformly distributed (accounting for days in the month), with possibly fewer people in the last 3 months of a year. 
+
+:::
