@@ -16,6 +16,10 @@ $theme-colors: (
 );
 
 /* css styles */
+.vcenter{
+  margin: 0!important;
+  height: 1em;
+}
 
 .reveal section {
   background-position: left 10px bottom 10px;

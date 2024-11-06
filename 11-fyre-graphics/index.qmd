@@ -10,6 +10,8 @@ format:
       in_header: ../libs/unl/header.html
     lib_dir: libs
     embed-resources: true
+
+lightbox: true
 ---
 
 ```{r setup, include = F}
@@ -24,23 +26,21 @@ library(knitr)
 
 ## Outline
 
-::: columns
+::::: columns
 ::: column
+1.  Why do we make charts?
 
-1. Why do we make charts?
+2.  What chart works for my data?
 
-2. What chart works for my data?
+3.  What makes a chart effective?
 
-3. What makes a chart effective?
-
-4. Which chart(s) should I use?
-
+4.  Which chart(s) should I use?
 :::
+
 ::: column
 ![Flowchart showing different data characteristics and appropriate graphics for each option.](data-to-vis-flowchart.png)
 :::
-
-:::
+:::::
 
 # Why?
 
@@ -56,9 +56,7 @@ knitr::kable(stars[1:100,c(1, 3, 8, 9, 10, 13, 14, 15, 16)])
 ```
 
 ::: notes
-
 The obvious reason is that they're prettier to look at than tables, and when you have a lot of data, they're also more concise - you trade accuracy of having every data point for the convenience of being able to actually "see" every data point across a couple of dimensions.
-
 :::
 
 ## Charts are easier to read!
@@ -108,12 +106,9 @@ ggplot(data = filter(stars, dist < 500)) +
   guides(color = guide_legend(override.aes = list(alpha = 1)))
 ```
 
-
 ## Why Charts? {.large}
 
 Graphics are a form of [**external cognition**]{.cerulean .emph} that allow us to think about the [**data**]{.purple .emph} rather than the [**chart**]{.green .emph}.
-
-
 
 ## Why Charts?
 
@@ -124,5 +119,242 @@ Good graphics take advantage of how the brain works:
 -   perceptual grouping
 
 -   visual limitations
+
+[Let's demonstrate ...]{.large .cerulean .emph .fragment}
+
+# Chart Cognition
+
+## Preattentive Perception {.r-fit-text}
+
+-   Combinations of preattentive features require attention
+
+    -   Double-encoding (using multiple features for the same variable) is ok
+
+```{r preattentive1}
+#| echo: false
+#| fig-width: 4
+#| fig-height: 4
+#| label: fig-preattentive1
+#| fig-cap: "Two scatterplots with one point that is different. Can you easily spot the different point?"
+#| fig-subcap: 
+#|   - "Shape"
+#|   - "Color"
+#| layout-ncol: 2
+
+set.seed(153253)
+data <- data.frame(expand.grid(x=1:6, y=1:6), color=sample(c(1,2), 36, replace=TRUE))
+data$x <- data$x+rnorm(36, 0, .25)
+data$y <- data$y+rnorm(36, 0, .25)
+suppressWarnings(library(ggplot2))
+new_theme_empty <- theme_bw()
+new_theme_empty$line <- element_blank()
+# new_theme_empty$rect <- element_blank()
+new_theme_empty$strip.text <- element_blank()
+new_theme_empty$axis.text <- element_blank()
+new_theme_empty$plot.title <- element_blank()
+new_theme_empty$axis.title <- element_blank()
+# new_theme_empty$plot.margin <- structure(c(0, 0, -1, -1), unit = "lines", valid.unit = 3L, class = "unit")
+
+data$shape <- c(rep(2, 15), 1, rep(2,20))
+library(scales)
+ggplot(data=data, aes(x=x, y=y, color=factor(1, levels=c(1,2)), shape=factor(shape), size=I(5))) + 
+  geom_point() +
+  scale_shape_manual(guide="none", values=c(19, 15)) + 
+  scale_color_discrete(guide="none") + 
+  new_theme_empty
+
+data$shape <- c(rep(2, 25), 1, rep(2,10))
+ggplot(data=data, aes(x=x, y=y, color=factor(shape), shape=I(19), size=I(5)))+
+  geom_point() +  
+  scale_color_discrete(guide="none") + 
+  new_theme_empty
+```
+
+## Preattentive Perception {.r-fit-text}
+
+-   Combinations of preattentive features require attention
+
+    -   Double-encoding (using multiple features for the same variable) is ok
+
+```{r preattentive2}
+#| echo: false
+#| fig-width: 4
+#| fig-height: 4
+#| label: fig-preattentive2
+#| fig-cap: "Two scatterplots. Can you easily spot the different point(s)?"
+#| fig-subcap: 
+#|   - "Shape and Color (dual encoded)"
+#|   - "Shape and Color (different variables)"
+#| layout-ncol: 2
+set.seed(1532534)
+data <- data.frame(expand.grid(x=1:6, y=1:6), color=sample(c(1,2), 36, replace=TRUE))
+data$x <- data$x+rnorm(36, 0, .25)
+data$y <- data$y+rnorm(36, 0, .25)
+suppressWarnings(library(ggplot2))
+new_theme_empty <- theme_bw()
+new_theme_empty$line <- element_blank()
+# new_theme_empty$rect <- element_blank()
+new_theme_empty$strip.text <- element_blank()
+new_theme_empty$axis.text <- element_blank()
+new_theme_empty$plot.title <- element_blank()
+new_theme_empty$axis.title <- element_blank()
+# new_theme_empty$plot.margin <- structure(c(0, 0, -1, -1), unit = "lines", valid.unit = 3L, class = "unit")
+
+data$shape <- data$color
+ggplot(data=data, aes(x=x, y=y, 
+                      color=factor(color), 
+                      shape=factor(shape))) + 
+  geom_point(size = 5) +
+  scale_shape_manual(guide="none", values=c(19, 15)) +
+  scale_color_discrete(guide="none") + 
+  new_theme_empty
+
+data <- data %>%
+  mutate(sample = row_number() %in% sample(1:n(), 4)) %>%
+  mutate(shape = if_else(sample, if_else(shape == 1, 2, 1), shape))
+
+ggplot(data=data, aes(x=x, y=y, 
+                      color=factor(color), 
+                      shape=factor(shape))) + 
+  geom_point(size = 5) +
+  scale_shape_manual(guide="none", values=c(19, 15)) +
+  scale_color_discrete(guide="none") + 
+  new_theme_empty
+# qplot(data=data, x=x, y=y, color=factor(color), shape=factor(shape), size=I(5))+scale_shape_manual(guide="none", values=c(19, 15)) + scale_color_discrete(guide="none") + new_theme_empty
+```
+
+## Perceptual Grouping {.r-fit-text}
+
+::: {layout="[[55,-10,35]]"}
+![Is this a rabbit or a duck?](../06-REU-graphics/rabbitduck.png){#fig-rabbitduck fig-alt="A picture laid out on an x-y coordinate axis. The y-axis is labeled 'Rabbit' and the x-axis is labeled 'Duck'. When viewed with the rabbit axis at the bottom, the image looks like a rabbit with tall ears; when viewed with the duck axis at the bottom, the image looks like a duck, where the ears become the bill."}
+
+![What do you see in this image?](../06-REU-graphics/IllusoryContour.png){#fig-illusory fig-alt="A complex figure that appears to be made up of a black outline of a triangle, three circles laid out to form the points of an inverted triangle, and a white triangle overlaid on top of the three dots. In practice, what actually exists is a set of three angles at 0, 120, and 240 degrees, and a set of three pac-man shapes (circles with a pie slice taken out) at 60, 180, and 300 degrees."}
+:::
+
+## Perceptual Grouping {.r-fit-text}
+
+![](../06-REU-graphics/gestalt.jpg){fig-alt="An image reading 'GESTALT', where each letter demonstrates a principle of gestalt grouping. G has a white stripe over it, demonstrating closure - the stripe and the G are perceived as separate objects. E is shown as a grid of black squares, with grey squares making up the background; this demonstrates proximity - small objects close together are perceived as being part of the same whole. A bar is woven through the S shape, showing good continuation - the S is perceived as a continuous object that is behind the bar in the middle portion. The two Ts are striped and indicate similarity - they are similarly shaped and patterned and can be perceived as a group. The AL are connected, and the inside of the A seems to have a white tree in the middle, demonstrating figure/ground. The final T is part of the similarity group."}
+
+## Grouping in Charts
+
+```{r chart-emphasis-r}
+#| label: chart-emphasis-r
+#| fig-width: 6
+#| fig-height: 4
+#| fig-subcap: 
+#|   - "Bar chart, showing 5 states"
+#|   - "Line chart, with one state per line"
+#|   - "Box plot by year, all 50 states"
+#| layout-nrow: 1
+#| layout-ncol: 3
+
+library(readr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(geomtextpath)
+library(stringr)
+theme_set(theme_bw())
+counties <- read_csv("https://raw.githubusercontent.com/evangambit/JsonOfCounties/master/counties.csv")
+
+popsubset <- counties |> select(name, fips, state, starts_with("population")) |>
+  pivot_longer(starts_with("population"), names_to = "year", values_to = "population") |>
+  mutate(year = parse_number(year))
+
+state_pop <- popsubset |> group_by(state, year) |>
+  summarize(population = sum(population))
+
+pal <- viridis::viridis(10)
+state_pop %>%
+  filter(state %in% c("NE", "IA", "CO", "MO", "KS")) %>%
+  ggplot(aes(x = state, y = population, fill = factor(year))) +
+  geom_col(position = "dodge", color = "black") +
+  scale_fill_manual("Year", values = pal) +
+  scale_x_discrete("State") + 
+  ylab("State Population, 2010-2019") + 
+  theme(legend.position = c(1, 1), legend.justification = c(.95,.95))
+
+state_pop |>
+  filter(state %in% c("NE", "IA", "CO", "MO", "KS")) |>
+  mutate(label = str_replace_all(state, c("NE" = "Nebraska", "IA" = "Iowa", "CO" = "Colorado", "MO" = "Missouri", "KS" = "Kansas"))) |>
+  ggplot(aes(x = year, y = population, color = state)) +
+  geom_textpath(aes(label = label), text_only = F) + 
+  scale_x_continuous("Year", breaks = (1005:1010)*2) + 
+  guides(color ="none") + 
+  ylab("Population")
+
+state_pop %>%
+  ggplot(aes(x = factor(year), y = population)) +
+  geom_boxplot() +
+  xlab("Year") + 
+  ylab("Population")
+```
+
+# Perceptual Limitations
+
+## Color {.r-fit-text}
+
+-   10% of XY and 0.2% of XX have color deficiency
+
+-   Avoid rainbow color schemes
+
+    -   unequal perception of different colors =\> misleading idea of distance
+
+    -   avoid "stoplight" color schemes
+
+::: {#fig-ishihara layout-ncol="6"}
+![](Ishihara_01.jpg)
+
+![](Ishihara_02.jpg)
+
+![](Ishihara_03.jpg)
+
+![](Ishihara_04.jpg)
+
+![](Ishihara_07.jpg)
+
+![](Ishihara_10.jpg)
+
+Plates from the Ishihara colorblindness test
+:::
+
+## Color {.r-fit-text}
+
+-   Strategies
+    -   double encoding (color + shape or linetype)
+    -   make it work with a black and white printer
+    -   use monochromatic (single color) gradients where possible ![](monochrome-gradient.png){.vcenter}
+    -   bidirectional scales: go through a neutral color ![](bidirectional-gradient.png){.vcenter}
+
+## Color
+
+-   Use implicit associations (reduce cognitive load)
+
+|            |                                     |            |
+|-----------:|:-------------------------------------:|:------------|
+|       cold | ![](bidirectional-gradient-redblue.png) | hot        |
+| democratic | ![](bidirectional-gradient-redblue.png) | republican |
+| neutral | ![](monochrome-gradient-yellowgreen.png) | eco-friendly |
+| flood | ![](bidirectional-gradient-brownblue.png) | drought |
+
+
+  - These associations depend on culture -- ask around if you're unsure!
+  - Avoid pink = female, blue = male
+
+## Categorical Scales
+
+-   **Working memory**: you can remember between 5 and 9 (7 plus or minus 2) things without writing them down
+
+  -   Avoid legends that have more than 7 categories
+  
+  - It can help to use color schemes that vary hue (color) and lightness: ![](paired-cat-color.png){.vcenter}
+
+## Accessibility {.r-fit-text}
+
+-   Provide alt-text for your charts that describe the important information as well as the data source and how it is represented
+
+-   Use larger text to make it easy for people with vis deficiencies to read
+
+-   Some fonts are easier for people with dyslexia to read -- if you're working with someone with dyslexia, ask them what font they prefer.
 
 
