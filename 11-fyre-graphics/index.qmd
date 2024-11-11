@@ -330,24 +330,26 @@ Plates from the Ishihara colorblindness test
 
 -   Use implicit associations (reduce cognitive load)
 
-|            |                                     |            |
-|-----------:|:-------------------------------------:|:------------|
-|       cold | ![](bidirectional-gradient-redblue.png) | hot        |
-| democratic | ![](bidirectional-gradient-redblue.png) | republican |
-| neutral | ![](monochrome-gradient-yellowgreen.png) | eco-friendly |
-| flood | ![](bidirectional-gradient-brownblue.png) | drought |
++------------:+:-----------------------------------------:+:-------------+
+| cold        | ![](bidirectional-gradient-redblue.png)   | hot          |
++-------------+-------------------------------------------+--------------+
+| democratic  | ![](bidirectional-gradient-redblue.png)   | republican   |
++-------------+-------------------------------------------+--------------+
+| neutral     | ![](monochrome-gradient-yellowgreen.png)  | eco-friendly |
++-------------+-------------------------------------------+--------------+
+| flood       | ![](bidirectional-gradient-brownblue.png) | drought      |
++-------------+-------------------------------------------+--------------+
 
-
-  - These associations depend on culture -- ask around if you're unsure!
-  - Avoid pink = female, blue = male
+-   These associations depend on culture -- ask around if you're unsure!
+-   Avoid pink = female, blue = male
 
 ## Categorical Scales
 
 -   **Working memory**: you can remember between 5 and 9 (7 plus or minus 2) things without writing them down
 
-  -   Avoid legends that have more than 7 categories
-  
-  - It can help to use color schemes that vary hue (color) and lightness: ![](paired-cat-color.png){.vcenter}
+-   Avoid legends that have more than 7 categories
+
+-   It can help to use color schemes that vary hue (color) and lightness: ![](paired-cat-color.png){.vcenter}
 
 ## Accessibility {.r-fit-text}
 
@@ -357,4 +359,34 @@ Plates from the Ishihara colorblindness test
 
 -   Some fonts are easier for people with dyslexia to read -- if you're working with someone with dyslexia, ask them what font they prefer.
 
+# So now what?
 
+## Find the right chart type
+
+-   [from Data to Viz](https://www.data-to-viz.com/): https://www.data-to-viz.com/
+
+    -   R, Python, D3.js, React code examples for each chart
+
+    -   Useful for everyone for finding the right chart
+
+## How-To Guides & Sample code
+
+![](https://upload.wikimedia.org/wikipedia/commons/3/34/Microsoft_Office_Excel_%282019%E2%80%93present%29.svg)
+
++--------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------+
+| Program                                                                                                            | Resources                                                                                               |
++====================================================================================================================+=========================================================================================================+
+| ![](https://www.r-project.org/logo/Rlogo.svg){width="60" height="50"}                                              | <https://r-graph-gallery.com/>                                                                          |
++--------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------+
+| ![](https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/files/python-logo-only.svg){width="41"} | <https://python-graph-gallery.com/>                                                                     |
++--------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------+
+| ![](https://upload.wikimedia.org/wikipedia/commons/e/ea/SPSS_logo.svg){width="50"}                                 | Chart Builder                                                                                           |
+|                                                                                                                    |                                                                                                         |
+|                                                                                                                    | Graphs -\> Legacy Dialogs -\> ...                                                                       |
+|                                                                                                                    |                                                                                                         |
+|                                                                                                                    | [Documentation](https://www.ibm.com/docs/en/spss-statistics/30.0.0?topic=features-legacy-dialog-charts) |
++--------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------+
+| ![](https://upload.wikimedia.org/wikipedia/commons/1/10/SAS_logo_horiz.svg){width="120" height="50"}               | Export data, import into R/Python                                                                       |
++--------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------+
+| ![](excel.svg){width="161" height="50"}                                                                            | Export data, import into R/Python                                                                       |
++--------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------+
