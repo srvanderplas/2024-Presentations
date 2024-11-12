@@ -1789,7 +1789,7 @@
     "href": "11-fyre-graphics/index.html#color-2",
     "title": "Creating Effective Graphics",
     "section": "Color",
-    "text": "Color\n\nUse implicit associations (reduce cognitive load)\n\n\n\n\ncold\n\nhot\n\n\ndemocratic\n\nrepublican\n\n\nneutral\n\neco-friendly\n\n\nflood\n\ndrought\n\n\n\n\nThese associations depend on culture – ask around if you’re unsure!\nAvoid pink = female, blue = male"
+    "text": "Color\n\nUse implicit associations (reduce cognitive load)\n\n\n\n\n\n\n\n\n\ncold\n\nhot\n\n\nneutral\n\neco-friendly\n\n\nflood\n\ndrought\n\n\n\n\nThese associations may depend on culture\nAvoid pink = female, blue = male"
   },
   {
     "objectID": "11-fyre-graphics/index.html#working-memory",
@@ -1811,5 +1811,124 @@
     "title": "Creating Effective Graphics",
     "section": "Categorical Scales",
     "text": "Categorical Scales\n\nWorking memory: you can remember between 5 and 9 (7 plus or minus 2) things without writing them down\nAvoid legends that have more than 7 categories\nIt can help to use color schemes that vary hue (color) and lightness:"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#find-the-right-chart-type",
+    "href": "11-fyre-graphics/index.html#find-the-right-chart-type",
+    "title": "Creating Effective Graphics",
+    "section": "Find the right chart type",
+    "text": "Find the right chart type\n\nfrom Data to Viz: https://www.data-to-viz.com/\n\nR, Python, D3.js, React code examples for each chart\nUseful for everyone for finding the right chart"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#how-to-guides-sample-code",
+    "href": "11-fyre-graphics/index.html#how-to-guides-sample-code",
+    "title": "Creating Effective Graphics",
+    "section": "How-To Guides & Sample code",
+    "text": "How-To Guides & Sample code\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \nProgram\nResources/Strategy\n\n\n\n\n\nR\nhttps://r-graph-gallery.com\n\n\n\nPython\nhttps://python-graph-gallery.com\n\n\n\nSPSS\nChart Builder, Documentation\n\n\n\nMatlab\nhttps://www.mathworks.com/products/matlab/plot-gallery.html\n\n\n\nSAS\nExport data, import into R/Python\n\n\n\nExcel\nExport data, import into R/Python"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#find-the-right-chart-for-the-data",
+    "href": "11-fyre-graphics/index.html#find-the-right-chart-for-the-data",
+    "title": "Creating Effective Graphics",
+    "section": "Find the right chart for the data",
+    "text": "Find the right chart for the data\n\nfrom Data to Viz: https://www.data-to-viz.com/\n\nUseful for everyone for finding the right chart\nR, Python, D3.js, React code examples for each chart"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#numerical-and-categorical-data",
+    "href": "11-fyre-graphics/index.html#numerical-and-categorical-data",
+    "title": "Creating Effective Graphics",
+    "section": "Numerical and Categorical Data",
+    "text": "Numerical and Categorical Data\n\n\nCategorical Variables:\n\n\nIsland\nSpecies\nGender\nyear (2007, 2008, 2009)\n\n\n\n\n\nNumeric variables:\n\n\nbill length (mm)\nbill depth (mm)\nflipper length (mm)\nflipper depth (mm)\nbody mass (g)"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#data",
+    "href": "11-fyre-graphics/index.html#data",
+    "title": "Creating Effective Graphics",
+    "section": "Data",
+    "text": "Data\n\n\nCategorical Variables:\n\n\nIsland\nSpecies\nGender\nyear (2007, 2008, 2009)\n\n\n\n\n\nNumeric variables:\n\n\nbill length (mm)\nbill depth (mm)\nflipper length (mm)\nflipper depth (mm)\nbody mass (g)"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#first-steps---explore",
+    "href": "11-fyre-graphics/index.html#first-steps---explore",
+    "title": "Creating Effective Graphics",
+    "section": "First Steps - Explore!",
+    "text": "First Steps - Explore!"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#first-steps---explore-1",
+    "href": "11-fyre-graphics/index.html#first-steps---explore-1",
+    "title": "Creating Effective Graphics",
+    "section": "First Steps - Explore!",
+    "text": "First Steps - Explore!"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#first-steps---explore-2",
+    "href": "11-fyre-graphics/index.html#first-steps---explore-2",
+    "title": "Creating Effective Graphics",
+    "section": "First Steps - Explore!",
+    "text": "First Steps - Explore!"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#first-steps---explore-3",
+    "href": "11-fyre-graphics/index.html#first-steps---explore-3",
+    "title": "Creating Effective Graphics",
+    "section": "First Steps - Explore!",
+    "text": "First Steps - Explore!"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#first-steps---explore-4",
+    "href": "11-fyre-graphics/index.html#first-steps---explore-4",
+    "title": "Creating Effective Graphics",
+    "section": "First Steps - Explore!",
+    "text": "First Steps - Explore!"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#identifying-important-characteristics",
+    "href": "11-fyre-graphics/index.html#identifying-important-characteristics",
+    "title": "Creating Effective Graphics",
+    "section": "Identifying Important Characteristics",
+    "text": "Identifying Important Characteristics\nWhat is important to show about the relationship between sex, species, and bill dimensions?"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#identifying-important-characteristics-1",
+    "href": "11-fyre-graphics/index.html#identifying-important-characteristics-1",
+    "title": "Creating Effective Graphics",
+    "section": "Identifying Important Characteristics",
+    "text": "Identifying Important Characteristics"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#important-characteristics",
+    "href": "11-fyre-graphics/index.html#important-characteristics",
+    "title": "Creating Effective Graphics",
+    "section": "Important Characteristics",
+    "text": "Important Characteristics\nWhat is important to show about the relationship between sex, species, and bill dimensions?"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#important-characteristics-1",
+    "href": "11-fyre-graphics/index.html#important-characteristics-1",
+    "title": "Creating Effective Graphics",
+    "section": "Important Characteristics",
+    "text": "Important Characteristics"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#important-characteristics-2",
+    "href": "11-fyre-graphics/index.html#important-characteristics-2",
+    "title": "Creating Effective Graphics",
+    "section": "Important Characteristics",
+    "text": "Important Characteristics"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#important-characteristics-3",
+    "href": "11-fyre-graphics/index.html#important-characteristics-3",
+    "title": "Creating Effective Graphics",
+    "section": "Important Characteristics",
+    "text": "Important Characteristics"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#important-characteristics-4",
+    "href": "11-fyre-graphics/index.html#important-characteristics-4",
+    "title": "Creating Effective Graphics",
+    "section": "Important Characteristics",
+    "text": "Important Characteristics"
   }
 ]

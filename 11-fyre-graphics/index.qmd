@@ -326,21 +326,19 @@ Plates from the Ishihara colorblindness test
     -   use monochromatic (single color) gradients where possible ![](monochrome-gradient.png){.vcenter}
     -   bidirectional scales: go through a neutral color ![](bidirectional-gradient.png){.vcenter}
 
-## Color
+## Color {.r-fit-text}
 
 -   Use implicit associations (reduce cognitive load)
 
-+------------:+:-----------------------------------------:+:-------------+
-| cold        | ![](bidirectional-gradient-redblue.png)   | hot          |
-+-------------+-------------------------------------------+--------------+
-| democratic  | ![](bidirectional-gradient-redblue.png)   | republican   |
-+-------------+-------------------------------------------+--------------+
-| neutral     | ![](monochrome-gradient-yellowgreen.png)  | eco-friendly |
-+-------------+-------------------------------------------+--------------+
-| flood       | ![](bidirectional-gradient-brownblue.png) | drought      |
-+-------------+-------------------------------------------+--------------+
++-------------:+:-----------------------------------------:+:-------------+
+| cold         | ![](bidirectional-gradient-redblue.png)   | hot          |
++--------------+-------------------------------------------+--------------+
+| neutral      | ![](monochrome-gradient-yellowgreen.png)  | eco-friendly |
++--------------+-------------------------------------------+--------------+
+| flood        | ![](bidirectional-gradient-brownblue.png) | drought      |
++--------------+-------------------------------------------+--------------+
 
--   These associations depend on culture -- ask around if you're unsure!
+-   These associations may depend on culture
 -   Avoid pink = female, blue = male
 
 ## Categorical Scales
@@ -361,32 +359,214 @@ Plates from the Ishihara colorblindness test
 
 # So now what?
 
-## Find the right chart type
+## Find the right chart for the data
 
 -   [from Data to Viz](https://www.data-to-viz.com/): https://www.data-to-viz.com/
 
-    -   R, Python, D3.js, React code examples for each chart
-
     -   Useful for everyone for finding the right chart
+
+    -   R, Python, D3.js, React code examples for each chart
 
 ## How-To Guides & Sample code
 
-![](https://upload.wikimedia.org/wikipedia/commons/3/34/Microsoft_Office_Excel_%282019%E2%80%93present%29.svg)
+<!-- Program                      | Resources/Strategy                                                                       -->
+<!-- :---: | --------------------------------------- -->
+<!--       | <https://r-graph-gallery.com/> -->
+<!--  | <https://python-graph-gallery.com/> -->
+<!--   | Chart Builder  [Documentation](https://www.ibm.com/docs/en/spss-statistics/30.0.0?topic=features-legacy-dialog-charts) -->
+<!--  | <https://www.mathworks.com/products/matlab/plot-gallery.html>  -->
+<!--    | Export data, import into R/Python    -->
+<!--   | Export data, import into R/Python -->
 
-+--------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------+
-| Program                                                                                                            | Resources                                                                                               |
-+====================================================================================================================+=========================================================================================================+
-| ![](https://www.r-project.org/logo/Rlogo.svg){width="60" height="50"}                                              | <https://r-graph-gallery.com/>                                                                          |
-+--------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------+
-| ![](https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/files/python-logo-only.svg){width="41"} | <https://python-graph-gallery.com/>                                                                     |
-+--------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------+
-| ![](https://upload.wikimedia.org/wikipedia/commons/e/ea/SPSS_logo.svg){width="50"}                                 | Chart Builder                                                                                           |
-|                                                                                                                    |                                                                                                         |
-|                                                                                                                    | Graphs -\> Legacy Dialogs -\> ...                                                                       |
-|                                                                                                                    |                                                                                                         |
-|                                                                                                                    | [Documentation](https://www.ibm.com/docs/en/spss-statistics/30.0.0?topic=features-legacy-dialog-charts) |
-+--------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------+
-| ![](https://upload.wikimedia.org/wikipedia/commons/1/10/SAS_logo_horiz.svg){width="120" height="50"}               | Export data, import into R/Python                                                                       |
-+--------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------+
-| ![](excel.svg){width="161" height="50"}                                                                            | Export data, import into R/Python                                                                       |
-+--------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------+
+::: columns
+
+::: {.column width="100%"}
+&nbsp; | Program                      | Resources/Strategy 
+:-: | --- | ---------------------------------------
+{{< iconify devicon:r >}} | R     | [https://r-graph-gallery.com](https://r-graph-gallery.com)
+{{< iconify devicon:python >}} | Python  | [https://python-graph-gallery.com](https://python-graph-gallery.com)
+{{< iconify devicon:spss >}} | SPSS   | Chart Builder, [Documentation](https://www.ibm.com/docs/en/spss-statistics/30.0.0?topic=features-legacy-dialog-charts)
+{{< iconify devicon:matlab >}} | Matlab | [https://www.mathworks.com/products/matlab/plot-gallery.html](https://www.mathworks.com/products/matlab/plot-gallery.html)
+{{< iconify file-icons:sas >}} | SAS  | Export data, import into R/Python   
+{{< iconify vscode-icons:file-type-excel >}} | Excel  | Export data, import into R/Python
+
+: {tbl-colwidths="[5,10,85]"}
+
+:::
+
+:::
+# Example - Penguins
+
+## Data { .r-fit-text}
+
+::: columns
+
+::: column
+Categorical Variables:
+
+::: small
+
+- Island
+- Species
+- Gender
+- year (2007, 2008, 2009)
+:::
+
+![](https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png){width="75%"}
+
+:::
+
+::: {.column}
+
+![](https://allisonhorst.github.io/palmerpenguins/reference/figures/culmen_depth.png){width="75%"}
+
+Numeric variables:
+
+::: small
+- bill length (mm)
+- bill depth (mm)
+- flipper length (mm)
+- flipper depth (mm)
+- body mass (g)
+:::
+:::
+:::
+
+## First Steps - Explore!
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+#| fig-dpi: 300
+library(palmerpenguins)
+data(penguins)
+library(ggplot2)
+theme_set(theme_bw())
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm)) + geom_point()
+```
+
+
+## First Steps - Explore! {auto-animate=true}
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+#| fig-dpi: 300
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = sex)) + geom_point() + 
+theme(
+  legend.background = element_rect(fill = "transparent"),
+  legend.position = "inside",
+  legend.location = "panel",
+  legend.position.inside=c(1, 0),
+  legend.justification = c(1.05, -0.05))
+```
+
+## First Steps - Explore! {auto-animate=true}
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+#| fig-dpi: 300
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = sex, shape = sex))  +  geom_point(size = 5) + 
+  scale_shape_manual(values = c("female" = "♀", male = "♂"), na.value = "?") +
+theme(
+  legend.background = element_rect(fill = "transparent"),
+  legend.position = "inside",
+  legend.location = "panel",
+  legend.position.inside=c(1, 0),
+  legend.justification = c(1.05, -0.05))
+```
+
+
+## First Steps - Explore! {auto-animate=true}
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+#| fig-dpi: 300
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) + geom_point()+ 
+theme(
+  legend.background = element_rect(fill = "transparent"),
+  legend.position = "inside",
+  legend.location = "panel",
+  legend.position.inside=c(1, 0),
+  legend.justification = c(1.05, -0.05))
+```
+
+
+## First Steps - Explore! {auto-animate=true}
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+#| fig-dpi: 300
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species, shape = sex)) + 
+  geom_point(size = 5) + 
+  scale_shape_manual(values = c("female" = "♀", male = "♂"), na.value = "?") + 
+theme(
+  legend.background = element_rect(fill = "transparent"),
+  legend.position = "inside",
+  legend.location = "panel",
+  legend.position.inside=c(1, 0),
+  legend.justification = c(1.05, -0.05))
+```
+
+## Important Characteristics
+
+What is important to show about the relationship between sex, species, and bill dimensions?
+
+
+
+## Important Characteristics
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+#| fig-dpi: 300
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) + geom_point()+ 
+theme(
+  legend.background = element_rect(fill = "transparent"),
+  legend.position = "inside",
+  legend.location = "panel",
+  legend.position.inside=c(1, 0),
+  legend.justification = c(1.05, -0.05)) + 
+  facet_grid(~sex)
+```
+
+
+
+## Important Characteristics
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+#| fig-dpi: 300
+ggplot(data = na.omit(penguins), aes(x = bill_length_mm, y = bill_depth_mm, color = species, fill = species, shape = sex)) + 
+  geom_point(size = 5) + 
+  scale_shape_manual(values = c("female" = "F", male = "M"), na.value = "?") + 
+  stat_ellipse(aes(group = interaction(sex, species)), geom="polygon", alpha = .1, linetype = 2) 
+```
+
+
+## Important Characteristics
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+#| fig-dpi: 300
+ggplot(data = na.omit(penguins), aes(x = bill_length_mm, y = bill_depth_mm, color = species, fill = species)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") 
+```
+
+
+## Important Characteristics
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+#| fig-dpi: 300
+ggplot(data = na.omit(penguins), aes(x = bill_length_mm, y = bill_depth_mm, color = species, fill = species, linetype = sex)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", aes(group = interaction(sex, species)))
+```
