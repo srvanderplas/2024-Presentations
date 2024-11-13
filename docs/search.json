@@ -1705,7 +1705,7 @@
     "href": "11-fyre-graphics/index.html#outline",
     "title": "Creating Effective Graphics",
     "section": "Outline",
-    "text": "Outline\n\n\n\nWhy do we make charts?\nWhat chart works for my data?\nWhat makes a chart effective?\nWhich chart(s) should I use?\n\n\n\n\n\nFlowchart showing different data characteristics and appropriate graphics for each option."
+    "text": "Outline\n\n\n\nWhy do we make charts?\nWhat makes a chart effective?\nWhat chart works for my data?\nWhich chart(s) should I use?\n\n\n\n\n\nFlowchart showing different data types and corresponding graphics."
   },
   {
     "objectID": "11-fyre-graphics/index.html#tables-are-tedious",
@@ -1789,7 +1789,7 @@
     "href": "11-fyre-graphics/index.html#color-2",
     "title": "Creating Effective Graphics",
     "section": "Color",
-    "text": "Color\n\nUse implicit associations (reduce cognitive load)\n\n\n\n\n\n\n\n\n\ncold\n\nhot\n\n\nneutral\n\neco-friendly\n\n\nflood\n\ndrought\n\n\n\n\nThese associations may depend on culture\nAvoid pink = female, blue = male"
+    "text": "Color\n\nUse implicit associations (reduce cognitive load)\n\n\n\n\ncold\n\nhot\n\n\nneutral\n\neco-friendly\n\n\nflood\n\ndrought\n\n\n\n\nThese associations may depend on culture\nAvoid pink = female, blue = male"
   },
   {
     "objectID": "11-fyre-graphics/index.html#working-memory",
@@ -1803,14 +1803,14 @@
     "href": "11-fyre-graphics/index.html#accessibility",
     "title": "Creating Effective Graphics",
     "section": "Accessibility",
-    "text": "Accessibility\n\nProvide alt-text for your charts that describe the important information as well as the data source and how it is represented\nUse larger text to make it easy for people with vis deficiencies to read\nSome fonts are easier for people with dyslexia to read – if you’re working with someone with dyslexia, ask them what font they prefer."
+    "text": "Accessibility\n\nProvide useful alt-text for your charts\n\n\n\nWhy is the image there?\nOverall meaning?\nWhat type of plot?\nImportant Details?\nData Source (with link!)\n\n\n\nUse larger text to make it easy for people with vis deficiencies to read\nSome fonts are easier for people with dyslexia to read\nIf you’re working with someone with dyslexia, ask them what font they prefer."
   },
   {
     "objectID": "11-fyre-graphics/index.html#categorical-scales",
     "href": "11-fyre-graphics/index.html#categorical-scales",
     "title": "Creating Effective Graphics",
     "section": "Categorical Scales",
-    "text": "Categorical Scales\n\nWorking memory: you can remember between 5 and 9 (7 plus or minus 2) things without writing them down\nAvoid legends that have more than 7 categories\nIt can help to use color schemes that vary hue (color) and lightness:"
+    "text": "Categorical Scales\n\nWorking memory is limited to \\(7 \\pm 2\\) items\nAvoid legends that have more than 7 categories\nColorblind friendlier color schemes vary both hue (color) and lightness:"
   },
   {
     "objectID": "11-fyre-graphics/index.html#find-the-right-chart-type",
@@ -1824,14 +1824,14 @@
     "href": "11-fyre-graphics/index.html#how-to-guides-sample-code",
     "title": "Creating Effective Graphics",
     "section": "How-To Guides & Sample code",
-    "text": "How-To Guides & Sample code\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \nProgram\nResources/Strategy\n\n\n\n\n\nR\nhttps://r-graph-gallery.com\n\n\n\nPython\nhttps://python-graph-gallery.com\n\n\n\nSPSS\nChart Builder, Documentation\n\n\n\nMatlab\nhttps://www.mathworks.com/products/matlab/plot-gallery.html\n\n\n\nSAS\nExport data, import into R/Python\n\n\n\nExcel\nExport data, import into R/Python"
+    "text": "How-To Guides & Sample code\n\n\n\n\n\n\n\n\n \nProgram\nResources/Strategy\n\n\n\n\n\nR\nhttps://r-graph-gallery.com\n\n\n\nPython\nhttps://python-graph-gallery.com\n\n\n\nSPSS\nChart Builder, Documentation\n\n\n\nMatlab\nhttps://www.mathworks.com/products/matlab/plot-gallery.html\n\n\n\nSAS\nExport data, import into R/Python\n\n\n\nExcel\nExport data, import into R/Python"
   },
   {
     "objectID": "11-fyre-graphics/index.html#find-the-right-chart-for-the-data",
     "href": "11-fyre-graphics/index.html#find-the-right-chart-for-the-data",
     "title": "Creating Effective Graphics",
     "section": "Find the right chart for the data",
-    "text": "Find the right chart for the data\n\nfrom Data to Viz: https://www.data-to-viz.com/\n\nUseful for everyone for finding the right chart\nR, Python, D3.js, React code examples for each chart"
+    "text": "Find the right chart for the data\n\n\n\nfrom Data to Viz:\nhttps://www.data-to-viz.com/\n\nR, Python, D3.js, React code examples for each chart"
   },
   {
     "objectID": "11-fyre-graphics/index.html#numerical-and-categorical-data",
@@ -1930,5 +1930,61 @@
     "title": "Creating Effective Graphics",
     "section": "Important Characteristics",
     "text": "Important Characteristics"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#data-1",
+    "href": "11-fyre-graphics/index.html#data-1",
+    "title": "Creating Effective Graphics",
+    "section": "Data",
+    "text": "Data\n\n\nCategorical Variables:\n\n\nIsland\nSpecies\nGender\nyear (2007, 2008, 2009)\n\n\n\n\n\nNumeric variables:\n\n\nbill length (mm)\nbill depth (mm)\nflipper length (mm)\nflipper depth (mm)\nbody mass (g)"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#first-steps---explore-5",
+    "href": "11-fyre-graphics/index.html#first-steps---explore-5",
+    "title": "Creating Effective Graphics",
+    "section": "First Steps - Explore!",
+    "text": "First Steps - Explore!"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#first-steps---explore-6",
+    "href": "11-fyre-graphics/index.html#first-steps---explore-6",
+    "title": "Creating Effective Graphics",
+    "section": "First Steps - Explore!",
+    "text": "First Steps - Explore!"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#how-to-guides-sample-code-1",
+    "href": "11-fyre-graphics/index.html#how-to-guides-sample-code-1",
+    "title": "Creating Effective Graphics",
+    "section": "How-To Guides & Sample code",
+    "text": "How-To Guides & Sample code\nhttps://srvanderplas.github.io/stat-computing-r-python/\n\n\n\n\n\nR and Python examples\nData Input\nData Exploration\nData Visualization\nGood Charts\n… and more - data wrangling, cleaning, …"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#facets---subsets-of-data",
+    "href": "11-fyre-graphics/index.html#facets---subsets-of-data",
+    "title": "Creating Effective Graphics",
+    "section": "Facets - Subsets of data",
+    "text": "Facets - Subsets of data\n\n\n\n\n\n\n\n\n\n\nSometimes, it’s helpful to remove missing data (but you should say so!)"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#emphasize-groups",
+    "href": "11-fyre-graphics/index.html#emphasize-groups",
+    "title": "Creating Effective Graphics",
+    "section": "Emphasize Groups",
+    "text": "Emphasize Groups"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#emphasize-trends",
+    "href": "11-fyre-graphics/index.html#emphasize-trends",
+    "title": "Creating Effective Graphics",
+    "section": "Emphasize Trends",
+    "text": "Emphasize Trends"
+  },
+  {
+    "objectID": "11-fyre-graphics/index.html#emphasize-moderating-variables",
+    "href": "11-fyre-graphics/index.html#emphasize-moderating-variables",
+    "title": "Creating Effective Graphics",
+    "section": "Emphasize Moderating Variables",
+    "text": "Emphasize Moderating Variables"
   }
 ]

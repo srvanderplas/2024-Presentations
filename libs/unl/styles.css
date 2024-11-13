@@ -104,6 +104,7 @@ $theme-colors: (
 
 /* Other font formatting stuff */
 .reveal section .emph { font-family: 'Handlee', cursive; }
+.reveal section .read { font-family: 'Atkinson Hyperlegible'; }
 .reveal section .cerulean { color: #249ab5 !important; }
 .reveal section .red { color: #d00000 !important;}
 .reveal section .navy { color: #001226 !important;}

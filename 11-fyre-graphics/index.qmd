@@ -30,15 +30,15 @@ library(knitr)
 ::: column
 1.  Why do we make charts?
 
-2.  What chart works for my data?
+2.  What makes a chart effective?
 
-3.  What makes a chart effective?
+3.  What chart works for my data?
 
 4.  Which chart(s) should I use?
 :::
 
 ::: column
-![Flowchart showing different data characteristics and appropriate graphics for each option.](data-to-vis-flowchart.png)
+![Flowchart showing different data types and corresponding graphics.](data-to-vis-flowchart.png)
 :::
 :::::
 
@@ -122,7 +122,6 @@ Good graphics take advantage of how the brain works:
 
 [Let's demonstrate ...]{.large .cerulean .emph .fragment}
 
-# Chart Cognition
 
 ## Preattentive Perception {.r-fit-text}
 
@@ -290,8 +289,6 @@ state_pop %>%
   ylab("Population")
 ```
 
-# Perceptual Limitations
-
 ## Color {.r-fit-text}
 
 -   10% of XY and 0.2% of XX have color deficiency
@@ -330,107 +327,191 @@ Plates from the Ishihara colorblindness test
 
 -   Use implicit associations (reduce cognitive load)
 
-+-------------:+:-----------------------------------------:+:-------------+
-| cold         | ![](bidirectional-gradient-redblue.png)   | hot          |
-+--------------+-------------------------------------------+--------------+
-| neutral      | ![](monochrome-gradient-yellowgreen.png)  | eco-friendly |
-+--------------+-------------------------------------------+--------------+
-| flood        | ![](bidirectional-gradient-brownblue.png) | drought      |
-+--------------+-------------------------------------------+--------------+
+|         |                                           |              |
+|--------:|:-----------------------------------------:|:-------------|
+|    cold |  ![](bidirectional-gradient-redblue.png)  | hot          |
+| neutral | ![](monochrome-gradient-yellowgreen.png)  | eco-friendly |
+|   flood | ![](bidirectional-gradient-brownblue.png) | drought      |
 
 -   These associations may depend on culture
 -   Avoid pink = female, blue = male
 
 ## Categorical Scales
 
--   **Working memory**: you can remember between 5 and 9 (7 plus or minus 2) things without writing them down
+-   **Working memory** is limited to $7 \pm 2$ items
 
--   Avoid legends that have more than 7 categories
+  -   Avoid legends that have more than 7 categories
 
--   It can help to use color schemes that vary hue (color) and lightness: ![](paired-cat-color.png){.vcenter}
+-   Colorblind friendlier color schemes vary both hue (color) and lightness: ![](paired-cat-color.png){.vcenter}
 
 ## Accessibility {.r-fit-text}
 
--   Provide alt-text for your charts that describe the important information as well as the data source and how it is represented
+-   [Provide useful alt-text for your charts](https://www.boia.org/blog/5-steps-for-writing-alt-text-for-accessibility)
 
--   Use larger text to make it easy for people with vis deficiencies to read
+::: small
+  - Why is the image there? 
+  - Overall meaning?
+  - What type of plot?
+  - Important Details? 
+  - Data Source (with link!)
+:::
 
--   Some fonts are easier for people with dyslexia to read -- if you're working with someone with dyslexia, ask them what font they prefer.
+-   Use [larger text]{.green .large} to make it easy for people with vis deficiencies to read
+
+-   [Some fonts are easier for people with dyslexia to read]{.purple .read}    
+[If you're working with someone with dyslexia, ask them what font they prefer.]{.small}
 
 # So now what?
 
 ## Find the right chart for the data
 
--   [from Data to Viz](https://www.data-to-viz.com/): https://www.data-to-viz.com/
+::: columns
 
-    -   Useful for everyone for finding the right chart
+::: {.column width="70%"}
+-   [from Data to Viz](https://www.data-to-viz.com/):     
+[https://www.data-to-viz.com/](https://www.data-to-viz.com/)
 
     -   R, Python, D3.js, React code examples for each chart
+:::
+
+::: {.column width="30%"}
+![](data-to-vis-numeric)
+:::
+:::
+
 
 ## How-To Guides & Sample code
 
-<!-- Program                      | Resources/Strategy                                                                       -->
-<!-- :---: | --------------------------------------- -->
-<!--       | <https://r-graph-gallery.com/> -->
-<!--  | <https://python-graph-gallery.com/> -->
-<!--   | Chart Builder  [Documentation](https://www.ibm.com/docs/en/spss-statistics/30.0.0?topic=features-legacy-dialog-charts) -->
-<!--  | <https://www.mathworks.com/products/matlab/plot-gallery.html>  -->
-<!--    | Export data, import into R/Python    -->
-<!--   | Export data, import into R/Python -->
+|   | Program | Resources/Strategy |
+|:--------:|----------|----------------------------------------------------|
+| {{< iconify devicon:r >}} | R | <https://r-graph-gallery.com> |
+| {{< iconify devicon:python >}} | Python | <https://python-graph-gallery.com> |
+| {{< iconify devicon:spss >}} | SPSS | Chart Builder, [Documentation](https://www.ibm.com/docs/en/spss-statistics/30.0.0?topic=features-legacy-dialog-charts) |
+| {{< iconify devicon:matlab >}} | Matlab | <https://www.mathworks.com/products/matlab/plot-gallery.html> |
+| {{< iconify file-icons:sas >}} | SAS | Export data, import into R/Python |
+| {{< iconify vscode-icons:file-type-excel >}} | Excel | Export data, import into R/Python |
+
+: {tbl-colwidths="\[5,10,85\]"}
+
+
+## How-To Guides & Sample code
+
+[[https://srvanderplas.github.io/stat-computing-r-python/](https://srvanderplas.github.io/stat-computing-r-python/)]{.cerulean}
 
 ::: columns
+::: column
 
-::: {.column width="100%"}
-&nbsp; | Program                      | Resources/Strategy 
-:-: | --- | ---------------------------------------
-{{< iconify devicon:r >}} | R     | [https://r-graph-gallery.com](https://r-graph-gallery.com)
-{{< iconify devicon:python >}} | Python  | [https://python-graph-gallery.com](https://python-graph-gallery.com)
-{{< iconify devicon:spss >}} | SPSS   | Chart Builder, [Documentation](https://www.ibm.com/docs/en/spss-statistics/30.0.0?topic=features-legacy-dialog-charts)
-{{< iconify devicon:matlab >}} | Matlab | [https://www.mathworks.com/products/matlab/plot-gallery.html](https://www.mathworks.com/products/matlab/plot-gallery.html)
-{{< iconify file-icons:sas >}} | SAS  | Export data, import into R/Python   
-{{< iconify vscode-icons:file-type-excel >}} | Excel  | Export data, import into R/Python
-
-: {tbl-colwidths="[5,10,85]"}
-
+![](book-screenshot.png)
 :::
-
-:::
-# Example - Penguins
-
-## Data { .r-fit-text}
-
-::: columns
 
 ::: column
+
+- R and Python examples
+- [Data Input](https://srvanderplas.github.io/stat-computing-r-python/part-wrangling/01-data-input.html)
+- [Data Exploration](https://srvanderplas.github.io/stat-computing-r-python/part-wrangling/02a-eda.html)
+- [Data Visualization](https://srvanderplas.github.io/stat-computing-r-python/part-wrangling/02b-graphics.html)
+- [Good Charts](https://srvanderplas.github.io/stat-computing-r-python/part-wrangling/02c-good-graphics.html)
+
+- ... and more - data wrangling, cleaning, ...
+:::
+:::
+
+# Example - Penguins
+
+## Data {.r-fit-text}
+
+::::::: columns
+:::: column
 Categorical Variables:
 
 ::: small
-
-- Island
-- Species
-- Gender
-- year (2007, 2008, 2009)
+-   Island
+-   Species
+-   Gender
+-   year (2007, 2008, 2009)
 :::
 
 ![](https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png){width="75%"}
+::::
 
-:::
-
-::: {.column}
-
+:::: column
 ![](https://allisonhorst.github.io/palmerpenguins/reference/figures/culmen_depth.png){width="75%"}
 
 Numeric variables:
 
 ::: small
-- bill length (mm)
-- bill depth (mm)
-- flipper length (mm)
-- flipper depth (mm)
-- body mass (g)
+-   bill length (mm)
+-   bill depth (mm)
+-   flipper length (mm)
+-   flipper depth (mm)
+-   body mass (g)
 :::
+::::
+:::::::
+
+
+## Data {.r-fit-text}
+
+::::::: columns
+:::: column
+Categorical Variables:
+
+::: small
+-   Island
+-   [Species]{.emph .cerulean}
+-   [Gender]{.emph .cerulean}
+-   year (2007, 2008, 2009)
 :::
+
+![](https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png){width="75%"}
+::::
+
+:::: column
+![](https://allisonhorst.github.io/palmerpenguins/reference/figures/culmen_depth.png){width="75%"}
+
+Numeric variables:
+
+::: small
+-   [bill length (mm)]{.emph .cerulean}
+-   [bill depth (mm)]{.emph .cerulean}
+-   flipper length (mm)
+-   flipper depth (mm)
+-   body mass (g)
 :::
+::::
+:::::::
+
+
+```{r}
+#| echo: false
+#| include: false
+library(palmerpenguins)
+data(penguins)
+library(ggplot2)
+theme_set(theme_bw())
+```
+
+## First Steps - Explore!
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| fig-dpi: 300
+#| layout-ncol: 2
+ggplot(data = penguins, aes(x = bill_length_mm)) + geom_histogram()
+
+ggplot(data = penguins, aes(x = bill_depth_mm)) + geom_histogram()
+```
+
+## First Steps - Explore!
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| fig-dpi: 300
+#| layout-ncol: 2
+ggplot(data = penguins, aes(x = species, y = bill_length_mm)) + geom_boxplot()
+
+ggplot(data = penguins, aes(x = species, y = bill_depth_mm)) + geom_boxplot()
+```
 
 ## First Steps - Explore!
 
@@ -445,8 +526,7 @@ theme_set(theme_bw())
 ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm)) + geom_point()
 ```
 
-
-## First Steps - Explore! {auto-animate=true}
+## First Steps - Explore! {auto-animate="true"}
 
 ```{r}
 #| fig-width: 7
@@ -461,7 +541,7 @@ theme(
   legend.justification = c(1.05, -0.05))
 ```
 
-## First Steps - Explore! {auto-animate=true}
+## First Steps - Explore! {auto-animate="true"}
 
 ```{r}
 #| fig-width: 7
@@ -477,8 +557,7 @@ theme(
   legend.justification = c(1.05, -0.05))
 ```
 
-
-## First Steps - Explore! {auto-animate=true}
+## First Steps - Explore! {auto-animate="true"}
 
 ```{r}
 #| fig-width: 7
@@ -493,8 +572,7 @@ theme(
   legend.justification = c(1.05, -0.05))
 ```
 
-
-## First Steps - Explore! {auto-animate=true}
+## First Steps - Explore! {auto-animate="true"}
 
 ```{r}
 #| fig-width: 7
@@ -515,27 +593,19 @@ theme(
 
 What is important to show about the relationship between sex, species, and bill dimensions?
 
-
-
-## Important Characteristics
+## Facets - Subsets of data
 
 ```{r}
 #| fig-width: 7
 #| fig-height: 4
 #| fig-dpi: 300
 ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) + geom_point()+ 
-theme(
-  legend.background = element_rect(fill = "transparent"),
-  legend.position = "inside",
-  legend.location = "panel",
-  legend.position.inside=c(1, 0),
-  legend.justification = c(1.05, -0.05)) + 
   facet_grid(~sex)
 ```
 
+- Sometimes, it's helpful to remove missing data (but you should say so!)
 
-
-## Important Characteristics
+## Emphasize Groups
 
 ```{r}
 #| fig-width: 7
@@ -547,8 +617,7 @@ ggplot(data = na.omit(penguins), aes(x = bill_length_mm, y = bill_depth_mm, colo
   stat_ellipse(aes(group = interaction(sex, species)), geom="polygon", alpha = .1, linetype = 2) 
 ```
 
-
-## Important Characteristics
+## Emphasize Trends
 
 ```{r}
 #| fig-width: 7
@@ -559,8 +628,7 @@ ggplot(data = na.omit(penguins), aes(x = bill_length_mm, y = bill_depth_mm, colo
   geom_smooth(method = "lm") 
 ```
 
-
-## Important Characteristics
+## Emphasize Moderating Variables
 
 ```{r}
 #| fig-width: 7
@@ -570,3 +638,6 @@ ggplot(data = na.omit(penguins), aes(x = bill_length_mm, y = bill_depth_mm, colo
   geom_point() + 
   geom_smooth(method = "lm", aes(group = interaction(sex, species)))
 ```
+
+
+# Questions?
