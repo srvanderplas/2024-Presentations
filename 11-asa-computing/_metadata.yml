@@ -4,10 +4,10 @@ date: 2024-11-02
 from: markdown+emoji
 location: Online
 abstract: |
-  How to use python to web-scrape olympic athletes names, events, and birthdays.
+  How to use python to web-scrape olympic athletes names, events, and birthdays. See the full narrative here: https://srvanderplas.github.io/2024-data-jamboree-python/python-narrative.html
 talk-type: ['web', 'invited']
 # One or more of seminar, web, invited, contributed, other
 
-image: <iframe class="slide-deck" src="./" width="100%" height="200px"></iframe>
+image: cover.png
 
 keywords: ['computing', 'web scraping', 'python']
