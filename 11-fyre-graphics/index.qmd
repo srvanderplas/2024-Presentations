@@ -1,4 +1,5 @@
 ---
+title: "Creating Effective Graphics"
 execute: 
   echo: false
 format: 
@@ -121,7 +122,6 @@ Good graphics take advantage of how the brain works:
 -   visual limitations
 
 [Let's demonstrate ...]{.large .cerulean .emph .fragment}
-
 
 ## Preattentive Perception {.r-fit-text}
 
@@ -340,7 +340,7 @@ Plates from the Ishihara colorblindness test
 
 -   **Working memory** is limited to $7 \pm 2$ items
 
-  -   Avoid legends that have more than 7 categories
+-   Avoid legends that have more than 7 categories
 
 -   Colorblind friendlier color schemes vary both hue (color) and lightness: ![](paired-cat-color.png){.vcenter}
 
@@ -349,27 +349,26 @@ Plates from the Ishihara colorblindness test
 -   [Provide useful alt-text for your charts](https://www.boia.org/blog/5-steps-for-writing-alt-text-for-accessibility)
 
 ::: small
-  - Why is the image there? 
-  - Overall meaning?
-  - What type of plot?
-  - Important Details? 
-  - Data Source (with link!)
+-   Why is the image there?
+-   Overall meaning?
+-   What type of plot?
+-   Important Details?
+-   Data Source (with link!)
 :::
 
 -   Use [larger text]{.green .large} to make it easy for people with vis deficiencies to read
 
--   [Some fonts are easier for people with dyslexia to read]{.purple .read}    
-[If you're working with someone with dyslexia, ask them what font they prefer.]{.small}
+-   [Some fonts are easier for people with dyslexia to read]{.purple .read}\
+    [If you're working with someone with dyslexia, ask them what font they prefer.]{.small}
 
 # So now what?
 
 ## Find the right chart for the data
 
-::: columns
-
+::::: columns
 ::: {.column width="70%"}
--   [from Data to Viz](https://www.data-to-viz.com/):     
-[https://www.data-to-viz.com/](https://www.data-to-viz.com/)
+-   [from Data to Viz](https://www.data-to-viz.com/):\
+    <https://www.data-to-viz.com/>
 
     -   R, Python, D3.js, React code examples for each chart
 :::
@@ -377,13 +376,12 @@ Plates from the Ishihara colorblindness test
 ::: {.column width="30%"}
 ![](data-to-vis-numeric)
 :::
-:::
-
+:::::
 
 ## How-To Guides & Sample code
 
 |   | Program | Resources/Strategy |
-|:--------:|----------|----------------------------------------------------|
+|:-----------:|-------------|---------------------------------------------|
 | {{< iconify devicon:r >}} | R | <https://r-graph-gallery.com> |
 | {{< iconify devicon:python >}} | Python | <https://python-graph-gallery.com> |
 | {{< iconify devicon:spss >}} | SPSS | Chart Builder, [Documentation](https://www.ibm.com/docs/en/spss-statistics/30.0.0?topic=features-legacy-dialog-charts) |
@@ -393,28 +391,29 @@ Plates from the Ishihara colorblindness test
 
 : {tbl-colwidths="\[5,10,85\]"}
 
-
 ## How-To Guides & Sample code
 
-[[https://srvanderplas.github.io/stat-computing-r-python/](https://srvanderplas.github.io/stat-computing-r-python/)]{.cerulean}
+[<https://srvanderplas.github.io/stat-computing-r-python/>]{.cerulean}
 
-::: columns
+::::: columns
 ::: column
-
 ![](book-screenshot.png)
 :::
 
 ::: column
+-   R and Python examples
 
-- R and Python examples
-- [Data Input](https://srvanderplas.github.io/stat-computing-r-python/part-wrangling/01-data-input.html)
-- [Data Exploration](https://srvanderplas.github.io/stat-computing-r-python/part-wrangling/02a-eda.html)
-- [Data Visualization](https://srvanderplas.github.io/stat-computing-r-python/part-wrangling/02b-graphics.html)
-- [Good Charts](https://srvanderplas.github.io/stat-computing-r-python/part-wrangling/02c-good-graphics.html)
+-   [Data Input](https://srvanderplas.github.io/stat-computing-r-python/part-wrangling/01-data-input.html)
 
-- ... and more - data wrangling, cleaning, ...
+-   [Data Exploration](https://srvanderplas.github.io/stat-computing-r-python/part-wrangling/02a-eda.html)
+
+-   [Data Visualization](https://srvanderplas.github.io/stat-computing-r-python/part-wrangling/02b-graphics.html)
+
+-   [Good Charts](https://srvanderplas.github.io/stat-computing-r-python/part-wrangling/02c-good-graphics.html)
+
+-   ... and more - data wrangling, cleaning, ...
 :::
-:::
+:::::
 
 # Example - Penguins
 
@@ -449,7 +448,6 @@ Numeric variables:
 ::::
 :::::::
 
-
 ## Data {.r-fit-text}
 
 ::::::: columns
@@ -481,7 +479,6 @@ Numeric variables:
 ::::
 :::::::
 
-
 ```{r}
 #| echo: false
 #| include: false
@@ -492,6 +489,7 @@ theme_set(theme_bw())
 ```
 
 ## First Steps - Explore!
+
 ```{r}
 #| fig-width: 4
 #| fig-height: 4
@@ -503,6 +501,7 @@ ggplot(data = penguins, aes(x = bill_depth_mm)) + geom_histogram()
 ```
 
 ## First Steps - Explore!
+
 ```{r}
 #| fig-width: 4
 #| fig-height: 4
@@ -603,7 +602,7 @@ ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = speci
   facet_grid(~sex)
 ```
 
-- Sometimes, it's helpful to remove missing data (but you should say so!)
+-   Sometimes, it's helpful to remove missing data (but you should say so!)
 
 ## Emphasize Groups
 
@@ -638,7 +637,6 @@ ggplot(data = na.omit(penguins), aes(x = bill_length_mm, y = bill_depth_mm, colo
   geom_point() + 
   geom_smooth(method = "lm", aes(group = interaction(sex, species)))
 ```
-
 
 # Questions?
 
